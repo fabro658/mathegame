@@ -1,4 +1,4 @@
-// src/app/niveau1.tsx
+// src/app/Niveau 1/niveau1.tsx
 import Link from "next/link";
 
 export default function Niveau1() {

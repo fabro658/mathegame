@@ -17,29 +17,29 @@ export default function Home() {
           <span className="text-xl font-bold">MathGame</span>
         </div>
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-          <Link href="/niveau1">
+          <Link href="/Niveau 1/niveau1">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
               Niveau 1
             </a>
           </Link>
           <Link href="/page2">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 2
+              2
             </a>
           </Link>
           <Link href="/page3">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 3
+              3
             </a>
           </Link>
           <Link href="/page4">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
+              4
             </a>
           </Link>
           <Link href="/page5">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 5
+              5
             </a>
           </Link>
         </div>
