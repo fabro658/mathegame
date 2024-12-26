@@ -4,6 +4,22 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <header className="absolute top-4 right-4">
+        <div className="menu">
+          <span className="menu-title">Menu</span>
+          <div className="menu-content">
+            <Link href="/option1">
+              <a className="menu-item">Option 1</a>
+            </Link>
+            <Link href="/option2">
+              <a className="menu-item">Option 2</a>
+            </Link>
+            <Link href="/option3">
+              <a className="menu-item">Option 3</a>
+            </Link>
+          </div>
+        </div>
+      </header>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex flex-col items-center gap-4">
           <Image
@@ -22,24 +38,24 @@ export default function Home() {
               Niveau 1
             </a>
           </Link>
-          <Link href="/Niveau/page2">
+          <Link href="/Niveau/niveau1.tsx">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 2
+              2
             </a>
           </Link>
           <Link href="/Niveau/page3">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 3
+              3
             </a>
           </Link>
           <Link href="/Niveau/page4">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
+              4
             </a>
           </Link>
           <Link href="/Niveau/page5">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 5
+              5
             </a>
           </Link>
         </div>
