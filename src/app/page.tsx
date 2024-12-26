@@ -19,27 +19,27 @@ export default function Home() {
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
           <Link href="/page1">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              1
+              Niveau 1
             </a>
           </Link>
           <Link href="/page2">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              2
+            Niveau 2
             </a>
           </Link>
           <Link href="/page3">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              3
+            Niveau 3
             </a>
           </Link>
           <Link href="/page4">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              4
+            Niveau 4
             </a>
           </Link>
           <Link href="/page5">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              5
+            Niveau 5
             </a>
           </Link>
         </div>
