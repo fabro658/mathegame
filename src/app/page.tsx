@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <header className="absolute top-4 left-4">
+    <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)] grid grid-cols-3 gap-4">
+      <header className="col-span-1 flex flex-col items-start">
         <div className="menu">
           <span className="menu-title">Menu</span>
           <div className="menu-content">
@@ -20,7 +20,7 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <main className="col-span-1 flex flex-col items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <Image
             className="dark:invert"
@@ -32,35 +32,35 @@ export default function Home() {
           />
           <span className="text-xl font-bold">MathGame</span>
         </div>
-        <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-          <Link href="/Niveau/niveau1.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-              Niveau 1
-            </a>
-          </Link>
-          <Link href="/Niveau/niveau2.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 2
-            </a>
-          </Link>
-          <Link href="/Niveau/niveau3.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 3
-            </a>
-          </Link>
-          <Link href="/Niveau/niveau4.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
-            </a>
-          </Link>
-          <Link href="/Niveau/niveau5.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 5
-            </a>
-          </Link>
-        </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <aside className="col-span-1 flex flex-col items-end gap-4">
+        <Link href="/Niveau/niveau1">
+          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Niveau 1
+          </a>
+        </Link>
+        <Link href="/Niveau/page2">
+          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            2
+          </a>
+        </Link>
+        <Link href="/Niveau/page3">
+          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            3
+          </a>
+        </Link>
+        <Link href="/Niveau/page4">
+          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            4
+          </a>
+        </Link>
+        <Link href="/Niveau/page5">
+          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            5
+          </a>
+        </Link>
+      </aside>
+      <footer className="col-span-3 flex gap-6 flex-wrap items-center justify-center mt-8">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
