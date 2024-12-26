@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <header className="absolute top-4 right-4">
+      <header className="absolute top-4 left-4">
         <div className="menu">
           <span className="menu-title">Menu</span>
           <div className="menu-content">
@@ -33,29 +33,29 @@ export default function Home() {
           <span className="text-xl font-bold">MathGame</span>
         </div>
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-          <Link href="/Niveau/niveau1.tsx">
+          <Link href="/Niveau/niveau1">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
               Niveau 1
             </a>
           </Link>
-          <Link href="/Niveau/niveau2.tsx">
+          <Link href="/Niveau/page2">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 2
+              2
             </a>
           </Link>
-          <Link href="/Niveau/niveau3.tsx">
+          <Link href="/Niveau/page3">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 3
+              3
             </a>
           </Link>
-          <Link href="/Niveau/niveau4.tsx">
+          <Link href="/Niveau/page4">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
+              4
             </a>
           </Link>
-          <Link href="/Niveau/niveau5.tsx">
+          <Link href="/Niveau/page5">
             <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 5
+              5
             </a>
           </Link>
         </div>
