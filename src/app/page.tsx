@@ -20,6 +20,7 @@ export default function Home() {
           </div>
         </div>
       </header>
+
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex flex-col items-center gap-4">
           <Image
@@ -33,33 +34,48 @@ export default function Home() {
           <span className="text-3xl font-bold">MathGame</span>
         </div>
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
+          {/* Niveau 1 */}
           <Link href="/Niveau/niveau1/page.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              <Image src="/file.svg" alt="File icon" width={16} height={16} />
               Niveau 1
             </a>
           </Link>
+
+          {/* Niveau 2 */}
           <Link href="/Niveau/niveau2/page.tsx">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              <Image src="/window.svg" alt="Window icon" width={16} height={16} />
               Niveau 2
             </a>
           </Link>
-          <Link href="/Niveau/niveau3">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+
+          {/* Niveau 3 */}
+          <Link href="/Niveau/niveau3/page.tsx">
+            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
               Niveau 3
             </a>
           </Link>
-          <Link href="/Niveau/niveau4">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+
+          {/* Niveau 4 */}
+          <Link href="/Niveau/niveau4/page.tsx">
+            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              <Image src="/file.svg" alt="File icon" width={16} height={16} />
               Niveau 4
             </a>
           </Link>
-          <Link href="/Niveau/niveau5">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+
+          {/* Niveau 5 */}
+          <Link href="/Niveau/niveau5/page.tsx">
+            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              <Image src="/window.svg" alt="Window icon" width={16} height={16} />
               Niveau 5
             </a>
           </Link>
         </div>
       </main>
+
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
