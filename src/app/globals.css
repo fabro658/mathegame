@@ -1,38 +1,82 @@
-/* styles/globals.css */
+/* Définition des couleurs globales */
+:root {
+  --background: #000; /* Fond noir */
+  --foreground: #fff; /* Texte blanc */
+  --hover-color: #383838; /* Couleur au survol */
+}
+
+/* Corps général de la page */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Geist Sans', sans-serif; /* Remplace par la police que tu utilises */
+}
+
+/* Styles du menu */
 .menu {
   position: relative;
-  display: inline-block;
 }
 
 .menu-title {
-  cursor: pointer;
   font-size: 1.25rem;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .menu-content {
   display: none;
   flex-direction: column;
+  background-color: var(--hover-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: absolute;
-  top: 100%;
+  top: 100%; /* Positionné juste en dessous du titre */
   left: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
-.menu:hover .menu-content {
+.menu-content a {
+  text-decoration: none;
+  color: var(--foreground);
+  margin: 0.25rem 0;
+}
+
+.menu-content a:hover {
+  color: #ccc; /* Gris clair pour l'effet au survol */
+}
+
+/* Activer l'affichage du menu au survol */
+.group:hover .menu-content {
   display: flex;
 }
 
-.menu-item {
-  padding: 8px 16px;
+/* Boutons */
+a {
   text-decoration: none;
-  color: black;
-  transition: background-color 0.3s;
 }
 
-.menu-item:hover {
-  background-color: #f0f0f0;
+a:hover {
+  text-decoration: underline;
+}
+
+/* Liens de niveau */
+a.rounded-full {
+  transition: background-color 0.3s ease;
+}
+
+a.rounded-full:hover {
+  background-color: var(--hover-color);
+}
+
+/* Footer */
+footer a {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
