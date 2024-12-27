@@ -4,18 +4,18 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <header className="absolute top-4 right-4">
+      <header className="absolute top-4 left-4">
         <div className="menu">
           <span className="menu-title">Menu</span>
           <div className="menu-content">
-            <Link href="/option1">
-              <a className="menu-item">Option 1</a>
+            <Link href="/Apprendre">
+              <a className="menu-item">option 1</a>
             </Link>
             <Link href="/option2">
-              <a className="menu-item">Option 2</a>
+              <a className="menu-item">option 2</a>
             </Link>
             <Link href="/option3">
-              <a className="menu-item">Option 3</a>
+              <a className="menu-item">option 3</a>
             </Link>
           </div>
         </div>
