@@ -34,45 +34,60 @@ export default function Home() {
           <span className="text-3xl font-bold">MathGame</span>
         </div>
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-          {/* Niveau 1 */}
-          <Link href="/Niveau/niveau1/page.tsx">
-            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-              <Image src="/file.svg" alt="File icon" width={16} height={16} />
-              Niveau 1
-            </a>
-          </Link>
+          {/* Niveau 1 (Redirige vers le même lien que Learn) */}
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          >
+            <Image src="/file.svg" alt="File icon" width={16} height={16} />
+            Niveau 1
+          </a>
 
-          {/* Niveau 2 */}
-          <Link href="/Niveau/niveau2/page.tsx">
-            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-              <Image src="/window.svg" alt="Window icon" width={16} height={16} />
-              Niveau 2
-            </a>
-          </Link>
+          {/* Niveau 2 (Redirige vers le même lien que Learn) */}
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          >
+            <Image src="/window.svg" alt="Window icon" width={16} height={16} />
+            Niveau 2
+          </a>
 
-          {/* Niveau 3 */}
-          <Link href="/Niveau/niveau3/page.tsx">
-            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-              <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
-              Niveau 3
-            </a>
-          </Link>
+          {/* Niveau 3 (Redirige vers le même lien que Learn) */}
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          >
+            <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
+            Niveau 3
+          </a>
 
-          {/* Niveau 4 */}
-          <Link href="/Niveau/niveau4/page.tsx">
-            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-              <Image src="/file.svg" alt="File icon" width={16} height={16} />
-              Niveau 4
-            </a>
-          </Link>
+          {/* Niveau 4 (Redirige vers le même lien que Learn) */}
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          >
+            <Image src="/file.svg" alt="File icon" width={16} height={16} />
+            Niveau 4
+          </a>
 
-          {/* Niveau 5 */}
-          <Link href="/Niveau/niveau5/page.tsx">
-            <a className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]">
-              <Image src="/window.svg" alt="Window icon" width={16} height={16} />
-              Niveau 5
-            </a>
-          </Link>
+          {/* Niveau 5 (Redirige vers le même lien que Learn) */}
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          >
+            <Image src="/window.svg" alt="Window icon" width={16} height={16} />
+            Niveau 5
+          </a>
         </div>
       </main>
 
