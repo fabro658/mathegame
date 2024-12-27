@@ -1,6 +1,6 @@
 /* Définition des couleurs globales */
 :root {
-  --background: #000; /* Fond noir */
+  --background: #2966ff; /* Fond noir */
   --foreground: #fff; /* Texte blanc */
   --hover-color: #383838; /* Couleur au survol */
 }
