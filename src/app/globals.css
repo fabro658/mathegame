@@ -14,11 +14,7 @@ body {
   font-family: 'Geist Sans', sans-serif; /* Remplace par la police que tu utilises */
 }
 
-/* Styles du menu */
-.menu {
-  position: relative;
-}
-
+/* Menu */
 .menu-title {
   font-size: 1.25rem;
   font-weight: bold;
@@ -26,16 +22,10 @@ body {
 }
 
 .menu-content {
-  display: none;
-  flex-direction: column;
   background-color: var(--hover-color);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 100%; /* Positionné juste en dessous du titre */
-  left: 0;
-  z-index: 10;
 }
 
 .menu-content a {
@@ -45,12 +35,7 @@ body {
 }
 
 .menu-content a:hover {
-  color: #ccc; /* Gris clair pour l'effet au survol */
-}
-
-/* Activer l'affichage du menu au survol */
-.group:hover .menu-content {
-  display: flex;
+  color: #ccc;
 }
 
 /* Boutons */
@@ -62,7 +47,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Liens de niveau */
 a.rounded-full {
   transition: background-color 0.3s ease;
 }
