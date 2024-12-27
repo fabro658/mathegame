@@ -30,7 +30,7 @@ export default function Home() {
             height={60}
             priority
           />
-          <span className="text-xl font-bold">MathGame</span>
+          <span className="text-3xl font-bold">MathGame</span>
         </div>
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
           <Link href="/Niveau/niveau1.tsx">
