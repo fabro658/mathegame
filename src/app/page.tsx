@@ -7,15 +7,36 @@ export default function Home() {
       <header className="absolute top-4 left-4">
         <div className="menu">
           <span className="menu-title">Menu</span>
-          <div className="menu-content">
-            <Link href="/Apprendre">
-              Apprendre 
+          <div className="menu-content flex flex-col gap-2">
+            <Link href="/Apprendre" className="flex items-center gap-2">
+              <Image
+                className="dark:invert"
+                src="/file.svg"
+                alt="File icon"
+                width={16}
+                height={16}
+              />
+              Apprendre
             </Link>
-            <Link href="/option2">
-              Documentation 
+            <Link href="/option2" className="flex items-center gap-2">
+              <Image
+                className="dark:invert"
+                src="/window.svg"
+                alt="Window icon"
+                width={16}
+                height={16}
+              />
+              Documentation
             </Link>
-            <Link href="/option3">
-              Option 
+            <Link href="/option3" className="flex items-center gap-2">
+              <Image
+                className="dark:invert"
+                src="/globe.svg"
+                alt="Globe icon"
+                width={16}
+                height={16}
+              />
+              Option
             </Link>
           </div>
         </div>
@@ -41,7 +62,6 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
           >
-            <Image src="/file.svg" alt="File icon" width={16} height={16} />
             Niveau 1
           </a>
 
@@ -52,7 +72,6 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
           >
-            <Image src="/window.svg" alt="Window icon" width={16} height={16} />
             Niveau 2
           </a>
 
@@ -63,7 +82,6 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
           >
-            <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
             Niveau 3
           </a>
 
@@ -74,7 +92,6 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
           >
-            <Image src="/file.svg" alt="File icon" width={16} height={16} />
             Niveau 4
           </a>
 
@@ -85,7 +102,6 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-full border border-solid border-transparent transition-colors bg-foreground text-background text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 hover:bg-[#383838] dark:hover:bg-[#ccc]"
           >
-            <Image src="/window.svg" alt="Window icon" width={16} height={16} />
             Niveau 5
           </a>
         </div>
