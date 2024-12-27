@@ -26,8 +26,8 @@ export default function Home() {
             className="dark:invert"
             src="/logo.png"
             alt="Mon logo"
-            width={180}
-            height={38}
+            width={300}
+            height={60}
             priority
           />
           <span className="text-xl font-bold">MathGame</span>
