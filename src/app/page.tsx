@@ -9,13 +9,13 @@ export default function Home() {
           <span className="menu-title">Menu</span>
           <div className="menu-content">
             <Link href="/Apprendre">
-              Apprendre
+              Apprendre 
             </Link>
             <Link href="/option2">
-              Documentation
+              Documentation 
             </Link>
             <Link href="/option3">
-              Option
+              Option 
             </Link>
           </div>
         </div>
