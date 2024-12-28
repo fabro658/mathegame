@@ -9,12 +9,17 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black">
+      {/* Header avec menu */}
       <header
         className="absolute top-4 left-4"
-        onMouseEnter={() => setMenuVisible(true)}  // Afficher le menu
+        onMouseEnter={() => setMenuVisible(true)} // Afficher le menu
         onMouseLeave={() => setMenuVisible(false)} // Cacher le menu
       >
-        <div className={`menu flex flex-col gap-4 ${menuVisible ? 'block' : 'hidden'}`}>
+        <div
+          className={`menu flex flex-col gap-4 bg-gray-900 p-4 rounded shadow-md ${
+            menuVisible ? "block" : "hidden"
+          }`}
+        >
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
           <Link href="/Apprendre" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/file.svg" alt="Apprendre Icon" width={20} height={20} />
@@ -31,6 +36,7 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Main content */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex flex-col items-center gap-4">
           <Image
