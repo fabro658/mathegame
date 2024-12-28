@@ -15,18 +15,6 @@ export default function Page() {
         >
           Soustraction
         </a>
-        <a
-          href="/niveaux/niveau1/multiplication"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
-          Multiplication
-        </a>
-        <a
-          href="/niveaux/niveau1/division"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
-          Division
-        </a>
       </div>
     </div>
   );
