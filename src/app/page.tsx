@@ -1,9 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  // État pour contrôler la visibilité du menu
   const [menuVisible, setMenuVisible] = useState(false);
 
   return (
