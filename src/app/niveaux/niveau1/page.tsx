@@ -15,6 +15,12 @@ export default function Page() {
         >
           Soustraction
         </a>
+        <a
+          href="/niveaux/niveau1/fraction"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+        >
+          Fraction
+        </a>
       </div>
     </div>
   );
