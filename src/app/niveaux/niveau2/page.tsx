@@ -1,14 +1,21 @@
-import Link from "next/link";
-
-export default function Niveau2() {
+export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold mb-8">Bienvenue au Niveau 2</h1>
-      <p>Voici le contenu spécifique pour le niveau 2 de votre jeu.</p>
-      {/* Corrected the usage of Link component */}
-      <Link href="/">
-        <a className="mt-8 px-4 py-2 bg-blue-500 text-white rounded">Retour à l&#39;accueil</a>
-      </Link>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
+      <h1 className="text-4xl font-bold mb-12">Niveau 2 - Choisissez une opération</h1>
+      <div className="grid grid-cols-2 gap-8">
+        <a
+          href="/niveaux/niveau2/multiplication"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+        >
+          Multiplication
+        </a>
+        <a
+          href="/niveaux/niveau2/division"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+        >
+          Division
+        </a>
+      </div>
     </div>
   );
 }
