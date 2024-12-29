@@ -23,20 +23,22 @@ export default function Page() {
             Division
           </Link>
         </div>
-        <Link
-          href="/niveaux/niveau2/multiplicationfraction"
-          className={`${buttonClass} bg-orange-500`}
-          aria-label="Page de multiplication de fraction"
-        >
-          Multiplication de fraction
-        </Link>
-        <Link
-          href="/niveaux/niveau2/divisionfraction"
-          className={`${buttonClass} bg-orange-500`}
-          aria-label="Page de division de fraction"
-        >
-          Division de fraction
-        </Link>
+        <div className="flex gap-8">
+          <Link
+            href="/niveaux/niveau2/multiplicationfraction"
+            className={`${buttonClass} bg-orange-500`}
+            aria-label="Page de multiplication de fraction"
+          >
+            Multiplication de fraction
+          </Link>
+          <Link
+            href="/niveaux/niveau2/divisionfraction"
+            className={`${buttonClass} bg-red-500`}
+            aria-label="Page de division de fraction"
+          >
+            Division de fraction
+          </Link>
+        </div>
       </div>
     </div>
   );
