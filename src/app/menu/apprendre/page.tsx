@@ -4,8 +4,8 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">
         Bienvenue sur la page d&apos;Apprentissage !
       </h1>
-      <div className="flex flex-col items-start gap-4 text-lg">
-        {/* Menu en colonne */}
+      <div className="flex flex-col items-start gap-4 text-lg w-full max-w-md">
+        {/* Menu aligné à gauche */}
         <a href="#" className="hover:underline text-gray-700">
           Addition
         </a>
