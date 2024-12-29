@@ -7,8 +7,8 @@ export default function Addition() {
   const questionsPerPage = 10; // Nombre de questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [isValidated, setIsValidated] = useState(false); // Validation des réponses
+  const [hasPassed, setHasPassed] = useState(false); // Vérification si toutes les réponses sont correctes
 
   // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
