@@ -78,12 +78,12 @@ export default function Addition() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Bouton pour naviguer vers la page "Apprendre" */}
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
 
       {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
       </div>
 
@@ -96,7 +96,7 @@ export default function Addition() {
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-3 px-5 rounded w-full"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
                   {a} + {b}
