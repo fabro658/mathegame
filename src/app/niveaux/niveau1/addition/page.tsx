@@ -51,7 +51,7 @@ export default function Addition() {
             {questions.map(([a, b], index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-3 px-6 rounded text-lg"
                   disabled
                 >
                   {a} + {b}
