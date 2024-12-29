@@ -13,7 +13,7 @@ export default function Division() {
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Divisions simples
+    if (index < 10) return [index + 2, Math.floor(Math.random() * 9) + 2]; // Niveau 1 : Divisions avec des résultats différents de 1
     if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
     if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
