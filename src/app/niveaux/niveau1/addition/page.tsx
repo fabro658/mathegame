@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 50;
-  const questionsPerPage = 10;
+  const questionsPerPage = 9; // Afficher 9 questions par page (3 colonnes x 3 lignes)
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -94,13 +94,13 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4">
+              <div key={index} className="flex flex-col items-center gap-2">
                 <span className="font-bold text-black">{a} + {b} =</span>
                 <input
                   type="number"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-3 rounded w-24 text-center text-black"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
