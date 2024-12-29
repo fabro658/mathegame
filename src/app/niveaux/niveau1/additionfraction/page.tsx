@@ -47,12 +47,9 @@ export default function AdditionFractions() {
 
     setError(""); // Réinitialiser les erreurs
 
-    let resultNumerator: number;
-    let resultDenominator: number;
-
-    // Effectuer l'addition des fractions
-    resultNumerator = n1 * d2 + n2 * d1;
-    resultDenominator = d1 * d2;
+    // Utiliser const au lieu de let
+    const resultNumerator = n1 * d2 + n2 * d1;
+    const resultDenominator = d1 * d2;
 
     // Simplifier la fraction
     const simplifiedResult = simplifyFraction(resultNumerator, resultDenominator);
