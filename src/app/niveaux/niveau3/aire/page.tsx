@@ -90,11 +90,11 @@ export default function Aire() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l&aposAire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l'Aire</h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>

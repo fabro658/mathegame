@@ -33,15 +33,15 @@ export default function Perimetre() {
     // Cercle
     else if (shapeType === 2) {
       const radius = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre (circonférence) d'un cercle de rayon ${radius} cm ?`;
-      correctAnswer = 2 * Math.PI * radius; // Périmètre du cercle = 2 * pi * rayon
+      questionText = `Quel est le périmètre d'un cercle de rayon ${radius} cm ?`;
+      correctAnswer = 2 * Math.PI * radius; // Périmètre du cercle = 2π * rayon
     }
     // Triangle
     else {
       const side1 = Math.floor(Math.random() * 10) + 1;
       const side2 = Math.floor(Math.random() * 10) + 1;
       const side3 = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm, et ${side3} cm ?`;
+      questionText = `Quel est le périmètre d'un triangle avec les côtés ${side1} cm, ${side2} cm et ${side3} cm ?`;
       correctAnswer = side1 + side2 + side3; // Périmètre du triangle = somme des côtés
     }
 
@@ -95,7 +95,7 @@ export default function Perimetre() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
