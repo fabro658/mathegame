@@ -13,7 +13,11 @@ export default function Division() {
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 2, Math.floor(Math.random() * 9) + 2]; // Niveau 1 : Divisions avec des résultats différents de 1
+    if (index < 10) {
+      const divisor = Math.floor(Math.random() * 9) + 2; // Diviseur entre 2 et 10
+      const numerator = divisor * (Math.floor(Math.random() * 10) + 1); // Numérateur est un multiple du diviseur
+      return [numerator, divisor];
+    }
     if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
     if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
