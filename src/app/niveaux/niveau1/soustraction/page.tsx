@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from 'next/link';
 
 export default function Soustraction() {
   const totalQuestions = 50;
@@ -12,7 +13,7 @@ export default function Soustraction() {
   // Génération des questions et réponses
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
+    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
     if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
@@ -53,6 +54,10 @@ export default function Soustraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+        Apprendre
+      </Link>
+
       <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
       </div>
