@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Link from 'next/link';
+import Link from "next/link"; // Importation du composant Link pour la navigation
 
-export default function MultiplicationFractions() {
+export default function MultiplicationFraction() {
   const totalQuestions = 50;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const questionsPerPage = 10;
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -17,7 +18,7 @@ export default function MultiplicationFractions() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et réponses pour multiplication de fractions
+  // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, () => {
     const a1 = Math.floor(Math.random() * 9) + 1;
     const b1 = Math.floor(Math.random() * 9) + 1;
@@ -36,6 +37,8 @@ export default function MultiplicationFractions() {
     };
   });
 
+  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
+
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -47,77 +50,101 @@ export default function MultiplicationFractions() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+    
+    // Vérification si toutes les réponses sont remplies
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      return;
+    }
+
+    // Validation des réponses
+    const newAnswers = [...answers];
+    let allCorrect = true;
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== correctAnswers[globalIndex]) {
+        allCorrect = false;
+        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+      }
+    });
+
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalQuestions / 10 - 1) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
+      setIsValidated(false); // Réinitialiser la validation pour la page suivante
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
+      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
-
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
       </div>
-
-      <h1 className="text-3xl font-bold mb-6">Multiplication de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
-                  {fraction1} * {fraction2}
+                  {fraction1} × {fraction2}
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
+          <div className="mt-6 flex gap-4">
+            {currentPage > 0 && (
+              <button
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handlePreviousPage}
+              >
+                Précédent
+              </button>
+            )}
             <button
               onClick={handleValidation}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
             >
               Valider les réponses
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
-            >
-              Suivant
-            </button>
+            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            )}
           </div>
         </>
       )}
@@ -127,12 +154,21 @@ export default function MultiplicationFractions() {
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
+              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  onClick={handleNextPage}
+                >
+                  Passer à la série suivante
+                </button>
+              ) : (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  onClick={() => alert("Vous avez complété toutes les questions !")}
+                >
+                  Terminer
+                </button>
+              )}
             </div>
           ) : (
             <div>
