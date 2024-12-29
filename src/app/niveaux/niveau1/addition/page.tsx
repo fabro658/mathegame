@@ -9,6 +9,10 @@ export default function Addition() {
 
   const correctAnswers = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]; // Réponses correctes (exemple)
 
+  // Calculer le pourcentage de réponses complétées
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / answers.length) * 100);
+
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
@@ -23,7 +27,12 @@ export default function Addition() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Suivi de la progression */}
+      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+        Progression : {completionPercentage}%
+      </div>
+
       <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
       {!isValidated && (
