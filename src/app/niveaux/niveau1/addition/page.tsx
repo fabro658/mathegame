@@ -1,28 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link"; // Importation du composant Link pour la navigation
+import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+    if (index < 10) return [index + 1, index + 1];
+    if (index < 20) return [10 + index - 9, 5 + index - 9];
+    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)];
+    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)];
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
 
-  const correctAnswers = questions.map(([a, b]) => a + b); // Réponses correctes
+  const correctAnswers = questions.map(([a, b]) => a + b);
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -37,14 +35,12 @@ export default function Addition() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
-    // Vérification si toutes les réponses sont remplies
+
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
@@ -52,7 +48,7 @@ export default function Addition() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -64,45 +60,44 @@ export default function Addition() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton pour naviguer vers la page "Apprendre" */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
 
-      {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
+      {/* Barre de progression */}
+      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-4">
+        <div
+          className="bg-green-500 h-4 rounded-full"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
+      </div>
+      <div className="absolute top-10 left-4 text-green-500 font-bold">
         Progression : {completionPercentage}%
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
-      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {a} + {b}
-                </button>
+                <span className="font-bold text-black">{a} + {b} =</span>
                 <input
                   type="number"
                   className="border border-gray-400 p-3 rounded w-full text-center text-black"
@@ -113,55 +108,42 @@ export default function Addition() {
             ))}
           </div>
 
-          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
 
-      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+              <button
+                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
             </div>
           ) : (
             <div>

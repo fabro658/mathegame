@@ -11,47 +11,38 @@ export default function Perimetre() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Calcul de la réponse correcte pour chaque question
   const questions = Array.from({ length: totalQuestions }, () => {
-    const shapeType = Math.floor(Math.random() * 4); // Générer une forme aléatoire parmi 4 types
+    const shapeType = Math.floor(Math.random() * 4);
     let questionText = "";
     let correctAnswer = 0;
 
-    // Carré
     if (shapeType === 0) {
       const side = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
-      correctAnswer = 4 * side; // Périmètre du carré = 4 * côté
-    }
-    // Rectangle
-    else if (shapeType === 1) {
+      questionText = `Quel est le périmètre d&apos;un carré de côté ${side} cm ?`;
+      correctAnswer = 4 * side;
+    } else if (shapeType === 1) {
       const length = Math.floor(Math.random() * 10) + 1;
       const width = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-      correctAnswer = 2 * (length + width); // Périmètre du rectangle = 2 * (longueur + largeur)
-    }
-    // Cercle
-    else if (shapeType === 2) {
+      questionText = `Quel est le périmètre d&apos;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+      correctAnswer = 2 * (length + width);
+    } else if (shapeType === 2) {
       const radius = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d'un cercle de rayon ${radius} cm ?`;
-      correctAnswer = 2 * Math.PI * radius; // Périmètre du cercle = 2π * rayon
-    }
-    // Triangle
-    else {
+      questionText = `Quel est le périmètre d&apos;un cercle de rayon ${radius} cm ? (π = 3.14)`;
+      correctAnswer = 2 * Math.PI * radius;
+    } else {
       const side1 = Math.floor(Math.random() * 10) + 1;
       const side2 = Math.floor(Math.random() * 10) + 1;
       const side3 = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d'un triangle avec les côtés ${side1} cm, ${side2} cm et ${side3} cm ?`;
-      correctAnswer = side1 + side2 + side3; // Périmètre du triangle = somme des côtés
+      questionText = `Quel est le périmètre d&apos;un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
+      correctAnswer = side1 + side2 + side3;
     }
 
     return {
       questionText,
-      correctAnswer: correctAnswer.toFixed(2), // Arrondir la réponse correcte
+      correctAnswer: correctAnswer.toFixed(2),
     };
   });
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -87,7 +78,14 @@ export default function Perimetre() {
         Apprendre
       </Link>
 
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+      {/* Barre de progression */}
+      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-4">
+        <div
+          className="bg-blue-500 h-4 rounded-full"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
+      </div>
+      <div className="absolute top-10 left-4 text-blue-500 font-bold">
         Progression : {completionPercentage}%
       </div>
 

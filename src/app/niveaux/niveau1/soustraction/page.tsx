@@ -84,10 +84,14 @@ export default function Soustraction() {
         Apprendre
       </Link>
 
-      {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+      {/* Barre de progression */}
+      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-6">
+        <div
+          className="bg-green-500 h-6 rounded-full"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
       </div>
+      <span className="absolute top-4 left-4 ml-4 text-black font-bold">{completionPercentage}%</span>
 
       <h1 className="text-3xl font-bold mb-6">Soustraction</h1>
 

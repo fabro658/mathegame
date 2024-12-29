@@ -73,14 +73,14 @@ export default function Aire() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded-lg font-bold">
         Apprendre
       </Link>
 
       {/* Barre de progression */}
       <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-4">
         <div
-          className="bg-blue-500 h-4 rounded-full"
+          className="bg-green-500 h-4 rounded-full"
           style={{ width: `${completionPercentage}%` }}
         ></div>
       </div>
