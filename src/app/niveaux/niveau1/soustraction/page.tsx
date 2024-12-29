@@ -4,20 +4,21 @@ import { useState } from "react";
 
 export default function Soustraction() {
   const totalQuestions = 50;
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions et des réponses correctes
+  // Génération des questions et réponses
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [20 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
-    if (index < 30) return [30 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [50 + Math.floor(Math.random() * 51), 20 + Math.floor(Math.random() * 51)]; // Niveau 4
-    return [60 + Math.floor(Math.random() * 51), 10 + Math.floor(Math.random() * 51)]; // Niveau 5
+    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
+    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
+    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
   });
 
-  const correctAnswers = questions.map(([a, b]) => a - b); // Réponses correctes
+  const correctAnswers = questions.map(([a, b]) => a - b);
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -36,9 +37,22 @@ export default function Soustraction() {
     setHasPassed(allCorrect);
   };
 
+  const handleNextPage = () => {
+    if (currentPage < totalQuestions / 10 - 1) {
+      setCurrentPage(currentPage + 1);
+      setIsValidated(false);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setIsValidated(false);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Suivi de la progression */}
       <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
       </div>
@@ -48,10 +62,10 @@ export default function Soustraction() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.map(([a, b], index) => (
+            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
-                  className="bg-blue-500 text-white font-bold py-3 px-6 rounded text-lg"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   disabled
                 >
                   {a} - {b}
@@ -59,17 +73,33 @@ export default function Soustraction() {
                 <input
                   type="number"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(index, e.target.value)}
+                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
-          <button
-            onClick={handleValidation}
-            className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-          >
-            Valider les réponses
-          </button>
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+            >
+              Valider les réponses
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === totalQuestions / 10 - 1}
+            >
+              Suivant
+            </button>
+          </div>
         </>
       )}
 
