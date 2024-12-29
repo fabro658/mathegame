@@ -49,7 +49,7 @@ export default function Addition() {
   };
 
   const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false); // Réinitialiser la validation pour la page suivante
     }
@@ -107,7 +107,7 @@ export default function Addition() {
             >
               Valider les réponses
             </button>
-            {currentPage < Math.floor(totalQuestions / questionsPerPage) && (
+            {isValidated && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleNextPage}
