@@ -90,7 +90,7 @@ export default function Aire() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l'Aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&aposAire</h1>
 
       {!isValidated && (
         <>
