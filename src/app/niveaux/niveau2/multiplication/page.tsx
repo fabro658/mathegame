@@ -54,11 +54,11 @@ export default function Multiplication() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded-lg font-bold">
         Apprendre
       </Link>
 
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
       </div>
 
