@@ -7,6 +7,7 @@ export default function Addition() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); // Page actuelle (1 à 5)
 
   // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -36,6 +37,23 @@ export default function Addition() {
     setHasPassed(allCorrect);
   };
 
+  const handleNextPage = () => {
+    if (currentPage < 5) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Déterminer l'index de départ et de fin pour chaque page
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = startIndex + 9;
+  const currentQuestions = questions.slice(startIndex, endIndex + 1);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Suivi de la progression */}
@@ -48,7 +66,7 @@ export default function Addition() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.map(([a, b], index) => (
+            {currentQuestions.map(([a, b], index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
                   className="bg-blue-500 text-white font-bold py-3 px-6 rounded text-lg"
@@ -59,11 +77,30 @@ export default function Addition() {
                 <input
                   type="number"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(index, e.target.value)}
+                  onChange={(e) => handleChange(startIndex + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
+
+          {/* Navigation entre les pages */}
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === 1}
+            >
+              Précédent
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === 5}
+            >
+              Suivant
+            </button>
+          </div>
+
           <button
             onClick={handleValidation}
             className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"

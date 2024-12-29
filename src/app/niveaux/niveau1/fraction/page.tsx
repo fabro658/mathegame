@@ -3,125 +3,139 @@
 import { useState } from "react";
 
 export default function Fractions() {
-  const totalQuestions = 50;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [num1, setNum1] = useState(""); // Numérateur de la première fraction
+  const [denom1, setDenom1] = useState(""); // Dénominateur de la première fraction
+  const [num2, setNum2] = useState(""); // Numérateur de la deuxième fraction
+  const [denom2, setDenom2] = useState(""); // Dénominateur de la deuxième fraction
+  const [operation, setOperation] = useState("+"); // Opération (addition ou soustraction)
+  const [result, setResult] = useState<string>(""); // Résultat de l'opération
+  const [error, setError] = useState<string>(""); // Message d'erreur
 
-  // Fonction pour simplifier les fractions
-  const simplifyFraction = (numerator: number, denominator: number): string => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const commonDivisor = gcd(Math.abs(numerator), Math.abs(denominator));
-    return `${numerator / commonDivisor}/${denominator / commonDivisor}`;
+  // Fonction pour calculer le plus grand commun diviseur (PGCD)
+  const gcd = (a: number, b: number): number => {
+    while (b !== 0) {
+      let temp = b;
+      b = a % b;
+      a = temp;
+    }
+    return a;
   };
 
-  // Génération des questions et des réponses correctes
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    const num1 = Math.floor(Math.random() * 10) + 1; // Numérateur entre 1 et 10
-    const denom1 = Math.floor(Math.random() * 10) + 1; // Dénominateur entre 1 et 10
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    const denom2 = Math.floor(Math.random() * 10) + 1;
+  // Fonction pour simplifier la fraction
+  const simplifyFraction = (numerator: number, denominator: number): string => {
+    const divisor = gcd(numerator, denominator);
+    return `${numerator / divisor}/${denominator / divisor}`;
+  };
 
-    // Niveau 1 : Addition ou soustraction de fractions simples
-    if (index < 25) return [[num1, denom1], [num2, denom2], '+'];
-    // Niveau 2 : Nombres plus complexes
-    return [[num1, denom1], [num2, denom2], '-'];
-  });
+  // Fonction pour effectuer l'opération sur les fractions
+  const handleOperation = () => {
+    // Convertir les valeurs en nombres
+    const n1 = parseFloat(num1);
+    const d1 = parseFloat(denom1);
+    const n2 = parseFloat(num2);
+    const d2 = parseFloat(denom2);
 
-  const correctAnswers = questions.map(([fraction1, fraction2, operation]) => {
-    const [num1, denom1] = fraction1;
-    const [num2, denom2] = fraction2;
-    let resultNumerator, resultDenominator;
-
-    if (operation === '+') {
-      resultNumerator = num1 * denom2 + num2 * denom1;
-      resultDenominator = denom1 * denom2;
-    } else {
-      resultNumerator = num1 * denom2 - num2 * denom1;
-      resultDenominator = denom1 * denom2;
+    // Vérification des erreurs
+    if (isNaN(n1) || isNaN(d1) || isNaN(n2) || isNaN(d2)) {
+      setError("Les numérateurs et dénominateurs doivent être des nombres valides.");
+      return;
     }
 
-    return simplifyFraction(resultNumerator, resultDenominator);
-  });
+    if (d1 === 0 || d2 === 0) {
+      setError("Les dénominateurs ne peuvent pas être zéro.");
+      return;
+    }
 
-  const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
-  };
+    setError(""); // Réinitialiser les erreurs
 
-  const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === correctAnswers[index]);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    let resultNumerator: number;
+    let resultDenominator: number;
+
+    // Effectuer l'opération d'addition ou de soustraction
+    if (operation === "+") {
+      resultNumerator = n1 * d2 + n2 * d1;
+      resultDenominator = d1 * d2;
+    } else if (operation === "-") {
+      resultNumerator = n1 * d2 - n2 * d1;
+      resultDenominator = d1 * d2;
+    } else {
+      setError("Opération non supportée");
+      return;
+    }
+
+    // Simplifier la fraction
+    const simplifiedResult = simplifyFraction(resultNumerator, resultDenominator);
+    setResult(simplifiedResult);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {Math.round((answers.filter((a) => a !== null).length / totalQuestions) * 100)}%
-      </div>
-
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
       <h1 className="text-3xl font-bold mb-6">Addition/Soustraction de Fractions</h1>
 
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.map(([fraction1, fraction2, operation], index) => {
-              const [num1, denom1] = fraction1;
-              const [num2, denom2] = fraction2;
-              return (
-                <div key={index} className="flex items-center gap-2">
-                  <button
-                    className="bg-blue-500 text-white font-bold py-3 px-6 rounded text-lg"
-                    disabled
-                  >
-                    {num1}/{denom1} {operation} {num2}/{denom2}
-                  </button>
-                  <input
-                    type="text"
-                    className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                    onChange={(e) => handleChange(index, e.target.value)}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <button
-            onClick={handleValidation}
-            className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-          >
-            Valider les réponses
-          </button>
-        </>
+      {/* Formulaire de saisie des fractions */}
+      <div className="mb-6">
+        <div className="flex gap-4">
+          <input
+            type="number"
+            placeholder="Numérateur 1"
+            value={num1}
+            onChange={(e) => setNum1(e.target.value)}
+            className="border border-gray-400 p-2 rounded w-24 text-center"
+          />
+          <input
+            type="number"
+            placeholder="Dénominateur 1"
+            value={denom1}
+            onChange={(e) => setDenom1(e.target.value)}
+            className="border border-gray-400 p-2 rounded w-24 text-center"
+          />
+        </div>
+        <div className="flex gap-4 mt-4">
+          <input
+            type="number"
+            placeholder="Numérateur 2"
+            value={num2}
+            onChange={(e) => setNum2(e.target.value)}
+            className="border border-gray-400 p-2 rounded w-24 text-center"
+          />
+          <input
+            type="number"
+            placeholder="Dénominateur 2"
+            value={denom2}
+            onChange={(e) => setDenom2(e.target.value)}
+            className="border border-gray-400 p-2 rounded w-24 text-center"
+          />
+        </div>
+      </div>
+
+      {/* Choix de l'opération */}
+      <div className="mb-6">
+        <label className="mr-2">Opération :</label>
+        <select
+          value={operation}
+          onChange={(e) => setOperation(e.target.value)}
+          className="border border-gray-400 p-2 rounded"
+        >
+          <option value="+">Addition</option>
+          <option value="-">Soustraction</option>
+        </select>
+      </div>
+
+      {/* Affichage du résultat ou de l'erreur */}
+      {error && <p className="text-red-600 font-bold">{error}</p>}
+      {result && (
+        <p className="text-green-600 font-bold text-xl mt-4">
+          Résultat : {result}
+        </p>
       )}
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      {/* Bouton pour effectuer l'opération */}
+      <button
+        onClick={handleOperation}
+        className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+      >
+        Calculer
+      </button>
     </div>
   );
 }
