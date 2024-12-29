@@ -62,7 +62,7 @@ export default function Page() {
           href="/menu/apprendre"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Priorité d'opértion
+          Priorité d&aposopértion
         </a>
       </div>
     </div>
