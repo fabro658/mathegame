@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link"; // Importation du composant Link pour la navigation
 
 export default function Addition() {
   const totalQuestions = 50;
@@ -76,6 +77,11 @@ export default function Addition() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton pour naviguer vers la page "Apprendre" */}
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded font-bold">
+        Apprendre
+      </Link>
+
       {/* Suivi de la progression */}
       <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
         Progression : {completionPercentage}%
@@ -86,18 +92,18 @@ export default function Addition() {
       {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-2">
+              <div key={index} className="flex items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-3 px-5 rounded w-full"
                   disabled
                 >
                   {a} + {b}
                 </button>
                 <input
                   type="number"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
