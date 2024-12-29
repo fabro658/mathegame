@@ -11,46 +11,37 @@ export default function Aire() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Calcul de la réponse correcte pour chaque question
   const questions = Array.from({ length: totalQuestions }, () => {
-    const shapeType = Math.floor(Math.random() * 4); // Générer une forme aléatoire parmi 4 types
+    const shapeType = Math.floor(Math.random() * 4);
     let questionText = "";
     let correctAnswer = 0;
 
-    // Carré
     if (shapeType === 0) {
       const side = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est l'aire d'un carré de côté ${side} cm ?`;
-      correctAnswer = side * side; // Aire du carré = côté * côté
-    }
-    // Rectangle
-    else if (shapeType === 1) {
+      questionText = `Quelle est l&apos;aire d&apos;un carré de côté ${side} cm ?`;
+      correctAnswer = side * side;
+    } else if (shapeType === 1) {
       const length = Math.floor(Math.random() * 10) + 1;
       const width = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est l'aire d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-      correctAnswer = length * width; // Aire du rectangle = longueur * largeur
-    }
-    // Cercle
-    else if (shapeType === 2) {
+      questionText = `Quelle est l&apos;aire d&apos;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+      correctAnswer = length * width;
+    } else if (shapeType === 2) {
       const radius = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est l'aire d'un cercle de rayon ${radius} cm ?`;
-      correctAnswer = Math.PI * radius * radius; // Aire du cercle = π * rayon^2
-    }
-    // Triangle
-    else {
+      questionText = `Quelle est l&apos;aire d&apos;un cercle de rayon ${radius} cm ? (π = 3.14)`;
+      correctAnswer = Math.PI * radius * radius;
+    } else {
       const base = Math.floor(Math.random() * 10) + 1;
       const height = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est l'aire d'un triangle de base ${base} cm et de hauteur ${height} cm ?`;
-      correctAnswer = 0.5 * base * height; // Aire du triangle = 1/2 * base * hauteur
+      questionText = `Quelle est l&apos;aire d&apos;un triangle de base ${base} cm et de hauteur ${height} cm ?`;
+      correctAnswer = 0.5 * base * height;
     }
 
     return {
       questionText,
-      correctAnswer: correctAnswer.toFixed(2), // Arrondir la réponse correcte
+      correctAnswer: correctAnswer.toFixed(2),
     };
   });
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -90,7 +81,7 @@ export default function Aire() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l'Aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&apos;Aire</h1>
 
       {!isValidated && (
         <>
