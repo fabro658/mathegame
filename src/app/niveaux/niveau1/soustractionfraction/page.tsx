@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 
 export default function SoustractionFractions() {
@@ -10,33 +10,39 @@ export default function SoustractionFractions() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Fonction pour simplifier une fraction
-  const simplifyFraction = (numerator: number, denominator: number) => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
-  };
+  // Tableau des questions et réponses générées une seule fois au début
+  const [questions, setQuestions] = useState<any[]>([]);
 
-  // Génération des questions et réponses pour soustraction de fractions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  useEffect(() => {
+    // Générer les questions une seule fois
+    const generatedQuestions = Array.from({ length: totalQuestions }, () => {
+      const a1 = Math.floor(Math.random() * 9) + 1;
+      const b1 = Math.floor(Math.random() * 9) + 1;
+      const a2 = Math.floor(Math.random() * 9) + 1;
+      const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const commonDenominator = b1 * b2;
-    const numerator1 = a1 * b2;
-    const numerator2 = a2 * b1;
+      const commonDenominator = b1 * b2;
+      const numerator1 = a1 * b2;
+      const numerator2 = a2 * b1;
 
-    const numeratorResult = numerator1 - numerator2;
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+      const numeratorResult = numerator1 - numerator2;
+      const simplifyFraction = (numerator: number, denominator: number) => {
+        const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+        const divisor = gcd(numerator, denominator);
+        return [numerator / divisor, denominator / divisor];
+      };
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+
+      return {
+        fraction1: `${a1}/${b1}`,
+        fraction2: `${a2}/${b2}`,
+        correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+      };
+    });
+
+    setQuestions(generatedQuestions);
+  }, []); // Effect avec un tableau de dépendances vide pour ne l'exécuter qu'une seule fois
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -95,6 +101,7 @@ export default function SoustractionFractions() {
                   type="text"
                   className="border border-gray-400 p-4 rounded-lg w-full text-center text-black"
                   onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  value={answers[currentPage * 10 + index] || ""}
                 />
               </div>
             ))}
