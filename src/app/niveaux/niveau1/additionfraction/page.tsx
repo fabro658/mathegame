@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
@@ -18,7 +19,7 @@ export default function SoustractionFractions() {
   };
 
   // Génération des questions et réponses pour soustraction de fractions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  const questions = Array.from({ length: totalQuestions }, () => {
     const a1 = Math.floor(Math.random() * 9) + 1;
     const b1 = Math.floor(Math.random() * 9) + 1;
     const a2 = Math.floor(Math.random() * 9) + 1;

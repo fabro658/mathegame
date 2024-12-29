@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 50;
@@ -10,7 +10,7 @@ export default function Division() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions et réponses
+  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Divisions simples
     if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
@@ -19,12 +19,9 @@ export default function Division() {
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
   });
 
-  const correctAnswers = questions.map(([a, b]) => a / b);
+  const correctAnswers = questions.map(([a, b]) => a / b); // Réponses correctes
 
-  // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
+  // Fonction pour gérer les changements de réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
@@ -32,60 +29,49 @@ export default function Division() {
     setAnswers(newAnswers);
   };
 
+  // Fonction de validation des réponses
   const handleValidation = () => {
     const allCorrect = answers.every((answer, index) => answer === correctAnswers[index]);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalQuestions / 10 - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded-lg font-bold">
-        Apprendre
+      {/* Bouton vers Apprendre */}
+      <Link href="/menu/apprendre">
+        <button className="absolute top-4 right-4 bg-blue-500 text-white font-bold py-2 px-4 rounded">
+          Apprendre
+        </button>
       </Link>
 
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+      {/* Progression */}
+      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+        Progression : {Math.round((answers.filter((a) => a !== null).length / totalQuestions) * 100)}%
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
-      {!isValidated && (
+      {!isValidated ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-2">
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                  disabled
-                >
+              <div key={index} className="flex items-center gap-4 border-2 border-blue-500 p-6 rounded-xl bg-white shadow-lg">
+                <button className="bg-blue-500 text-white font-bold py-3 px-5 rounded-lg text-lg" disabled>
                   {a} ÷ {b}
                 </button>
                 <input
-                  type="number"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  type="text"
+                  className="border border-gray-400 p-3 rounded-lg w-full text-center text-black"
                   onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
+
           <div className="flex gap-4 mt-6">
             <button
-              onClick={handlePreviousPage}
+              onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
               className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
               disabled={currentPage === 0}
             >
@@ -98,39 +84,27 @@ export default function Division() {
               Valider les réponses
             </button>
             <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
+              onClick={() => setCurrentPage(Math.min(Math.floor(totalQuestions / 10) - 1, currentPage + 1))}
+              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / 10) - 1}
             >
               Suivant
             </button>
           </div>
         </>
-      )}
-
-      {isValidated && (
+      ) : (
         <>
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
+            <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
+            <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
           )}
+          <button
+            onClick={() => setIsValidated(false)}
+            className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+          >
+            Revenir pour corriger
+          </button>
         </>
       )}
     </div>
