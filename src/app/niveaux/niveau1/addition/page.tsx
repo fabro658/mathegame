@@ -1,13 +1,12 @@
-"use client";
-
 import { useState } from "react";
 
 export default function Addition() {
   const totalQuestions = 50;
+  const questionsPerPage = 10; // Nombre de questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // Page actuelle (1 à 5)
 
   // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -32,27 +31,34 @@ export default function Addition() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === correctAnswers[index]);
+    // Vérifier que toutes les réponses de la page actuelle sont remplies
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      return;
+    }
+
+    const allCorrect = pageAnswers.every((answer, index) => answer === correctAnswers[startIndex + index]);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
-    if (currentPage < 5) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
       setCurrentPage(currentPage + 1);
+      setIsValidated(false); // Réinitialiser la validation pour la page suivante
     }
   };
 
   const handlePreviousPage = () => {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
     }
   };
-
-  // Déterminer l'index de départ et de fin pour chaque page
-  const startIndex = (currentPage - 1) * 10;
-  const endIndex = startIndex + 9;
-  const currentQuestions = questions.slice(startIndex, endIndex + 1);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -63,13 +69,14 @@ export default function Addition() {
 
       <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
+      {/* Afficher les questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {currentQuestions.map(([a, b], index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
-                  className="bg-blue-500 text-white font-bold py-3 px-6 rounded text-lg"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   disabled
                 >
                   {a} + {b}
@@ -77,39 +84,40 @@ export default function Addition() {
                 <input
                   type="number"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(startIndex + index, e.target.value)}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
 
-          {/* Navigation entre les pages */}
-          <div className="flex gap-4 mt-6">
+          <div className="mt-6 flex gap-4">
+            {currentPage > 0 && (
+              <button
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handlePreviousPage}
+              >
+                Précédent
+              </button>
+            )}
             <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 1}
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
             >
-              Précédent
+              Valider les réponses
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 5}
-            >
-              Suivant
-            </button>
+            {currentPage < Math.floor(totalQuestions / questionsPerPage) && (
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            )}
           </div>
-
-          <button
-            onClick={handleValidation}
-            className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-          >
-            Valider les réponses
-          </button>
         </>
       )}
 
+      {/* Résultat après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
