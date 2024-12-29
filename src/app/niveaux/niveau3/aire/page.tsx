@@ -77,7 +77,14 @@ export default function Aire() {
         Apprendre
       </Link>
 
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
+      {/* Barre de progression */}
+      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-4">
+        <div
+          className="bg-blue-500 h-4 rounded-full"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
+      </div>
+      <div className="absolute top-10 left-4 text-blue-500 font-bold">
         Progression : {completionPercentage}%
       </div>
 
