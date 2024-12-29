@@ -23,26 +23,31 @@ export default function Addition() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Addition</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
+      <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
       {!isValidated && (
         <>
-          {answers.map((_, index) => (
-            <div key={index} className="mb-2">
-              <label>
-                {index + 1} + {index + 1} ={" "}
+          <div className="grid grid-cols-2 gap-4">
+            {answers.map((_, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  disabled
+                >
+                  {index + 1} + {index + 1}
+                </button>
                 <input
                   type="number"
-                  className="border p-1"
+                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
-              </label>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
           <button
             onClick={handleValidation}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+            className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
           >
             Valider les réponses
           </button>
@@ -53,9 +58,9 @@ export default function Addition() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => {
                   alert("Prochaine série de questions !");
                 }}
@@ -65,9 +70,9 @@ export default function Addition() {
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
