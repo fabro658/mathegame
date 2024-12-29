@@ -1,11 +1,11 @@
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
+    <div className="min-h-screen flex flex-col justify-center items-start bg-gray-100 text-gray-900">
       <h1 className="text-4xl font-bold mb-12">
         Bienvenue sur la page d&apos;Apprentissage !
       </h1>
-      <div className="flex flex-col items-start gap-4 text-lg w-full max-w-md">
-        {/* Menu aligné à gauche */}
+      <div className="flex flex-col gap-4 text-lg w-full pl-0">
+        {/* Menu complètement collé à gauche */}
         <a href="#" className="hover:underline text-gray-700">
           Addition
         </a>
