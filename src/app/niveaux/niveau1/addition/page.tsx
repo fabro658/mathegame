@@ -15,7 +15,7 @@ export default function Addition() {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
     if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
+    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math random() * 81)]; // Niveau 4
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
   });
 
@@ -36,14 +36,26 @@ export default function Addition() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+    
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    const allCorrect = pageAnswers.every((answer, index) => answer === correctAnswers[startIndex + index]);
+    // Validation des réponses
+    const newAnswers = [...answers];
+    let allCorrect = true;
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== correctAnswers[globalIndex]) {
+        allCorrect = false;
+        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+      }
+    });
+
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -57,19 +69,6 @@ export default function Addition() {
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
-      // Réinitialiser uniquement les réponses erronées de la page précédente
-      const startIndex = (currentPage - 1) * questionsPerPage;
-      const endIndex = startIndex + questionsPerPage;
-      const newAnswers = [...answers];
-
-      // Réinitialisation des réponses erronées uniquement
-      for (let i = startIndex; i < endIndex; i++) {
-        if (newAnswers[i] !== null && newAnswers[i] !== correctAnswers[i]) {
-          newAnswers[i] = null; // Réinitialiser uniquement les mauvaises réponses
-        }
-      }
-
-      setAnswers(newAnswers);
       setCurrentPage(currentPage - 1);
       setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
     }
@@ -99,6 +98,7 @@ export default function Addition() {
                 <input
                   type="number"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
