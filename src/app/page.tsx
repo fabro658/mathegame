@@ -7,7 +7,7 @@ export default function Home() {
       <header className="absolute top-4 left-4">
         <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
-          <Link href="/Apprendre" className="flex items-center gap-2 text-white hover:underline">
+          <Link href="/menu/apprendre" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/file.svg" alt="Apprendre Icon" width={20} height={20} />
             <span>Apprendre</span>
           </Link>
