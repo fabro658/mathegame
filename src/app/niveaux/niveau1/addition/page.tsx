@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 export default function Addition() {
@@ -5,6 +7,8 @@ export default function Addition() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [errors, setErrors] = useState<number[]>([]); // Indices des réponses incorrectes
+
+  // Générer dynamiquement des questions simples
   const questions = Array.from({ length: 10 }, (_, i) => ({
     num1: i + 1,
     num2: i + 1,
