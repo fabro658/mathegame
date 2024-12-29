@@ -11,15 +11,15 @@ export default function Fractions() {
   const [result, setResult] = useState<string>(""); // Résultat de l'opération
   const [error, setError] = useState<string>(""); // Message d'erreur
 
-  // Fonction pour calculer le plus grand commun diviseur (PGCD)
-  const gcd = (a: number, b: number): number => {
-    while (b !== 0) {
-      let temp = b;
-      b = a % b;
-      a = temp;
-    }
-    return a;
-  };
+// Fonction pour calculer le plus grand commun diviseur (PGCD)
+const gcd = (a: number, b: number): number => {
+  while (b !== 0) {
+    const temp = b; // Remplacer 'let' par 'const'
+    b = a % b;
+    a = temp;
+  }
+  return a;
+};
 
   // Fonction pour simplifier la fraction
   const simplifyFraction = (numerator: number, denominator: number): string => {
