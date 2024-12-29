@@ -65,6 +65,7 @@ export default function Addition() {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false); // Réinitialiser la validation pour la page suivante
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
     }
   };
 
@@ -72,6 +73,7 @@ export default function Addition() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
     }
   };
 
@@ -127,7 +129,7 @@ export default function Addition() {
             >
               Valider les réponses
             </button>
-            {isValidated && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleNextPage}
@@ -145,12 +147,21 @@ export default function Addition() {
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
+              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  onClick={handleNextPage}
+                >
+                  Passer à la série suivante
+                </button>
+              ) : (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  onClick={() => alert("Vous avez complété toutes les questions !")}
+                >
+                  Terminer
+                </button>
+              )}
             </div>
           ) : (
             <div>
