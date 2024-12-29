@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
-export default function Revision() {
+export default function SoustractionFractions() {
   const totalQuestions = 50;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
@@ -17,46 +17,26 @@ export default function Revision() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions (addition, soustraction, fractions)
-  const generateQuestion = (index: number) => {
-    const operation = Math.floor(Math.random() * 3); // 0 -> addition, 1 -> soustraction, 2 -> fraction
+  // Génération des questions et réponses pour soustraction de fractions
+  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+    const a1 = Math.floor(Math.random() * 9) + 1;
+    const b1 = Math.floor(Math.random() * 9) + 1;
+    const a2 = Math.floor(Math.random() * 9) + 1;
+    const b2 = Math.floor(Math.random() * 9) + 1;
 
-    if (operation === 0) {
-      // Addition
-      const num1 = Math.floor(Math.random() * 10) + 1;
-      const num2 = Math.floor(Math.random() * 10) + 1;
-      return {
-        question: `${num1} + ${num2}`,
-        correctAnswer: `${num1 + num2}`,
-      };
-    } else if (operation === 1) {
-      // Soustraction
-      const num1 = Math.floor(Math.random() * 10) + 1;
-      const num2 = Math.floor(Math.random() * 10) + 1;
-      return {
-        question: `${num1} - ${num2}`,
-        correctAnswer: `${num1 - num2}`,
-      };
-    } else {
-      // Fraction
-      const a1 = Math.floor(Math.random() * 9) + 1;
-      const b1 = Math.floor(Math.random() * 9) + 1;
-      const a2 = Math.floor(Math.random() * 9) + 1;
-      const b2 = Math.floor(Math.random() * 9) + 1;
+    const commonDenominator = b1 * b2;
+    const numerator1 = a1 * b2;
+    const numerator2 = a2 * b1;
 
-      const commonDenominator = b1 * b2;
-      const numerator1 = a1 * b2;
-      const numerator2 = a2 * b1;
+    const numeratorResult = numerator1 - numerator2;
+    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
-      const numeratorResult = numerator1 + numerator2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
-
-      return {
-        question: `${a1}/${b1} + ${a2}/${b2}`,
-        correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-      };
-    }
-  };
+    return {
+      fraction1: `${a1}/${b1}`,
+      fraction2: `${a2}/${b2}`,
+      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+    };
+  });
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -69,7 +49,7 @@ export default function Revision() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === generateQuestion(index).correctAnswer);
+    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -98,29 +78,26 @@ export default function Revision() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Révision : Addition, Soustraction et Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Soustraction de Fractions</h1>
 
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {Array.from({ length: totalQuestions }).slice(currentPage * 10, (currentPage + 1) * 10).map((_, index) => {
-              const { question } = generateQuestion(index);
-              return (
-                <div key={index} className="flex items-center gap-2">
-                  <button
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                    disabled
-                  >
-                    {question}
-                  </button>
-                  <input
-                    type="text"
-                    className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                    onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
-                  />
-                </div>
-              );
-            })}
+            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  disabled
+                >
+                  {fraction1} - {fraction2}
+                </button>
+                <input
+                  type="text"
+                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                />
+              </div>
+            ))}
           </div>
           <div className="flex gap-4 mt-6">
             <button
@@ -175,3 +152,4 @@ export default function Revision() {
     </div>
   );
 }
+
