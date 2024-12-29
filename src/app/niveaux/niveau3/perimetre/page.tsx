@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Perimetre() {
-  const totalQuestions = 30;
+  const totalQuestions = 30; // 30 questions au total
+  const questionsPerPage = 3; // 3 questions par vague
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -67,7 +68,7 @@ export default function Perimetre() {
   };
 
   const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / 10 - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
@@ -95,13 +96,13 @@ export default function Perimetre() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ questionText }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex items-center gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="number"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
@@ -123,7 +124,7 @@ export default function Perimetre() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
