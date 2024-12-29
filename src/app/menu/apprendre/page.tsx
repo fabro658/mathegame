@@ -8,6 +8,36 @@ export default function Page() {
           href="/menu/apprendre"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
+          Addition
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Soustraction
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Multiplication
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Division
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Fraction
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
           Aire
         </a>
         <a
@@ -21,6 +51,18 @@ export default function Page() {
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Fraction
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Algèbre
+        </a>
+        <a
+          href="/menu/apprendre"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Priorité d'opértion
         </a>
       </div>
     </div>
