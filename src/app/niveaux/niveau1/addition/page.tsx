@@ -3,15 +3,25 @@
 import { useState } from "react";
 
 export default function Addition() {
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(10).fill(null)); // État des réponses (10 questions)
+  const totalQuestions = 50;
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
 
-  const correctAnswers = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]; // Réponses correctes (exemple)
+  // Génération des questions et des réponses correctes
+  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
+    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2 : Nombres supérieurs à 10
+    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
+    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+  });
+
+  const correctAnswers = questions.map(([a, b]) => a + b); // Réponses correctes
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / answers.length) * 100);
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -37,14 +47,14 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-2 gap-4">
-            {answers.map((_, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {questions.map(([a, b], index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                   disabled
                 >
-                  {index + 1} + {index + 1}
+                  {a} + {b}
                 </button>
                 <input
                   type="number"
@@ -70,11 +80,9 @@ export default function Addition() {
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
                 className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => {
-                  alert("Prochaine série de questions !");
-                }}
+                onClick={() => alert("Vous avez complété toutes les questions !")}
               >
-                Passer aux questions 10 à 20
+                Terminer
               </button>
             </div>
           ) : (
