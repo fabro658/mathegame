@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from 'next/link';
 
-export default function SoustractionFractions() {
+export default function Revision() {
   const totalQuestions = 50;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
@@ -17,8 +17,8 @@ export default function SoustractionFractions() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et réponses pour soustraction de fractions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  // Génération des questions et réponses pour révision
+  const questions = Array.from({ length: totalQuestions }, () => {
     const a1 = Math.floor(Math.random() * 9) + 1;
     const b1 = Math.floor(Math.random() * 9) + 1;
     const a2 = Math.floor(Math.random() * 9) + 1;
@@ -78,7 +78,7 @@ export default function SoustractionFractions() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Soustraction de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Révision de Fractions</h1>
 
       {!isValidated && (
         <>
@@ -152,4 +152,3 @@ export default function SoustractionFractions() {
     </div>
   );
 }
-
