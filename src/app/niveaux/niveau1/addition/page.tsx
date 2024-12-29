@@ -4,11 +4,11 @@ import { useState } from "react";
 
 export default function Addition() {
   const totalQuestions = 50;
-  const questionsPerPage = 10; // Nombre de questions par page
+  const questionsPerPage = 10;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [isValidated, setIsValidated] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
-  const [isValidated, setIsValidated] = useState(false); // Validation des réponses
-  const [hasPassed, setHasPassed] = useState(false); // Vérification si toutes les réponses sont correctes
 
   // Génération des questions et des réponses correctes
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -33,11 +33,11 @@ export default function Addition() {
   };
 
   const handleValidation = () => {
-    // Vérifier que toutes les réponses de la page actuelle sont remplies
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
@@ -57,6 +57,19 @@ export default function Addition() {
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
+      // Réinitialiser uniquement les réponses erronées de la page précédente
+      const startIndex = (currentPage - 1) * questionsPerPage;
+      const endIndex = startIndex + questionsPerPage;
+      const newAnswers = [...answers];
+
+      // Réinitialisation des réponses erronées uniquement
+      for (let i = startIndex; i < endIndex; i++) {
+        if (newAnswers[i] !== null && newAnswers[i] !== correctAnswers[i]) {
+          newAnswers[i] = null; // Réinitialiser uniquement les mauvaises réponses
+        }
+      }
+
+      setAnswers(newAnswers);
       setCurrentPage(currentPage - 1);
       setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
     }
@@ -71,7 +84,7 @@ export default function Addition() {
 
       <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
-      {/* Afficher les questions de la page actuelle */}
+      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -92,6 +105,7 @@ export default function Addition() {
             ))}
           </div>
 
+          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -119,7 +133,7 @@ export default function Addition() {
         </>
       )}
 
-      {/* Résultat après validation */}
+      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
