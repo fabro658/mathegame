@@ -6,13 +6,12 @@ import Link from "next/link";
 export default function Perimetre() {
   const totalQuestions = 30; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
-  const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions une seule fois
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
@@ -99,7 +98,7 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le Périmètre</h1>
 
-      {!isValidated && questions.length > 0 && (
+      {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
