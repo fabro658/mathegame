@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function AdditionFractions() {
   const totalQuestions = 50;
+  const questionsPerPage = 10; // Questions par page
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,26 +19,31 @@ export default function AdditionFractions() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et réponses pour addition de fractions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  // Générer les questions
+  useEffect(() => {
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const commonDenominator = b1 * b2;
-    const numerator1 = a1 * b2;
-    const numerator2 = a2 * b1;
+        const commonDenominator = b1 * b2;
+        const numerator1 = a1 * b2;
+        const numerator2 = a2 * b1;
 
-    const numeratorResult = numerator1 + numerator2;
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+        const numeratorResult = numerator1 + numerator2;
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
+
+    setQuestions(generateQuestions());
+  }, []); // Génère les questions une seule fois
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -49,13 +56,13 @@ export default function AdditionFractions() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalQuestions / 10 - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
@@ -83,7 +90,7 @@ export default function AdditionFractions() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-6">
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full"
@@ -94,7 +101,7 @@ export default function AdditionFractions() {
                 <input
                   type="text"
                   className="border border-gray-400 p-4 rounded-lg w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
@@ -116,7 +123,7 @@ export default function AdditionFractions() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>

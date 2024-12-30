@@ -13,11 +13,19 @@ export default function Multiplication() {
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Multiplications simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+    if (index < 10) {
+      return [index + 1, index + 1]; // Niveau 1 : Table de 1 à 10
+    }
+    if (index < 20) {
+      return [index - 9, index - 9]; // Niveau 2 : Table 11 à 20
+    }
+    if (index < 30) {
+      return [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1]; // Niveau 3 : Aléatoire 1 à 10
+    }
+    if (index < 40) {
+      return [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1]; // Niveau 4 : Aléatoire 1 à 20
+    }
+    return [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1]; // Niveau 5 : Aléatoire 1 à 50
   });
 
   const correctAnswers = questions.map(([a, b]) => a * b); // Réponses correctes
@@ -85,8 +93,14 @@ export default function Multiplication() {
       </Link>
 
       {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold flex items-center gap-2">
+        <div className="relative bg-gray-300 h-4 rounded w-32">
+          <div
+            className="absolute top-0 left-0 h-4 bg-green-500 rounded"
+            style={{ width: `${completionPercentage}%` }}
+          ></div>
+        </div>
+        <span>{completionPercentage}%</span>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
