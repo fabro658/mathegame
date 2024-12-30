@@ -3,21 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function Division() {
+export default function Addition() {
   const totalQuestions = 50;
-  const questionsPerPage = 10;
+  const questionsPerPage = 9; // 3 colonnes x 3 lignes
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    const divisor = Math.floor(Math.random() * 9) + 2;
-    const numerator = divisor * (Math.floor(Math.random() * 10) + 1);
-    return [numerator, divisor];
+    if (index < 10) return [index + 1, index + 1];
+    if (index < 20) return [10 + index - 9, 5 + index - 9];
+    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)];
+    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)];
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
-
-  const correctAnswers = questions.map(([a, b]) => a / b);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -44,7 +44,8 @@ export default function Division() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      const [a, b] = questions[globalIndex];
+      if (answer !== a + b) {
         allCorrect = false;
         newAnswers[globalIndex] = null;
       }
@@ -88,14 +89,16 @@ export default function Division() {
         Progression : {completionPercentage}%
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex flex-col items-center gap-2">
-                <span className="font-bold text-black">{a} ÷ {b} =</span>
+              <div key={index} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+                  {a} + {b}
+                </div>
                 <input
                   type="number"
                   className="border border-gray-400 p-3 rounded w-24 text-center text-black"
