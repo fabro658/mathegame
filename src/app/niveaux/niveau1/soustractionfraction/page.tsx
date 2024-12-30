@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function SoustractionFractions() {
   const totalQuestions = 50;
-  // Définir le type comme un tableau de chaînes ou null
+  const questionsPerPage = 10; // Nombre de questions par page
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,26 +19,31 @@ export default function SoustractionFractions() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et réponses pour soustraction de fractions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  // Génération des questions
+  useEffect(() => {
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const commonDenominator = b1 * b2;
-    const numerator1 = a1 * b2;
-    const numerator2 = a2 * b1;
+        const commonDenominator = b1 * b2;
+        const numerator1 = a1 * b2;
+        const numerator2 = a2 * b1;
 
-    const numeratorResult = numerator1 - numerator2;
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+        const numeratorResult = numerator1 - numerator2;
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
+
+    setQuestions(generateQuestions());
+  }, []); // Générer les questions une seule fois
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -50,13 +56,13 @@ export default function SoustractionFractions() {
   };
 
   const handleValidation = (): void => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
   const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / 10 - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
@@ -84,7 +90,7 @@ export default function SoustractionFractions() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
@@ -95,7 +101,7 @@ export default function SoustractionFractions() {
                 <input
                   type="text"
                   className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
@@ -117,7 +123,7 @@ export default function SoustractionFractions() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
