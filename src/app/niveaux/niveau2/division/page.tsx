@@ -18,10 +18,24 @@ export default function Division() {
       const numerator = divisor * (Math.floor(Math.random() * 10) + 1); // Numérateur est un multiple du diviseur
       return [numerator, divisor];
     }
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+    if (index < 20) {
+      const divisor = Math.floor(Math.random() * 9) + 2;
+      const numerator = divisor * (Math.floor(Math.random() * 20) + 1);
+      return [numerator, divisor];
+    }
+    if (index < 30) {
+      const divisor = Math.floor(Math.random() * 15) + 5;
+      const numerator = divisor * (Math.floor(Math.random() * 30) + 1);
+      return [numerator, divisor];
+    }
+    if (index < 40) {
+      const divisor = Math.floor(Math.random() * 30) + 10;
+      const numerator = divisor * (Math.floor(Math.random() * 40) + 1);
+      return [numerator, divisor];
+    }
+    const divisor = Math.floor(Math.random() * 50) + 25;
+    const numerator = divisor * (Math.floor(Math.random() * 50) + 1);
+    return [numerator, divisor];
   });
 
   const correctAnswers = questions.map(([a, b]) => a / b); // Réponses correctes
@@ -41,7 +55,7 @@ export default function Division() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
+
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");

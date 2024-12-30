@@ -37,7 +37,7 @@ export default function Multiplication() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
+
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");

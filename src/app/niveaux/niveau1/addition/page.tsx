@@ -95,8 +95,8 @@ export default function Addition() {
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex flex-col items-center gap-2">
-                <span className="font-bold text-black">{a} + {b} =</span>
+              <div key={index} className="flex flex-col items-center gap-2 bg-blue-500 p-4 rounded">
+                <span className="font-bold text-white">{a} + {b} =</span>
                 <input
                   type="number"
                   className="border border-gray-400 p-3 rounded w-24 text-center text-black"

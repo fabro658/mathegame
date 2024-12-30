@@ -1,47 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Perimetre() {
   const totalQuestions = 30; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
+  const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const shapeType = Math.floor(Math.random() * 4);
-    let questionText = "";
-    let correctAnswer = 0;
+  // Génération des questions une seule fois
+  useEffect(() => {
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, () => {
+        const shapeType = Math.floor(Math.random() * 4);
+        let questionText = "";
+        let correctAnswer = 0;
 
-    if (shapeType === 0) {
-      const side = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d&apos;un carré de côté ${side} cm ?`;
-      correctAnswer = 4 * side;
-    } else if (shapeType === 1) {
-      const length = Math.floor(Math.random() * 10) + 1;
-      const width = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d&apos;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-      correctAnswer = 2 * (length + width);
-    } else if (shapeType === 2) {
-      const radius = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d&apos;un cercle de rayon ${radius} cm ? (π = 3.14)`;
-      correctAnswer = 2 * Math.PI * radius;
-    } else {
-      const side1 = Math.floor(Math.random() * 10) + 1;
-      const side2 = Math.floor(Math.random() * 10) + 1;
-      const side3 = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quel est le périmètre d&apos;un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
-      correctAnswer = side1 + side2 + side3;
-    }
+        if (shapeType === 0) {
+          const side = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
+          correctAnswer = 4 * side;
+        } else if (shapeType === 1) {
+          const length = Math.floor(Math.random() * 10) + 1;
+          const width = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+          correctAnswer = 2 * (length + width);
+        } else if (shapeType === 2) {
+          const radius = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quel est le périmètre d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
+          correctAnswer = 2 * Math.PI * radius;
+        } else {
+          const side1 = Math.floor(Math.random() * 10) + 1;
+          const side2 = Math.floor(Math.random() * 10) + 1;
+          const side3 = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
+          correctAnswer = side1 + side2 + side3;
+        }
 
-    return {
-      questionText,
-      correctAnswer: correctAnswer.toFixed(2),
+        return {
+          questionText,
+          correctAnswer: correctAnswer.toFixed(2),
+        };
+      });
     };
-  });
+
+    setQuestions(generateQuestions());
+  }, []); // La liste de dépendances vide garantit que cette fonction est exécutée une seule fois.
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -53,7 +61,7 @@ export default function Perimetre() {
   };
 
   const handleValidation = (): void => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -91,7 +99,7 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le Périmètre</h1>
 
-      {!isValidated && (
+      {!isValidated && questions.length > 0 && (
         <>
           <div className="flex flex-col gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
