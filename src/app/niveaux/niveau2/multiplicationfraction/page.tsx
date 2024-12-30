@@ -18,7 +18,7 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et des réponses correctes
+  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
   const questions = Array.from({ length: totalQuestions }, () => {
     const a1 = Math.floor(Math.random() * 9) + 1;
     const b1 = Math.floor(Math.random() * 9) + 1;
