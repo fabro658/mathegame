@@ -11,6 +11,7 @@ export default function Aire() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const shapeType = Math.floor(Math.random() * 4);
     let questionText = "";
@@ -38,19 +39,22 @@ export default function Aire() {
 
     return {
       questionText,
-      correctAnswer: correctAnswer.toFixed(2),
+      correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
     };
   });
 
+  // Calcul de la progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Gestion des changements de réponses
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
+  // Validation des réponses
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -58,22 +62,16 @@ export default function Aire() {
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
     const allCorrect = pageAnswers.every((answer, index) => answer === pageCorrectAnswers[index]);
-    const newAnswers = [...answers];
 
-    if (allCorrect) {
-      setIsValidated(true);
-      setHasPassed(true);
-    } else {
-      setIsValidated(true);
-      setHasPassed(false);
-    }
+    setIsValidated(true);
+    setHasPassed(allCorrect);
   };
 
+  // Navigation entre les pages de questions
   const handleNextPage = (): void => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -81,7 +79,6 @@ export default function Aire() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -104,6 +101,7 @@ export default function Aire() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur l&apos;Aire</h1>
 
+      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
@@ -135,7 +133,7 @@ export default function Aire() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
@@ -143,6 +141,7 @@ export default function Aire() {
         </>
       )}
 
+      {/* Résultats de validation */}
       {isValidated && (
         <>
           {hasPassed ? (
