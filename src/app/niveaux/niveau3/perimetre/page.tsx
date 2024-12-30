@@ -81,7 +81,7 @@ export default function Perimetre() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded-lg font-bold">
         Apprendre
       </Link>
 
