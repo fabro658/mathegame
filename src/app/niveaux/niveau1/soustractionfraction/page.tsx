@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SoustractionFractions() {
   const totalQuestions = 50;
-  const questionsPerPage = 10; // Nombre de questions par page
+  const questionsPerPage = 10;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
@@ -43,7 +43,7 @@ export default function SoustractionFractions() {
       });
 
     setQuestions(generateQuestions());
-  }, []); // Générer les questions une seule fois
+  }, []);
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -93,14 +93,15 @@ export default function SoustractionFractions() {
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
                   {fraction1} - {fraction2}
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  placeholder="Réponse"
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
