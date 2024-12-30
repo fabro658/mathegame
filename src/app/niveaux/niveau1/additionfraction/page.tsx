@@ -81,8 +81,12 @@ export default function AdditionFractions() {
         Apprendre
       </Link>
 
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-2 px-5 rounded font-bold">
-        Progression : {completionPercentage}%
+      {/* Barre de progression animée */}
+      <div className="absolute top-4 left-4 w-64 h-8 bg-gray-300 rounded-lg overflow-hidden">
+        <div
+          className="bg-blue-500 h-full transition-all duration-500"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
       </div>
 
       <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>

@@ -87,6 +87,14 @@ export default function SoustractionFractions() {
 
       <h1 className="text-3xl font-bold mb-6">Soustraction de Fractions</h1>
 
+      {/* Barre de progression */}
+      <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
+        <div
+          className="bg-blue-500 h-4 rounded-full"
+          style={{ width: `${completionPercentage}%` }}
+        ></div>
+      </div>
+
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
