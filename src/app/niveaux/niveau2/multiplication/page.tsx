@@ -1,34 +1,43 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "next/link"; // Importation du composant Link pour la navigation
 
-export default function Multiplication() {
+export default function MultiplicationFraction() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
-  // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) {
-      return [index + 1, index + 1]; // Niveau 1 : Table de 1 à 10
-    }
-    if (index < 20) {
-      return [index - 9, index - 9]; // Niveau 2 : Table 11 à 20
-    }
-    if (index < 30) {
-      return [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1]; // Niveau 3 : Aléatoire 1 à 10
-    }
-    if (index < 40) {
-      return [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1]; // Niveau 4 : Aléatoire 1 à 20
-    }
-    return [Math.floor(Math.random() * 50) + 1, Math.floor(Math.random() * 50) + 1]; // Niveau 5 : Aléatoire 1 à 50
+  // Fonction pour simplifier une fraction
+  const simplifyFraction = (numerator: number, denominator: number) => {
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    const divisor = gcd(numerator, denominator);
+    return [numerator / divisor, denominator / divisor];
+  };
+
+  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
+  const questions = Array.from({ length: totalQuestions }, () => {
+    const a1 = Math.floor(Math.random() * 9) + 1;
+    const b1 = Math.floor(Math.random() * 9) + 1;
+    const a2 = Math.floor(Math.random() * 9) + 1;
+    const b2 = Math.floor(Math.random() * 9) + 1;
+
+    const numeratorResult = a1 * a2;
+    const denominatorResult = b1 * b2;
+
+    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+
+    return {
+      fraction1: `${a1}/${b1}`,
+      fraction2: `${a2}/${b2}`,
+      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+    };
   });
 
-  const correctAnswers = questions.map(([a, b]) => a * b); // Réponses correctes
+  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -36,8 +45,7 @@ export default function Multiplication() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
@@ -45,7 +53,7 @@ export default function Multiplication() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+    
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -87,47 +95,33 @@ export default function Multiplication() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton pour naviguer vers la page "Apprendre" */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
-
-      {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold flex items-center gap-2">
-        <div className="relative bg-gray-300 h-4 rounded w-32">
-          <div
-            className="absolute top-0 left-0 h-4 bg-green-500 rounded"
-            style={{ width: `${completionPercentage}%` }}
-          ></div>
-        </div>
-        <span>{completionPercentage}%</span>
+      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
+        Progression : {completionPercentage}%
       </div>
+      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
-
-      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
-                  {a} × {b}
+                  {fraction1} × {fraction2}
                 </button>
                 <input
-                  type="number"
+                  type="text"
                   className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
-
-          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -155,7 +149,6 @@ export default function Multiplication() {
         </>
       )}
 
-      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
