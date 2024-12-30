@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link"; // Importation du composant Link pour la navigation
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function MultiplicationFraction() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -18,28 +20,33 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  // Génération des questions lors de la première exécution
+  useEffect(() => {
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const numeratorResult = a1 * a2;
-    const denominatorResult = b1 * b2;
+        const numeratorResult = a1 * a2;
+        const denominatorResult = b1 * b2;
 
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(
+          numeratorResult,
+          denominatorResult
+        );
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
 
-  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
+    setQuestions(generateQuestions());
+  }, []);
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -53,20 +60,18 @@ export default function MultiplicationFraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
-    // Vérification si toutes les réponses sont remplies
+
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      if (answer !== questions[globalIndex].correctAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
@@ -80,16 +85,16 @@ export default function MultiplicationFraction() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -137,7 +142,7 @@ export default function MultiplicationFraction() {
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleNextPage}
