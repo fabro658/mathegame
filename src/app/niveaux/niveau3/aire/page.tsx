@@ -52,15 +52,28 @@ export default function Aire() {
   };
 
   const handleValidation = (): void => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
+
+    const allCorrect = pageAnswers.every((answer, index) => answer === pageCorrectAnswers[index]);
+    const newAnswers = [...answers];
+
+    if (allCorrect) {
+      setIsValidated(true);
+      setHasPassed(true);
+    } else {
+      setIsValidated(true);
+      setHasPassed(false);
+    }
   };
 
   const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -68,6 +81,7 @@ export default function Aire() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -121,7 +135,7 @@ export default function Aire() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
             </button>

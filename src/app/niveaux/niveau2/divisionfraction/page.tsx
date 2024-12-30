@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link"; // Importation du composant Link pour la navigation
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function DivisionFraction() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
@@ -19,23 +20,28 @@ export default function DivisionFraction() {
   };
 
   // Génération des questions et des réponses correctes
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  useEffect(() => {
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const numeratorResult = a1 * b2;
-    const denominatorResult = b1 * a2;
+        const numeratorResult = a1 * b2;
+        const denominatorResult = b1 * a2;
 
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
+
+    setQuestions(generateQuestions());
+  }, []); // Générer les questions une seule fois
 
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
