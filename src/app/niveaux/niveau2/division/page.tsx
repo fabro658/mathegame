@@ -1,6 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import Link from "next/link";
 
+// Ton composant ici
 export default function Division() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
