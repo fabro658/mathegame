@@ -126,23 +126,24 @@ export default function MultiplicationFraction() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {fraction1} × {fraction2}
-                </button>
-                <input
-                  type="text"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
+         <div className="grid grid-cols-3 gap-6">
+           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => (
+            <div key={index} className="flex items-center gap-4">
+              <button
+                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                disabled
+              >
+                {q.fraction1} × {q.fraction2}
+              </button>
+              <input
+                type="text"
+                className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                value={answers[currentPage * questionsPerPage + index] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              />
+            </div>
+          ))}
+        </div>
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button

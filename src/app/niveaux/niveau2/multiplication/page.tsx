@@ -120,7 +120,7 @@ export default function Multiplication() {
       {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
