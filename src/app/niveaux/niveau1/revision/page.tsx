@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 export default function Revision() {
   const totalQuestions = 50;
+  const questionsPerPage = 10; // Nombre de questions par page
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -16,6 +17,29 @@ export default function Revision() {
 
   // Calcul du pourcentage de progression en fonction de la page actuelle
   const completionPercentage = ((currentPage + 1) * 10 / totalQuestions) * 100;
+
+  // Générer les questions
+  const questions = Array.from({ length: totalQuestions }, () => {
+    const a1 = Math.floor(Math.random() * 9) + 1;
+    const b1 = Math.floor(Math.random() * 9) + 1;
+    const a2 = Math.floor(Math.random() * 9) + 1;
+    const b2 = Math.floor(Math.random() * 9) + 1;
+
+    const commonDenominator = b1 * b2;
+    const numerator1 = a1 * b2;
+    const numerator2 = a2 * b1;
+
+    const numeratorResult = numerator1 - numerator2;
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    const divisor = gcd(numeratorResult, commonDenominator);
+    const [simplifiedNumerator, simplifiedDenominator] = [numeratorResult / divisor, commonDenominator / divisor];
+
+    return {
+      fraction1: `${a1}/${b1}`,
+      fraction2: `${a2}/${b2}`,
+      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+    };
+  });
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -30,7 +54,7 @@ export default function Revision() {
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalQuestions / 10 - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
@@ -92,19 +116,18 @@ export default function Revision() {
       {/* Formulaire de révision */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                  disabled
-                >
+          <div className="grid grid-cols-3 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {fraction1} - {fraction2}
-                </button>
+                </div>
                 <input
                   type="text"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * 10 + index, e.target.value)}
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
@@ -126,7 +149,7 @@ export default function Revision() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / 10 - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
