@@ -24,17 +24,17 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex flex-col items-center gap-4">
-          {/* Logo avec taille beaucoup plus grande */}
+          {/* Logo ajusté pour être plus petit mais toujours grand */}
           <Image
             className="dark:invert"
             src="/logo.png"
             alt="Mon logo"
-            width={1000}  // Taille du logo encore plus grande
-            height={200}  // Hauteur proportionnelle pour garder les bonnes proportions
+            width={600}  // Taille du logo ajustée pour plus de visibilité
+            height={120}  // Hauteur proportionnelle pour garder les bonnes proportions
             priority
           />
-          {/* Nom avec taille beaucoup plus grande */}
-          <span className="text-9xl sm:text-[10rem] font-bold text-white">MathGame</span>  {/* Texte encore plus grand */}
+          {/* Nom ajusté pour être plus grand mais pas trop imposant */}
+          <span className="text-6xl sm:text-7xl font-bold text-white">MathGame</span>  {/* Texte agrandi mais pas trop */}
         </div>
 
         {/* Liens vers les niveaux */}

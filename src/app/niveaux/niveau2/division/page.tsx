@@ -85,7 +85,7 @@ export default function Division() {
         Apprendre
       </Link>
 
-      {/* Cercle de progression */}
+      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -104,7 +104,7 @@ export default function Division() {
             stroke="#3b82f6"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>

@@ -77,6 +77,7 @@ export default function Multiplication() {
 
   // Calcul pour dessiner le cercle de progression
   const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
+  const strokeWidth = 10; // Définir la largeur du cercle
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -86,7 +87,7 @@ export default function Multiplication() {
         Apprendre
       </Link>
 
-      {/* cercle de progression */}
+      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -95,7 +96,7 @@ export default function Multiplication() {
             r={radius}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth="4"
+            strokeWidth={strokeWidth}
           />
           <circle
             cx="50%"
@@ -103,7 +104,7 @@ export default function Multiplication() {
             r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth="4"
+            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
