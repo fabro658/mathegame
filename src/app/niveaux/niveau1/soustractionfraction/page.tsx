@@ -12,6 +12,10 @@ export default function SoustractionFractions() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
@@ -77,60 +81,76 @@ export default function SoustractionFractions() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-3 px-6 rounded-lg font-bold">
         Apprendre
       </Link>
 
-      <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+      {/* Barre circulaire */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Soustraction de Fractions</h1>
-
-      {/* Barre de progression */}
-      <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
-        <div
-          className="bg-blue-500 h-4 rounded-full"
-          style={{ width: `${completionPercentage}%` }}
-        ></div>
-      </div>
+      <h1 className="text-4xl font-bold mb-8">Soustraction de Fractions</h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-2">
+              <div key={index} className="flex items-center gap-6">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full"
                   disabled
                 >
                   {fraction1} - {fraction2}
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-4 rounded-lg w-full text-center text-black"
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
-          <div className="flex gap-4 mt-6">
+          <div className="flex gap-6 mt-8">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
               disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
@@ -143,9 +163,9 @@ export default function SoustractionFractions() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
                 onClick={() => alert("Vous avez complété toutes les questions !")}
               >
                 Terminer
@@ -153,9 +173,9 @@ export default function SoustractionFractions() {
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
