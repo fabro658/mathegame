@@ -4,28 +4,24 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function AdditionFractions() {
-  // Déclarations des constantes
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  // États
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
     const divisor = gcd(numerator, denominator);
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Générer les questions
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
@@ -51,7 +47,6 @@ export default function AdditionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -59,12 +54,31 @@ export default function AdditionFractions() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes(null) || pageAnswers.some((answer) => answer === "")) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
+      return;
+    }
+
+    const newAnswers = [...answers];
+    let allCorrect = true;
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== questions[globalIndex]?.correctAnswer) {
+        allCorrect = false;
+        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
+      }
+    });
+
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
-  // Navigation
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
@@ -79,37 +93,27 @@ export default function AdditionFractions() {
     }
   };
 
-  // Calculer le pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-    {/* Boutons de navigation */}
-    <Link
-      href="/menu/apprendre"
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-    >
-      Apprendre
-    </Link>
-    <Link
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
         href="/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
@@ -134,10 +138,7 @@ export default function AdditionFractions() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-6">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full"
-                  disabled
-                >
+                <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
                   {fraction1} + {fraction2}
                 </button>
                 <input
