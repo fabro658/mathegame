@@ -1,11 +1,11 @@
-"use client"; 
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 columns x 2 rows
+  const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -16,7 +16,7 @@ export default function Division() {
   const radius = 20;
   const circumference = 2 * Math.PI * radius;
 
-  // Generate questions
+  // Générer les questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const numerator = Math.floor(Math.random() * 100) + 1;
     const denominator = Math.floor(Math.random() * 10) + 1;
@@ -85,7 +85,7 @@ export default function Division() {
         Apprendre
       </Link>
 
-      {/* Progress Circle */}
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -113,7 +113,7 @@ export default function Division() {
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
-      {/* Questions for the current page */}
+      {/* Questions pour la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
@@ -135,7 +135,7 @@ export default function Division() {
             ))}
           </div>
 
-          {/* Validation and navigation buttons */}
+          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -163,7 +163,7 @@ export default function Division() {
         </>
       )}
 
-      {/* Results after validation */}
+      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (

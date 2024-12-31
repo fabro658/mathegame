@@ -143,9 +143,9 @@ export default function DivisionFraction() {
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex flex-col items-start gap-4">
+              <div key={index} className="flex flex-row items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-32 text-center"
                   disabled
                 >
                   {fraction1} ÷ {fraction2}

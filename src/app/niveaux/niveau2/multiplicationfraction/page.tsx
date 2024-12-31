@@ -100,26 +100,31 @@ export default function MultiplicationFraction() {
       </Link>
 
       {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 flex items-center gap-2">
-        <svg width="50" height="50" viewBox="0 0 36 36" className="rotate-90">
-          <path
-            className="text-gray-300"
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={50}
             fill="none"
-            strokeWidth="2"
-            stroke="currentColor"
-            strokeDasharray="100"
-            d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
-          ></path>
-          <path
-            className="text-green-500"
+            stroke="#e5e5e5"
+            strokeWidth={10}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={50}
             fill="none"
-            strokeWidth="2"
-            stroke="currentColor"
-            strokeDasharray={`${completionPercentage}, 100`}
-            d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
-          ></path>
+            stroke="#3b82f6"
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
         </svg>
-        <span>{completionPercentage}%</span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
