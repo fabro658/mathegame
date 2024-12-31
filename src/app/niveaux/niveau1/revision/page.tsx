@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 
+// Définir un type pour chaque question
+type Question = 
+  | { type: "addition"; question: string; correctAnswer: string }
+  | { type: "subtraction"; question: string; correctAnswer: string }
+  | { type: "fraction"; question: string; correctAnswer: string };
+
 export default function Revision() {
   const totalQuestions = 50;
   const questionsPerPage = 10; // Nombre de questions par page
@@ -24,6 +30,7 @@ export default function Revision() {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
+        type: "addition",
         question: `${a} + ${b}`,
         correctAnswer: (a + b).toString(),
       };
@@ -35,6 +42,7 @@ export default function Revision() {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
+        type: "subtraction",
         question: `${a} - ${b}`,
         correctAnswer: (a - b).toString(),
       };
@@ -58,6 +66,7 @@ export default function Revision() {
       const [simplifiedNumerator, simplifiedDenominator] = [numeratorResult / divisor, commonDenominator / divisor];
 
       return {
+        type: "fraction",
         question: `${a1}/${b1} - ${a2}/${b2}`,
         correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
       };
@@ -65,7 +74,7 @@ export default function Revision() {
   };
 
   // Générer les questions une seule fois au montage du composant
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
     setQuestions([
