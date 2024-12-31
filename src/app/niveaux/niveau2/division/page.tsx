@@ -77,8 +77,6 @@ export default function Division() {
     }
   };
 
-  const offset = circumference - (completionPercentage / 100) * circumference;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
