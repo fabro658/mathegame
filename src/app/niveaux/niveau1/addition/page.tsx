@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-import Link from "next/link"; // Import de Link pour la navigation
+import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
@@ -15,7 +15,6 @@ export default function Addition() {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)];
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)];
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
 
@@ -78,12 +77,16 @@ export default function Addition() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
-        </Link>
+      </Link>
       <Link
         href="/src/app/niveaux/niveau1"
-        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-16 right-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
@@ -140,20 +143,20 @@ export default function Addition() {
           <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
               disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
@@ -168,7 +171,7 @@ export default function Addition() {
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
                 onClick={handleNextPage}
               >
                 Suivant
@@ -178,7 +181,7 @@ export default function Addition() {
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-3 px-6 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
