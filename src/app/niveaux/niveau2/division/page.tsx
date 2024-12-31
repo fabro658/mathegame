@@ -104,10 +104,12 @@ export default function Division() {
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
-          />
-        </svg>
-        <span className="font-bold">{completionPercentage}%</span>
-      </div>
+            />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+            </div>
+          </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
