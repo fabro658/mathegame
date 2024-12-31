@@ -1,5 +1,3 @@
-'use client'; 
-
 import { useState } from "react";
 import Link from "next/link"; // Import de Link pour la navigation
 
@@ -76,12 +74,6 @@ export default function Addition() {
     }
   };
 
-  const inputStyle: React.CSSProperties = {
-    appearance: 'none',
-    '-moz-appearance': 'textfield',
-    '-webkit-appearance': 'none',
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
@@ -131,7 +123,11 @@ export default function Addition() {
                   className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  style={inputStyle} // Appliquer le style personnalisé ici
+                  style={{
+                    appearance: 'none',
+                    '-moz-appearance': 'textfield',
+                    '-webkit-appearance': 'none',
+                  }}
                 />
               </div>
             ))}
