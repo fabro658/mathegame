@@ -11,11 +11,6 @@ export default function Division() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // SVG stroke width and radius for the circle
-  const strokeWidth = 4;
-  const radius = 20;
-  const circumference = 2 * Math.PI * radius;
-
   // Générer les questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const numerator = Math.floor(Math.random() * 100) + 1;
@@ -77,6 +72,11 @@ export default function Division() {
     }
   };
 
+    // Calcul pour dessiner le cercle de progression
+    const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
+    const strokeWidth = 10; // Définir la largeur du cercle
+    const circumference = 2 * Math.PI * radius;
+    
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
