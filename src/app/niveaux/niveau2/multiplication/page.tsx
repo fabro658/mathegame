@@ -76,7 +76,7 @@ export default function Multiplication() {
   };
 
   // Calcul pour dessiner le cercle de progression
-  const radius = 20;
+  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (completionPercentage / 100) * circumference;
 
@@ -88,29 +88,31 @@ export default function Multiplication() {
       </Link>
 
       {/* Suivi de la progression sous forme de cercle */}
-      <div className="absolute top-4 left-4 flex items-center gap-2">
-        <svg width="60" height="60" className="transform -rotate-90">
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
-            cx="30"
-            cy="30"
+            cx="50%"
+            cy="50%"
             r={radius}
             stroke="gray"
-            strokeWidth="4"
+            strokeWidth="10"
             fill="transparent"
           />
           <circle
-            cx="30"
-            cy="30"
+            cx="50%"
+            cy="50%"
             r={radius}
             stroke={completionPercentage === 100 ? "green" : "orange"}
-            strokeWidth="4"
+            strokeWidth="10"
             fill="transparent"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             style={{ transition: "stroke-dashoffset 0.3s ease" }}
           />
         </svg>
-        <span className="font-bold">{completionPercentage}%</span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
