@@ -76,7 +76,7 @@ export default function Division() {
     const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
     const strokeWidth = 10; // Définir la largeur du cercle
     const circumference = 2 * Math.PI * radius;
-    
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
@@ -125,11 +125,13 @@ export default function Division() {
                 >
                   {numerator} ÷ {denominator}
                 </button>
-                <input
-                  type="number"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+               <input
+                  type="text"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  
                 />
               </div>
             ))}

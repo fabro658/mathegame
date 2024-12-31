@@ -128,8 +128,11 @@ export default function AdditionFractions() {
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-4 rounded-lg w-full text-center text-black"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  
                 />
               </div>
             ))}
