@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 
 export default function Revision() {
@@ -18,28 +18,62 @@ export default function Revision() {
   // Calcul du pourcentage de progression en fonction de la page actuelle
   const completionPercentage = ((currentPage + 1) * 10 / totalQuestions) * 100;
 
-  // Générer les questions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  // Générer les questions pour chaque type d'opération
+  const generateAddition = () => {
+    return Array.from({ length: totalQuestions / 3 }, () => {
+      const a = Math.floor(Math.random() * 9) + 1;
+      const b = Math.floor(Math.random() * 9) + 1;
+      return {
+        question: `${a} + ${b}`,
+        correctAnswer: (a + b).toString(),
+      };
+    });
+  };
 
-    const commonDenominator = b1 * b2;
-    const numerator1 = a1 * b2;
-    const numerator2 = a2 * b1;
+  const generateSubtraction = () => {
+    return Array.from({ length: totalQuestions / 3 }, () => {
+      const a = Math.floor(Math.random() * 9) + 1;
+      const b = Math.floor(Math.random() * 9) + 1;
+      return {
+        question: `${a} - ${b}`,
+        correctAnswer: (a - b).toString(),
+      };
+    });
+  };
 
-    const numeratorResult = numerator1 - numerator2;
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numeratorResult, commonDenominator);
-    const [simplifiedNumerator, simplifiedDenominator] = [numeratorResult / divisor, commonDenominator / divisor];
+  const generateFraction = () => {
+    return Array.from({ length: totalQuestions / 3 }, () => {
+      const a1 = Math.floor(Math.random() * 9) + 1;
+      const b1 = Math.floor(Math.random() * 9) + 1;
+      const a2 = Math.floor(Math.random() * 9) + 1;
+      const b2 = Math.floor(Math.random() * 9) + 1;
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+      const commonDenominator = b1 * b2;
+      const numerator1 = a1 * b2;
+      const numerator2 = a2 * b1;
+
+      const numeratorResult = numerator1 - numerator2;
+      const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+      const divisor = gcd(numeratorResult, commonDenominator);
+      const [simplifiedNumerator, simplifiedDenominator] = [numeratorResult / divisor, commonDenominator / divisor];
+
+      return {
+        question: `${a1}/${b1} - ${a2}/${b2}`,
+        correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+      };
+    });
+  };
+
+  // Générer les questions une seule fois au montage du composant
+  const [questions, setQuestions] = useState<any[]>([]);
+
+  useEffect(() => {
+    setQuestions([
+      ...generateAddition(),
+      ...generateSubtraction(),
+      ...generateFraction(),
+    ]);
+  }, []);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -111,16 +145,16 @@ export default function Revision() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Révision de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Révision des Opérations</h1>
 
       {/* Formulaire de révision */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {fraction1} - {fraction2}
+                  {question}
                 </div>
                 <input
                   type="text"
