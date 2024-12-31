@@ -11,11 +11,6 @@ export default function Division() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // SVG stroke width and radius for the circle
-  const strokeWidth = 4;
-  const radius = 20;
-  const circumference = 2 * Math.PI * radius;
-
   // Générer les questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const numerator = Math.floor(Math.random() * 100) + 1;
@@ -25,8 +20,13 @@ export default function Division() {
 
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
+  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
+
+  // SVG pour le cercle de progression
+  const radius = 50; // Rayon du cercle
+  const circumference = 2 * Math.PI * radius;
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -83,7 +83,7 @@ export default function Division() {
         Apprendre
       </Link>
 
-      {/* Barre circulaire */}
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -92,7 +92,7 @@ export default function Division() {
             r={radius}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
+            strokeWidth="4"
           />
           <circle
             cx="50%"
@@ -100,18 +100,20 @@ export default function Division() {
             r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
+            strokeWidth="4"
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
-        <span className="font-bold">{completionPercentage}%</span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
-      {/* Questions pour la page actuelle */}
+      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
@@ -133,7 +135,7 @@ export default function Division() {
             ))}
           </div>
 
-          {/* Boutons de validation et navigation */}
+          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button

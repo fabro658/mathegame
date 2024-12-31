@@ -22,19 +22,19 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start mt-10">
         <div className="flex flex-col items-center gap-4">
-          {/* Logo ajusté pour être plus petit mais toujours grand */}
+          {/* Logo remonté en ajustant les marges */}
           <Image
             className="dark:invert"
             src="/logo.png"
             alt="Mon logo"
-            width={600}  // Taille du logo ajustée pour plus de visibilité
-            height={120}  // Hauteur proportionnelle pour garder les bonnes proportions
+            width={500}  // Taille du logo ajustée pour plus de visibilité
+            height={100}  // Hauteur proportionnelle pour garder les bonnes proportions
             priority
           />
-          {/* Nom ajusté pour être plus grand mais pas trop imposant */}
-          <span className="text-6xl sm:text-7xl font-bold text-white">MathGame</span>  {/* Texte agrandi mais pas trop */}
+          {/* Nom remonté en ajustant la marge */}
+          <span className="text-5xl sm:text-6xl font-bold text-white mt-2">MathGame</span>  {/* Texte agrandi mais pas trop */}
         </div>
 
         {/* Liens vers les niveaux */}
