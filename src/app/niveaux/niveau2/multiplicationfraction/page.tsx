@@ -26,7 +26,7 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions lors de la première exécution
+  // Générer les questions une seule fois lors du premier rendu
   useEffect(() => {
     const generateQuestions = (): Question[] =>
       Array.from({ length: totalQuestions }, () => {
@@ -51,7 +51,7 @@ export default function MultiplicationFraction() {
       });
 
     setQuestions(generateQuestions());
-  }, []);
+  }, []); // Le tableau vide garantit que cela ne s'exécute qu'une fois
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
