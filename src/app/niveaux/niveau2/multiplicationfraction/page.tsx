@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function DivisionFraction() {
+export default function MultiplicationFraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
@@ -28,8 +28,8 @@ export default function DivisionFraction() {
         const a2 = Math.floor(Math.random() * 9) + 1;
         const b2 = Math.floor(Math.random() * 9) + 1;
 
-        const numeratorResult = a1 * b2;
-        const denominatorResult = b1 * a2;
+        const numeratorResult = a1 * a2;
+        const denominatorResult = b1 * b2;
 
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
 
@@ -59,7 +59,7 @@ export default function DivisionFraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
+
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -147,8 +147,9 @@ export default function DivisionFraction() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
+      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
@@ -158,7 +159,7 @@ export default function DivisionFraction() {
                   className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
                   disabled
                 >
-                  {fraction1} ÷ {fraction2}
+                  {fraction1} × {fraction2}
                 </button>
                 <input
                   type="text"

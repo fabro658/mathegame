@@ -10,8 +10,8 @@ type Question =
   | { type: "fraction"; question: string; correctAnswer: string };
 
 export default function Revision() {
-  const totalQuestions = 50;
-  const questionsPerPage = 10; // Nombre de questions par page
+  const totalQuestions = 36;
+  const questionsPerPage = 6; // Nombre de questions par page
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -112,7 +112,7 @@ export default function Revision() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Barre circulaire */}
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -136,7 +136,7 @@ export default function Revision() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage.toFixed(0)}%</span>
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
         </div>
       </div>
 
