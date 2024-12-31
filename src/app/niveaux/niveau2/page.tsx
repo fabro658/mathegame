@@ -8,7 +8,7 @@ export default function Page() {
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/"
-        className="absolute top-4 right-4 bg-gray-800 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>

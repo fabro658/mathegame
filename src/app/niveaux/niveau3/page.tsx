@@ -13,6 +13,12 @@ export default function Page() {
             Périmètre
           </Link>
           <Link
+        href="/"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
+          <Link
             href="/niveaux/niveau3/aire"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
