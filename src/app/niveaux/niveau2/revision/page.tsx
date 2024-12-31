@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Définir un type pour chaque question
-type Question = 
+type Question =
   | { type: "multiplication"; question: string; correctAnswer: string }
   | { type: "division"; question: string; correctAnswer: string }
   | { type: "fraction"; question: string; correctAnswer: string };
@@ -22,8 +22,9 @@ export default function RevisionNiveau2() {
   const strokeWidth = 10; // Largeur du cercle
   const circumference = 2 * Math.PI * radius; // Circonférence du cercle
 
-  // Calcul du pourcentage de progression
-  const completionPercentage = ((currentPage + 1) * questionsPerPage / totalQuestions) * 100;
+  // Calcul du pourcentage de progression basé sur le nombre de réponses fournies
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   // Générer les questions (une seule fois)
   useEffect(() => {
