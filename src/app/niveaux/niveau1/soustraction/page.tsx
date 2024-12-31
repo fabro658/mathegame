@@ -4,17 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Soustraction() {
+  // Déclarations des constantes
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
+  // États
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // Paramètres du cercle
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -29,6 +30,7 @@ export default function Soustraction() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
@@ -63,6 +65,7 @@ export default function Soustraction() {
     setHasPassed(allCorrect);
   };
 
+  // Navigation
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
@@ -81,27 +84,18 @@ export default function Soustraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Liens de navigation */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
         Apprendre
       </Link>
-      <Link
-        href="/src/app/niveaux/niveau1"
-        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
-      >
+      <Link href="/src/app/niveaux/niveaux1" className="absolute top-16 right-4 bg-black text-white py-3 px-6 rounded font-bold">
         Retour
       </Link>
 
       {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
@@ -127,21 +121,17 @@ export default function Soustraction() {
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {a} - {b}
-                </div>
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
                 <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  
                 />
               </div>
             ))}
           </div>
-
           <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
@@ -173,20 +163,14 @@ export default function Soustraction() {
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
+              <button className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold" onClick={handleNextPage}>
                 Suivant
               </button>
             </div>
           ) : (
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
+              <button className="mt-6 bg-gray-500 text-white py-3 px-6 rounded font-bold" onClick={() => setIsValidated(false)}>
                 Revenir pour corriger
               </button>
             </div>

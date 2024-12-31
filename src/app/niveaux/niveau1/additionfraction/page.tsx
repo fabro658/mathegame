@@ -94,7 +94,7 @@ export default function AdditionFractions() {
       </Link>
       <Link
         href="/src/app/niveaux/niveau1"
-        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-16 right-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
