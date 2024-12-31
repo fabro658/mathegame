@@ -45,6 +45,13 @@ export default function Page() {
             aria-label="Page de division de fraction"
           >
             Division de fraction
+          </Link> 
+          {/* Bouton centré en dessous */}
+          <Link
+          href="/niveaux/niveau1/revision"
+          className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Révision
           </Link>
         </div>
       </div>
