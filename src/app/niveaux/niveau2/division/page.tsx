@@ -1,27 +1,28 @@
-"use client";
-
 import { useState } from "react";
 import Link from "next/link";
 
-// Ton composant ici
 export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6; // 3 columns x 2 rows
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
+  // SVG stroke width and radius for the circle
+  const strokeWidth = 4;
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+
+  // Generate questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const numerator = Math.floor(Math.random() * 100) + 1;
     const denominator = Math.floor(Math.random() * 10) + 1;
     return [numerator, denominator];
   });
 
-  const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator); // Réponses correctes
+  const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
 
@@ -37,13 +38,11 @@ export default function Division() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
@@ -51,7 +50,7 @@ export default function Division() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -63,45 +62,48 @@ export default function Division() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
-  // Calcul pour dessiner le cercle de progression
-  const radius = 20;
-  const circumference = 2 * Math.PI * radius;
   const offset = circumference - (completionPercentage / 100) * circumference;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton pour naviguer vers la page "Apprendre" */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
 
-      {/* Suivi de la progression sous forme de cercle */}
-      <div className="absolute top-4 left-4 flex items-center gap-2">
-        <svg width="60" height="60" className="transform -rotate-90">
-          <circle cx="30" cy="30" r={radius} stroke="gray" strokeWidth="4" fill="transparent" />
+      {/* Progress Circle */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
-            cx="30"
-            cy="30"
+            cx="50%"
+            cy="50%"
             r={radius}
-            stroke={completionPercentage === 100 ? "green" : "orange"}
-            strokeWidth="4"
-            fill="transparent"
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            style={{ transition: "stroke-dashoffset 0.3s ease" }}
+            className="transition-all duration-500"
           />
         </svg>
         <span className="font-bold">{completionPercentage}%</span>
@@ -109,7 +111,7 @@ export default function Division() {
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
-      {/* Questions de la page actuelle */}
+      {/* Questions for the current page */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
@@ -131,7 +133,7 @@ export default function Division() {
             ))}
           </div>
 
-          {/* Boutons de validation et de navigation */}
+          {/* Validation and navigation buttons */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -159,7 +161,7 @@ export default function Division() {
         </>
       )}
 
-      {/* Résultats après validation */}
+      {/* Results after validation */}
       {isValidated && (
         <>
           {hasPassed ? (

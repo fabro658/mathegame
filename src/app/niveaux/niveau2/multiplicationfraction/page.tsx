@@ -53,7 +53,7 @@ export default function MultiplicationFraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
+
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -98,7 +98,7 @@ export default function MultiplicationFraction() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
-      
+
       {/* Cercle de progression */}
       <div className="absolute top-4 left-4 flex items-center gap-2">
         <svg width="50" height="50" viewBox="0 0 36 36" className="rotate-90">
@@ -126,24 +126,24 @@ export default function MultiplicationFraction() {
 
       {!isValidated && (
         <>
-         <div className="grid grid-cols-3 gap-6">
-           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => (
-            <div key={index} className="flex items-center gap-4">
-              <button
-                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                disabled
-              >
-                {q.fraction1} × {q.fraction2}
-              </button>
-              <input
-                type="text"
-                className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                value={answers[currentPage * questionsPerPage + index] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-              />
-            </div>
-          ))}
-        </div>
+          <div className="grid grid-cols-3 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => (
+              <div key={index} className="flex items-center gap-4">
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  disabled
+                >
+                  {q.fraction1} × {q.fraction2}
+                </button>
+                <input
+                  type="text"
+                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
