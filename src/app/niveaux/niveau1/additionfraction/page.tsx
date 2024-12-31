@@ -12,6 +12,10 @@ export default function AdditionFractions() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
@@ -81,12 +85,32 @@ export default function AdditionFractions() {
         Apprendre
       </Link>
 
-      {/* Barre de progression animée */}
-      <div className="absolute top-4 left-4 w-64 h-8 bg-gray-300 rounded-lg overflow-hidden">
-        <div
-          className="bg-blue-500 h-full transition-all duration-500"
-          style={{ width: `${completionPercentage}%` }}
-        ></div>
+      {/* Barre circulaire */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
       <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
