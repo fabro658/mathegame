@@ -3,11 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+type Question = {
+  fraction1: string;
+  fraction2: string;
+  correctAnswer: string;
+};
+
 export default function MultiplicationFraction() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
 
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -22,7 +28,7 @@ export default function MultiplicationFraction() {
 
   // Génération des questions lors de la première exécution
   useEffect(() => {
-    const generateQuestions = () =>
+    const generateQuestions = (): Question[] =>
       Array.from({ length: totalQuestions }, () => {
         const a1 = Math.floor(Math.random() * 9) + 1;
         const b1 = Math.floor(Math.random() * 9) + 1;
