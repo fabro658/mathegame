@@ -10,12 +10,12 @@ export default function Division() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState<[number, number][]>([]); // Ajouter un state pour stocker les questions générées
+  const [questions, setQuestions] = useState<[number, number][]>([]); // Le type est maintenant explicitement [number, number][]
 
   // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
-    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
-      let numerator, denominator;
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+      let numerator: number, denominator: number;
 
       // Les premières questions avec des multiples simples
       if (index < 10) {
@@ -32,8 +32,9 @@ export default function Division() {
         denominator = Math.floor(Math.random() * 50) + 1;
       }
 
-      return [numerator, denominator];
+      return [numerator, denominator]; // Ici, le type est bien [number, number]
     });
+
     setQuestions(generatedQuestions); // Stocker les questions générées dans le state
   }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
 
