@@ -1,23 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-
-type Question = {
-  fraction1: string;
-  fraction2: string;
-  correctAnswer: string;
-};
+import { useState } from "react";
+import Link from "next/link"; // Importation du composant Link pour la navigation
 
 export default function MultiplicationFraction() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
-
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -26,33 +18,28 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Générer les questions une seule fois lors du premier rendu
-  useEffect(() => {
-    const generateQuestions = (): Question[] =>
-      Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
+  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
+  const questions = Array.from({ length: totalQuestions }, () => {
+    const a1 = Math.floor(Math.random() * 9) + 1;
+    const b1 = Math.floor(Math.random() * 9) + 1;
+    const a2 = Math.floor(Math.random() * 9) + 1;
+    const b2 = Math.floor(Math.random() * 9) + 1;
 
-        const numeratorResult = a1 * a2;
-        const denominatorResult = b1 * b2;
+    const numeratorResult = a1 * a2;
+    const denominatorResult = b1 * b2;
 
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(
-          numeratorResult,
-          denominatorResult
-        );
+    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
 
-        return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-        };
-      });
+    return {
+      fraction1: `${a1}/${b1}`,
+      fraction2: `${a2}/${b2}`,
+      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+    };
+  });
 
-    setQuestions(generateQuestions());
-  }, []); // Le tableau vide garantit que cela ne s'exécute qu'une fois
+  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
+  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -66,18 +53,20 @@ export default function MultiplicationFraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+    
+    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
+    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex].correctAnswer) {
+      if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
         newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
@@ -91,16 +80,16 @@ export default function MultiplicationFraction() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
+      setIsValidated(false); // Réinitialiser la validation pour la page suivante
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
+      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
+      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
     }
   };
 
@@ -109,9 +98,30 @@ export default function MultiplicationFraction() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+      
+      {/* Cercle de progression */}
+      <div className="absolute top-4 left-4 flex items-center gap-2">
+        <svg width="50" height="50" viewBox="0 0 36 36" className="rotate-90">
+          <path
+            className="text-gray-300"
+            fill="none"
+            strokeWidth="2"
+            stroke="currentColor"
+            strokeDasharray="100"
+            d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
+          ></path>
+          <path
+            className="text-green-500"
+            fill="none"
+            strokeWidth="2"
+            stroke="currentColor"
+            strokeDasharray={`${completionPercentage}, 100`}
+            d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
+          ></path>
+        </svg>
+        <span>{completionPercentage}%</span>
       </div>
+
       <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
       {!isValidated && (
@@ -148,7 +158,7 @@ export default function MultiplicationFraction() {
             >
               Valider les réponses
             </button>
-            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleNextPage}

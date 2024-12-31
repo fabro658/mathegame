@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link"; // Importation du composant Link pour la navigation
+import { CircularProgressbar } from "react-circular-progressbar"; // Importation du composant pour le cercle de progression
+import 'react-circular-progressbar/dist/styles.css'; // Importation des styles
 
-export default function MultiplicationFraction() {
+export default function Multiplication() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
@@ -11,29 +13,15 @@ export default function MultiplicationFraction() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
-  // Fonction pour simplifier une fraction
-  const simplifyFraction = (numerator: number, denominator: number) => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
-  };
-
   // Génération des questions et des réponses correctes (hors état pour les garder constantes)
   const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
-
-    const numeratorResult = a1 * a2;
-    const denominatorResult = b1 * b2;
-
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+    const num1 = Math.floor(Math.random() * 9) + 1;
+    const num2 = Math.floor(Math.random() * 9) + 1;
+    const correctAnswer = num1 * num2;
 
     return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+      question: `${num1} × ${num2}`,
+      correctAnswer: correctAnswer.toString(),
     };
   });
 
@@ -98,21 +86,25 @@ export default function MultiplicationFraction() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
+      
       <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        Progression : {completionPercentage}%
+        <div style={{ width: 50, height: 50 }}>
+          <CircularProgressbar value={completionPercentage} text={`${completionPercentage}%`} />
+        </div>
       </div>
-      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
+
+      <h1 className="text-3xl font-bold mb-6">Multiplications</h1>
 
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
-                  {fraction1} × {fraction2}
+                  {question}
                 </button>
                 <input
                   type="text"

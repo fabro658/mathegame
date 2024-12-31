@@ -75,6 +75,11 @@ export default function Division() {
     }
   };
 
+  // Calcul pour dessiner le cercle de progression
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (completionPercentage / 100) * circumference;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Bouton pour naviguer vers la page "Apprendre" */}
@@ -82,15 +87,30 @@ export default function Division() {
         Apprendre
       </Link>
 
-      {/* Suivi de la progression */}
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold flex items-center gap-2">
-        <div className="relative bg-gray-300 h-4 rounded w-32">
-          <div
-            className="absolute top-0 left-0 h-4 bg-green-500 rounded"
-            style={{ width: `${completionPercentage}%` }}
-          ></div>
-        </div>
-        <span>{completionPercentage}%</span>
+      {/* Suivi de la progression sous forme de cercle */}
+      <div className="absolute top-4 left-4 flex items-center gap-2">
+        <svg width="60" height="60" className="transform -rotate-90">
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            stroke="gray"
+            strokeWidth="4"
+            fill="transparent"
+          />
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            stroke={completionPercentage === 100 ? "green" : "orange"}
+            strokeWidth="4"
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            style={{ transition: "stroke-dashoffset 0.3s ease" }}
+          />
+        </svg>
+        <span className="font-bold">{completionPercentage}%</span>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
