@@ -1,4 +1,4 @@
-"use client";
+'use client'; 
 
 import { useState } from "react";
 import Link from "next/link"; // Import de Link pour la navigation
@@ -122,9 +122,11 @@ export default function Addition() {
                 </div>
                 <input
                   type="number"
-                  className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg"
+                  className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg appearance-none"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  // Retirer les flèches dans le champ de saisie
+                  style={{ '-moz-appearance': 'textfield', '-webkit-appearance': 'none' }}
                 />
               </div>
             ))}
