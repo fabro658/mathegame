@@ -91,7 +91,19 @@ export default function Revision() {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const newAnswers = [...answers];
+    let allCorrect = true;
+
+    // Vérification des réponses et réinitialisation des mauvaises
+    for (let i = currentPage * questionsPerPage; i < (currentPage + 1) * questionsPerPage; i++) {
+      const correctAnswer = questions[i]?.correctAnswer;
+      if (answers[i] !== correctAnswer) {
+        newAnswers[i] = null; // Réinitialiser la réponse incorrecte
+        allCorrect = false;
+      }
+    }
+
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
