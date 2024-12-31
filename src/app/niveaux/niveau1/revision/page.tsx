@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 type Question =
   | { type: "addition"; question: string; correctAnswer: string }
@@ -12,8 +11,6 @@ export default function Revision() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // Nombre de questions par page
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const radius = 50; // Rayon du cercle
@@ -90,32 +87,26 @@ export default function Revision() {
 
   const handleValidation = () => {
     const newAnswers = [...answers];
-    let allCorrect = true;
 
     for (let i = currentPage * questionsPerPage; i < (currentPage + 1) * questionsPerPage; i++) {
       const correctAnswer = questions[i]?.correctAnswer;
       if (answers[i] !== correctAnswer) {
         newAnswers[i] = null; // Réinitialiser la réponse incorrecte
-        allCorrect = false;
       }
     }
 
     setAnswers(newAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
