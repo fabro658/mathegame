@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// Définir un type pour chaque question
 type Question =
   | { type: "addition"; question: string; correctAnswer: string }
   | { type: "subtraction"; question: string; correctAnswer: string }
@@ -21,10 +20,10 @@ export default function Revision() {
   const strokeWidth = 10; // Largeur du cercle
   const circumference = 2 * Math.PI * radius; // Circonférence du cercle
 
-  // Calcul du pourcentage de progression en fonction de la page actuelle
-  const completionPercentage = Math.round(((currentPage + 1) * questionsPerPage / totalQuestions) * 100);
+  // Calcul du pourcentage de progression en fonction des réponses remplies
+  const answeredCount = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = (answeredCount / totalQuestions) * 100;
 
-  // Générer les questions pour chaque type d'opération
   const generateAddition = (): Question[] => {
     return Array.from({ length: totalQuestions / 3 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
@@ -73,7 +72,6 @@ export default function Revision() {
     });
   };
 
-  // Générer les questions une seule fois au montage du composant
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
@@ -94,7 +92,6 @@ export default function Revision() {
     const newAnswers = [...answers];
     let allCorrect = true;
 
-    // Vérification des réponses et réinitialisation des mauvaises
     for (let i = currentPage * questionsPerPage; i < (currentPage + 1) * questionsPerPage; i++) {
       const correctAnswer = questions[i]?.correctAnswer;
       if (answers[i] !== correctAnswer) {
@@ -148,95 +145,51 @@ export default function Revision() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">{Math.round(completionPercentage)}%</span>
         </div>
       </div>
 
-      {/* Boutons de navigation */}
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
-
       <h1 className="text-3xl font-bold mb-6">Révision des Opérations</h1>
 
-      {/* Formulaire de révision */}
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {question}
-                </div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+      <div className="grid grid-cols-3 gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
+          <div key={index} className="flex items-center gap-4">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+              {question}
+            </div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
           </div>
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
+        ))}
+      </div>
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      <div className="flex gap-4 mt-6">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+          disabled={currentPage === totalQuestions / questionsPerPage - 1}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }
