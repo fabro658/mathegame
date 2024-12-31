@@ -11,6 +11,11 @@ export default function Soustraction() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Paramètres du cercle
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
@@ -20,9 +25,7 @@ export default function Soustraction() {
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
   });
 
-  const correctAnswers = questions.map(([a, b]) => a - b); // Réponses correctes
-
-  // Calculer le pourcentage de réponses complétées
+  // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -37,22 +40,21 @@ export default function Soustraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
-    // Vérification si toutes les réponses sont remplies
+
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      const [a, b] = questions[globalIndex];
+      if (answer !== a - b) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -64,55 +66,67 @@ export default function Soustraction() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton pour naviguer vers la page "Apprendre" */}
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
         Apprendre
       </Link>
 
       {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 w-16 h-16 border-4 border-gray-300 rounded-full flex items-center justify-center">
-        <div
-          className="w-14 h-14 rounded-full bg-green-500"
-          style={{
-            clipPath: `polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%)`,
-            transform: `rotate(${(completionPercentage / 100) * 360}deg)`,
-          }}
-        />
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
-      <span className="absolute top-4 left-4 ml-4 text-black font-bold">{completionPercentage}%</span>
 
-      <h1 className="text-3xl font-bold mb-6">Soustraction</h1>
+      <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
 
-      {/* Questions de la page actuelle */}
+      {/* Questions et réponses */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-1/2"
-                  disabled
-                >
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {a} - {b}
-                </button>
+                </div>
                 <input
                   type="number"
-                  className="border border-gray-400 p-3 rounded w-1/2 text-center text-black"
+                  className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
@@ -120,30 +134,27 @@ export default function Soustraction() {
             ))}
           </div>
 
-          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
@@ -154,27 +165,18 @@ export default function Soustraction() {
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+              <button
+                className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
             </div>
           ) : (
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-3 px-6 rounded font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
