@@ -87,7 +87,7 @@ export default function Multiplication() {
         Apprendre
         </Link>
       <Link
-        href="/src/app/niveaux/niveau1"
+        href="/src/app/niveaux/niveau2"
         className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
