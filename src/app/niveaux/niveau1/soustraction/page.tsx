@@ -88,8 +88,11 @@ export default function Soustraction() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/src/app/niveaux/niveaux1" className="absolute top-16 right-4 bg-black text-white py-3 px-6 rounded font-bold">
-        Retour
+      <Link
+        href="/src/app/niveaux/niveaux1"
+         className="absolute top-16 right-4 bg-gray-500 text-white py-3 px-6 rounded font-bold"
+      >
+         Retour
       </Link>
 
       {/* Cercle de progression */}
