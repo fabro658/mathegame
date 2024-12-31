@@ -15,7 +15,7 @@ export default function Multiplication() {
 
   useEffect(() => {
     // Génération des questions uniquement au premier rendu
-    const generatedQuestions = Array.from({ length: totalQuestions }, () => {
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, () => {
       const factor1 = Math.floor(Math.random() * 10) + 1;
       const factor2 = Math.floor(Math.random() * 10) + 1;
       return [factor1, factor2];
