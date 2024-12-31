@@ -122,16 +122,11 @@ export default function Addition() {
                 </div>
                 <input
                   type="text"
-                  className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  style={
-                    {
-                      appearance: 'none',
-                      '-moz-appearance': 'textfield',
-                      '-webkit-appearance': 'none',
-                    } as React.CSSProperties
-                  }
+                  
                 />
               </div>
             ))}
