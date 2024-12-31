@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function AdditionFractions() {
-  const totalQuestions = 50;
-  const questionsPerPage = 10; // Questions par page
+  const totalQuestions = 36;
+  const questionsPerPage = 6; // 3 colonnes x 3 lignes
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
