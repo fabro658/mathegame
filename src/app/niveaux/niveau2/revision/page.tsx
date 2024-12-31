@@ -11,7 +11,7 @@ type Question =
 
 export default function RevisionNiveau2() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // Nombre de questions par page
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -19,14 +19,12 @@ export default function RevisionNiveau2() {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius; // Circonférence du cercle
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
-  // Calcul du pourcentage de progression basé sur le nombre de réponses fournies
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Générer les questions (une seule fois)
   useEffect(() => {
     const generateQuestions = (): Question[] => {
       const generateMultiplication = (): Question[] => {
@@ -81,20 +79,39 @@ export default function RevisionNiveau2() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = value.trim() || null;
     setAnswers(newAnswers);
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      return;
+    }
+
+    const newAnswers = [...answers];
+    let allCorrect = true;
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      const correctAnswer = questions[globalIndex].correctAnswer;
+      if (answer !== correctAnswer) {
+        newAnswers[globalIndex] = null;
+        allCorrect = false;
+      }
+    });
+
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
 
-  // Navigation entre pages
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
@@ -132,23 +149,8 @@ export default function RevisionNiveau2() {
         </div>
       </div>
 
-      {/* Boutons de navigation */}
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/niveaux/niveau2"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+      <h1 className="text-3xl font-bold mb-6">Révision Niveau 2</h1>
 
-      <h1 className="text-3xl font-bold mb-6">Révision des Multiplications et Divisions</h1>
-
-      {/* Formulaire de révision */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
@@ -159,19 +161,15 @@ export default function RevisionNiveau2() {
                 </div>
                 <input
                   type="text"
-                  inputMode="numeric"
-                  className={`border p-4 rounded w-32 text-center text-lg ${
-                    isValidated && answers[currentPage * questionsPerPage + index] !== questions[currentPage * questionsPerPage + index].correctAnswer
-                      ? "border-red-500"
-                      : "border-gray-400"
-                  }`}
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
-          <div className="flex gap-4 mt-6">
+
+          <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
@@ -183,7 +181,7 @@ export default function RevisionNiveau2() {
               onClick={handleValidation}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
             >
-              Valider les réponses
+              Valider
             </button>
             <button
               onClick={handleNextPage}
@@ -199,25 +197,9 @@ export default function RevisionNiveau2() {
       {isValidated && (
         <>
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
+            <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
+            <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
           )}
         </>
       )}
