@@ -93,11 +93,11 @@ export default function AdditionFractions() {
       Apprendre
     </Link>
     <Link
-      href="/niveaux/niveaux1"
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-    >
-      Retour
-    </Link>
+        href="/niveaux/niveau1"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
       {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">

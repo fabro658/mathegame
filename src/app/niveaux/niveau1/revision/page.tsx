@@ -148,7 +148,7 @@ export default function Revision() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveaux1"
+        href="/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
