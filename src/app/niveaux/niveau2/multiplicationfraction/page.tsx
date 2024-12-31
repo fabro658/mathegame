@@ -1,12 +1,11 @@
-"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
-import { useState } from "react";
-import Link from "next/link"; // Importation du composant Link pour la navigation
-
-export default function MultiplicationFraction() {
+export default function DivisionFraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
@@ -18,24 +17,29 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const a1 = Math.floor(Math.random() * 9) + 1;
-    const b1 = Math.floor(Math.random() * 9) + 1;
-    const a2 = Math.floor(Math.random() * 9) + 1;
-    const b2 = Math.floor(Math.random() * 9) + 1;
+  // Génération des questions et des réponses correctes, seulement une fois
+  useEffect(() => {
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-    const numeratorResult = a1 * a2;
-    const denominatorResult = b1 * b2;
+        const numeratorResult = a1 * b2;
+        const denominatorResult = b1 * a2;
 
-    const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
 
-    return {
-      fraction1: `${a1}/${b1}`,
-      fraction2: `${a2}/${b2}`,
-      correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-    };
-  });
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
+
+    setQuestions(generateQuestions());
+  }, []); // Générer les questions une seule fois au montage initial
 
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
@@ -53,7 +57,7 @@ export default function MultiplicationFraction() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+    
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -93,6 +97,10 @@ export default function MultiplicationFraction() {
     }
   };
 
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
@@ -105,20 +113,20 @@ export default function MultiplicationFraction() {
           <circle
             cx="50%"
             cy="50%"
-            r={50}
+            r={radius}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth={10}
+            strokeWidth={strokeWidth}
           />
           <circle
             cx="50%"
             cy="50%"
-            r={50}
+            r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
@@ -127,23 +135,22 @@ export default function MultiplicationFraction() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
 
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => (
-              <div key={index} className="flex items-center gap-4">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex flex-row items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
                   disabled
                 >
-                  {q.fraction1} × {q.fraction2}
+                  {fraction1} ÷ {fraction2}
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  className="border border-gray-400 p-3 rounded w-32 text-center text-black"
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -19,7 +17,7 @@ export default function DivisionFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions et des réponses correctes
+  // Génération des questions et des réponses correctes, seulement une fois
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
@@ -41,7 +39,7 @@ export default function DivisionFraction() {
       });
 
     setQuestions(generateQuestions());
-  }, []); // Générer les questions une seule fois
+  }, []); // Générer les questions une seule fois au montage initial
 
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
@@ -145,14 +143,14 @@ export default function DivisionFraction() {
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex flex-row items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-32 text-center"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
                   disabled
                 >
                   {fraction1} ÷ {fraction2}
                 </button>
                 <input
                   type="text"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-3 rounded w-32 text-center text-black"
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
