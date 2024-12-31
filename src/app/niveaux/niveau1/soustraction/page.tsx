@@ -84,12 +84,15 @@ export default function Soustraction() {
         Apprendre
       </Link>
 
-      {/* Barre de progression */}
-      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-6">
+      {/* Cercle de progression */}
+      <div className="absolute top-4 left-4 w-16 h-16 border-4 border-gray-300 rounded-full flex items-center justify-center">
         <div
-          className="bg-green-500 h-6 rounded-full"
-          style={{ width: `${completionPercentage}%` }}
-        ></div>
+          className="w-14 h-14 rounded-full bg-green-500"
+          style={{
+            clipPath: `polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%)`,
+            transform: `rotate(${(completionPercentage / 100) * 360}deg)`,
+          }}
+        />
       </div>
       <span className="absolute top-4 left-4 ml-4 text-black font-bold">{completionPercentage}%</span>
 
@@ -100,16 +103,16 @@ export default function Soustraction() {
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex flex-col items-center gap-4">
+              <div key={index} className="flex items-center gap-4">
                 <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-1/2"
                   disabled
                 >
                   {a} - {b}
                 </button>
                 <input
                   type="number"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  className="border border-gray-400 p-3 rounded w-1/2 text-center text-black"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
