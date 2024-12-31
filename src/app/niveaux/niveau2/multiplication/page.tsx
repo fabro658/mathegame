@@ -85,6 +85,12 @@ export default function Multiplication() {
       {/* Bouton pour naviguer vers la page "Apprendre" */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
+        </Link>
+      <Link
+        href="/src/app/niveaux/niveau1"
+        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
       </Link>
 
       {/* Barre circulaire */}

@@ -84,6 +84,12 @@ export default function SoustractionFractions() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-3 px-6 rounded-lg font-bold">
         Apprendre
       </Link>
+      <Link
+        href="/src/app/niveaux/niveau1"
+        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
       {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">

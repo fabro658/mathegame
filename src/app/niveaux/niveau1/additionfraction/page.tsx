@@ -4,17 +4,19 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function AdditionFractions() {
+  // Déclarations des constantes
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 3 lignes
+  const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
+  // États
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -47,12 +49,9 @@ export default function AdditionFractions() {
       });
 
     setQuestions(generateQuestions());
-  }, []); // Génère les questions une seule fois
+  }, []);
 
-  // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
+  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -65,6 +64,7 @@ export default function AdditionFractions() {
     setHasPassed(allCorrect);
   };
 
+  // Navigation
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
@@ -79,10 +79,24 @@ export default function AdditionFractions() {
     }
   };
 
+  // Calculer le pourcentage de progression
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-3 px-6 rounded-lg font-bold">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute top-4 right-4 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
+      </Link>
+      <Link
+        href="/src/app/niveaux/niveau1"
+        className="absolute top-16 right-4 bg-black-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
       </Link>
 
       {/* Barre circulaire */}
@@ -132,7 +146,6 @@ export default function AdditionFractions() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  
                 />
               </div>
             ))}
