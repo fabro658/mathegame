@@ -81,6 +81,9 @@ export default function Addition() {
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
         Apprendre
       </Link>
+      <Link href="/niveau1" className="absolute top-16 right-4 bg-gray-500 text-white py-3 px-6 rounded font-bold">
+        Retour
+      </Link>
 
       {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
@@ -126,7 +129,6 @@ export default function Addition() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  
                 />
               </div>
             ))}
