@@ -1,31 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link"; // Importation du composant Link pour la navigation
-import { CircularProgressbar } from "react-circular-progressbar"; // Importation du composant pour le cercle de progression
-import 'react-circular-progressbar/dist/styles.css'; // Importation des styles
+import Link from "next/link";
 
 export default function Multiplication() {
   const totalQuestions = 50;
   const questionsPerPage = 10;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions et des réponses correctes (hors état pour les garder constantes)
+  // Génération des questions de multiplication
   const questions = Array.from({ length: totalQuestions }, () => {
-    const num1 = Math.floor(Math.random() * 9) + 1;
-    const num2 = Math.floor(Math.random() * 9) + 1;
-    const correctAnswer = num1 * num2;
-
-    return {
-      question: `${num1} × ${num2}`,
-      correctAnswer: correctAnswer.toString(),
-    };
+    const factor1 = Math.floor(Math.random() * 10) + 1;
+    const factor2 = Math.floor(Math.random() * 10) + 1;
+    return [factor1, factor2];
   });
 
-  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
+  const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2); // Réponses correctes
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -33,7 +26,8 @@ export default function Multiplication() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    const parsedValue = parseFloat(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
 
@@ -41,7 +35,7 @@ export default function Multiplication() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
+
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -81,39 +75,69 @@ export default function Multiplication() {
     }
   };
 
+  // Calcul pour dessiner le cercle de progression
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (completionPercentage / 100) * circumference;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton pour naviguer vers la page "Apprendre" */}
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded font-bold">
         Apprendre
       </Link>
-      
-      <div className="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded font-bold">
-        <div style={{ width: 50, height: 50 }}>
-          <CircularProgressbar value={completionPercentage} text={`${completionPercentage}%`} />
-        </div>
+
+      {/* Suivi de la progression sous forme de cercle */}
+      <div className="absolute top-4 left-4 flex items-center gap-2">
+        <svg width="60" height="60" className="transform -rotate-90">
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            stroke="gray"
+            strokeWidth="4"
+            fill="transparent"
+          />
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            stroke={completionPercentage === 100 ? "green" : "orange"}
+            strokeWidth="4"
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            style={{ transition: "stroke-dashoffset 0.3s ease" }}
+          />
+        </svg>
+        <span className="font-bold">{completionPercentage}%</span>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplications</h1>
+      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
 
+      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
-                  {question}
+                  {factor1} × {factor2}
                 </button>
                 <input
-                  type="text"
+                  type="number"
                   className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
+
+          {/* Boutons de validation et de navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -141,6 +165,7 @@ export default function Multiplication() {
         </>
       )}
 
+      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
