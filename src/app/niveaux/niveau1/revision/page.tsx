@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
 // Définir un type pour chaque question
-type Question = 
+type Question =
   | { type: "addition"; question: string; correctAnswer: string }
   | { type: "subtraction"; question: string; correctAnswer: string }
   | { type: "fraction"; question: string; correctAnswer: string };
@@ -22,7 +22,7 @@ export default function Revision() {
   const circumference = 2 * Math.PI * radius; // Circonférence du cercle
 
   // Calcul du pourcentage de progression en fonction de la page actuelle
-  const completionPercentage = ((currentPage + 1) * 10 / totalQuestions) * 100;
+  const completionPercentage = Math.round(((currentPage + 1) * questionsPerPage / totalQuestions) * 100);
 
   // Générer les questions pour chaque type d'opération
   const generateAddition = (): Question[] => {
