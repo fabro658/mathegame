@@ -138,7 +138,7 @@ export default function DivisionFraction() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
-
+{/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">

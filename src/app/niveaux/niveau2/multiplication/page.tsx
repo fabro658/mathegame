@@ -130,7 +130,7 @@ export default function Multiplication() {
                   {factor1} × {factor2}
                 </button>
                 <input
-                  type="number"
+                  type="text"
                   className="border border-gray-400 p-3 rounded w-full text-center text-black"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
