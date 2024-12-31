@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Multiplication() {
@@ -10,13 +10,19 @@ export default function Multiplication() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<[number, number][]>([]); // Stocker les questions
 
-  // Génération des questions de multiplication
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const factor1 = Math.floor(Math.random() * 10) + 1;
-    const factor2 = Math.floor(Math.random() * 10) + 1;
-    return [factor1, factor2];
-  });
+  // Générer les questions une seule fois
+  useEffect(() => {
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, () => {
+        const factor1 = Math.floor(Math.random() * 10) + 1;
+        const factor2 = Math.floor(Math.random() * 10) + 1;
+        return [factor1, factor2];
+      });
+    };
+    setQuestions(generateQuestions());
+  }, []); // Le tableau vide [] garantit que cela ne s'exécute qu'une fois
 
   const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2); // Réponses correctes
 
@@ -36,13 +42,11 @@ export default function Multiplication() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
@@ -50,7 +54,7 @@ export default function Multiplication() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -62,22 +66,22 @@ export default function Multiplication() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
   // Calcul pour dessiner le cercle de progression
-  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
-  const strokeWidth = 10; // Définir la largeur du cercle
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -127,92 +131,48 @@ export default function Multiplication() {
       <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
 
       {/* Questions de la page actuelle */}
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {factor1} × {factor2}
-                </button>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Boutons de validation et de navigation */}
-          <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
-          </div>
-        </>
-      )}
-
-      {/* Résultats après validation */}
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+      <div className="grid grid-cols-3 gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
+          <div key={index} className="flex items-center gap-4">
+            <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full">
+              {factor1} × {factor2}
             </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Boutons de navigation */}
+      <div className="mt-6 flex gap-4">
+        {currentPage > 0 && (
+          <button
+            className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+            onClick={handlePreviousPage}
+          >
+            Précédent
+          </button>
+        )}
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+          <button
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+            onClick={handleNextPage}
+          >
+            Suivant
+          </button>
+        )}
+      </div>
     </div>
   );
 }
