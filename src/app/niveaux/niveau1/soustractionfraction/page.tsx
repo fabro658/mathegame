@@ -84,15 +84,15 @@ export default function SoustractionFractions() {
     {/* Boutons de navigation */}
     <Link
       href="/menu/apprendre"
-      className="absolute botom-4 right-4 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
     >
       Apprendre
     </Link>
     <Link
       href="/niveaux/niveaux1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
     >
-       Retour
+      Retour
     </Link>
 
       {/* Barre circulaire */}

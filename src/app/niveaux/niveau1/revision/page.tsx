@@ -38,9 +38,12 @@ export default function Revision() {
     };
   });
 
-  // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
+  // Pourcentage de progression
+  const completionPercentage = (currentPage * 10 / totalQuestions) * 100;
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -70,8 +73,18 @@ export default function Revision() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded-lg font-bold"
+      >
         Apprendre
+      </Link>
+      <Link
+        href="/niveaux/niveaux1"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded-lg font-bold"
+      >
+        Retour
       </Link>
 
       <div className="absolute top-4 left-4 bg-blue-500 text-white py-1 px-3 rounded font-bold">
@@ -86,7 +99,7 @@ export default function Revision() {
             {questions.slice(currentPage * 10, (currentPage + 1) * 10).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-2">
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
                   disabled
                 >
                   {fraction1} - {fraction2}
@@ -102,20 +115,20 @@ export default function Revision() {
           <div className="flex gap-4 mt-6">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-gray-500 text-white py-6 px-12 rounded-lg text-3xl shadow-lg font-bold"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-6 px-12 rounded-lg text-3xl shadow-lg font-bold"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-6 px-12 rounded-lg text-3xl shadow-lg font-bold"
               disabled={currentPage === totalQuestions / 10 - 1}
             >
               Suivant
@@ -130,7 +143,7 @@ export default function Revision() {
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-6 bg-blue-500 text-white py-6 px-12 rounded-lg text-3xl shadow-lg font-bold"
                 onClick={() => alert("Vous avez complété toutes les questions !")}
               >
                 Terminer
@@ -140,7 +153,7 @@ export default function Revision() {
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-6 px-12 rounded-lg text-3xl shadow-lg font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger

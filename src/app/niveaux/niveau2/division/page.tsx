@@ -99,19 +99,19 @@ export default function Division() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-    {/* Boutons de navigation */}
-    <Link
-      href="/menu/apprendre"
-      className="absolute botom-4 right-4 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-    >
-      Apprendre
-    </Link>
-    <Link
-      href="/niveaux/niveaux2"
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/niveaux/niveaux2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-    >
-       Retour
-    </Link>
+      >
+        Retour
+      </Link>
 
       {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
@@ -155,7 +155,7 @@ export default function Division() {
                 >
                   {numerator} ÷ {denominator}
                 </button>
-               <input
+                <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
