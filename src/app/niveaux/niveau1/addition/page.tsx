@@ -11,10 +11,6 @@ export default function Addition() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
-
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -75,6 +71,10 @@ export default function Addition() {
       setHasPassed(false);
     }
   };
+
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">

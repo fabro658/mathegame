@@ -79,21 +79,40 @@ export default function Perimetre() {
     }
   };
 
+  // Variables pour la barre circulaire
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-4 rounded-lg font-bold">
         Apprendre
       </Link>
 
-      {/* Barre de progression */}
-      <div className="absolute top-4 left-4 w-1/2 bg-gray-300 rounded-full h-4">
-        <div
-          className="bg-blue-500 h-4 rounded-full"
-          style={{ width: `${completionPercentage}%` }}
-        ></div>
-      </div>
-      <div className="absolute top-10 left-4 text-blue-500 font-bold">
-        Progression : {completionPercentage}%
+      {/* Barre circulaire */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le Périmètre</h1>

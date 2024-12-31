@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Division() {
@@ -10,28 +10,32 @@ export default function Division() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<[number, number][]>([]); // Ajouter un state pour stocker les questions générées
 
-  // Générer les questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    let numerator, denominator;
+  // Générer les questions une seule fois lors du montage du composant
+  useEffect(() => {
+    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
+      let numerator, denominator;
 
-    // Les premières questions avec des multiples simples
-    if (index < 10) {
-      denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
-      numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
-    } else if (index < 20) {
-      numerator = Math.floor(Math.random() * 100) + 1;
-      denominator = Math.floor(Math.random() * 10) + 1;
-    } else if (index < 30) {
-      numerator = Math.floor(Math.random() * 100) + 1;
-      denominator = Math.floor(Math.random() * 20) + 1;
-    } else {
-      numerator = Math.floor(Math.random() * 100) + 1;
-      denominator = Math.floor(Math.random() * 50) + 1;
-    }
+      // Les premières questions avec des multiples simples
+      if (index < 10) {
+        denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
+        numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
+      } else if (index < 20) {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 10) + 1;
+      } else if (index < 30) {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 20) + 1;
+      } else {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 50) + 1;
+      }
 
-    return [numerator, denominator];
-  });
+      return [numerator, denominator];
+    });
+    setQuestions(generatedQuestions); // Stocker les questions générées dans le state
+  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
 
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
