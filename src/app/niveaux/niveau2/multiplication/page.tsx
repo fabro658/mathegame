@@ -78,7 +78,6 @@ export default function Multiplication() {
   // Calcul pour dessiner le cercle de progression
   const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (completionPercentage / 100) * circumference;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -96,8 +95,7 @@ export default function Multiplication() {
             r={radius}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-            
+            strokeWidth="4"
           />
           <circle
             cx="50%"
@@ -105,7 +103,7 @@ export default function Multiplication() {
             r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
+            strokeWidth="4"
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
