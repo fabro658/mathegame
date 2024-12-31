@@ -11,6 +11,11 @@ export default function Division() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // SVG stroke width and radius for the circle
+  const strokeWidth = 4;
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+
   // Générer les questions
   const questions = Array.from({ length: totalQuestions }, () => {
     const numerator = Math.floor(Math.random() * 100) + 1;
@@ -20,13 +25,8 @@ export default function Division() {
 
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
-  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
-
-  // SVG pour le cercle de progression
-  const radius = 50; // Rayon du cercle
-  const circumference = 2 * Math.PI * radius;
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -83,7 +83,7 @@ export default function Division() {
         Apprendre
       </Link>
 
-      {/* Cercle de progression */}
+      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -92,7 +92,7 @@ export default function Division() {
             r={radius}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth="4"
+            strokeWidth={strokeWidth}
           />
           <circle
             cx="50%"
@@ -100,20 +100,18 @@ export default function Division() {
             r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth="4"
+            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+        <span className="font-bold">{completionPercentage}%</span>
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
-      {/* Questions de la page actuelle */}
+      {/* Questions pour la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
@@ -135,11 +133,11 @@ export default function Division() {
             ))}
           </div>
 
-          {/* Boutons de validation et de navigation */}
+          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={handlePreviousPage}
               >
                 Précédent
@@ -147,13 +145,13 @@ export default function Division() {
             )}
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
             >
               Valider les réponses
             </button>
             {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={handleNextPage}
               >
                 Suivant
@@ -171,14 +169,14 @@ export default function Division() {
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
                 <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                   onClick={handleNextPage}
                 >
                   Passer à la série suivante
                 </button>
               ) : (
                 <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                   onClick={() => alert("Vous avez complété toutes les questions !")}
                 >
                   Terminer
@@ -189,7 +187,7 @@ export default function Division() {
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
