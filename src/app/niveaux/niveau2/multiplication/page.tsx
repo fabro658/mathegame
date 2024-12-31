@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Multiplication() {
-  const totalQuestions = 50;
-  const questionsPerPage = 10;
+  const totalQuestions = 36;
+  const questionsPerPage = 6; // 3 colonnes x 3 lignes
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
