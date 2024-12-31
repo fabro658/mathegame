@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Link from "next/link";
 
@@ -22,7 +20,7 @@ export default function Division() {
 
   // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -90,14 +88,7 @@ export default function Division() {
       {/* Suivi de la progression sous forme de cercle */}
       <div className="absolute top-4 left-4 flex items-center gap-2">
         <svg width="60" height="60" className="transform -rotate-90">
-          <circle
-            cx="30"
-            cy="30"
-            r={radius}
-            stroke="gray"
-            strokeWidth="4"
-            fill="transparent"
-          />
+          <circle cx="30" cy="30" r={radius} stroke="gray" strokeWidth="4" fill="transparent" />
           <circle
             cx="30"
             cy="30"
@@ -118,7 +109,7 @@ export default function Division() {
       {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-3 grid-rows-2 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
               <div key={index} className="flex items-center gap-4">
                 <button

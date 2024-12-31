@@ -1,8 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import Link from "next/link";
-
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
@@ -117,12 +112,12 @@ export default function Addition() {
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {a} + {b}
                 </div>
                 <input
                   type="number"
-                  className="border border-gray-400 p-3 rounded w-24 text-center text-black"
+                  className="border border-gray-400 p-4 rounded w-24 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
