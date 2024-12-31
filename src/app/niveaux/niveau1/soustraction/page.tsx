@@ -84,16 +84,19 @@ export default function Soustraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Liens de navigation */}
-      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-6 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link
-        href="/src/app/niveaux/niveaux1"
-         className="absolute top-16 right-4 bg-gray-500 text-white py-3 px-6 rounded font-bold"
-      >
-         Retour
-      </Link>
+    {/* Boutons de navigation */}
+    <Link
+      href="/menu/apprendre"
+      className="absolute botom-4 right-4 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+    >
+      Apprendre
+    </Link>
+    <Link
+      href="/niveaux/niveaux1"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+    >
+       Retour
+    </Link>
 
       {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
