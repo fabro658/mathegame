@@ -25,7 +25,7 @@ export default function Revision() {
   const completionPercentage = ((currentPage + 1) * 10 / totalQuestions) * 100;
 
   // Générer les questions pour chaque type d'opération
-  const generateAddition = () => {
+  const generateAddition = (): Question[] => {
     return Array.from({ length: totalQuestions / 3 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
@@ -37,7 +37,7 @@ export default function Revision() {
     });
   };
 
-  const generateSubtraction = () => {
+  const generateSubtraction = (): Question[] => {
     return Array.from({ length: totalQuestions / 3 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
@@ -49,7 +49,7 @@ export default function Revision() {
     });
   };
 
-  const generateFraction = () => {
+  const generateFraction = (): Question[] => {
     return Array.from({ length: totalQuestions / 3 }, () => {
       const a1 = Math.floor(Math.random() * 9) + 1;
       const b1 = Math.floor(Math.random() * 9) + 1;
