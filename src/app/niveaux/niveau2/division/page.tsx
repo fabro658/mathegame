@@ -12,9 +12,24 @@ export default function Division() {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Générer les questions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const numerator = Math.floor(Math.random() * 100) + 1;
-    const denominator = Math.floor(Math.random() * 10) + 1;
+  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+    let numerator, denominator;
+
+    // Les premières questions avec des multiples simples
+    if (index < 10) {
+      denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
+      numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
+    } else if (index < 20) {
+      numerator = Math.floor(Math.random() * 100) + 1;
+      denominator = Math.floor(Math.random() * 10) + 1;
+    } else if (index < 30) {
+      numerator = Math.floor(Math.random() * 100) + 1;
+      denominator = Math.floor(Math.random() * 20) + 1;
+    } else {
+      numerator = Math.floor(Math.random() * 100) + 1;
+      denominator = Math.floor(Math.random() * 50) + 1;
+    }
+
     return [numerator, denominator];
   });
 
@@ -72,10 +87,10 @@ export default function Division() {
     }
   };
 
-    // Calcul pour dessiner le cercle de progression
-    const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
-    const strokeWidth = 10; // Définir la largeur du cercle
-    const circumference = 2 * Math.PI * radius;
+  // Calcul pour dessiner le cercle de progression
+  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
+  const strokeWidth = 10; // Définir la largeur du cercle
+  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -104,12 +119,12 @@ export default function Division() {
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
-            />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-            </div>
-          </div>
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">Division</h1>
 
@@ -131,7 +146,6 @@ export default function Division() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  
                 />
               </div>
             ))}
