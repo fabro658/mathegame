@@ -5,7 +5,7 @@ import Link from "next/link"; // Importation du composant Link pour la navigatio
 
 export default function MultiplicationFraction() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 3 lignes
+  const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);

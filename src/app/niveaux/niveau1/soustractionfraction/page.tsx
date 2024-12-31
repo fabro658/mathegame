@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SoustractionFractions() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 3 lignes
+  const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
