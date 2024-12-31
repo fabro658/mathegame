@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link"; // Import de Link pour la navigation
+
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
