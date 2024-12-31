@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Multiplication() {
@@ -11,15 +11,21 @@ export default function Multiplication() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions de multiplication
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const factor1 = Math.floor(Math.random() * 10) + 1;
-    const factor2 = Math.floor(Math.random() * 10) + 1;
-    return [factor1, factor2];
-  });
+  const [questions, setQuestions] = useState<[number, number][]>([]); // État pour stocker les questions
 
-  const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2);
+  useEffect(() => {
+    // Génération des questions uniquement au premier rendu
+    const generatedQuestions = Array.from({ length: totalQuestions }, () => {
+      const factor1 = Math.floor(Math.random() * 10) + 1;
+      const factor2 = Math.floor(Math.random() * 10) + 1;
+      return [factor1, factor2];
+    });
+    setQuestions(generatedQuestions);
+  }, []);
 
+  const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2); // Réponses correctes
+
+  // Calculer le pourcentage de réponses complétées
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
@@ -35,11 +41,13 @@ export default function Multiplication() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
+    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
@@ -47,7 +55,7 @@ export default function Multiplication() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
     });
 
@@ -123,20 +131,25 @@ export default function Multiplication() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>
-                  {factor1} × {factor2}
-                </button>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+            {questions
+              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+              .map(([factor1, factor2], index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <button
+                    className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                    disabled
+                  >
+                    {factor1} × {factor2}
+                  </button>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                    value={answers[currentPage * questionsPerPage + index] || ""}
+                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  />
+                </div>
+              ))}
           </div>
 
           <div className="mt-6 flex gap-4">
@@ -154,6 +167,14 @@ export default function Multiplication() {
             >
               Valider les réponses
             </button>
+            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            )}
           </div>
         </>
       )}
@@ -162,7 +183,7 @@ export default function Multiplication() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
                 <button
                   className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
@@ -171,7 +192,12 @@ export default function Multiplication() {
                   Passer à la série suivante
                 </button>
               ) : (
-                <p className="mt-6 text-blue-500 font-bold">Vous avez terminé toutes les questions !</p>
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  onClick={() => alert("Vous avez complété toutes les questions !")}
+                >
+                  Terminer
+                </button>
               )}
             </div>
           ) : (
