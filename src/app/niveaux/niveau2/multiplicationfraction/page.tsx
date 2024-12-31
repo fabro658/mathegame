@@ -1,3 +1,5 @@
+'use client'; // Ajoute cette ligne en haut du fichier
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
