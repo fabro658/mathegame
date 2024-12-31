@@ -160,7 +160,11 @@ export default function RevisionNiveau2() {
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  className={`border p-4 rounded w-32 text-center text-lg ${
+                    isValidated && answers[currentPage * questionsPerPage + index] !== questions[currentPage * questionsPerPage + index].correctAnswer
+                      ? "border-red-500"
+                      : "border-gray-400"
+                  }`}
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
