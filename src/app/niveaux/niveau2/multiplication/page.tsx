@@ -87,27 +87,28 @@ export default function Multiplication() {
         Apprendre
       </Link>
 
-      {/* Suivi de la progression sous forme de cercle */}
+      {/* cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
             cy="50%"
             r={radius}
-            stroke="gray"
-            strokeWidth="10"
-            fill="transparent"
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+            
           />
           <circle
             cx="50%"
             cy="50%"
             r={radius}
-            stroke={completionPercentage === 100 ? "green" : "orange"}
-            strokeWidth="10"
-            fill="transparent"
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            style={{ transition: "stroke-dashoffset 0.3s ease" }}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
