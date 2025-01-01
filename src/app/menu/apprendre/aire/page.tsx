@@ -3,54 +3,44 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function Aire() {
-  // États pour chaque forme géométrique
-  const [side, setSide] = useState<number | string>("");
-  const [length, setLength] = useState<number | string>("");
-  const [width, setWidth] = useState<number | string>("");
-  const [radius, setRadius] = useState<number | string>("");
-  const [base, setBase] = useState<number | string>("");
-  const [height, setHeight] = useState<number | string>("");
-  const [result, setResult] = useState<string>("");
+export default function AireLearning() {
+  const [selectedShape, setSelectedShape] = useState(null);
 
-  // Fonction pour calculer l'aire du carré
-  const calculateSquareArea = () => {
-    if (typeof side === "number" && side > 0) {
-      const area = Math.pow(side, 2);
-      setResult(`L&apos;aire du carré est ${area} cm².`);
-    } else {
-      setResult("Veuillez entrer une valeur valide pour le côté.");
+  const shapes = [
+    {
+      name: "Carré",
+      description: "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
+      formula: "Aire = côté × côté",
+      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
+    },
+    {
+      name: "Rectangle",
+      description: "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
+      formula: "Aire = longueur × largeur",
+      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
+    },
+    {
+      name: "Triangle",
+      description: "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
+      formula: "Aire = (base × hauteur) ÷ 2",
+      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
+    },
+    {
+      name: "Trapèze",
+      description: "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
+      example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+    },
+    {
+      name: "Cercle",
+      description: "L'aire d'un cercle est calculée en utilisant le rayon.",
+      formula: "Aire = π × rayon²",
+      example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
     }
-  };
+  ];
 
-  // Fonction pour calculer l'aire du rectangle
-  const calculateRectangleArea = () => {
-    if (typeof length === "number" && typeof width === "number" && length > 0 && width > 0) {
-      const area = length * width;
-      setResult(`L&apos;aire du rectangle est ${area} cm².`);
-    } else {
-      setResult("Veuillez entrer des valeurs valides pour la longueur et la largeur.");
-    }
-  };
-
-  // Fonction pour calculer l'aire du cercle
-  const calculateCircleArea = () => {
-    if (typeof radius === "number" && radius > 0) {
-      const area = Math.PI * Math.pow(radius, 2);
-      setResult(`L&apos;aire du cercle est ${area.toFixed(2)} cm².`);
-    } else {
-      setResult("Veuillez entrer une valeur valide pour le rayon.");
-    }
-  };
-
-  // Fonction pour calculer l'aire du triangle
-  const calculateTriangleArea = () => {
-    if (typeof base === "number" && typeof height === "number" && base > 0 && height > 0) {
-      const area = 0.5 * base * height;
-      setResult(`L&apos;aire du triangle est ${area} cm².`);
-    } else {
-      setResult("Veuillez entrer des valeurs valides pour la base et la hauteur.");
-    }
+  const handleSelectShape = (shape) => {
+    setSelectedShape(shape);
   };
 
   return (
@@ -68,100 +58,31 @@ export default function Aire() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Calcul de l&apos;aire des formes géométriques</h1>
-
-      <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg">
-        {/* Calcul de l'aire du carré */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d&apos;un carré</h2>
-          <input
-            type="number"
-            value={side}
-            onChange={(e) => setSide(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Longueur du côté (en cm)"
-          />
+      <h1 className="text-3xl font-bold mb-6">Apprendre à calculer l'aire des formes géométriques</h1>
+      
+      <div className="flex flex-col gap-6">
+        <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son aire :</p>
+        {shapes.map((shape, index) => (
           <button
-            onClick={calculateSquareArea}
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
+            key={index}
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+            onClick={() => handleSelectShape(shape)}
           >
-            Calculer l&apos;aire
+            {shape.name}
           </button>
-        </div>
-
-        {/* Calcul de l'aire du rectangle */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d&apos;un rectangle</h2>
-          <input
-            type="number"
-            value={length}
-            onChange={(e) => setLength(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Longueur (en cm)"
-          />
-          <input
-            type="number"
-            value={width}
-            onChange={(e) => setWidth(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Largeur (en cm)"
-          />
-          <button
-            onClick={calculateRectangleArea}
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
-          >
-            Calculer l&apos;aire
-          </button>
-        </div>
-
-        {/* Calcul de l'aire du cercle */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d&apos;un cercle</h2>
-          <input
-            type="number"
-            value={radius}
-            onChange={(e) => setRadius(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Rayon (en cm)"
-          />
-          <button
-            onClick={calculateCircleArea}
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
-          >
-            Calculer l&apos;aire
-          </button>
-        </div>
-
-        {/* Calcul de l'aire du triangle */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d&apos;un triangle</h2>
-          <input
-            type="number"
-            value={base}
-            onChange={(e) => setBase(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Base (en cm)"
-          />
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(Number(e.target.value))}
-            className="border p-2 mt-2 w-full"
-            placeholder="Hauteur (en cm)"
-          />
-          <button
-            onClick={calculateTriangleArea}
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
-          >
-            Calculer l&apos;aire
-          </button>
-        </div>
-
-        {/* Affichage du résultat */}
-        <div className="mt-6">
-          <p className="text-xl font-bold">{result}</p>
-        </div>
+        ))}
       </div>
+
+      {selectedShape && (
+        <div className="mt-8 p-6 bg-white rounded-lg shadow-lg w-80">
+          <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
+          <p className="text-md mb-4">{selectedShape.description}</p>
+          <p className="text-lg font-bold mb-2">Formule :</p>
+          <p className="text-lg mb-4">{selectedShape.formula}</p>
+          <p className="text-lg font-bold mb-2">Exemple :</p>
+          <p className="text-lg">{selectedShape.example}</p>
+        </div>
+      )}
     </div>
   );
 }
