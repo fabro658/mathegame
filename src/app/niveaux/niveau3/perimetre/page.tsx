@@ -60,7 +60,28 @@ export default function Perimetre() {
   };
 
   const handleValidation = (): void => {
-    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
+    const currentAnswers = answers.slice(
+      currentPage * questionsPerPage,
+      (currentPage + 1) * questionsPerPage
+    );
+
+    const allFilled = currentAnswers.every((answer) => answer !== null && answer.trim() !== "");
+    if (!allFilled) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
+      return;
+    }
+
+    const updatedAnswers = [...answers];
+    let allCorrect = true;
+
+    answers.forEach((answer, index) => {
+      if (answer !== questions[index]?.correctAnswer) {
+        updatedAnswers[index] = null; // Efface uniquement les réponses incorrectes
+        allCorrect = false;
+      }
+    });
+
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -86,7 +107,6 @@ export default function Perimetre() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -94,12 +114,11 @@ export default function Perimetre() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
-
 
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
@@ -130,22 +149,33 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur l&apos;aire</h1>
 
-      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => {
+              const globalIndex = currentPage * questionsPerPage + index;
+              const isIncorrect =
+                isValidated && answers[globalIndex] !== questions[globalIndex]?.correctAnswer;
+
+              return (
+                <div key={index} className="flex flex-col items-start gap-2">
+                  <div
+                    className={`font-bold text-black ${isIncorrect ? "text-red-600" : ""}`}
+                  >
+                    {questionText}
+                  </div>
+                  <input
                     type="text"
                     inputMode="numeric"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                    className={`border p-4 rounded w-32 text-center text-black text-lg ${
+                      isIncorrect ? "border-red-600" : "border-gray-400"
+                    }`}
+                    value={answers[globalIndex] || ""}
+                    onChange={(e) => handleChange(globalIndex, e.target.value)}
                   />
                 </div>
-            ))}
+              );
+            })}
           </div>
           <div className="flex gap-4 mt-6">
             <button
@@ -164,7 +194,7 @@ export default function Perimetre() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
+              disabled={!isValidated || currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
@@ -176,7 +206,9 @@ export default function Perimetre() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-xl">
+                Bravo ! Toutes vos réponses sont correctes.
+              </p>
               <button
                 className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => alert("Vous avez complété toutes les questions !")}
@@ -186,7 +218,9 @@ export default function Perimetre() {
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-xl">
+                Certaines réponses sont incorrectes. Corrigez-les.
+              </p>
               <button
                 className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => setIsValidated(false)}
