@@ -3,10 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function AireLearning() {
-  const [selectedShape, setSelectedShape] = useState(null);
+// Définir le type pour la forme géométrique
+interface Shape {
+  name: string;
+  description: string;
+  formula: string;
+  example: string;
+}
 
-  const shapes = [
+export default function AireLearning() {
+  const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
+
+  const shapes: Shape[] = [
     {
       name: "Carré",
       description: "L&apos;aire d&apos;un carré est calculée en multipliant la longueur de son côté par elle-même.",
@@ -39,7 +47,7 @@ export default function AireLearning() {
     }
   ];
 
-  const handleSelectShape = (shape) => {
+  const handleSelectShape = (shape: Shape): void => {
     setSelectedShape(shape);
   };
 
