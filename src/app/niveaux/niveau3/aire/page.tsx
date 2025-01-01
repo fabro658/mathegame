@@ -22,21 +22,21 @@ export default function Aire() {
 
         if (shapeType === 0) {
           const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un carré de côté ${side} cm ?`;
+          questionText = `Quelle est l&#39;aire d&#39;un carré de côté ${side} cm ?`;
           correctAnswer = side * side;
         } else if (shapeType === 1) {
           const length = Math.floor(Math.random() * 10) + 1;
           const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+          questionText = `Quelle est l&#39;aire d&#39;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
           correctAnswer = length * width;
         } else if (shapeType === 2) {
           const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
+          questionText = `Quelle est l&#39;aire d&#39;un cercle de rayon ${radius} cm ? (π = 3.14)`;
           correctAnswer = Math.PI * radius * radius;
         } else {
           const base = Math.floor(Math.random() * 10) + 1;
           const height = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un triangle de base ${base} cm et de hauteur ${height} cm ?`;
+          questionText = `Quelle est l&#39;aire d&#39;un triangle de base ${base} cm et de hauteur ${height} cm ?`;
           correctAnswer = 0.5 * base * height;
         }
 
@@ -62,7 +62,7 @@ export default function Aire() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q: { correctAnswer: string }) => q.correctAnswer);
 
     const allCorrect = pageAnswers.every((answer, index) => answer === pageCorrectAnswers[index]);
 
@@ -136,7 +136,7 @@ export default function Aire() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l'aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
 
       {/* Affichage des questions */}
       {!isValidated && (
