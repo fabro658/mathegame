@@ -62,12 +62,6 @@ export default function AireLearning() {
       {/* Options des formes à gauche */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
-          href="/menu/apprendre"
-          className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
-        <Link
           href="/niveaux/niveau2"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
         >
@@ -86,11 +80,6 @@ export default function AireLearning() {
               >
                 {shape.name}
               </button>
-              <img 
-                src={shape.imageUrl} 
-                alt={shape.name} 
-                className="w-32 h-32 object-contain mb-4"  // Taille de l'image
-              />
             </div>
           ))}
         </div>
@@ -99,13 +88,22 @@ export default function AireLearning() {
       {/* Formules et explications au centre */}
       <div className="w-3/4 p-8">
         {selectedShape && (
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
             <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
             <p className="text-md mb-4">{selectedShape.description}</p>
             <p className="text-lg font-bold mb-2">Formule :</p>
             <p className="text-lg mb-4">{selectedShape.formula}</p>
             <p className="text-lg font-bold mb-2">Exemple :</p>
             <p className="text-lg">{selectedShape.example}</p>
+            
+            {/* Afficher l'image sous l'espace des formules */}
+            <div className="mt-6 flex justify-center">
+              <img 
+                src={selectedShape.imageUrl} 
+                alt={selectedShape.name} 
+                className="w-48 h-48 object-contain"  // Taille de l'image
+              />
+            </div>
           </div>
         )}
       </div>
