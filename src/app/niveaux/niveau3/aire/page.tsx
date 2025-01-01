@@ -91,6 +91,14 @@ export default function Aire() {
     setAnswers(updatedAnswers); // Mettre à jour les réponses
     setIsValidated(true);
     setHasPassed(allCorrect);
+
+    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
+      // Passer à la série suivante si toutes les réponses sont correctes
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+        setIsValidated(false);
+      }, 1500); // Attendre un peu avant de passer à la série suivante pour l'effet
+    }
   };
 
   // Navigation entre les pages de questions
