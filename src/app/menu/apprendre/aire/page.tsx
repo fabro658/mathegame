@@ -18,37 +18,37 @@ export default function AireLearning() {
   const shapes: Shape[] = [
     {
       name: "Carré",
-      description: "L&apos;aire d&apos;un carré est calculée en multipliant la longueur de son côté par elle-même.",
+      description: "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
       formula: "Aire = côté × côté",
-      example: "Si le côté mesure 5 cm, l&apos;aire est : 5 × 5 = 25 cm²",
+      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
       imageUrl: "/images/carre.png",  // Image du carré
     },
     {
       name: "Rectangle",
-      description: "L&apos;aire d&apos;un rectangle est calculée en multipliant sa longueur par sa largeur.",
+      description: "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = longueur × largeur",
-      example: "Si la longueur est 6 cm et la largeur est 4 cm, l&apos;aire est : 6 × 4 = 24 cm²",
+      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
       imageUrl: "/images/rectangle.png",  // Image du rectangle
     },
     {
       name: "Triangle",
-      description: "L&apos;aire d&apos;un triangle est calculée en utilisant la base et la hauteur.",
+      description: "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
-      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l&apos;aire est : (8 × 5) ÷ 2 = 20 cm²",
+      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
       imageUrl: "/images/triangle.png",  // Image du triangle
     },
     {
       name: "Trapèze",
-      description: "L&apos;aire d&apos;un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      description: "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l&apos;aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
       imageUrl: "/images/trapeze.png",  // Image du trapèze
     },
     {
       name: "Cercle",
-      description: "L&apos;aire d&apos;un cercle est calculée en utilisant le rayon.",
+      description: "L'aire d'un cercle est calculée en utilisant le rayon.",
       formula: "Aire = π × rayon²",
-      example: "Si le rayon est 7 cm, l&apos;aire est : 3.14 × 7² = 153.86 cm²",
+      example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
       imageUrl: "/images/cercle.png",  // Image du cercle
     }
   ];
@@ -62,7 +62,7 @@ export default function AireLearning() {
       {/* Options des formes à gauche */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
-          href="/niveaux/niveau2"
+          href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
         >
           Retour
@@ -85,8 +85,8 @@ export default function AireLearning() {
         </div>
       </div>
 
-      {/* Formules et explications au centre */}
-      <div className="w-3/4 p-8">
+      {/* Formules et explications au centre avec un peu de marge en haut */}
+      <div className="w-3/4 p-8 mt-12"> {/* Ajout de mt-12 pour la marge en haut */}
         {selectedShape && (
           <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
             <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
