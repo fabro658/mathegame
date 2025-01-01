@@ -73,12 +73,16 @@ export default function Aire() {
       return; // Empêche la validation si des réponses sont vides
     }
 
-    // Vérifier les réponses
+    // Vérifier les réponses avec une marge d'erreur
+    const marginOfError = 0.01;
     let allCorrect = true;
     const updatedAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
-      if (answer !== pageCorrectAnswers[index]) {
+      const userAnswer = parseFloat(answer || "0");
+      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
+
+      if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
         updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
         allCorrect = false;
       }
