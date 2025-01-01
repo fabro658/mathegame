@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Perimetre() {
-  const totalQuestions = 30; // 30 questions au total
-  const questionsPerPage = 3; // 3 questions par vague
+  const totalQuestions = 30;
+  const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
@@ -48,7 +48,7 @@ export default function Perimetre() {
     };
 
     setQuestions(generateQuestions());
-  }, []); // La liste de dépendances vide garantit que cette fonction est exécutée une seule fois.
+  }, []);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -60,28 +60,12 @@ export default function Perimetre() {
   };
 
   const handleValidation = (): void => {
-    const currentAnswers = answers.slice(
-      currentPage * questionsPerPage,
-      (currentPage + 1) * questionsPerPage
-    );
-
-    const allFilled = currentAnswers.every((answer) => answer !== null && answer.trim() !== "");
-    if (!allFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
-      return;
-    }
-
-    const updatedAnswers = [...answers];
-    let allCorrect = true;
-
-    answers.forEach((answer, index) => {
-      if (answer !== questions[index]?.correctAnswer) {
-        updatedAnswers[index] = null; // Efface uniquement les réponses incorrectes
-        allCorrect = false;
-      }
+    const allCorrect = answers.every((answer, index) => {
+      const numericAnswer = parseFloat(answer || "");
+      const correctAnswer = parseFloat(questions[index]?.correctAnswer || "");
+      return Math.abs(numericAnswer - correctAnswer) < 0.01;
     });
 
-    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -100,9 +84,8 @@ export default function Perimetre() {
     }
   };
 
-  // Variables pour la barre circulaire
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -152,30 +135,22 @@ export default function Perimetre() {
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => {
-              const globalIndex = currentPage * questionsPerPage + index;
-              const isIncorrect =
-                isValidated && answers[globalIndex] !== questions[globalIndex]?.correctAnswer;
-
-              return (
-                <div key={index} className="flex flex-col items-start gap-2">
-                  <div
-                    className={`font-bold text-black ${isIncorrect ? "text-red-600" : ""}`}
-                  >
-                    {questionText}
-                  </div>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className={`border p-4 rounded w-32 text-center text-black text-lg ${
-                      isIncorrect ? "border-red-600" : "border-gray-400"
-                    }`}
-                    value={answers[globalIndex] || ""}
-                    onChange={(e) => handleChange(globalIndex, e.target.value)}
-                  />
-                </div>
-              );
-            })}
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+              <div key={index} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`border p-4 rounded w-32 text-center text-lg ${
+                    isValidated && answers[currentPage * questionsPerPage + index] !== questions[currentPage * questionsPerPage + index]?.correctAnswer
+                      ? "border-red-500"
+                      : "border-gray-400"
+                  }`}
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
           </div>
           <div className="flex gap-4 mt-6">
             <button
@@ -194,7 +169,7 @@ export default function Perimetre() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={!isValidated || currentPage === totalQuestions / questionsPerPage - 1}
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
             >
               Suivant
             </button>
@@ -206,9 +181,7 @@ export default function Perimetre() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">
-                Bravo ! Toutes vos réponses sont correctes.
-              </p>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
                 className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => alert("Vous avez complété toutes les questions !")}
@@ -218,9 +191,7 @@ export default function Perimetre() {
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">
-                Certaines réponses sont incorrectes. Corrigez-les.
-              </p>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
                 className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
                 onClick={() => setIsValidated(false)}
