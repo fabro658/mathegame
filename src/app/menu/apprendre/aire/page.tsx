@@ -58,51 +58,57 @@ export default function AireLearning() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/menu/apprendre"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+    <div className="flex min-h-screen bg-gray-100 text-black">
+      {/* Options des formes à gauche */}
+      <div className="w-1/4 bg-white p-6 shadow-lg">
+        <Link
+          href="/menu/apprendre"
+          className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        >
+          Apprendre
+        </Link>
+        <Link
+          href="/niveaux/niveau2"
+          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Retour
+        </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Apprendre à calculer l&apos;aire des formes géométriques</h1>
-      
-      <div className="flex flex-col gap-6">
-        <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son aire :</p>
-        {shapes.map((shape, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <button
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
-              onClick={() => handleSelectShape(shape)}
-            >
-              {shape.name}
-            </button>
-            <img 
-              src={shape.imageUrl} 
-              alt={shape.name} 
-              className="w-32 h-32 object-contain mb-4"  // Taille de l'image
-            />
-          </div>
-        ))}
+        <h1 className="text-3xl font-bold mb-6">Formes géométriques</h1>
+        
+        <div className="flex flex-col gap-6">
+          <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son aire :</p>
+          {shapes.map((shape, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
+                onClick={() => handleSelectShape(shape)}
+              >
+                {shape.name}
+              </button>
+              <img 
+                src={shape.imageUrl} 
+                alt={shape.name} 
+                className="w-32 h-32 object-contain mb-4"  // Taille de l'image
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {selectedShape && (
-        <div className="mt-8 p-6 bg-white rounded-lg shadow-lg w-80">
-          <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
-          <p className="text-md mb-4">{selectedShape.description}</p>
-          <p className="text-lg font-bold mb-2">Formule :</p>
-          <p className="text-lg mb-4">{selectedShape.formula}</p>
-          <p className="text-lg font-bold mb-2">Exemple :</p>
-          <p className="text-lg">{selectedShape.example}</p>
-        </div>
-      )}
+      {/* Formules et explications au centre */}
+      <div className="w-3/4 p-8">
+        {selectedShape && (
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
+            <p className="text-md mb-4">{selectedShape.description}</p>
+            <p className="text-lg font-bold mb-2">Formule :</p>
+            <p className="text-lg mb-4">{selectedShape.formula}</p>
+            <p className="text-lg font-bold mb-2">Exemple :</p>
+            <p className="text-lg">{selectedShape.example}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
