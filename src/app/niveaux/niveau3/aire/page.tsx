@@ -6,13 +6,13 @@ import Link from "next/link";
 export default function Aire() {
   const totalQuestions = 30; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
-  const [questions, setQuestions] = useState([]); // État pour les questions
+
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]); // Typage explicite
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions lors du montage
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
@@ -42,13 +42,14 @@ export default function Aire() {
 
         return {
           questionText,
-          correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
+          correctAnswer: correctAnswer.toFixed(2),
         };
       });
     };
 
     setQuestions(generateQuestions());
-  }, []); // Exécuté uniquement au montage
+  }, []);
+
 
   // Gestion des changements de réponses
   const handleChange = (index: number, value: string): void => {
