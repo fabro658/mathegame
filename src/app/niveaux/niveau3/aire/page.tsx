@@ -216,21 +216,15 @@ export default function Aire() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
+              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <button className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => alert("Vous avez complété toutes les questions !")}>
                 Terminer
               </button>
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
+              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <button className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => setIsValidated(false)}>
                 Revenir pour corriger
               </button>
             </div>
