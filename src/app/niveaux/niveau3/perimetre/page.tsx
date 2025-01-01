@@ -147,7 +147,7 @@ export default function Perimetre() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l&apos;aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
       {!isValidated && (
         <>
