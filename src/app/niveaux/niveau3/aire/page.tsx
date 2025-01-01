@@ -1,51 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Aire() {
   const totalQuestions = 30; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
+  const [questions, setQuestions] = useState([]); // État pour les questions
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const shapeType = Math.floor(Math.random() * 4);
-    let questionText = "";
-    let correctAnswer = 0;
+  // Génération des questions lors du montage
+  useEffect(() => {
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, () => {
+        const shapeType = Math.floor(Math.random() * 4);
+        let questionText = "";
+        let correctAnswer = 0;
 
-    if (shapeType === 0) {
-      const side = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quelle est l&#39;aire d&#39;un carré de côté ${side} cm ?`;
-      correctAnswer = side * side;
-    } else if (shapeType === 1) {
-      const length = Math.floor(Math.random() * 10) + 1;
-      const width = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quelle est l&#39;aire d&#39;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-      correctAnswer = length * width;
-    } else if (shapeType === 2) {
-      const radius = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quelle est l&#39;aire d&#39;un cercle de rayon ${radius} cm ? (π = 3.14)`;
-      correctAnswer = Math.PI * radius * radius;
-    } else {
-      const base = Math.floor(Math.random() * 10) + 1;
-      const height = Math.floor(Math.random() * 10) + 1;
-      questionText = `Quelle est l&#39;aire d&#39;un triangle de base ${base} cm et de hauteur ${height} cm ?`;
-      correctAnswer = 0.5 * base * height;
-    }
+        if (shapeType === 0) {
+          const side = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quelle est l'aire d'un carré de côté ${side} cm ?`;
+          correctAnswer = side * side;
+        } else if (shapeType === 1) {
+          const length = Math.floor(Math.random() * 10) + 1;
+          const width = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quelle est l'aire d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+          correctAnswer = length * width;
+        } else if (shapeType === 2) {
+          const radius = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quelle est l'aire d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
+          correctAnswer = Math.PI * radius * radius;
+        } else {
+          const base = Math.floor(Math.random() * 10) + 1;
+          const height = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quelle est l'aire d'un triangle de base ${base} cm et de hauteur ${height} cm ?`;
+          correctAnswer = 0.5 * base * height;
+        }
 
-    return {
-      questionText,
-      correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
+        return {
+          questionText,
+          correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
+        };
+      });
     };
-  });
 
-  // Calcul de la progression
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+    setQuestions(generateQuestions());
+  }, []); // Exécuté uniquement au montage
 
   // Gestion des changements de réponses
   const handleChange = (index: number, value: string): void => {
@@ -66,8 +69,9 @@ export default function Aire() {
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
-   // Navigation entre les pages de questions
-   const handleNextPage = (): void => {
+
+  // Navigation entre les pages de questions
+  const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
@@ -80,6 +84,10 @@ export default function Aire() {
       setIsValidated(false);
     }
   };
+
+  // Calcul de la progression
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   // Variables pour la barre circulaire
   const radius = 50; // Rayon du cercle
@@ -128,12 +136,12 @@ export default function Aire() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l'aire</h1>
 
       {/* Affichage des questions */}
       {!isValidated && (
         <>
-         <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>

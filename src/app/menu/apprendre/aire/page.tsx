@@ -17,7 +17,7 @@ export default function Aire() {
   const calculateSquareArea = () => {
     if (typeof side === "number" && side > 0) {
       const area = Math.pow(side, 2);
-      setResult(`L'aire du carré est ${area} cm².`);
+      setResult(`L&apos;aire du carré est ${area} cm².`);
     } else {
       setResult("Veuillez entrer une valeur valide pour le côté.");
     }
@@ -27,7 +27,7 @@ export default function Aire() {
   const calculateRectangleArea = () => {
     if (typeof length === "number" && typeof width === "number" && length > 0 && width > 0) {
       const area = length * width;
-      setResult(`L'aire du rectangle est ${area} cm².`);
+      setResult(`L&apos;aire du rectangle est ${area} cm².`);
     } else {
       setResult("Veuillez entrer des valeurs valides pour la longueur et la largeur.");
     }
@@ -37,7 +37,7 @@ export default function Aire() {
   const calculateCircleArea = () => {
     if (typeof radius === "number" && radius > 0) {
       const area = Math.PI * Math.pow(radius, 2);
-      setResult(`L'aire du cercle est ${area.toFixed(2)} cm².`);
+      setResult(`L&apos;aire du cercle est ${area.toFixed(2)} cm².`);
     } else {
       setResult("Veuillez entrer une valeur valide pour le rayon.");
     }
@@ -47,7 +47,7 @@ export default function Aire() {
   const calculateTriangleArea = () => {
     if (typeof base === "number" && typeof height === "number" && base > 0 && height > 0) {
       const area = 0.5 * base * height;
-      setResult(`L'aire du triangle est ${area} cm².`);
+      setResult(`L&apos;aire du triangle est ${area} cm².`);
     } else {
       setResult("Veuillez entrer des valeurs valides pour la base et la hauteur.");
     }
@@ -68,12 +68,12 @@ export default function Aire() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Calcul de l'aire des formes géométriques</h1>
+      <h1 className="text-3xl font-bold mb-6">Calcul de l&apos;aire des formes géométriques</h1>
 
       <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg">
         {/* Calcul de l'aire du carré */}
         <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d'un carré</h2>
+          <h2 className="text-xl font-semibold">Aire d&apos;un carré</h2>
           <input
             type="number"
             value={side}
@@ -85,13 +85,13 @@ export default function Aire() {
             onClick={calculateSquareArea}
             className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
           >
-            Calculer l'aire
+            Calculer l&apos;aire
           </button>
         </div>
 
         {/* Calcul de l'aire du rectangle */}
         <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d'un rectangle</h2>
+          <h2 className="text-xl font-semibold">Aire d&apos;un rectangle</h2>
           <input
             type="number"
             value={length}
@@ -110,13 +110,13 @@ export default function Aire() {
             onClick={calculateRectangleArea}
             className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
           >
-            Calculer l'aire
+            Calculer l&apos;aire
           </button>
         </div>
 
         {/* Calcul de l'aire du cercle */}
         <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d'un cercle</h2>
+          <h2 className="text-xl font-semibold">Aire d&apos;un cercle</h2>
           <input
             type="number"
             value={radius}
@@ -128,13 +128,13 @@ export default function Aire() {
             onClick={calculateCircleArea}
             className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
           >
-            Calculer l'aire
+            Calculer l&apos;aire
           </button>
         </div>
 
         {/* Calcul de l'aire du triangle */}
         <div className="mb-6">
-          <h2 className="text-xl font-semibold">Aire d'un triangle</h2>
+          <h2 className="text-xl font-semibold">Aire d&apos;un triangle</h2>
           <input
             type="number"
             value={base}
@@ -153,7 +153,7 @@ export default function Aire() {
             onClick={calculateTriangleArea}
             className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
           >
-            Calculer l'aire
+            Calculer l&apos;aire
           </button>
         </div>
 
