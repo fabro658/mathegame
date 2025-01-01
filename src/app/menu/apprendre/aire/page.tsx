@@ -9,6 +9,7 @@ interface Shape {
   description: string;
   formula: string;
   example: string;
+  imageUrl: string;  // URL de l'image pour chaque forme
 }
 
 export default function AireLearning() {
@@ -20,30 +21,35 @@ export default function AireLearning() {
       description: "L&apos;aire d&apos;un carré est calculée en multipliant la longueur de son côté par elle-même.",
       formula: "Aire = côté × côté",
       example: "Si le côté mesure 5 cm, l&apos;aire est : 5 × 5 = 25 cm²",
+      imageUrl: "/images/carre.png",  // Image du carré
     },
     {
       name: "Rectangle",
       description: "L&apos;aire d&apos;un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = longueur × largeur",
       example: "Si la longueur est 6 cm et la largeur est 4 cm, l&apos;aire est : 6 × 4 = 24 cm²",
+      imageUrl: "/images/rectangle.png",  // Image du rectangle
     },
     {
       name: "Triangle",
       description: "L&apos;aire d&apos;un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
       example: "Si la base mesure 8 cm et la hauteur est 5 cm, l&apos;aire est : (8 × 5) ÷ 2 = 20 cm²",
+      imageUrl: "/images/triangle.png",  // Image du triangle
     },
     {
       name: "Trapèze",
       description: "L&apos;aire d&apos;un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
       example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l&apos;aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      imageUrl: "/images/trapeze.png",  // Image du trapèze
     },
     {
       name: "Cercle",
       description: "L&apos;aire d&apos;un cercle est calculée en utilisant le rayon.",
       formula: "Aire = π × rayon²",
       example: "Si le rayon est 7 cm, l&apos;aire est : 3.14 × 7² = 153.86 cm²",
+      imageUrl: "/images/cercle.png",  // Image du cercle
     }
   ];
 
@@ -60,7 +66,7 @@ export default function AireLearning() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/menu/apprendre"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -71,13 +77,19 @@ export default function AireLearning() {
       <div className="flex flex-col gap-6">
         <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son aire :</p>
         {shapes.map((shape, index) => (
-          <button
-            key={index}
-            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-            onClick={() => handleSelectShape(shape)}
-          >
-            {shape.name}
-          </button>
+          <div key={index} className="flex flex-col items-center">
+            <button
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
+              onClick={() => handleSelectShape(shape)}
+            >
+              {shape.name}
+            </button>
+            <img 
+              src={shape.imageUrl} 
+              alt={shape.name} 
+              className="w-32 h-32 object-contain mb-4"  // Taille de l'image
+            />
+          </div>
         ))}
       </div>
 
