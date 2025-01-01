@@ -50,7 +50,6 @@ export default function Aire() {
     setQuestions(generateQuestions());
   }, []);
 
-
   // Gestion des changements de réponses
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
@@ -214,14 +213,7 @@ export default function Aire() {
       {/* Résultats de validation */}
       {isValidated && (
         <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => alert("Vous avez complété toutes les questions !")}>
-                Terminer
-              </button>
-            </div>
-          ) : (
+          {!hasPassed && (
             <div>
               <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => setIsValidated(false)}>
