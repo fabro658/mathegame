@@ -6,22 +6,6 @@ export default function Page() {
       </h1>
       <div className="flex flex-col gap-4 text-lg w-full pl-0">
         {/* Menu complètement collé à gauche */}
-        <a href="/menu/apprendre/addition" 
-        className="hover:underline text-gray-700">
-          Addition
-        </a>
-        <a href="/menu/apprendre/soustraction" 
-        className="hover:underline text-gray-700">
-          Soustraction
-        </a>
-        <a href="/menu/apprendre/multiplication" 
-        className="hover:underline text-gray-700">
-          Multiplication
-        </a>
-        <a href="/menu/apprendre/division" 
-        className="hover:underline text-gray-700">
-          Division
-        </a>
         <a href="/menu/apprendre/fraction"
         className="hover:underline text-gray-700">
           Fraction
