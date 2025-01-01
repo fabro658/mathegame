@@ -184,45 +184,59 @@ export default function Aire() {
                 />
               </div>
             ))}
-          </div>
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {/* Résultats de validation */}
-      {isValidated && (
-        <>
-          {!hasPassed && (
-            <div>
-              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
+            </div>
+  
+            <div className="mt-6 flex gap-4">
+              <button
+                onClick={handlePreviousPage}
+                className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                disabled={currentPage === 0}
+              >
+                Précédent
+              </button>
+              <button
+                onClick={handleValidation}
+                className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              >
+                Valider les réponses
+              </button>
+              <button
+                onClick={handleNextPage}
+                className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+              >
+                Suivant
               </button>
             </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
+          </>
+        )}
+  
+        {isValidated && (
+          <>
+            {hasPassed ? (
+              <div>
+                <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+                <button
+                  className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                  onClick={handleNextPage}
+                >
+                  Suivant
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+                <button
+                  className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                  onClick={() => setIsValidated(false)}
+                >
+                  Revenir pour corriger
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
+  
