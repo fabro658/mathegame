@@ -86,7 +86,7 @@ export default function Perimetre() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
+
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -94,13 +94,13 @@ export default function Perimetre() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau3"
+        href="/niveaux/niveau2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      {/* Barre circulaire */}
+
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -123,10 +123,14 @@ export default function Perimetre() {
             className="transition-all duration-500"
           />
         </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le Périmètre</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&apos;aire</h1>
 
+      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
@@ -134,11 +138,13 @@ export default function Perimetre() {
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
-                  type="number"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
+                    type="text"
+                    inputMode="numeric"
+                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                    value={answers[currentPage * questionsPerPage + index] || ""}
+                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  />
+                </div>
             ))}
           </div>
           <div className="flex gap-4 mt-6">
