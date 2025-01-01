@@ -132,6 +132,7 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
+      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
@@ -141,67 +142,65 @@ export default function Perimetre() {
                 <input
                   type="text"
                   inputMode="numeric"
-                  className={`border p-4 rounded w-32 text-center text-lg ${
-                    isValidated && answers[currentPage * questionsPerPage + index] !== questions[currentPage * questionsPerPage + index]?.correctAnswer
-                      ? "border-red-500"
-                      : "border-gray-400"
-                  }`}
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
-          </div>
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+            </div>
+  
+            <div className="mt-6 flex gap-4">
               <button
-                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
+                onClick={handlePreviousPage}
+                className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                disabled={currentPage === 0}
               >
-                Terminer
+                Précédent
+              </button>
+              <button
+                onClick={handleValidation}
+                className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              >
+                Valider les réponses
+              </button>
+              <button
+                onClick={handleNextPage}
+                className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+              >
+                Suivant
               </button>
             </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
+          </>
+        )}
+  
+        {isValidated && (
+          <>
+            {hasPassed ? (
+              <div>
+                <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+                <button
+                  className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                  onClick={handleNextPage}
+                >
+                  Suivant
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+                <button
+                  className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                  onClick={() => setIsValidated(false)}
+                >
+                  Revenir pour corriger
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
+  
