@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Aire() {
@@ -11,41 +11,37 @@ export default function Aire() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions, une seule fois
-  const questions = useMemo(
-    () =>
-      Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 4);
-        let questionText = "";
-        let correctAnswer = 0;
+  // Génération des questions
+  const questions = Array.from({ length: totalQuestions }, () => {
+    const shapeType = Math.floor(Math.random() * 4);
+    let questionText = "";
+    let correctAnswer = 0;
 
-        if (shapeType === 0) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un carré de côté ${side} cm ?`;
-          correctAnswer = side * side;
-        } else if (shapeType === 1) {
-          const length = Math.floor(Math.random() * 10) + 1;
-          const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-          correctAnswer = length * width;
-        } else if (shapeType === 2) {
-          const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
-          correctAnswer = Math.PI * radius * radius;
-        } else {
-          const base = Math.floor(Math.random() * 10) + 1;
-          const height = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un triangle de base ${base} cm et de hauteur ${height} cm ?`;
-          correctAnswer = 0.5 * base * height;
-        }
+    if (shapeType === 0) {
+      const side = Math.floor(Math.random() * 10) + 1;
+      questionText = `Quelle est l&#39;aire d&#39;un carré de côté ${side} cm ?`;
+      correctAnswer = side * side;
+    } else if (shapeType === 1) {
+      const length = Math.floor(Math.random() * 10) + 1;
+      const width = Math.floor(Math.random() * 10) + 1;
+      questionText = `Quelle est l&#39;aire d&#39;un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+      correctAnswer = length * width;
+    } else if (shapeType === 2) {
+      const radius = Math.floor(Math.random() * 10) + 1;
+      questionText = `Quelle est l&#39;aire d&#39;un cercle de rayon ${radius} cm ? (π = 3.14)`;
+      correctAnswer = Math.PI * radius * radius;
+    } else {
+      const base = Math.floor(Math.random() * 10) + 1;
+      const height = Math.floor(Math.random() * 10) + 1;
+      questionText = `Quelle est l&#39;aire d&#39;un triangle de base ${base} cm et de hauteur ${height} cm ?`;
+      correctAnswer = 0.5 * base * height;
+    }
 
-        return {
-          questionText,
-          correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
-        };
-      }),
-    [] // Vide pour s'assurer que les questions sont générées une seule fois
-  );
+    return {
+      questionText,
+      correctAnswer: correctAnswer.toFixed(2), // Conversion en chaîne de caractères
+    };
+  });
 
   // Calcul de la progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -133,25 +129,24 @@ export default function Aire() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l'aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
 
+      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions
-              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(({ questionText }, index) => (
-                <div key={index} className="flex flex-col items-start gap-2">
-                  <div className="font-bold text-black">{questionText}</div>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
-                </div>
-              ))}
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+              <div key={index} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
           </div>
           <div className="flex gap-4 mt-6">
             <button
@@ -178,6 +173,7 @@ export default function Aire() {
         </>
       )}
 
+      {/* Résultats de validation */}
       {isValidated && (
         <>
           {hasPassed ? (
@@ -185,7 +181,7 @@ export default function Aire() {
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
                 className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
+                onClick={() => alert("Vous avez complété toutes les questions !")}
               >
                 Terminer
               </button>
