@@ -141,11 +141,13 @@ export default function Aire() {
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
-                  type="number"
-                  className="border border-gray-400 p-2 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
+                    type="text"
+                    inputMode="numeric"
+                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                    value={answers[currentPage * questionsPerPage + index] || ""}
+                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  />
+                </div>
             ))}
           </div>
           <div className="flex gap-4 mt-6">
