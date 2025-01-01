@@ -65,8 +65,26 @@ export default function Aire() {
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q: { correctAnswer: string }) => q.correctAnswer);
 
-    const allCorrect = pageAnswers.every((answer, index) => answer === pageCorrectAnswers[index]);
+    // Vérifier si toutes les réponses sont remplies
+    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
 
+    if (!allAnswersFilled) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
+      return; // Empêche la validation si des réponses sont vides
+    }
+
+    // Vérifier les réponses
+    let allCorrect = true;
+    const updatedAnswers = [...answers];
+
+    pageAnswers.forEach((answer, index) => {
+      if (answer !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
+        allCorrect = false;
+      }
+    });
+
+    setAnswers(updatedAnswers); // Mettre à jour les réponses
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
@@ -104,7 +122,7 @@ export default function Aire() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
