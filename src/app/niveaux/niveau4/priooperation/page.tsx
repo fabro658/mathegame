@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function PrioOperationsLearning() {
-  const totalQuestions = 36;
+  const totalQuestions = 30; // Nombre total de questions
   const questionsPerPage = 6;
   const radius = 50;
   const strokeWidth = 10;
@@ -23,22 +23,22 @@ export default function PrioOperationsLearning() {
         const num1 = Math.floor(Math.random() * 10) + 1;
         const num2 = Math.floor(Math.random() * 10) + 1;
         const num3 = Math.floor(Math.random() * 10) + 1;
-        const operator1 = ["+", "-"][Math.floor(Math.random() * 2)];
+        const operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
         const operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
 
         // Première série : Parenthèses simples avec addition et soustraction
-        if (i < 12) {
+        if (i < 10) {
           const question = `(${num1} ${operator1} ${num2})`;
-          const correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
+          const correctAnswer = operator1 === "+" ? num1 + num2 : operator1 === "-" ? num1 - num2 : 0;
           questionsArray.push({
             question,
             correctAnswer: correctAnswer.toString(),
           });
         }
         // Deuxième série : Parenthèses avec toutes les opérations
-        else if (i < 24) {
+        else if (i < 20) {
           const question = `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
-          let correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
+          let correctAnswer = operator1 === "+" ? num1 + num2 : operator1 === "-" ? num1 - num2 : 0;
           if (operator2 === "+") correctAnswer += num3;
           if (operator2 === "-") correctAnswer -= num3;
           if (operator2 === "*") correctAnswer *= num3;
@@ -51,7 +51,7 @@ export default function PrioOperationsLearning() {
         // Troisième série : Parenthèses imbriquées avec plusieurs termes
         else {
           const question = `(${num1} ${operator1} ${num2}) ${operator2} (${num3} ${operator1} ${num2})`;
-          let correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
+          let correctAnswer = operator1 === "+" ? num1 + num2 : operator1 === "-" ? num1 - num2 : 0;
           if (operator2 === "+") correctAnswer += num3 + num2;
           if (operator2 === "-") correctAnswer -= num3 - num2;
           if (operator2 === "*") correctAnswer *= num3 * num2;
