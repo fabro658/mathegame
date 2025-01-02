@@ -18,13 +18,13 @@ export default function PrioOperationsLearning() {
 
   useEffect(() => {
     const generateQuestions = () => {
-      let questionsArray = [];
+      const questionsArray: { question: string; correctAnswer: string }[] = [];  // Use 'const' here
       for (let i = 0; i < totalQuestions; i++) {
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let num3 = Math.floor(Math.random() * 10) + 1;
-        let operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
-        let operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
+        const num1 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
+        const num2 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
+        const num3 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
+        const operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
+        const operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
 
         // Début de la première série simple
         if (i < 12) {
