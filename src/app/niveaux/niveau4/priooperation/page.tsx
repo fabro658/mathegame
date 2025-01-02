@@ -32,7 +32,7 @@ export default function PrioriteOperations() {
         else if (index < 24) {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
-          num3 = Math.floor(Math.random() * 10) + 1;
+          num3 = Math.floor(Math.random() * 10) + 1; // Assigner num3 ici
           operator1 = "+";
           operator2 = "*";
         }
