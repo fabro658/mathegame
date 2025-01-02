@@ -16,22 +16,34 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12 underline">Zone d&apos;apprentissage</h1>
       <div className="flex flex-col gap-4 text-lg w-full pl-0">
         {/* Menu complètement collé à gauche */}
-        <Link href="/menu/apprendre/opérations arithmétiques" className="hover:underline text-gray-700">
-          opérations arithmétiques
+        <Link href="/menu/apprendre/opérations arithmétiques" 
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            >
+            opérations arithmétiques
         </Link>
-        <Link href="/menu/apprendre/fraction" className="hover:underline text-gray-700">
-          Fraction
+        <Link href="/menu/apprendre/fraction" 
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            >
+            Fraction
         </Link>
-        <Link href="/menu/apprendre/aire" className="hover:underline text-gray-700">
+        <Link href="/menu/apprendre/aire" 
+        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
           Aire
         </Link>
-        <Link href="/menu/apprendre/perimetre" className="hover:underline text-gray-700">
+        <Link href="/menu/apprendre/perimetre" 
+        className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
           Périmètre
         </Link>
-        <Link href="/menu/apprendre/algebre" className="hover:underline text-gray-700">
+        <Link href="/menu/apprendre/algebre" 
+        className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
           Algèbre
         </Link>
-        <Link href="/menu/apprendre/priorite operation" className="hover:underline text-gray-700">
+        <Link href="/menu/apprendre/priorite operation" 
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
           Priorité d&apos;opération
         </Link>
       </div>
