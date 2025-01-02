@@ -1,8 +1,29 @@
-// src/app/page1.tsx
-export default function page5() {
+import Link from 'next/link';
+
+export default function Page() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold">Page 5</h1>
-    </div>
-  );
-}
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
+      <h1 className="text-4xl font-bold mb-12">Niveau 5 - Choisissez une opération</h1>
+      <div className="grid grid-cols-2 gap-8">
+      <Link
+        href="/"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
+      <Link
+          href="/niveaux/niveau5/fonction"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          >
+          Fonction
+          </Link>
+          <Link
+          href="/niveaux/niveau4/operationalgebre"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+        >
+          Oprération algébrique
+          </Link>
+        </div>
+      </div>
+    );
+  }

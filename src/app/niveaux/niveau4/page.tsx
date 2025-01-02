@@ -1,4 +1,4 @@
-import Link from 'next/link'; // Si vous utilisez Next.js
+import Link from 'next/link'; 
 
 export default function Page() {
   return (
