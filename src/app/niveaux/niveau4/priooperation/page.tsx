@@ -91,17 +91,16 @@ export default function PrioOperationsLearning() {
       const globalIndex = startIndex + index;
       const correctAnswer = questions[globalIndex]?.correctAnswer;
   
-      // Conversion de la réponse en nombre pour une comparaison plus précise
       if (answer && correctAnswer) {
         const parsedAnswer = parseFloat(answer);
         const parsedCorrectAnswer = parseFloat(correctAnswer);
   
-        // Arrondi les deux valeurs à deux décimales pour comparer les résultats
-        const roundedAnswer = Math.round(parsedAnswer * 100) / 100;
-        const roundedCorrectAnswer = Math.round(parsedCorrectAnswer * 100) / 100;
+        // Utilisation d'une tolérance pour comparer les résultats
+        const tolerance = 0.01;  // Tolérance de 0.01 pour éviter les erreurs d'arrondi
+        const diff = Math.abs(parsedAnswer - parsedCorrectAnswer);
   
-        // Vérification si les réponses arrondies sont égales
-        if (roundedAnswer !== roundedCorrectAnswer) {
+        // Vérification si la différence est inférieure à la tolérance
+        if (diff > tolerance) {
           allCorrect = false;
           newAnswers[globalIndex] = null;
         }
@@ -115,6 +114,7 @@ export default function PrioOperationsLearning() {
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
+  
   
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
