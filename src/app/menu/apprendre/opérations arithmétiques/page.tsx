@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Définir le type pour l'opération mathématique
+// Définir le type pour les opérations
 interface Operation {
   name: string;
   description: string;
@@ -17,27 +17,27 @@ export default function OperationsLearning() {
   const operations: Operation[] = [
     {
       name: "Addition",
-      description: "L'addition est une opération mathématique qui consiste à additionner deux nombres.",
+      description: "L'addition consiste à ajouter des nombres ensemble.",
       formula: "A + B",
-      example: "Si A = 3 et B = 5, l'addition donne : 3 + 5 = 8",
+      example: "Exemple : 3 + 2 = 5",
     },
     {
       name: "Soustraction",
-      description: "La soustraction est une opération mathématique qui consiste à soustraire un nombre d'un autre.",
+      description: "La soustraction consiste à retirer un nombre d'un autre.",
       formula: "A - B",
-      example: "Si A = 8 et B = 5, la soustraction donne : 8 - 5 = 3",
+      example: "Exemple : 5 - 2 = 3",
     },
     {
       name: "Multiplication",
-      description: "La multiplication est une opération mathématique qui consiste à multiplier deux nombres.",
+      description: "La multiplication est une manière rapide d'ajouter le même nombre plusieurs fois.",
       formula: "A × B",
-      example: "Si A = 4 et B = 6, la multiplication donne : 4 × 6 = 24",
+      example: "Exemple : 3 × 2 = 6 (c'est comme ajouter 3 + 3)",
     },
     {
       name: "Division",
-      description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
+      description: "La division consiste à partager un nombre en parts égales.",
       formula: "A ÷ B",
-      example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
+      example: "Exemple : 6 ÷ 2 = 3 (on partage 6 en 2 parts égales)",
     }
   ];
 
@@ -56,10 +56,10 @@ export default function OperationsLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Opérations mathématiques</h1>
+        <h1 className="text-3xl font-bold mb-6">Opérations arithmétiques</h1>
         
         <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
+          <p className="text-lg mb-6">Sélectionne une opération pour apprendre comment la faire :</p>
           {operations.map((operation, index) => (
             <div key={index} className="flex flex-col items-center">
               <button
