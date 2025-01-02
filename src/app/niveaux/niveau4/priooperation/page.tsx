@@ -18,35 +18,27 @@ export default function PrioOperationsLearning() {
 
   useEffect(() => {
     const generateQuestions = () => {
-      const questionsArray: { question: string; correctAnswer: string }[] = [];  // Use 'const' here
+      const questionsArray: { question: string; correctAnswer: string }[] = [];
       for (let i = 0; i < totalQuestions; i++) {
-        const num1 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const num2 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const num3 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
-        const operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const num3 = Math.floor(Math.random() * 10) + 1;
+        const operator1 = ["+", "-"][Math.floor(Math.random() * 2)];
+        const operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
 
-        // Début de la première série simple
+        // Première série : Parenthèses simples avec addition et soustraction
         if (i < 12) {
-          const question = `${num1} ${operator1} ${num2}`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
+          const question = `(${num1} ${operator1} ${num2})`;
+          const correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
           questionsArray.push({
             question,
             correctAnswer: correctAnswer.toString(),
           });
         }
-        // Deuxième série avec des parenthèses
+        // Deuxième série : Parenthèses avec toutes les opérations
         else if (i < 24) {
           const question = `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
+          let correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
           if (operator2 === "+") correctAnswer += num3;
           if (operator2 === "-") correctAnswer -= num3;
           if (operator2 === "*") correctAnswer *= num3;
@@ -56,14 +48,10 @@ export default function PrioOperationsLearning() {
             correctAnswer: correctAnswer.toString(),
           });
         }
-        // Dernière série avec trois termes
+        // Troisième série : Parenthèses imbriquées avec plusieurs termes
         else {
           const question = `(${num1} ${operator1} ${num2}) ${operator2} (${num3} ${operator1} ${num2})`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
+          let correctAnswer = operator1 === "+" ? num1 + num2 : num1 - num2;
           if (operator2 === "+") correctAnswer += num3 + num2;
           if (operator2 === "-") correctAnswer -= num3 - num2;
           if (operator2 === "*") correctAnswer *= num3 * num2;
@@ -103,7 +91,7 @@ export default function PrioOperationsLearning() {
       const globalIndex = startIndex + index;
       if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
