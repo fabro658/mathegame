@@ -3,123 +3,94 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function PrioOperationsLearning() {
-  const totalQuestions = 36;
-  const questionsPerPage = 6;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+export default function ExponentsPractice() {
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Questions affichées par vague
 
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ question: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      const questionsArray: { question: string; correctAnswer: string }[] = [];  // Use 'const' here
-      for (let i = 0; i < totalQuestions; i++) {
-        const num1 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const num2 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const num3 = Math.floor(Math.random() * 10) + 1;  // Use 'const' instead of 'let'
-        const operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
-        const operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];  // Use 'const' instead of 'let'
+      return Array.from({ length: totalQuestions }, () => {
+        const base = Math.floor(Math.random() * 10) + 2;
+        const exponent = Math.floor(Math.random() * 4) + 1;
 
-        // Début de la première série simple
-        if (i < 12) {
-          const question = `${num1} ${operator1} ${num2}`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
-          questionsArray.push({
-            question,
-            correctAnswer: correctAnswer.toString(),
-          });
+        let questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+        let correctAnswer = Math.pow(base, exponent).toString();
+
+        // Ajouter de la variété avec des parenthèses ou des fractions
+        if (Math.random() > 0.7) {
+          const baseAlt = base + Math.floor(Math.random() * 3);
+          questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(baseAlt, exponent).toString();
         }
-        // Deuxième série avec des parenthèses
-        else if (i < 24) {
-          const question = `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
-          if (operator2 === "+") correctAnswer += num3;
-          if (operator2 === "-") correctAnswer -= num3;
-          if (operator2 === "*") correctAnswer *= num3;
-          if (operator2 === "/") correctAnswer /= num3;
-          questionsArray.push({
-            question,
-            correctAnswer: correctAnswer.toString(),
-          });
-        }
-        // Dernière série avec trois termes
-        else {
-          const question = `(${num1} ${operator1} ${num2}) ${operator2} (${num3} ${operator1} ${num2})`;
-          let correctAnswer = 0;
-          if (operator1 === "+") correctAnswer = num1 + num2;
-          if (operator1 === "-") correctAnswer = num1 - num2;
-          if (operator1 === "*") correctAnswer = num1 * num2;
-          if (operator1 === "/") correctAnswer = num1 / num2;
-          if (operator2 === "+") correctAnswer += num3 + num2;
-          if (operator2 === "-") correctAnswer -= num3 - num2;
-          if (operator2 === "*") correctAnswer *= num3 * num2;
-          if (operator2 === "/") correctAnswer /= num3 / num2;
-          questionsArray.push({
-            question,
-            correctAnswer: correctAnswer.toString(),
-          });
-        }
-      }
-      return questionsArray;
+
+        return {
+          questionText,
+          correctAnswer,
+        };
+      });
     };
 
     setQuestions(generateQuestions());
   }, []);
 
-  const handleChange = (index: number, value: string) => {
+  // Gestion des changements de réponse
+  const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
-  const handleValidation = () => {
+  // Validation des réponses
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.includes(null) || pageAnswers.some((answer) => answer === "")) {
+    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
+
+    if (!allAnswersFilled) {
       alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const newAnswers = [...answers];
     let allCorrect = true;
+    const updatedAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
+      if (answer !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null;
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
       }
     });
 
-    setAnswers(newAnswers);
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
+
+    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+        setIsValidated(false);
+      }, 1500);
+    }
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
@@ -128,6 +99,11 @@ export default function PrioOperationsLearning() {
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
+  // Barre circulaire de progression
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -138,7 +114,7 @@ export default function PrioOperationsLearning() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau4"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -146,7 +122,14 @@ export default function PrioOperationsLearning() {
 
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
           <circle
             cx="50%"
             cy="50%"
@@ -164,16 +147,14 @@ export default function PrioOperationsLearning() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-8">Priorité des Opérations</h1>
+      <h1 className="text-3xl font-bold mb-6">Pratique des Exposants</h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
-              <div key={index} className="flex items-center gap-6">
-                <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
-                  {question}
-                </button>
+          <div className="flex flex-col gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+              <div key={index} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -184,24 +165,25 @@ export default function PrioOperationsLearning() {
               </div>
             ))}
           </div>
-          <div className="flex gap-6 mt-8">
+
+          <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
             </button>
@@ -213,19 +195,19 @@ export default function PrioOperationsLearning() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                onClick={handleNextPage}
               >
-                Terminer
+                Suivant
               </button>
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
