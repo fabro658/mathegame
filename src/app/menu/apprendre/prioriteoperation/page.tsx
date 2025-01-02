@@ -40,7 +40,7 @@ export default function PrioriteOperationsLearning() {
   return (
     <div className="flex min-h-screen bg-gray-100 text-black">
       {/* Options d'exemples à gauche */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
+      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -48,14 +48,14 @@ export default function PrioriteOperationsLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Priorité des Opérations</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Priorité des Opérations</h1>
         
         <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6">Sélectionne un exemple pour apprendre les priorités d&apos;opérations :</p>
+          <p className="text-lg mb-6 text-center">Sélectionne un exemple pour apprendre les priorités d&apos;opérations :</p>
           {examples.map((example, index) => (
             <div key={index} className="flex flex-col items-center">
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
                 onClick={() => handleSelectExample(example.name)}
               >
                 {example.name}
@@ -66,10 +66,10 @@ export default function PrioriteOperationsLearning() {
       </div>
 
       {/* Formules et explications au centre */}
-      <div className="w-3/4 p-8">
+      <div className="w-full sm:w-3/4 p-8">
         {selectedExample && (
           <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-4">{selectedExample}</h2>
+            <h2 className="text-2xl font-bold mb-6">{selectedExample}</h2>
             <p className="text-md mb-4">
               {examples.find((example) => example.name === selectedExample)?.description}
             </p>
