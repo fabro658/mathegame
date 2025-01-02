@@ -6,6 +6,10 @@ export default function Page() {
       </h1>
       <div className="flex flex-col gap-4 text-lg w-full pl-0">
         {/* Menu complètement collé à gauche */}
+        <a href="/menu/apprendre/opérations arithmétiques"
+        className="hover:underline text-gray-700">
+          opérations arithmétiques
+        </a>
         <a href="/menu/apprendre/fraction"
         className="hover:underline text-gray-700">
           Fraction
