@@ -15,7 +15,8 @@ export default function Page() {
 
       <h1 className="text-4xl font-bold mb-12">Niveau 2 - Choisissez une opération</h1>
       <div className="flex flex-col items-center gap-8">
-        <div className="flex flex-wrap justify-center gap-8">
+        {/* Première ligne avec 2 boutons */}
+        <div className="flex justify-center gap-8">
           <Link
             href="/niveaux/niveau2/multiplication"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
@@ -31,7 +32,9 @@ export default function Page() {
             Division
           </Link>
         </div>
-        <div className="flex flex-wrap justify-center gap-8">
+
+        {/* Deuxième ligne avec 2 boutons */}
+        <div className="flex justify-center gap-8">
           <Link
             href="/niveaux/niveau2/multiplicationfraction"
             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
@@ -45,13 +48,16 @@ export default function Page() {
             aria-label="Page de division de fraction"
           >
             Division de fraction
-          </Link> 
-          {/* Bouton centré en dessous */}
+          </Link>
+        </div>
+
+        {/* Dernière ligne avec 1 bouton centré */}
+        <div className="flex justify-center">
           <Link
-          href="/niveaux/niveau2/revision"
-          className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-        >
-          Révision
+            href="/niveaux/niveau2/revision"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          >
+            Révision
           </Link>
         </div>
       </div>
