@@ -27,7 +27,7 @@ export default function AireLearning() {
     {
       name: "Rectangle",
       description: "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
-      formula: "Aire = longueur × largeur",
+      formula: "Aire = base × hauteur",
       example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
       imageUrl: "/images/rectangle.png",  // Image du rectangle
     },
