@@ -19,42 +19,42 @@ export default function PrioriteOperations() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, (_, index) => {
-        let num1: number, num2: number, num3: number, operator1: string, operator2: string;
+        let num1: number, num2: number, num3: number | undefined, operator1: string, operator2: string;
 
-        // Questions simples (opérations de base sans priorité)
+        // Niveau 1 : Addition et soustraction simples
         if (index < 12) {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
-          operator1 = "+";
+          operator1 = Math.random() > 0.5 ? "+" : "-";
           operator2 = "";
         }
-        // Questions avec multiplication
+        // Niveau 2 : Introduction de la multiplication et division
         else if (index < 24) {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
-          num3 = Math.floor(Math.random() * 10) + 1; // Assigner num3 ici
-          operator1 = "+";
-          operator2 = "*";
+          num3 = Math.floor(Math.random() * 10) + 1; // Affectation de num3
+          operator1 = Math.random() > 0.5 ? "+" : "-";
+          operator2 = Math.random() > 0.5 ? "*" : "/";
         }
-        // Questions avec soustraction et multiplication
+        // Niveau 3 : Parenthèses ajoutées
         else {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
           num3 = Math.floor(Math.random() * 10) + 1;
-          operator1 = "*";
-          operator2 = "-";
+          operator1 = Math.random() > 0.5 ? "+" : "-";
+          operator2 = Math.random() > 0.5 ? "*" : "/";
         }
 
         const question = operator2 === ""
           ? `${num1} ${operator1} ${num2}`
-          : `${num1} ${operator1} ${num2} ${operator2} ${num3}`;
+          : `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
 
         let correctAnswer: number;
 
         if (operator2 === "") {
           correctAnswer = eval(`${num1} ${operator1} ${num2}`);
         } else {
-          correctAnswer = eval(`${num1} ${operator1} ${num2} ${operator2} ${num3}`);
+          correctAnswer = eval(`(${num1} ${operator1} ${num2}) ${operator2} ${num3}`);
         }
 
         return {
