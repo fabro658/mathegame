@@ -14,8 +14,8 @@ export default function Page() {
       </Link>
 
       <h1 className="text-4xl font-bold mb-12 underline">Zone d&apos;apprentissage</h1>
-      <div className="flex flex-col gap-4 text-lg w-full pl-0">
-        {/* Menu complètement collé à gauche */}
+      <div className="flex flex-col items-center gap-8">
+        {/* Conteneur pour les deux premiers boutons */}
         <div className="flex flex-wrap justify-center gap-8">
         </div>
         <Link href="/menu/apprendre/opérations arithmétiques" 
