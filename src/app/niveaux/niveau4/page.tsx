@@ -12,10 +12,10 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau4/algebre"
+          href="/niveaux/niveau4/exposant"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
-          Algèbre
+          Exposant
           </Link>
           <Link
           href="/niveaux/niveau4/priooperation"
