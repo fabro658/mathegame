@@ -96,8 +96,12 @@ export default function PrioOperationsLearning() {
         const parsedAnswer = parseFloat(answer);
         const parsedCorrectAnswer = parseFloat(correctAnswer);
   
-        // Vérification si les réponses sont égales (avec une tolérance pour les petits arrondis)
-        if (Math.abs(parsedAnswer - parsedCorrectAnswer) > 0.01) {
+        // Arrondi les deux valeurs à deux décimales pour comparer les résultats
+        const roundedAnswer = Math.round(parsedAnswer * 100) / 100;
+        const roundedCorrectAnswer = Math.round(parsedCorrectAnswer * 100) / 100;
+  
+        // Vérification si les réponses arrondies sont égales
+        if (roundedAnswer !== roundedCorrectAnswer) {
           allCorrect = false;
           newAnswers[globalIndex] = null;
         }
@@ -110,8 +114,8 @@ export default function PrioOperationsLearning() {
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
-  };  
-
+  };
+  
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
