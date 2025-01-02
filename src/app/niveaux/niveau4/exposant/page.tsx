@@ -17,8 +17,8 @@ export default function ExponentsPractice() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        let base = Math.floor(Math.random() * 6) + 2; // Bases plus simples pour commencer
-        let exponent = Math.floor(Math.random() * 3) + 1; // Exposants plus petits pour les premières vagues
+        const base = Math.floor(Math.random() * 6) + 2; // Utilisation de const
+        const exponent = Math.floor(Math.random() * 3) + 1; // Utilisation de const
   
         let questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
         let correctAnswer = Math.pow(base, exponent).toString();
@@ -39,6 +39,7 @@ export default function ExponentsPractice() {
   
     setQuestions(generateQuestions());
   }, []);
+  
   
 
   // Gestion des changements de réponse

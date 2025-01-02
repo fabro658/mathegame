@@ -42,16 +42,28 @@ export default function Page() {
           Périmètre
         </Link>
         <Link 
-          href="/menu/apprendre/algebre" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          href="/menu/apprendre/exposant" 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Algèbre
+          exposant
         </Link>
         <Link 
           href="/menu/apprendre/prioriteoperation" 
           className="bg-blue-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Priorité d&apos;opération
+        </Link>
+        <Link 
+          href="/menu/apprendre/algebre" 
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Algèbre
+        </Link>
+        <Link 
+          href="/menu/apprendre/fonction" 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          fonction
         </Link>
       </div>
     </div>
