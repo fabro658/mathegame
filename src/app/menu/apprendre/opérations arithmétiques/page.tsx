@@ -80,8 +80,8 @@ export default function OperationsLearning() {
             <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
             <p className="text-md mb-6">{selectedOperation.description}</p>
 
-            {/* Ajout d'un espacement avant les formules */}
-            <div className="mt-10">
+            {/* Ajout d'un espacement encore plus grand avant les formules */}
+            <div className="mt-20">
               <p className="text-lg font-bold mb-2">Formule :</p>
               <p className="text-lg mb-4">{selectedOperation.formula}</p>
               <p className="text-lg font-bold mb-2">Exemple :</p>
