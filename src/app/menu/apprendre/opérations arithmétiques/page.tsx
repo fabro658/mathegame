@@ -77,12 +77,16 @@ export default function OperationsLearning() {
       <div className="w-3/4 p-8">
         {selectedOperation && (
           <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-4">{selectedOperation.name}</h2>
-            <p className="text-md mb-4">{selectedOperation.description}</p>
-            <p className="text-lg font-bold mb-2">Formule :</p>
-            <p className="text-lg mb-4">{selectedOperation.formula}</p>
-            <p className="text-lg font-bold mb-2">Exemple :</p>
-            <p className="text-lg">{selectedOperation.example}</p>
+            <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
+            <p className="text-md mb-6">{selectedOperation.description}</p>
+
+            {/* Ajout d'un espacement avant les formules */}
+            <div className="mt-10">
+              <p className="text-lg font-bold mb-2">Formule :</p>
+              <p className="text-lg mb-4">{selectedOperation.formula}</p>
+              <p className="text-lg font-bold mb-2">Exemple :</p>
+              <p className="text-lg">{selectedOperation.example}</p>
+            </div>
           </div>
         )}
       </div>
