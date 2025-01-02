@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function PrioriteOperations() {
+export default function PrioOperationsLearning() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const radius = 50;
@@ -17,51 +17,65 @@ export default function PrioriteOperations() {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const generateQuestions = () =>
-      Array.from({ length: totalQuestions }, (_, index) => {
-        let num1: number, num2: number, num3: number | undefined, operator1: string, operator2: string;
+    const generateQuestions = () => {
+      let questionsArray = [];
+      for (let i = 0; i < totalQuestions; i++) {
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+        let num3 = Math.floor(Math.random() * 10) + 1;
+        let operator1 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
+        let operator2 = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
 
-        // Niveau 1 : Addition et soustraction simples
-        if (index < 12) {
-          num1 = Math.floor(Math.random() * 10) + 1;
-          num2 = Math.floor(Math.random() * 10) + 1;
-          operator1 = Math.random() > 0.5 ? "+" : "-";
-          operator2 = "";
+        // Début de la première série simple
+        if (i < 12) {
+          const question = `${num1} ${operator1} ${num2}`;
+          let correctAnswer = 0;
+          if (operator1 === "+") correctAnswer = num1 + num2;
+          if (operator1 === "-") correctAnswer = num1 - num2;
+          if (operator1 === "*") correctAnswer = num1 * num2;
+          if (operator1 === "/") correctAnswer = num1 / num2;
+          questionsArray.push({
+            question,
+            correctAnswer: correctAnswer.toString(),
+          });
         }
-        // Niveau 2 : Introduction de la multiplication et division
-        else if (index < 24) {
-          num1 = Math.floor(Math.random() * 10) + 1;
-          num2 = Math.floor(Math.random() * 10) + 1;
-          num3 = Math.floor(Math.random() * 10) + 1; // Affectation de num3
-          operator1 = Math.random() > 0.5 ? "+" : "-";
-          operator2 = Math.random() > 0.5 ? "*" : "/";
+        // Deuxième série avec des parenthèses
+        else if (i < 24) {
+          const question = `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
+          let correctAnswer = 0;
+          if (operator1 === "+") correctAnswer = num1 + num2;
+          if (operator1 === "-") correctAnswer = num1 - num2;
+          if (operator1 === "*") correctAnswer = num1 * num2;
+          if (operator1 === "/") correctAnswer = num1 / num2;
+          if (operator2 === "+") correctAnswer += num3;
+          if (operator2 === "-") correctAnswer -= num3;
+          if (operator2 === "*") correctAnswer *= num3;
+          if (operator2 === "/") correctAnswer /= num3;
+          questionsArray.push({
+            question,
+            correctAnswer: correctAnswer.toString(),
+          });
         }
-        // Niveau 3 : Parenthèses ajoutées
+        // Dernière série avec trois termes
         else {
-          num1 = Math.floor(Math.random() * 10) + 1;
-          num2 = Math.floor(Math.random() * 10) + 1;
-          num3 = Math.floor(Math.random() * 10) + 1;
-          operator1 = Math.random() > 0.5 ? "+" : "-";
-          operator2 = Math.random() > 0.5 ? "*" : "/";
+          const question = `(${num1} ${operator1} ${num2}) ${operator2} (${num3} ${operator1} ${num2})`;
+          let correctAnswer = 0;
+          if (operator1 === "+") correctAnswer = num1 + num2;
+          if (operator1 === "-") correctAnswer = num1 - num2;
+          if (operator1 === "*") correctAnswer = num1 * num2;
+          if (operator1 === "/") correctAnswer = num1 / num2;
+          if (operator2 === "+") correctAnswer += num3 + num2;
+          if (operator2 === "-") correctAnswer -= num3 - num2;
+          if (operator2 === "*") correctAnswer *= num3 * num2;
+          if (operator2 === "/") correctAnswer /= num3 / num2;
+          questionsArray.push({
+            question,
+            correctAnswer: correctAnswer.toString(),
+          });
         }
-
-        const question = operator2 === ""
-          ? `${num1} ${operator1} ${num2}`
-          : `(${num1} ${operator1} ${num2}) ${operator2} ${num3}`;
-
-        let correctAnswer: number;
-
-        if (operator2 === "") {
-          correctAnswer = eval(`${num1} ${operator1} ${num2}`);
-        } else {
-          correctAnswer = eval(`(${num1} ${operator1} ${num2}) ${operator2} ${num3}`);
-        }
-
-        return {
-          question,
-          correctAnswer: correctAnswer.toString(),
-        };
-      });
+      }
+      return questionsArray;
+    };
 
     setQuestions(generateQuestions());
   }, []);
