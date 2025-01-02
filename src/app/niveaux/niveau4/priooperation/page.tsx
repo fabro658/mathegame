@@ -78,27 +78,39 @@ export default function PrioOperationsLearning() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+  
     if (pageAnswers.includes(null) || pageAnswers.some((answer) => answer === "")) {
       alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
-
+  
     const newAnswers = [...answers];
     let allCorrect = true;
-
+  
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
+      const correctAnswer = questions[globalIndex]?.correctAnswer;
+  
+      // Conversion de la réponse en nombre pour une comparaison plus précise
+      if (answer && correctAnswer) {
+        const parsedAnswer = parseFloat(answer);
+        const parsedCorrectAnswer = parseFloat(correctAnswer);
+  
+        // Vérification si les réponses sont égales (avec une tolérance pour les petits arrondis)
+        if (Math.abs(parsedAnswer - parsedCorrectAnswer) > 0.01) {
+          allCorrect = false;
+          newAnswers[globalIndex] = null;
+        }
+      } else {
         allCorrect = false;
         newAnswers[globalIndex] = null;
       }
     });
-
+  
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
-  };
+  };  
 
   const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
