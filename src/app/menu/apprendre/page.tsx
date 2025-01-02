@@ -48,7 +48,7 @@ export default function Page() {
           Algèbre
         </Link>
         <Link 
-          href="/menu/apprendre/priorite operation" 
+          href="/menu/apprendre/prioriteoperation" 
           className="bg-blue-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Priorité d&apos;opération
