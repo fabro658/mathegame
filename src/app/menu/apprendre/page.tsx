@@ -1,5 +1,3 @@
-// src/app/menu/apprendre/page.tsx
-
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
@@ -27,6 +25,14 @@ export default function Page() {
           Priorité d&apos;opération
         </a>
       </div>
+
+      {/* Bouton de retour vers la page d'accueil */}
+      <a
+        href="/"
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-lg mt-8"
+      >
+        Retour à l&apos;accueil
+      </a>
     </div>
   );
 }
