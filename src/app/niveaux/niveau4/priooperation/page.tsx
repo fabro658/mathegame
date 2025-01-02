@@ -21,18 +21,23 @@ export default function PrioriteOperations() {
       Array.from({ length: totalQuestions }, (_, index) => {
         let num1: number, num2: number, num3: number, operator1: string, operator2: string;
 
+        // Questions simples (opérations de base sans priorité)
         if (index < 12) {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
           operator1 = "+";
           operator2 = "";
-        } else if (index < 24) {
+        }
+        // Questions avec multiplication
+        else if (index < 24) {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
           num3 = Math.floor(Math.random() * 10) + 1;
           operator1 = "+";
           operator2 = "*";
-        } else {
+        }
+        // Questions avec soustraction et multiplication
+        else {
           num1 = Math.floor(Math.random() * 10) + 1;
           num2 = Math.floor(Math.random() * 10) + 1;
           num3 = Math.floor(Math.random() * 10) + 1;
@@ -40,13 +45,14 @@ export default function PrioriteOperations() {
           operator2 = "-";
         }
 
-        const question = `${num1} ${operator1} ${num2} ${operator2} ${num3}`;
+        const question = operator2 === ""
+          ? `${num1} ${operator1} ${num2}`
+          : `${num1} ${operator1} ${num2} ${operator2} ${num3}`;
+
         let correctAnswer: number;
 
         if (operator2 === "") {
           correctAnswer = eval(`${num1} ${operator1} ${num2}`);
-        } else if (operator2 === "*") {
-          correctAnswer = eval(`${num1} ${operator1} ${num2} ${operator2} ${num3}`);
         } else {
           correctAnswer = eval(`${num1} ${operator1} ${num2} ${operator2} ${num3}`);
         }
