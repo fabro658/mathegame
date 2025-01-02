@@ -16,29 +16,30 @@ export default function ExponentsPractice() {
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const base = Math.floor(Math.random() * 10) + 2;
-        const exponent = Math.floor(Math.random() * 4) + 1;
-
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let base = Math.floor(Math.random() * 6) + 2; // Bases plus simples pour commencer
+        let exponent = Math.floor(Math.random() * 3) + 1; // Exposants plus petits pour les premières vagues
+  
         let questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
         let correctAnswer = Math.pow(base, exponent).toString();
-
-        // Ajouter de la variété avec des parenthèses ou des fractions
-        if (Math.random() > 0.7) {
-          const baseAlt = base + Math.floor(Math.random() * 3);
+  
+        // Introduire des parenthèses ou des bases plus complexes après la 15ᵉ question
+        if (index >= 15 && Math.random() > 0.5) {
+          const baseAlt = base + Math.floor(Math.random() * 4) + 1;
           questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
           correctAnswer = Math.pow(baseAlt, exponent).toString();
         }
-
+  
         return {
           questionText,
           correctAnswer,
         };
       });
     };
-
+  
     setQuestions(generateQuestions());
   }, []);
+  
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
@@ -114,7 +115,7 @@ export default function ExponentsPractice() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau3"
+        href="/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
