@@ -48,7 +48,7 @@ export default function OperationsLearning() {
   return (
     <div className="flex min-h-screen bg-gray-100 text-black">
       {/* Options des opérations à gauche */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
+      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -74,14 +74,14 @@ export default function OperationsLearning() {
       </div>
 
       {/* Formules et explications au centre */}
-      <div className="w-3/4 p-8">
+      <div className="w-full sm:w-3/4 p-8">
         {selectedOperation && (
           <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
             <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
             <p className="text-md mb-6">{selectedOperation.description}</p>
 
-            {/* Ajout d'un espacement encore plus grand avant les formules */}
-            <div className="mt-32">
+            {/* Ajout d'un espacement plus modéré avant les formules */}
+            <div className="mt-16">
               <p className="text-lg font-bold mb-2">Formule :</p>
               <p className="text-lg mb-4">{selectedOperation.formula}</p>
               <p className="text-lg font-bold mb-2">Exemple :</p>

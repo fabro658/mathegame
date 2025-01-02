@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // Importation du composant Image de Next.js
 
 // Définir le type pour la forme géométrique
 interface Shape {
@@ -89,12 +90,14 @@ export default function PerimetreLearning() {
             <p className="text-lg font-bold mb-2">Exemple :</p>
             <p className="text-lg">{selectedShape.example}</p>
             
-            {/* Afficher l'image sous l'espace des formules */}
+            {/* Afficher l'image sous l'espace des formules en utilisant Image de Next.js */}
             <div className="mt-6 flex justify-center">
-              <img 
+              <Image 
                 src={selectedShape.imageUrl} 
                 alt={selectedShape.name} 
-                className="w-48 h-48 object-contain"  // Taille de l'image
+                width={192} // Largeur de l'image
+                height={192} // Hauteur de l'image
+                className="object-contain"  // Assurez-vous que l'image reste dans son conteneur
               />
             </div>
           </div>
