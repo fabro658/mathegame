@@ -1,4 +1,6 @@
-import Link from 'next/link';
+"use client";
+import { useState } from "react";  // Ajoute cette ligne pour importer useState
+import Link from "next/link";
 
 export default function Option() {
   const [formData, setFormData] = useState({
@@ -123,16 +125,6 @@ export default function Option() {
               </button>
             </div>
           </form>
-
-          {/* Lien "Nous joindre" */}
-          <div className="mt-8 text-center">
-            <Link
-              href="mailto:gestionmathegame@gmail.com?subject=Question%20concernant%20le%20site&body=Bonjour%20Mathegame,%20je%20souhaite%20vous%20contacter%20au%20sujet%20de..."
-              className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600"
-            >
-              Nous joindre par email
-            </Link>
-          </div>
         </section>
       </div>
     </div>
