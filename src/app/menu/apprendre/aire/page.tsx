@@ -22,35 +22,35 @@ export default function AireLearning() {
       description: "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
       formula: "Aire = côté × côté",
       example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
-      imageUrl: "/images/carre.png",  // Image du carré
+      imageUrl: "/images/airecarre.jpeg",  // Image du carré
     },
     {
       name: "Rectangle",
       description: "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = base × hauteur",
       example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
-      imageUrl: "/images/rectangle.png",  // Image du rectangle
+      imageUrl: "/images/airerectangle.jpeg",  // Image du rectangle
     },
     {
       name: "Triangle",
       description: "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
       example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
-      imageUrl: "/images/triangle.png",  // Image du triangle
+      imageUrl: "/images/airetriangle.jpeg",  // Image du triangle
     },
     {
       name: "Trapèze",
       description: "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
       example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/images/trapeze.png",  // Image du trapèze
+      imageUrl: "/images/airetrapeze.jpeg",  // Image du trapèze
     },
     {
       name: "Cercle",
       description: "L'aire d'un cercle est calculée en utilisant le rayon.",
       formula: "Aire = π × rayon²",
       example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
-      imageUrl: "/images/cercle.png",  // Image du cercle
+      imageUrl: "/images/airecercle.jpeg",  // Image du cercle
     }
   ];
 
