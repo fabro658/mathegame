@@ -9,25 +9,25 @@ export default function PrioriteOperationsLearning() {
   const examples = [
     {
       name: "Exemple 1 : Addition et multiplication",
-      description: "Lorsque l&apos;addition et la multiplication apparaissent dans une même expression, on effectue d&apos;abord la multiplication.",
+      description: "Lorsque l'addition et la multiplication apparaissent dans une même expression, on effectue d'abord la multiplication.",
       formula: "Exemple : 3 + 5 × 2",
       solution: "3 + (5 × 2) = 3 + 10 = 13",
     },
     {
-      name: "Exemple 2 : Parenthèses d&apos;abord",
-      description: "Les parenthèses ont la priorité sur les autres opérations, quelle que soit l&apos;opération à l&apos;intérieur.",
+      name: "Exemple 2 : Parenthèses d'abord",
+      description: "Les parenthèses ont la priorité sur les autres opérations, quelle que soit l'opération à l'intérieur.",
       formula: "Exemple : (2 + 3) × 4",
       solution: "(2 + 3) × 4 = 5 × 4 = 20",
     },
     {
       name: "Exemple 3 : Division avant addition",
-      description: "La division est effectuée avant l&apos;addition si elles apparaissent dans la même expression sans parenthèses.",
+      description: "La division est effectuée avant l'addition si elles apparaissent dans la même expression sans parenthèses.",
       formula: "Exemple : 8 ÷ 4 + 3",
       solution: "(8 ÷ 4) + 3 = 2 + 3 = 5",
     },
     {
       name: "Exemple 4 : Parenthèses avec plusieurs opérations",
-      description: "Les parenthèses doivent être résolues en premier, peu importe les opérations à l&apos;intérieur.",
+      description: "Les parenthèses doivent être résolues en premier, peu importe les opérations à l'intérieur.",
       formula: "Exemple : (2 + 3) × (4 + 1)",
       solution: "(2 + 3) × (4 + 1) = 5 × 5 = 25",
     }
@@ -50,17 +50,15 @@ export default function PrioriteOperationsLearning() {
 
         <h1 className="text-3xl font-bold mb-6">Priorité des Opérations</h1>
         
-        <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6">Sélectionne un exemple pour apprendre les priorités d&apos;opérations :</p>
+        <div className="flex flex-col gap-4">
           {examples.map((example, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
-                onClick={() => handleSelectExample(example.name)}
-              >
-                {example.name}
-              </button>
-            </div>
+            <button
+              key={index}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
+              onClick={() => handleSelectExample(example.name)}
+            >
+              {example.name}
+            </button>
           ))}
         </div>
       </div>

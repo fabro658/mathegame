@@ -58,17 +58,15 @@ export default function OperationsLearning() {
 
         <h1 className="text-3xl font-bold mb-6 text-center">Opérations mathématiques</h1>
         
-        <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
+        <div className="flex flex-col gap-4">
           {operations.map((operation, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-                onClick={() => handleSelectOperation(operation)}
-              >
-                {operation.name}
-              </button>
-            </div>
+            <button
+              key={index}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
+              onClick={() => handleSelectOperation(operation)}
+            >
+              {operation.name}
+            </button>
           ))}
         </div>
       </div>
@@ -80,7 +78,6 @@ export default function OperationsLearning() {
             <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
             <p className="text-md mb-6">{selectedOperation.description}</p>
 
-            {/* Ajout d'un espacement plus modéré avant les formules */}
             <div className="mt-8">
               <p className="text-lg font-bold mb-2">Formule :</p>
               <p className="text-lg mb-4">{selectedOperation.formula}</p>
