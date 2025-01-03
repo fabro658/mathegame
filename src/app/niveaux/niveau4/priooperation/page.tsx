@@ -1,3 +1,5 @@
+"use client"; // Ajoutez cette directive pour activer le rendu côté client
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
