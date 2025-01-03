@@ -1,4 +1,4 @@
-"use client"; // Ajoutez cette directive pour activer le rendu côté client
+"use client"; // Assurez-vous que ce fichier soit rendu côté client
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -17,12 +17,12 @@ export default function PrioOperation() {
     const generateQuestions = () => {
       const operations = ["+", "-", "*", "/"];
       const questionsArray: string[] = [];
-      
+
       for (let i = 0; i < totalQuestions; i++) {
-        const num1 = Math.floor(Math.random() * 10) + 1;
-        const num2 = Math.floor(Math.random() * 10) + 1;
-        const num3 = Math.floor(Math.random() * 10) + 1;
-        const num4 = Math.floor(Math.random() * 10) + 1;
+        const num1 = Math.floor(Math.random() * 10) + 1;  // Garantir un nombre positif
+        const num2 = Math.floor(Math.random() * 10) + 1;  // Garantir un nombre positif
+        const num3 = Math.floor(Math.random() * 10) + 1;  // Garantir un nombre positif
+        const num4 = Math.floor(Math.random() * 10) + 1;  // Garantir un nombre positif
         const op1 = operations[Math.floor(Math.random() * operations.length)];
         const op2 = operations[Math.floor(Math.random() * operations.length)];
         const op3 = operations[Math.floor(Math.random() * operations.length)];
