@@ -67,6 +67,13 @@ export default function PrioOperation() {
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
+
+    // Valider que la valeur ne contient pas de caractères non numériques
+    if (/[^0-9]/.test(value)) {
+      alert("Seuls les chiffres sont autorisés.");
+      return; // Si un caractère non numérique est trouvé, ignorer la modification
+    }
+
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
