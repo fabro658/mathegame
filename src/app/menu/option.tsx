@@ -1,7 +1,9 @@
 "use client"; // Assurez-vous que ce fichier soit rendu côté client
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+// Si tu ne prévois pas d'utiliser ces hooks, tu peux supprimer ces imports
+// import { useState, useEffect } from "react";
+// import Link from "next/link";
+
 export default function Option() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 p-4">
@@ -13,7 +15,7 @@ export default function Option() {
           <p className="text-lg">
             Bienvenue sur notre site ! Notre objectif est de vous offrir une expérience
             agréable et facile à utiliser. Nous vous proposons des fonctionnalités innovantes 
-            pour vous aider à [insère ici l'objectif spécifique du site]. Que vous soyez 
+            pour vous aider à [insère ici l&apos;objectif spécifique du site]. Que vous soyez 
             ici pour [décrire les principales actions sur le site], nous espérons que vous
             trouverez ce que vous cherchez.
           </p>
@@ -22,8 +24,8 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
           <ul className="list-disc pl-6 text-lg">
-            <li><strong>Comment m&apos;inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton "S&apos;inscrire" en haut à droite de la page d&apos;accueil.</li>
-            <li><strong>Comment réinitialiser mon mot de passe ?</strong> Si vous avez oublié votre mot de passe, cliquez sur "Mot de passe oublié" sur la page de connexion.</li>
+            <li><strong>Comment m&apos;inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton &quot;S&apos;inscrire&quot; en haut à droite de la page d&apos;accueil.</li>
+            <li><strong>Comment réinitialiser mon mot de passe ?</strong> Si vous avez oublié votre mot de passe, cliquez sur &quot;Mot de passe oublié&quot; sur la page de connexion.</li>
             <li><strong>Comment signaler un bug ?</strong> Si vous rencontrez un problème, vous pouvez nous en informer via le formulaire de contact ci-dessous.</li>
           </ul>
         </section>
