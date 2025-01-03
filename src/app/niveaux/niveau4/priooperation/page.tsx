@@ -1,4 +1,4 @@
-"use client"; 
+"use client"; // Assurez-vous que ce fichier soit rendu côté client
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function PrioOperation() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -67,14 +67,14 @@ export default function PrioOperation() {
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     
-    // Validation des entrées : autorise uniquement les chiffres, le point pour les décimales, et le tiret pour les négatifs
-    if (!/^(-?\d+(\.\d*)?)?$/.test(value) && value !== "") {
-      alert("Seuls les chiffres, le point décimal et le signe négatif sont autorisés.");
+    // Validation des entrées : autorise uniquement les chiffres, le point décimal, la barre oblique
+    if (!/^(-?\d+(\.\d*)?|\d*\/\d*)?$/.test(value) && value !== "") {
+      alert("Seuls les chiffres, le point décimal et la barre oblique sont autorisés.");
       return; // Si un caractère invalide est trouvé, on ignore la modification
     }
 
     // Si l'entrée est vide ou un nombre valide, on l'ajoute
-    newAnswers[index] = value === "" ? null : parseFloat(value);
+    newAnswers[index] = value === "" ? null : value;
     setAnswers(newAnswers);
   };
 

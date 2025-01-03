@@ -1,8 +1,3 @@
-"use client"; 
-
-import { useState, useEffect } from "react";
-import Link from "next/link";
-
 export default function Option() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 p-4">
@@ -23,16 +18,16 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
           <ul className="list-disc pl-6 text-lg">
-            <li><strong>Comment m'inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton "S'inscrire" en haut à droite de la page d'accueil.</li>
+            <li><strong>Comment m&apos;inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton "S&apos;inscrire" en haut à droite de la page d&apos;accueil.</li>
             <li><strong>Comment réinitialiser mon mot de passe ?</strong> Si vous avez oublié votre mot de passe, cliquez sur "Mot de passe oublié" sur la page de connexion.</li>
             <li><strong>Comment signaler un bug ?</strong> Si vous rencontrez un problème, vous pouvez nous en informer via le formulaire de contact ci-dessous.</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Contacter l’équipe</h2>
+          <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
           <p className="text-lg mb-4">
-            Si vous avez des questions ou si vous rencontrez un problème, n'hésitez pas à nous
+            Si vous avez des questions ou si vous rencontrez un problème, n&apos;hésitez pas à nous
             contacter en remplissant le formulaire ci-dessous. Nous nous efforçons de répondre
             dans les plus brefs délais.
           </p>
