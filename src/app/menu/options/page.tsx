@@ -24,10 +24,10 @@ export default function Option() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900 p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">Option</h1>
-
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4">
       <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
+        <h1 className="text-3xl font-bold text-center mb-8"></h1>
+
         {/* Section 1: A propos de votre site */}
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
