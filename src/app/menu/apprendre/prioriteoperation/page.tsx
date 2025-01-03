@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Définir le type pour l'opération mathématique
+// Définir le type pour la priorité d'opération
 interface Operation {
   name: string;
   description: string;
@@ -11,7 +11,7 @@ interface Operation {
   example: string;
 }
 
-export default function prioriteoperation() {
+export default function PrioriteOperation() {
   const [selectedOperation, setSelectedOperation] = useState<Operation | null>(null);
 
   const operations: Operation[] = [
