@@ -65,12 +65,12 @@ export default function Option() {
             <div>
               <label htmlFor="message" className="block text-lg">Votre message :</label>
               <textarea
-                id="message"
+               id="message"
                 name="message"
-                rows="4"
+                rows={4} 
                 className="w-full p-2 border border-gray-300 rounded-md"
                 required
-              ></textarea>
+            ></textarea>
             </div>
 
             <div className="text-center">
