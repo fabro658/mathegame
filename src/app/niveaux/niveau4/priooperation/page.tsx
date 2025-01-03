@@ -68,7 +68,7 @@ export default function PrioOperation() {
     const newAnswers = [...answers];
     
     // Validation des entrées : autorise uniquement les chiffres, le point pour les décimales, et le tiret pour les négatifs
-    if (!/^-?\d*\.?\d+$/.test(value) && value !== "") {
+    if (!/^(-?\d+(\.\d*)?)?$/.test(value) && value !== "") {
       alert("Seuls les chiffres, le point décimal et le signe négatif sont autorisés.");
       return; // Si un caractère invalide est trouvé, on ignore la modification
     }
