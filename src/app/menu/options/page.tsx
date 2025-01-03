@@ -34,7 +34,7 @@ export default function Option() {
           <p className="text-lg">
             Bienvenue sur notre site ! Notre objectif est de vous offrir une expérience
             agréable et facile à utiliser. Nous vous proposons des fonctionnalités innovantes
-            pour vous aider à [insère ici l'objectif spécifique du site]. Que vous soyez
+            pour vous aider à [insère ici l&apos;objectif spécifique du site]. Que vous soyez
             ici pour [décrire les principales actions sur le site], nous espérons que vous
             trouverez ce que vous cherchez.
           </p>
