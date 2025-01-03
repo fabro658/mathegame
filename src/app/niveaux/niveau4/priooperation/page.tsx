@@ -66,9 +66,14 @@ export default function PrioOperation() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    
+
     // Validation des entrées : autorise uniquement les chiffres, le point décimal, la barre oblique et le signe négatif
-    if (!/^(-?\d+(\.\d*)?|\d*\/\d*)?$/.test(value) && value !== "") {
+    // Cette regex accepte : 
+    // 1. Un signe négatif au début (-).
+    // 2. Des chiffres avec une virgule.
+    // 3. Un point décimal avec des chiffres.
+    // 4. Une barre oblique (pour les divisions).
+    if (!/^(-?\d+(\.\d*)?|\d*\/\d+(\.\d*)?)?$/.test(value) && value !== "") {
       alert("Seuls les chiffres, le signe négatif, le point décimal et la barre oblique sont autorisés.");
       return; // Si un caractère invalide est trouvé, on ignore la modification
     }
@@ -137,7 +142,7 @@ export default function PrioOperation() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

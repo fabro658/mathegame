@@ -1,9 +1,5 @@
 "use client"; // Assurez-vous que ce fichier soit rendu côté client
 
-// Si tu ne prévois pas d'utiliser ces hooks, tu peux supprimer ces imports
-// import { useState, useEffect } from "react";
-// import Link from "next/link";
-
 export default function Option() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 p-4">
