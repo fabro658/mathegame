@@ -94,9 +94,12 @@ export default function PrioOperation() {
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const correctAnswer = correctAnswers[globalIndex];
-      if (answer !== correctAnswer) {
-        allCorrect = false;
-        newAnswers[globalIndex] = null;
+      if (answer !== null) {
+        const parsedAnswer = parseFloat(answer);
+        if (parsedAnswer !== correctAnswer) {
+          allCorrect = false;
+          newAnswers[globalIndex] = null; // Réinitialiser uniquement les réponses incorrectes
+        }
       }
     });
 
