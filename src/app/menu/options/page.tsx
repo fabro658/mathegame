@@ -27,7 +27,7 @@ export default function Option() {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4 relative">
       <Link
-        href="/niveaux/niveau1"
+        href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
