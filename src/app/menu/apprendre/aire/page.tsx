@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image"; // Composant Image de Next.js
+import Image from "next/image";
 
 interface Shape {
   name: string;
   description: string;
   formula: string;
   example: string;
-  imageUrl: string; // URL de l'image pour chaque forme
+  imageUrl: string;
 }
 
 export default function AireLearning() {
@@ -22,7 +22,7 @@ export default function AireLearning() {
         "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
       formula: "Aire = côté × côté",
       example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
-      imageUrl: "/airecarre.jpeg", // Image du carré
+      imageUrl: "/airecarre.jpeg",
     },
     {
       name: "Rectangle",
@@ -30,7 +30,7 @@ export default function AireLearning() {
         "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = base × hauteur",
       example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
-      imageUrl: "/airerectangle.jpeg", // Image du rectangle
+      imageUrl: "/airerectangle.jpeg",
     },
     {
       name: "Triangle",
@@ -38,7 +38,7 @@ export default function AireLearning() {
         "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
       example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
-      imageUrl: "/airetriangle.jpeg", // Image du triangle
+      imageUrl: "/airetriangle.jpeg",
     },
     {
       name: "Trapèze",
@@ -47,14 +47,14 @@ export default function AireLearning() {
       formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
       example:
         "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/airetrapeze.jpeg", // Image du trapèze
+      imageUrl: "/airetrapeze.jpeg",
     },
     {
       name: "Cercle",
       description: "L'aire d'un cercle est calculée en utilisant le rayon.",
       formula: "Aire = π × rayon²",
       example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
-      imageUrl: "/airecercle.jpeg", // Image du cercle
+      imageUrl: "/airecercle.jpeg",
     },
   ];
 
@@ -64,7 +64,7 @@ export default function AireLearning() {
 
   return (
     <main className="flex min-h-screen bg-gray-100 text-black">
-      {/* Barre latérale pour sélectionner une forme */}
+      {/* Barre latérale */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
@@ -92,24 +92,24 @@ export default function AireLearning() {
         </div>
       </div>
 
-      {/* Section principale pour afficher les détails */}
-      <div className="w-3/4 p-8 flex flex-col items-center">
+      {/* Section centrale agrandie */}
+      <div className="w-3/4 p-10 flex flex-col items-center">
         {selectedShape && (
-          <div className="bg-white p-6 rounded-lg shadow-lg mt-10 w-full sm:w-3/4">
-            <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
-            <p className="text-md mb-4">{selectedShape.description}</p>
-            <p className="text-lg font-bold mb-2">Formule :</p>
-            <p className="text-lg mb-4">{selectedShape.formula}</p>
-            <p className="text-lg font-bold mb-2">Exemple :</p>
-            <p className="text-lg">{selectedShape.example}</p>
+          <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
+            <h2 className="text-3xl font-bold mb-6">{selectedShape.name}</h2>
+            <p className="text-lg mb-6">{selectedShape.description}</p>
+            <p className="text-2xl font-bold mb-4">Formule :</p>
+            <p className="text-lg mb-6">{selectedShape.formula}</p>
+            <p className="text-2xl font-bold mb-4">Exemple :</p>
+            <p className="text-lg mb-6">{selectedShape.example}</p>
 
-            {/* Image spécifique de la forme */}
-            <div className="mt-6 flex justify-center">
+            {/* Image agrandie */}
+            <div className="mt-8 flex justify-center">
               <Image
                 src={selectedShape.imageUrl}
                 alt={selectedShape.name}
-                width={250} // Largeur ajustée
-                height={250} // Hauteur proportionnelle
+                width={400} // Taille augmentée pour plus de visibilité
+                height={400}
                 className="object-contain"
               />
             </div>
