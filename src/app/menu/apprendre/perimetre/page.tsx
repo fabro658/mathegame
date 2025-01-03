@@ -64,20 +64,19 @@ export default function PerimetreLearning() {
 
         <h1 className="text-3xl font-bold mb-6 text-center">Formes géométriques</h1>
         
-        <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6 text-center">Sélectionne une forme pour apprendre comment calculer son périmètre :</p>
+        <div className="flex flex-col gap-4">
           {shapes.map((shape, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-                onClick={() => handleSelectShape(shape)}
-              >
-                {shape.name}
-              </button>
-            </div>
+            <button
+              key={index}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              onClick={() => handleSelectShape(shape)}
+            >
+              {shape.name}
+            </button>
           ))}
         </div>
       </div>
+
 
       {/* Formules et explications au centre */}
       <div className="w-full sm:w-3/4 p-8">
