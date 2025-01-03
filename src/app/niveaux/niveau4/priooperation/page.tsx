@@ -1,4 +1,4 @@
-"use client"; // Assurez-vous que ce fichier soit rendu côté client
+"use client"; 
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
