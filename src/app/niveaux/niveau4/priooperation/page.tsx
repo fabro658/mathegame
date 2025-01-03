@@ -66,15 +66,15 @@ export default function PrioOperation() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
-
-    // Valider que la valeur ne contient pas de caractères non numériques
-    if (/[^0-9]/.test(value)) {
-      alert("Seuls les chiffres sont autorisés.");
-      return; // Si un caractère non numérique est trouvé, ignorer la modification
+    
+    // Validation des entrées : autorise uniquement les chiffres, le point pour les décimales, et le tiret pour les négatifs
+    if (!/^-?\d*\.?\d+$/.test(value) && value !== "") {
+      alert("Seuls les chiffres, le point décimal et le signe négatif sont autorisés.");
+      return; // Si un caractère invalide est trouvé, on ignore la modification
     }
 
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    // Si l'entrée est vide ou un nombre valide, on l'ajoute
+    newAnswers[index] = value === "" ? null : parseFloat(value);
     setAnswers(newAnswers);
   };
 
