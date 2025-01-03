@@ -67,9 +67,9 @@ export default function PrioOperation() {
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     
-    // Validation des entrées : autorise uniquement les chiffres, le point décimal, la barre oblique
+    // Validation des entrées : autorise uniquement les chiffres, le point décimal, la barre oblique et le signe négatif
     if (!/^(-?\d+(\.\d*)?|\d*\/\d*)?$/.test(value) && value !== "") {
-      alert("Seuls les chiffres, le point décimal et la barre oblique sont autorisés.");
+      alert("Seuls les chiffres, le signe négatif, le point décimal et la barre oblique sont autorisés.");
       return; // Si un caractère invalide est trouvé, on ignore la modification
     }
 
