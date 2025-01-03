@@ -74,10 +74,10 @@ export default function ExponentsLearning() {
         <div className="flex flex-col gap-6">
           <p className="text-lg mb-6">Sélectionne un concept pour en apprendre davantage :</p>
           {concepts.map((concept, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <div key={index} className="flex flex-col gap-4">
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4"
-                onClick={() => handleSelectConcept(concept)}
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={() => handleSelectConcept(concept)} // Sélectionner le concept
               >
                 {concept.name}
               </button>
