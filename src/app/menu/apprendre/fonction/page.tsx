@@ -49,7 +49,8 @@ export default function PrioriteOperationsLearning() {
         </Link>
 
         <h1 className="text-3xl font-bold mb-6">Priorité des Opérations</h1>
-        
+        <p className="text-lg mb-6">Sélectionne un concept pour en apprendre davantage :</p>
+
         <div className="flex flex-col gap-4">
           {examples.map((example, index) => (
             <button

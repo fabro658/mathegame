@@ -56,7 +56,9 @@ export default function OperationsLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6 text-center">Opérations mathématiques</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
+        <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
+
         
         <div className="flex flex-col gap-4">
           {operations.map((operation, index) => (

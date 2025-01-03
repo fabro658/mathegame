@@ -73,7 +73,7 @@ export default function AireLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Formes géométriques</h1>
+        <h1 className="text-3xl font-bold mb-6">Calculer l'aire</h1>
 
         <p className="text-lg mb-6">
           Sélectionne une forme pour apprendre comment calculer son aire :
