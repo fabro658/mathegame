@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Option() {
   const [formData, setFormData] = useState({
@@ -24,9 +25,16 @@ export default function Option() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4">
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4 relative">
+      <Link
+        href="/niveaux/niveau1"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
+
       <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
-        <h1 className="text-3xl font-bold text-center mb-8"></h1>
+        <h1 className="text-3xl font-bold text-center mb-8">Option</h1>
 
         {/* Section 1: A propos de votre site */}
         <section className="mb-8">
@@ -44,9 +52,18 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
           <ul className="list-disc pl-6 text-lg">
-            <li><strong>Comment m&apos;inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton &quot;S&apos;inscrire&quot; en haut à droite de la page d&apos;accueil.</li>
-            <li><strong>Comment réinitialiser mon mot de passe ?</strong> Si vous avez oublié votre mot de passe, cliquez sur &quot;Mot de passe oublié&quot; sur la page de connexion.</li>
-            <li><strong>Comment signaler un bug ?</strong> Si vous rencontrez un problème, vous pouvez nous en informer via le formulaire de contact ci-dessous.</li>
+            <li>
+              <strong>Comment m&apos;inscrire ?</strong> Pour vous inscrire, cliquez sur le bouton
+              &quot;S&apos;inscrire&quot; en haut à droite de la page d&apos;accueil.
+            </li>
+            <li>
+              <strong>Comment réinitialiser mon mot de passe ?</strong> Si vous avez oublié votre
+              mot de passe, cliquez sur &quot;Mot de passe oublié&quot; sur la page de connexion.
+            </li>
+            <li>
+              <strong>Comment signaler un bug ?</strong> Si vous rencontrez un problème, vous pouvez
+              nous en informer via le formulaire de contact ci-dessous.
+            </li>
           </ul>
         </section>
 
@@ -55,8 +72,8 @@ export default function Option() {
           <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
           <p className="text-lg mb-4">
             Si vous avez des questions ou si vous rencontrez un problème, n&apos;hésitez pas à nous
-            contacter en remplissant le formulaire ci-dessous. Nous nous efforçons de répondre
-            dans les plus brefs délais.
+            contacter en remplissant le formulaire ci-dessous. Nous nous efforçons de répondre dans
+            les plus brefs délais.
           </p>
 
           {/* Formulaire de contact */}
