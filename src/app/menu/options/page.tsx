@@ -19,28 +19,28 @@ export default function Option() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici, vous pouvez ajouter la logique pour envoyer les données du formulaire (par exemple via une API)
     console.log("Formulaire soumis avec les données suivantes :", formData);
-    // Réinitialiser le formulaire après soumission
     setFormData({ nom: "", email: "", message: "" });
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 p-4">
-      <h1 className="text-3xl font-bold mb-8">Option</h1>
+    <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900 p-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">Option</h1>
 
-      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg">
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
+        {/* Section 1: A propos de votre site */}
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Présentation du site</h2>
+          <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
           <p className="text-lg">
             Bienvenue sur notre site ! Notre objectif est de vous offrir une expérience
-            agréable et facile à utiliser. Nous vous proposons des fonctionnalités innovantes 
-            pour vous aider à [insère ici l&apos;objectif spécifique du site]. Que vous soyez 
+            agréable et facile à utiliser. Nous vous proposons des fonctionnalités innovantes
+            pour vous aider à [insère ici l'objectif spécifique du site]. Que vous soyez
             ici pour [décrire les principales actions sur le site], nous espérons que vous
             trouverez ce que vous cherchez.
           </p>
         </section>
 
+        {/* Section 2: Foire aux questions (FAQ) */}
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
           <ul className="list-disc pl-6 text-lg">
@@ -50,6 +50,7 @@ export default function Option() {
           </ul>
         </section>
 
+        {/* Section 3: Poser des questions ou rapporter un problème */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
           <p className="text-lg mb-4">
