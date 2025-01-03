@@ -1,6 +1,30 @@
 "use client"; // Assurez-vous que ce fichier soit rendu côté client
 
+import { useState } from "react";
+
 export default function Option() {
+  const [formData, setFormData] = useState({
+    nom: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Ici, vous pouvez ajouter la logique pour envoyer les données du formulaire (par exemple via une API)
+    console.log("Formulaire soumis avec les données suivantes :", formData);
+    // Réinitialiser le formulaire après soumission
+    setFormData({ nom: "", email: "", message: "" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 p-4">
       <h1 className="text-3xl font-bold mb-8">Option</h1>
@@ -35,13 +59,15 @@ export default function Option() {
           </p>
 
           {/* Formulaire de contact */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="nom" className="block text-lg">Votre nom :</label>
               <input
                 type="text"
                 id="nom"
                 name="nom"
+                value={formData.nom}
+                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 required
               />
@@ -53,6 +79,8 @@ export default function Option() {
                 type="email"
                 id="email"
                 name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 required
               />
@@ -61,12 +89,14 @@ export default function Option() {
             <div>
               <label htmlFor="message" className="block text-lg">Votre message :</label>
               <textarea
-               id="message"
+                id="message"
                 name="message"
-                rows={4} 
+                rows={4}
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 required
-            ></textarea>
+              ></textarea>
             </div>
 
             <div className="text-center">
