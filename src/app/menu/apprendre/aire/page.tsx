@@ -103,13 +103,13 @@ export default function AireLearning() {
             <p className="text-2xl font-bold mb-4">Exemple :</p>
             <p className="text-lg mb-6">{selectedShape.example}</p>
 
-            {/* Image agrandie */}
+            {/* Image beaucoup plus grande */}
             <div className="mt-8 flex justify-center">
               <Image
                 src={selectedShape.imageUrl}
                 alt={selectedShape.name}
-                width={400} // Taille augmentée pour plus de visibilité
-                height={400}
+                width={500} // Taille encore augmentée
+                height={500}
                 className="object-contain"
               />
             </div>
