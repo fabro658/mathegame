@@ -3,43 +3,51 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function PrioriteOperationsLearning() {
-  const [selectedExample, setSelectedExample] = useState<string | null>(null);
+// Définir le type pour l'opération mathématique
+interface Operation {
+  name: string;
+  description: string;
+  formula: string;
+  example: string;
+}
 
-  const examples = [
+export default function prioriteoperation() {
+  const [selectedOperation, setSelectedOperation] = useState<Operation | null>(null);
+
+  const operations: Operation[] = [
     {
-      name: "Exemple 1 : Addition et multiplication",
-      description: "Lorsque l&apos;addition et la multiplication apparaissent dans une même expression, on effectue d&apos;abord la multiplication.",
-      formula: "Exemple : 3 + 5 × 2",
-      solution: "3 + (5 × 2) = 3 + 10 = 13",
+      name: "Addition",
+      description: "L'addition est une opération mathématique qui consiste à additionner deux nombres.",
+      formula: "A + B",
+      example: "Si A = 3 et B = 5, l'addition donne : 3 + 5 = 8",
     },
     {
-      name: "Exemple 2 : Parenthèses d&apos;abord",
-      description: "Les parenthèses ont la priorité sur les autres opérations, quelle que soit l&apos;opération à l&apos;intérieur.",
-      formula: "Exemple : (2 + 3) × 4",
-      solution: "(2 + 3) × 4 = 5 × 4 = 20",
+      name: "Soustraction",
+      description: "La soustraction est une opération mathématique qui consiste à soustraire un nombre d'un autre.",
+      formula: "A - B",
+      example: "Si A = 8 et B = 5, la soustraction donne : 8 - 5 = 3",
     },
     {
-      name: "Exemple 3 : Division avant addition",
-      description: "La division est effectuée avant l&apos;addition si elles apparaissent dans la même expression sans parenthèses.",
-      formula: "Exemple : 8 ÷ 4 + 3",
-      solution: "(8 ÷ 4) + 3 = 2 + 3 = 5",
+      name: "Multiplication",
+      description: "La multiplication est une opération mathématique qui consiste à multiplier deux nombres.",
+      formula: "A × B",
+      example: "Si A = 4 et B = 6, la multiplication donne : 4 × 6 = 24",
     },
     {
-      name: "Exemple 4 : Parenthèses avec plusieurs opérations",
-      description: "Les parenthèses doivent être résolues en premier, peu importe les opérations à l&apos;intérieur.",
-      formula: "Exemple : (2 + 3) × (4 + 1)",
-      solution: "(2 + 3) × (4 + 1) = 5 × 5 = 25",
+      name: "Division",
+      description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
+      formula: "A ÷ B",
+      example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
     }
   ];
 
-  const handleSelectExample = (example: string): void => {
-    setSelectedExample(example);
+  const handleSelectOperation = (operation: Operation): void => {
+    setSelectedOperation(operation);
   };
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Options d'exemples à gauche */}
+      {/* Options des opérations à gauche */}
       <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
@@ -48,17 +56,17 @@ export default function PrioriteOperationsLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6 text-center">Priorité des Opérations</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Opérations mathématiques</h1>
         
         <div className="flex flex-col gap-6">
-          <p className="text-lg mb-6 text-center">Sélectionne un exemple pour apprendre les priorités d&apos;opérations :</p>
-          {examples.map((example, index) => (
+          <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
+          {operations.map((operation, index) => (
             <div key={index} className="flex flex-col items-center">
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-                onClick={() => handleSelectExample(example.name)}
+                onClick={() => handleSelectOperation(operation)}
               >
-                {example.name}
+                {operation.name}
               </button>
             </div>
           ))}
@@ -67,20 +75,18 @@ export default function PrioriteOperationsLearning() {
 
       {/* Formules et explications au centre */}
       <div className="w-full sm:w-3/4 p-8">
-        {selectedExample && (
+        {selectedOperation && (
           <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-6">{selectedExample}</h2>
-            <p className="text-md mb-4">
-              {examples.find((example) => example.name === selectedExample)?.description}
-            </p>
-            <p className="text-lg font-bold mb-2">Formule :</p>
-            <p className="text-lg mb-4">
-              {examples.find((example) => example.name === selectedExample)?.formula}
-            </p>
-            <p className="text-lg font-bold mb-2">Solution :</p>
-            <p className="text-lg">
-              {examples.find((example) => example.name === selectedExample)?.solution}
-            </p>
+            <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
+            <p className="text-md mb-6">{selectedOperation.description}</p>
+
+            {/* Ajout d'un espacement plus modéré avant les formules */}
+            <div className="mt-8">
+              <p className="text-lg font-bold mb-2">Formule :</p>
+              <p className="text-lg mb-4">{selectedOperation.formula}</p>
+              <p className="text-lg font-bold mb-2">Exemple :</p>
+              <p className="text-lg">{selectedOperation.example}</p>
+            </div>
           </div>
         )}
       </div>
