@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -16,22 +14,36 @@ export default function PrioOperation() {
     // Génération des questions avec priorité des opérations
     const generateQuestions = () => {
       const operations = ["+", "-", "*", "/"];
-      const questionsArray = Array.from({ length: totalQuestions }, () => {
+      const questionsArray: string[] = [];
+      
+      for (let i = 0; i < totalQuestions; i++) {
         const num1 = Math.floor(Math.random() * 10) + 1;
         const num2 = Math.floor(Math.random() * 10) + 1;
         const num3 = Math.floor(Math.random() * 10) + 1;
-        const num4 = Math.floor(Math.random() * 10) + 1;  // Ajout d'un 4ème nombre
+        const num4 = Math.floor(Math.random() * 10) + 1;
         const op1 = operations[Math.floor(Math.random() * operations.length)];
         const op2 = operations[Math.floor(Math.random() * operations.length)];
         const op3 = operations[Math.floor(Math.random() * operations.length)];
+        const op4 = operations[Math.floor(Math.random() * operations.length)];
 
-        // Ajouter des parenthèses pour des priorités d'opérations
-        const questionWithParentheses = Math.random() > 0.5 ? 
-          `(${num1} ${op1} ${num2}) ${op2} (${num3} ${op3} ${num4})` : 
-          `${num1} ${op1} (${num2} ${op2} ${num3}) ${op3} ${num4}`;
+        // Facile : une parenthèse et une seule opération
+        if (i < totalQuestions / 4) {
+          questionsArray.push(`(${num1} ${op1} ${num2})`);
+        }
+        // Moyenne : deux opérations avec une parenthèse
+        else if (i < totalQuestions / 2) {
+          questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} ${num3}`);
+        }
+        // Difficile : deux parenthèses et trois opérations
+        else if (i < (3 * totalQuestions) / 4) {
+          questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} (${num3} ${op3} ${num4})`);
+        }
+        // Très difficile : deux sets de parenthèses et quatre opérations
+        else {
+          questionsArray.push(`(${num1} ${op1} (${num2} ${op2} ${num3})) ${op3} (${num4} ${op4} ${num1})`);
+        }
+      }
 
-        return questionWithParentheses;
-      });
       setQuestions(questionsArray);
     };
 
