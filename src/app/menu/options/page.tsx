@@ -36,7 +36,6 @@ export default function Option() {
         throw new Error('Échec de l\'envoi de l\'email');
       }
 
-      const result = await response.json();
       alert('Email envoyé avec succès!');
       setFormData({ nom: "", email: "", message: "" }); // Réinitialise le formulaire
     } catch (error) {
