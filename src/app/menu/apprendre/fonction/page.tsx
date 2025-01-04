@@ -56,7 +56,7 @@ export default function FonctionLearning() {
       description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
       formula: "f(x) = a^x",
       example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
-      imageUrl: "/fonction_exponentielle.jpeg",
+      imageUrl: "/fonction_expon.jpeg",
     },
     {
       name: "Fonction en escalier",
