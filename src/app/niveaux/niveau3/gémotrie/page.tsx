@@ -16,7 +16,7 @@ export default function GeometryPractice() {
   // Génération des questions de géométrie
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
+      return Array.from({ length: totalQuestions }, () => {
         let questionText = "";
         let correctAnswer = "";
 
@@ -72,9 +72,9 @@ export default function GeometryPractice() {
     let allCorrect = true;
     const updatedAnswers = [...answers];
 
-    pageAnswers.forEach((answer, index) => {
-      if (answer !== pageCorrectAnswers[index]) {
-        updatedAnswers[startIndex + index] = null;
+    pageAnswers.forEach((answer, idx) => {
+      if (answer !== pageCorrectAnswers[idx]) {
+        updatedAnswers[startIndex + idx] = null;
         allCorrect = false;
       }
     });
@@ -156,7 +156,6 @@ export default function GeometryPractice() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Pratique de la Géométrie</h1>
-
 
       {!isValidated && (
         <>
