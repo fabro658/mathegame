@@ -21,28 +21,28 @@ export default function FractionOperationsLearning() {
       name: "Addition de fractions",
       description: "L'addition de fractions nécessite des dénominateurs identiques. Si les dénominateurs sont différents, il faut d'abord les rendre égaux.",
       formula: "A/B + C/B = (A + C)/B",
-      example: "Si A = 1/4 et B = 2/4, on a : 1/4 + 2/4 = (1 + 2)/4 = 3/4",
+      example: "Si A/B = 1/4 et C/B = 2/4, on a : 1/4 + 2/4 = (1 + 2)/4 = 3/4",
       imageUrl: "/images/addition.png", // Exemple d'image
     },
     {
       name: "Soustraction de fractions",
       description: "La soustraction de fractions suit la même règle que l'addition. On doit rendre les dénominateurs égaux si nécessaire.",
       formula: "A/B - C/B = (A - C)/B",
-      example: "Si A = 3/5 et B = 1/5, on a : 3/5 - 1/5 = (3 - 1)/5 = 2/5",
+      example: "Si A/B = 3/5 et C/B = 1/5, on a : 3/5 - 1/5 = (3 - 1)/5 = 2/5",
       imageUrl: "/images/soustraction.png", // Exemple d'image
     },
     {
       name: "Multiplication de fractions",
       description: "Pour multiplier des fractions, on multiplie les numérateurs entre eux et les dénominateurs entre eux.",
       formula: "A/B × C/D = (A×C)/(B×D)",
-      example: "Si A = 1/2 et B = 3/4, on a : 1/2 × 3/4 = (1×3)/(2×4) = 3/8",
+      example: "Si A/B = 1/2 et C/D = 3/4, on a : 1/2 × 3/4 = (1×3)/(2×4) = 3/8",
       imageUrl: "/images/multiplication.png", // Exemple d'image
     },
     {
       name: "Division de fractions",
       description: "Pour diviser des fractions, on multiplie la première fraction par l'inverse de la deuxième.",
       formula: "A/B ÷ C/D = A/B × D/C",
-      example: "Si A = 3/4 et B = 1/2, on a : 3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 2/4 = 1 1/2",
+      example: "Si A/B = 3/4 et C/D = 1/2, on a : 3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 2/4 = 1 1/2",
       imageUrl: "/images/division.png", // Exemple d'image
     },
   ];
