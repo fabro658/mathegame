@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";  // Ajoute cette ligne pour importer useState
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Option() {
@@ -35,74 +35,48 @@ export default function Option() {
       <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
         <h1 className="text-3xl font-bold text-center mb-8">Option</h1>
 
+        {/* Section À propos */}
         <section className="mb-8">
-  <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
-  <p className="text-lg">
-    Bienvenue sur <strong>MatheGame</strong> ! Notre mission est de rendre les mathématiques plus 
-    accessibles et captivantes pour tous. Nous croyons que les mathématiques ne sont pas seulement 
-    des chiffres et des équations, mais aussi un outil puissant pour comprendre le monde et résoudre 
-    des problèmes.
-  </p>
-  <p className="text-lg mt-4">
-    Sur ce site, nous encourageons la <strong>pratique</strong> et la <strong>réussite</strong> en 
-    offrant des exercices interactifs, des leçons engageantes et des outils adaptés à tous les niveaux. 
-    Que vous soyez étudiant, parent ou enseignant, nous sommes ici pour vous aider à découvrir 
-    le plaisir d'apprendre et de maîtriser les mathématiques.
-  </p>
-  <p className="text-lg mt-4">
-    Rejoignez-nous dans cette aventure et explorons ensemble le monde fascinant des mathématiques !
-  </p>
-</section>
+          <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
+          <p className="text-lg">
+            Bienvenue sur <strong>MatheGame</strong> ! Notre mission est de rendre les mathématiques 
+            plus accessibles et captivantes pour tous. Nous croyons que les mathématiques sont 
+            un outil puissant pour comprendre le monde et résoudre des problèmes.
+          </p>
+          <p className="text-lg mt-4">
+            Sur ce site, nous encourageons la <strong>pratique</strong> et la <strong>réussite</strong> 
+            en offrant des exercices interactifs et des leçons engageantes. Que vous soyez étudiant, 
+            parent ou enseignant, nous sommes ici pour vous aider à découvrir le plaisir d&apos;apprendre 
+            et de maîtriser les mathématiques.
+          </p>
+        </section>
 
-<section className="mb-8">
-  <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
-  <ul className="list-disc pl-6 text-lg space-y-4">
-    <li>
-      <strong>Dois-je créer un compte pour utiliser le site ?</strong> 
-      Non, il n&apos;est pas nécessaire de créer un compte pour accéder aux contenus et aux exercices proposés. 
-      Vous pouvez commencer à pratiquer immédiatement !
-    </li>
-    <li>
-      <strong>À qui s&apos;adresse ce site ?</strong> 
-      Ce site s&apos;adresse à tous ceux qui souhaitent améliorer leurs compétences en mathématiques, 
-      que vous soyez étudiant, parent ou enseignant.
-    </li>
-    <li>
-      <strong>Les ressources sont-elles gratuites ?</strong> 
-      Oui, toutes les ressources disponibles sur le site sont entièrement gratuites. 
-      Notre mission est de rendre les mathématiques accessibles à tous.
-    </li>
-    <li>
-      <strong>Puis-je signaler une erreur ou un bug sur le site ?</strong> 
-      Bien sûr ! Si vous remarquez un problème, utilisez la section &quot;Nous joindre&quot; pour nous envoyer un message. 
-      Nous apprécions votre aide pour améliorer le site.
-    </li>
-    <li>
-      <strong>Comment puis-je améliorer mes résultats en mathématiques ?</strong> 
-      La clé est la pratique régulière. Utilisez nos exercices interactifs pour vous entraîner 
-      et renforcer vos compétences à votre propre rythme.
-    </li>
-  </ul>
-  <div className="mt-6 text-center">
-    <a
-      href="mailto:gestionmathegame@gmail.com"
-      className="text-blue-500 underline hover:text-blue-700"
-    >
-      Nous joindre
-    </a>
-  </div>
-</section>
+        {/* Section FAQ */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
+          <ul className="list-disc pl-6 text-lg space-y-4">
+            <li>
+              <strong>Dois-je créer un compte pour utiliser le site ?</strong> 
+              Non, il n&apos;est pas nécessaire de créer un compte pour accéder aux contenus et exercices proposés.
+            </li>
+            <li>
+              <strong>À qui s&apos;adresse ce site ?</strong> 
+              Ce site s&apos;adresse à tous ceux qui souhaitent améliorer leurs compétences en mathématiques.
+            </li>
+            <li>
+              <strong>Les ressources sont-elles gratuites ?</strong> 
+              Oui, toutes les ressources disponibles sur le site sont entièrement gratuites.
+            </li>
+            <li>
+              <strong>Puis-je signaler une erreur ou un bug ?</strong> 
+              Oui, utilisez la section &quot;Nous joindre&quot; pour nous envoyer un message.
+            </li>
+          </ul>
+        </section>
 
-        {/* Section 3: Poser des questions ou rapporter un problème */}
+        {/* Section Contacter */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
-          <p className="text-lg mb-4">
-            Si vous avez des questions ou si vous rencontrez un problème, n&apos;hésitez pas à nous
-            contacter en remplissant le formulaire ci-dessous. Nous nous efforçons de répondre dans
-            les plus brefs délais.
-          </p>
-
-          {/* Formulaire de contact */}
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="nom" className="block text-lg">Votre nom :</label>
@@ -116,7 +90,6 @@ export default function Option() {
                 required
               />
             </div>
-
             <div>
               <label htmlFor="email" className="block text-lg">Votre e-mail :</label>
               <input
@@ -129,7 +102,6 @@ export default function Option() {
                 required
               />
             </div>
-
             <div>
               <label htmlFor="message" className="block text-lg">Votre message :</label>
               <textarea
@@ -142,15 +114,12 @@ export default function Option() {
                 required
               ></textarea>
             </div>
-
-            <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
-              >
-                Envoyer
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
+            >
+              Envoyer
+            </button>
           </form>
         </section>
       </div>
