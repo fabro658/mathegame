@@ -54,18 +54,17 @@ export default function Option() {
   </p>
 </section>
 
-        {/* Section 2: Foire aux questions (FAQ) */}
-        <section className="mb-8">
+<section className="mb-8">
   <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
   <ul className="list-disc pl-6 text-lg space-y-4">
     <li>
       <strong>Dois-je créer un compte pour utiliser le site ?</strong> 
-      Non, il n'est pas nécessaire de créer un compte pour accéder aux contenus et aux exercices proposés. 
+      Non, il n&apos;est pas nécessaire de créer un compte pour accéder aux contenus et aux exercices proposés. 
       Vous pouvez commencer à pratiquer immédiatement !
     </li>
     <li>
-      <strong>À qui s'adresse ce site ?</strong> 
-      Ce site s'adresse à tous ceux qui souhaitent améliorer leurs compétences en mathématiques, 
+      <strong>À qui s&apos;adresse ce site ?</strong> 
+      Ce site s&apos;adresse à tous ceux qui souhaitent améliorer leurs compétences en mathématiques, 
       que vous soyez étudiant, parent ou enseignant.
     </li>
     <li>
@@ -75,7 +74,7 @@ export default function Option() {
     </li>
     <li>
       <strong>Puis-je signaler une erreur ou un bug sur le site ?</strong> 
-      Bien sûr ! Si vous remarquez un problème, utilisez la section "Nous joindre" pour nous envoyer un message. 
+      Bien sûr ! Si vous remarquez un problème, utilisez la section &quot;Nous joindre&quot; pour nous envoyer un message. 
       Nous apprécions votre aide pour améliorer le site.
     </li>
     <li>
