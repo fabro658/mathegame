@@ -14,7 +14,7 @@ router.post('/send-email', async (req, res) => {
       service: 'gmail',
       auth: {
         user: 'gestionmathegame@gmail.com',
-        pass: 'Lemotdepasseleplussecuritaire13.', // Remplacez par votre mot de passe ou token d'application.
+        pass: 'mot de passe du compte gmail', // Remplacez par votre mot de passe ou token d'application.
       },
     });
 
