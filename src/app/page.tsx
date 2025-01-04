@@ -11,13 +11,9 @@ export default function Home() {
             <Image src="/file.svg" alt="Apprendre Icon" width={20} height={20} />
             <span>Apprendre</span>
           </Link>
-          <Link href="/menu/documentation" className="flex items-center gap-2 text-white hover:underline">
-            <Image src="/window.svg" alt="Documentation Icon" width={20} height={20} />
-            <span>Documentation</span>
-          </Link>
           <Link href="/menu/options" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/globe.svg" alt="Option Icon" width={20} height={20} />
-            <span>Option</span>
+            <span>À propos</span>
           </Link>
         </div>
       </header>

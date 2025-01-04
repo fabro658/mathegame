@@ -21,7 +21,7 @@ export default function Page() {
           href="/menu/apprendre/opérations arithmétiques" 
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          opérations arithmétiques
+          Opérations arithmétiques
         </Link>
         <Link 
           href="/menu/apprendre/fraction" 
@@ -45,7 +45,7 @@ export default function Page() {
           href="/menu/apprendre/exposant" 
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          exposant
+          Exposant
         </Link>
         <Link 
           href="/menu/apprendre/prioriteoperation" 
@@ -63,7 +63,7 @@ export default function Page() {
           href="/menu/apprendre/fonction" 
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          fonction
+          Fonction
         </Link>
       </div>
     </div>

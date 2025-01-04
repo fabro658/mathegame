@@ -44,7 +44,7 @@ export default function Option() {
             un outil puissant pour comprendre le monde et résoudre des problèmes.
           </p>
           <p className="text-lg mt-4">
-            Sur ce site, nous encourageons la <strong>pratique</strong> et la <strong>réussite</strong> 
+            Sur ce site, nous encourageons la <strong>pratique</strong> et la <strong>réussite </strong> 
             en offrant des exercices interactifs et des leçons engageantes. Que vous soyez étudiant, 
             parent ou enseignant, nous sommes ici pour vous aider à découvrir le plaisir d&apos;apprendre 
             et de maîtriser les mathématiques.
@@ -56,19 +56,19 @@ export default function Option() {
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
           <ul className="list-disc pl-6 text-lg space-y-4">
             <li>
-              <strong>Dois-je créer un compte pour utiliser le site ?</strong> 
+              <strong>Dois-je créer un compte pour utiliser le site ? </strong> 
               Non, il n&apos;est pas nécessaire de créer un compte pour accéder aux contenus et exercices proposés.
             </li>
             <li>
-              <strong>À qui s&apos;adresse ce site ?</strong> 
+              <strong>À qui s&apos;adresse ce site ? </strong> 
               Ce site s&apos;adresse à tous ceux qui souhaitent améliorer leurs compétences en mathématiques.
             </li>
             <li>
-              <strong>Les ressources sont-elles gratuites ?</strong> 
+              <strong>Les ressources sont-elles gratuites ? </strong> 
               Oui, toutes les ressources disponibles sur le site sont entièrement gratuites.
             </li>
             <li>
-              <strong>Puis-je signaler une erreur ou un bug ?</strong> 
+              <strong>Puis-je signaler une erreur ou un bug ? </strong> 
               Oui, utilisez la section &quot;Nous joindre&quot; pour nous envoyer un message.
             </li>
           </ul>
