@@ -2,44 +2,106 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function PrioriteOperationsLearning() {
-  const [selectedExample, setSelectedExample] = useState<string | null>(null);
+interface FunctionConcept {
+  name: string;
+  description: string;
+  formula: string;
+  example: string;
+  imageUrl: string;
+}
 
-  const examples = [
+export default function FonctionLearning() {
+  const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
+
+  const functionConcepts: FunctionConcept[] = [
     {
-      name: "Exemple 1 : Addition et multiplication",
-      description: "Lorsque l'addition et la multiplication apparaissent dans une même expression, on effectue d'abord la multiplication.",
-      formula: "Exemple : 3 + 5 × 2",
-      solution: "3 + (5 × 2) = 3 + 10 = 13",
+      name: "Relation",
+      description: "Une relation est une règle qui associe chaque élément d'un ensemble à un ou plusieurs éléments d'un autre ensemble.",
+      formula: "Relation : A ↔ B",
+      example: "Par exemple, la relation x ↔ y telle que y = 2x.",
+      imageUrl: "/relation.png",
     },
     {
-      name: "Exemple 2 : Parenthèses d'abord",
-      description: "Les parenthèses ont la priorité sur les autres opérations, quelle que soit l'opération à l'intérieur.",
-      formula: "Exemple : (2 + 3) × 4",
-      solution: "(2 + 3) × 4 = 5 × 4 = 20",
+      name: "Fonction",
+      description: "Une fonction est une relation particulière où chaque élément de l'ensemble de départ (variable indépendante) est associé à un seul élément de l'ensemble d'arrivée (variable dépendante).",
+      formula: "Fonction : f(x) = y",
+      example: "Si f(x) = 2x + 3, pour x = 5, f(5) = 13.",
+      imageUrl: "/fonction.png",
     },
     {
-      name: "Exemple 3 : Division avant addition",
-      description: "La division est effectuée avant l'addition si elles apparaissent dans la même expression sans parenthèses.",
-      formula: "Exemple : 8 ÷ 4 + 3",
-      solution: "(8 ÷ 4) + 3 = 2 + 3 = 5",
+      name: "Fonction linéaire",
+      description: "Une fonction linéaire est une fonction de la forme f(x) = ax + b où a et b sont des constantes.",
+      formula: "f(x) = ax + b",
+      example: "Si f(x) = 2x + 3, alors pour x = 4, f(4) = 2(4) + 3 = 11.",
+      imageUrl: "/fonction_lineaire.png",
     },
     {
-      name: "Exemple 4 : Parenthèses avec plusieurs opérations",
-      description: "Les parenthèses doivent être résolues en premier, peu importe les opérations à l'intérieur.",
-      formula: "Exemple : (2 + 3) × (4 + 1)",
-      solution: "(2 + 3) × (4 + 1) = 5 × 5 = 25",
-    }
+      name: "Fonction quadratique",
+      description: "Une fonction quadratique est une fonction polynomiale de degré 2, généralement de la forme f(x) = ax² + bx + c.",
+      formula: "f(x) = ax² + bx + c",
+      example: "Si f(x) = x² + 2x + 1, alors pour x = 3, f(3) = 3² + 2(3) + 1 = 16.",
+      imageUrl: "/fonction_quadratique.JPG",
+    },
+    {
+      name: "Fonction valeur absolue",
+      description: "La fonction valeur absolue donne la distance entre un nombre et zéro, sans tenir compte du signe.",
+      formula: "f(x) = |x|",
+      example: "Si f(x) = |x|, alors f(-5) = 5.",
+      imageUrl: "/fonction_valeurabs.JPG",
+    },
+    {
+      name: "Fonction exponentielle",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonction_exponentielle.JPG",
+    },
+    {
+      name: "Fonction en escalier",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonciton_escalier.JPG",
+    },
+    {
+      name: "Fonction logarithmique",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonction_log.JPG",
+    },
+    {
+      name: "Fonction trigonométrique",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonction_trigo.JPG",
+    },
+    {
+      name: "Fonction rationnelle",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonction_rationnelle.JPG",
+    },
+    {
+      name: "Fonction racine carrée",
+      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
+      formula: "f(x) = a^x",
+      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
+      imageUrl: "/fonction_racinecarree.JPG",
+    },
   ];
 
-  const handleSelectExample = (example: string): void => {
-    setSelectedExample(example);
+  const handleSelectConcept = (concept: FunctionConcept): void => {
+    setSelectedConcept(concept);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Options d'exemples à gauche */}
+    <main className="flex min-h-screen bg-gray-100 text-black">
+      {/* Barre latérale */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
@@ -48,41 +110,49 @@ export default function PrioriteOperationsLearning() {
           Retour
         </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Priorité des Opérations</h1>
-        <p className="text-lg mb-6">Sélectionne un concept pour en apprendre davantage :</p>
+        <h1 className="text-3xl font-bold mb-6">Les Fonctions</h1>
+
+        <p className="text-lg mb-6">
+          Sélectionne un concept pour apprendre à mieux comprendre les fonctions en mathématiques :
+        </p>
 
         <div className="flex flex-col gap-4">
-          {examples.map((example, index) => (
+          {functionConcepts.map((concept, index) => (
             <button
               key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-              onClick={() => handleSelectExample(example.name)}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              onClick={() => handleSelectConcept(concept)}
             >
-              {example.name}
+              {concept.name}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Formules et explications au centre */}
-      <div className="w-3/4 p-8">
-        {selectedExample && (
-          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-4">{selectedExample}</h2>
-            <p className="text-md mb-4">
-              {examples.find((example) => example.name === selectedExample)?.description}
-            </p>
-            <p className="text-lg font-bold mb-2">Formule :</p>
-            <p className="text-lg mb-4">
-              {examples.find((example) => example.name === selectedExample)?.formula}
-            </p>
-            <p className="text-lg font-bold mb-2">Solution :</p>
-            <p className="text-lg">
-              {examples.find((example) => example.name === selectedExample)?.solution}
-            </p>
+      {/* Section centrale agrandie */}
+      <div className="w-3/4 p-10 flex flex-col items-center">
+        {selectedConcept && (
+          <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
+            <h2 className="text-3xl font-bold mb-6">{selectedConcept.name}</h2>
+            <p className="text-lg mb-6">{selectedConcept.description}</p>
+            <p className="text-2xl font-bold mb-4">Formule :</p>
+            <p className="text-lg mb-6">{selectedConcept.formula}</p>
+            <p className="text-2xl font-bold mb-4">Exemple :</p>
+            <p className="text-lg mb-6">{selectedConcept.example}</p>
+
+            {/* Image beaucoup plus grande */}
+            <div className="mt-8 flex justify-center">
+              <Image
+                src={selectedConcept.imageUrl}
+                alt={selectedConcept.name}
+                width={500} // Taille encore augmentée
+                height={500}
+                className="object-contain"
+              />
+            </div>
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }
