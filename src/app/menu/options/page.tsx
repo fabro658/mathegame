@@ -9,6 +9,7 @@ export default function Option() {
     message: "",
   });
 
+  // Fonction pour gérer les changements dans le formulaire
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -17,10 +18,31 @@ export default function Option() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Fonction pour gérer la soumission du formulaire
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Formulaire soumis avec les données suivantes :", formData);
-    setFormData({ nom: "", email: "", message: "" });
+
+    try {
+      const response = await fetch('http://localhost:5001/send-email', { // Remplacez par l'URL de votre backend
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData), // Envoie des données du formulaire en JSON
+      });
+
+      if (!response.ok) {
+        throw new Error('Échec de l\'envoi de l\'email');
+      }
+
+      const result = await response.json();
+      alert('Email envoyé avec succès!');
+      setFormData({ nom: "", email: "", message: "" }); // Réinitialise le formulaire
+    } catch (error) {
+      alert('Erreur lors de l\'envoi de l\'email.');
+      console.error(error);
+    }
   };
 
   return (
