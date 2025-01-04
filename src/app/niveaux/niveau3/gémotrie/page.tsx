@@ -122,7 +122,7 @@ export default function GeometryPractice() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau3"
+        href="/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -155,21 +155,21 @@ export default function GeometryPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Pratique de la Géométrie</h1>
 
-      {/* Affichage des questions */}
+
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
+              <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  value={answers[currentPage * questionsPerPage + idx] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
                 />
               </div>
             ))}
