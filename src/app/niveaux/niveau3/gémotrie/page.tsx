@@ -122,7 +122,7 @@ export default function GeometryPractice() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau4"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -155,8 +155,9 @@ export default function GeometryPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Pratique de la Géométrie</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
 
+      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
@@ -222,3 +223,8 @@ export default function GeometryPractice() {
               </button>
             </div>
           )}
+        </>
+      )}
+    </div>
+  );
+}
