@@ -18,32 +18,6 @@ export default function Option() {
     }));
   };
 
-  // Fonction pour gérer la soumission du formulaire
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Formulaire soumis avec les données suivantes :", formData);
-
-    try {
-      const response = await fetch("http://localhost:5001/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Échec de l'envoi de l'email");
-      }
-
-      alert("Email envoyé avec succès!");
-      setFormData({ nom: "", email: "", message: "" }); // Réinitialise le formulaire
-    } catch (error) {
-      alert("Erreur lors de l'envoi de l'email.");
-      console.error(error);
-    }
-  };
-
   // Fonction pour envoyer un email via mailto
   const handleMailto = () => {
     const mailtoLink = `mailto:gestionmathegame@gmail.com?subject=Message%20de%20${encodeURIComponent(
@@ -106,7 +80,7 @@ export default function Option() {
         {/* Section Contacter */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
             <div>
               <label htmlFor="nom" className="block text-lg">Votre nom :</label>
               <input
@@ -143,21 +117,13 @@ export default function Option() {
                 required
               ></textarea>
             </div>
-            <div className="flex space-x-4">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
-              >
-                Envoyer via serveur
-              </button>
-              <button
-                type="button"
-                onClick={handleMailto}
-                className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600"
-              >
-                Envoyer via mailto
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleMailto}
+              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
+            >
+              Envoyer
+            </button>
           </form>
         </section>
       </div>
