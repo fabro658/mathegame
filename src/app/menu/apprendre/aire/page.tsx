@@ -19,41 +19,41 @@ export default function AireLearning() {
     {
       name: "Carré",
       description:
-        "L&apos;aire d&apos;un carré est calculée en multipliant la longueur de son côté par elle-même.",
+        "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
       formula: "Aire = côté × côté",
-      example: "Si le côté mesure 5 cm, l&apos;aire est : 5 × 5 = 25 cm²",
+      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
       imageUrl: "/airecarre.jpeg",
     },
     {
       name: "Rectangle",
       description:
-        "L&apos;aire d&apos;un rectangle est calculée en multipliant sa longueur par sa largeur.",
+        "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = base × hauteur",
-      example: "Si la longueur est 6 cm et la largeur est 4 cm, l&apos;aire est : 6 × 4 = 24 cm²",
+      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
       imageUrl: "/airerectangle.jpeg",
     },
     {
       name: "Triangle",
       description:
-        "L&apos;aire d&apos;un triangle est calculée en utilisant la base et la hauteur.",
+        "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
-      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l&apos;aire est : (8 × 5) ÷ 2 = 20 cm²",
+      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
       imageUrl: "/airetriangle.jpeg",
     },
     {
       name: "Trapèze",
       description:
-        "L&apos;aire d&apos;un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
       example:
-        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l&apos;aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
       imageUrl: "/airetrapeze.jpeg",
     },
     {
       name: "Cercle",
-      description: "L&apos;aire d&apos;un cercle est calculée en utilisant le rayon.",
+      description: "L'aire d'un cercle est calculée en utilisant le rayon.",
       formula: "Aire = π × rayon²",
-      example: "Si le rayon est 7 cm, l&apos;aire est : 3.14 × 7² = 153.86 cm²",
+      example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
       imageUrl: "/airecercle.jpeg",
     },
   ];
