@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function GeometryPractice() {
-  const totalQuestions = 30; // Nombre total de questions
+  const totalQuestions = 36; // Nombre total de questions
   const questionsPerPage = 3; // Questions affichées par vague
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
@@ -20,22 +20,23 @@ export default function GeometryPractice() {
         let questionText = "";
         let correctAnswer = "";
 
-        const figureChoice = Math.floor(Math.random() * 3); // Choix aléatoire de la forme géométrique
-        const dimension1 = Math.floor(Math.random() * 10) + 1; // Dimension aléatoire (par exemple, longueur)
-        const dimension2 = Math.floor(Math.random() * 10) + 1; // Autre dimension (par exemple, largeur)
+        const conceptChoice = Math.floor(Math.random() * 3); // Choix aléatoire de concept
 
-        if (figureChoice === 0) {
-          // Question pour un rectangle
-          questionText = `Quel est le périmètre d'un rectangle de longueur ${dimension1} et de largeur ${dimension2} ?`;
-          correctAnswer = (2 * (dimension1 + dimension2)).toString();
-        } else if (figureChoice === 1) {
-          // Question pour un cercle
-          questionText = `Quel est l'aire d'un cercle de rayon ${dimension1} ? (Utilisez π ≈ 3.14)`;
-          correctAnswer = (Math.PI * dimension1 * dimension1).toFixed(2);
+        if (conceptChoice === 0) {
+          // Question sur les angles
+          const angle1 = Math.floor(Math.random() * 90) + 1; // Angle aléatoire
+          const angle2 = Math.floor(Math.random() * (180 - angle1)) + 1; // Angle complémentaire
+          questionText = `Quel est le troisième angle d'un triangle si les deux premiers sont ${angle1}° et ${angle2}° ?`;
+          correctAnswer = (180 - angle1 - angle2).toString();
+        } else if (conceptChoice === 1) {
+          // Question sur les lignes
+          questionText = `Quel type de lignes sont toujours équidistantes et ne se croisent jamais ?`;
+          correctAnswer = "parallèles";
         } else {
-          // Question pour un triangle rectangle
-          questionText = `Quel est l'aire d'un triangle rectangle de base ${dimension1} et de hauteur ${dimension2} ?`;
-          correctAnswer = ((dimension1 * dimension2) / 2).toString();
+          // Question sur les polygones
+          const sides = Math.floor(Math.random() * 6) + 3; // Nombre de côtés (3 à 8)
+          questionText = `Comment appelle-t-on un polygone à ${sides} côtés ?`;
+          correctAnswer = ["triangle", "quadrilatère", "pentagone", "hexagone", "heptagone", "octogone"][sides - 3];
         }
 
         return {
@@ -165,7 +166,7 @@ export default function GeometryPractice() {
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
-                  inputMode="numeric"
+                  inputMode="text"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + idx] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
