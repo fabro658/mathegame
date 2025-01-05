@@ -6,6 +6,7 @@ export default function Option() {
   const [formData, setFormData] = useState({
     nom: "",
     email: "",
+    objet: "",
     message: "",
   });
 
@@ -20,9 +21,11 @@ export default function Option() {
 
   // Fonction pour envoyer un email via mailto
   const handleMailto = () => {
-    const mailtoLink = `mailto:gestionmathegame@gmail.com?subject=Message%20de%20${encodeURIComponent(
-      formData.nom
-    )}&body=${encodeURIComponent(formData.message)}`;
+    const subject = `${formData.nom} - ${formData.objet}`;
+    const body = `${formData.message}`;
+    const mailtoLink = `mailto:gestionmathegame@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
 
@@ -88,6 +91,18 @@ export default function Option() {
                 id="nom"
                 name="nom"
                 value={formData.nom}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="objet" className="block text-lg">Objet :</label>
+              <input
+                type="text"
+                id="objet"
+                name="objet"
+                value={formData.objet}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 required
