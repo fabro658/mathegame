@@ -5,57 +5,56 @@ import Link from "next/link";
 
 export default function ExpressionsEquivalentes() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
   const [answers, setAnswers] = useState<(boolean | string | null)[]>(Array(totalQuestions).fill(null));
+  const [questions, setQuestions] = useState<Array<{ expression: string; isCorrect?: boolean; correctAnswer?: string }>>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    const baseValue = Math.floor(Math.random() * 81) + 20; // Nombre aléatoire entre 20 et 100
+  useEffect(() => {
+    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
+      const baseValue = Math.floor(Math.random() * 81) + 20; // Nombre aléatoire entre 20 et 100
 
-    if (index < 12) {
-      const expressions = [
-        [`${baseValue}`, `${Math.floor(baseValue / 2)} + ${Math.ceil(baseValue / 2)}`],
-        [`${baseValue}`, `${baseValue - 10} + 10`],
-        [`${baseValue}`, `${baseValue * 2} / 2`],
-      ];
-      const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-
-      return {
-        type: "trueFalse",
-        expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-        isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
-      };
-    } else if (index < 24) {
-      const randomValue1 = Math.floor(Math.random() * 50) + 1;
-      const randomValue2 = baseValue - randomValue1;
-      const expressions = [
-        [`${randomValue1} + ${randomValue2}`, `${baseValue}`],
-        [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
-      ];
-      const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-
-      return {
-        type: "trueFalse",
-        expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-        isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
-      };
-    } else {
-      const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
-      const missingValue = baseValue - randomValue1;
-
-      return {
-        type: "fillInTheBlank",
-        expression: `${baseValue} = ${randomValue1} + _`,
-        correctAnswer: missingValue.toString(),
-      };
-    }
-  });
-
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+      if (index < 12) {
+        const expressions = [
+          [`${baseValue}`, `${Math.floor(baseValue / 2)} + ${Math.ceil(baseValue / 2)}`],
+          [`${baseValue}`, `${baseValue - 10} + 10`],
+          [`${baseValue}`, `${baseValue * 2} / 2`],
+        ];
+        const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+        return {
+          expression: `${randomExpression[0]} = ${randomExpression[1]}`,
+          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+        };
+      } else if (index < 24) {
+        const randomValue1 = Math.floor(Math.random() * 50) + 1;
+        const randomValue2 = baseValue - randomValue1;
+        const expressions = [
+          [`${randomValue1} + ${randomValue2}`, `${baseValue}`],
+          [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
+        ];
+        const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+        return {
+          expression: `${randomExpression[0]} = ${randomExpression[1]}`,
+          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+        };
+      } else {
+        const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
+        const missingValue = baseValue - randomValue1;
+        return {
+          expression: `${baseValue} = ${randomValue1} + _`,
+          correctAnswer: missingValue.toString(),
+        };
+      }
+    });
+    setQuestions(generatedQuestions);
+  }, []);
 
   const handleChange = (index: number, value: boolean | string) => {
     const newAnswers = [...answers];
@@ -74,18 +73,15 @@ export default function ExpressionsEquivalentes() {
     }
 
     let allCorrect = true;
+    const newAnswers = [...answers];
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const question = questions[globalIndex];
 
-      if (question.type === "trueFalse") {
-        if (answer !== question.isCorrect) {
-          allCorrect = false;
-        }
-      } else if (question.type === "fillInTheBlank") {
-        if (answer !== question.correctAnswer) {
-          allCorrect = false;
-        }
+      if (question.isCorrect !== undefined && answer !== question.isCorrect) {
+        allCorrect = false;
+      } else if (question.correctAnswer && answer !== question.correctAnswer) {
+        allCorrect = false;
       }
     });
 
@@ -109,16 +105,8 @@ export default function ExpressionsEquivalentes() {
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
-  // Utiliser useEffect pour éviter que la question change quand on clique sur une réponse
-  useEffect(() => {
-    // Vérifier si la page actuelle est différente et réinitialiser l'état de validation
-    setIsValidated(false);
-    setHasPassed(false);
-  }, [currentPage]);
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -167,7 +155,7 @@ export default function ExpressionsEquivalentes() {
                   <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                     {question.expression}
                   </div>
-                  {question.type === "trueFalse" ? (
+                  {question.correctAnswer === undefined ? (
                     <div className="flex gap-4">
                       <button
                         className={`py-2 px-4 rounded-lg font-bold ${
@@ -195,7 +183,7 @@ export default function ExpressionsEquivalentes() {
                       type="text"
                       className="py-2 px-4 border rounded-lg text-center"
                       placeholder="?"
-                      value={answers[currentPage * questionsPerPage + index] === null ? "" : String(answers[currentPage * questionsPerPage + index])}
+                      value={answers[currentPage * questionsPerPage + index] || ""}
                       onChange={(e) =>
                         handleChange(currentPage * questionsPerPage + index, e.target.value)
                       }
@@ -234,19 +222,19 @@ export default function ExpressionsEquivalentes() {
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
+                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+                onClick={() => alert("Vous avez complété toutes les questions !")}
               >
-                Suivant
+                Terminer
               </button>
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
