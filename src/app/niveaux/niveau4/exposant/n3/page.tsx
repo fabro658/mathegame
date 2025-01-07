@@ -16,11 +16,11 @@ export default function ExponentsLevel3() {
   // Génération des questions pour le niveau 3
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
+      return Array.from({ length: totalQuestions }, () => {
         const base1 = Math.floor(Math.random() * 5) + 2; // Base principale
         const base2 = Math.floor(Math.random() * 5) + 2; // Base secondaire
         const exponent = Math.floor(Math.random() * 4) + 1; // Exposant (1 à 4)
-  
+
         let questionText = "";
         let correctAnswer = "";
 
@@ -157,15 +157,15 @@ export default function ExponentsLevel3() {
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
+              <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  value={answers[currentPage * questionsPerPage + idx] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
                 />
               </div>
             ))}

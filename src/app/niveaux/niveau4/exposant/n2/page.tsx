@@ -7,9 +7,7 @@ export default function ExponentsPracticeLevel2() {
   const totalQuestions = 30; // Nombre total de questions
   const questionsPerPage = 3; // Questions affichées par vague
 
-  const [questions, setQuestions] = useState<
-    { questionText: string; correctAnswers: string[] }[]
-  >([]);
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -18,19 +16,29 @@ export default function ExponentsPracticeLevel2() {
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        const base = Math.floor(Math.random() * 5) + 1; // Base de 1 à 5
-        const exponent = 2; // On fixe l'exposant à 2 pour le niveau 2
+      return Array.from({ length: totalQuestions }, () => {
+        const base1 = Math.floor(Math.random() * 5) + 2; // Base entre 2 et 6
+        const base2 = Math.floor(Math.random() * 5) + 2; // Autre base entre 2 et 6
+        const exponent = Math.floor(Math.random() * 4) + 1; // Exposant entre 1 et 4
 
-        const result = Math.pow(base, exponent);
-        const questionText = `Si x² = ${result}, que vaut x ?`;
+        let questionText = "";
+        let correctAnswer = "";
 
-        // Inclure les réponses possibles (positive et négative)
-        const correctAnswers = [`${base}`, `${-base}`];
+        const type = Math.random();
+        if (type < 0.33) {
+          questionText = `Que vaut (${base1} + ${base2})^${exponent} ?`;
+          correctAnswer = Math.pow(base1 + base2, exponent).toString();
+        } else if (type < 0.66) {
+          questionText = `Que vaut (${base1} * ${base2})^${exponent} ?`;
+          correctAnswer = Math.pow(base1 * base2, exponent).toString();
+        } else {
+          questionText = `Que vaut (${base1} - ${base2})^${exponent} ?`;
+          correctAnswer = Math.pow(base1 - base2, exponent).toString();
+        }
 
         return {
           questionText,
-          correctAnswers,
+          correctAnswer,
         };
       });
     };
@@ -50,7 +58,7 @@ export default function ExponentsPracticeLevel2() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswers);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
     const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
 
@@ -62,9 +70,9 @@ export default function ExponentsPracticeLevel2() {
     let allCorrect = true;
     const updatedAnswers = [...answers];
 
-    pageAnswers.forEach((answer, index) => {
-      if (!pageCorrectAnswers[index].includes(answer || "")) {
-        updatedAnswers[startIndex + index] = null;
+    pageAnswers.forEach((answer, idx) => {
+      if (answer !== pageCorrectAnswers[idx]) {
+        updatedAnswers[startIndex + idx] = null;
         allCorrect = false;
       }
     });
@@ -145,20 +153,20 @@ export default function ExponentsPracticeLevel2() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Pratique des Exposants - Niveau 2</h1>
+      <h1 className="text-3xl font-bold mb-6">Pratique des Exposants</h1>
 
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
+              <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  value={answers[currentPage * questionsPerPage + idx] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
                 />
               </div>
             ))}
