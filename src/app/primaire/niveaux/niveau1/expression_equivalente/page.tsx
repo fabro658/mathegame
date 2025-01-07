@@ -28,10 +28,9 @@ export default function ExpressionsEquivalentes() {
           [`${baseValue}`, `${baseValue * 2} / 2`],
         ];
         const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-        const isCorrect = Number(randomExpression[0]) === Number(eval(randomExpression[1]));
         return {
           expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect,
+          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
         };
       } else if (index < 24) {
         const randomValue1 = Math.floor(Math.random() * 50) + 1;
@@ -41,10 +40,9 @@ export default function ExpressionsEquivalentes() {
           [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
         ];
         const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-        const isCorrect = Number(randomExpression[0]) === Number(eval(randomExpression[1]));
         return {
           expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect,
+          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
         };
       } else {
         const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
@@ -197,7 +195,7 @@ export default function ExpressionsEquivalentes() {
                       type="text"
                       className="py-2 px-4 border rounded-lg text-center"
                       placeholder="?"
-                      value={answers[currentPage * questionsPerPage + index] || ""}
+                      value={answers[currentPage * questionsPerPage + index] === true ? "Vrai" : answers[currentPage * questionsPerPage + index] || ""}
                       onChange={(e) =>
                         handleChange(currentPage * questionsPerPage + index, e.target.value)
                       }
@@ -235,26 +233,19 @@ export default function ExpressionsEquivalentes() {
       {isValidated && (
         <>
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
+            <h2 className="text-2xl font-bold text-green-500">Bravo, vous avez tout juste !</h2>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
+            <h2 className="text-2xl font-bold text-red-500">Il y a des erreurs, essayez à nouveau !</h2>
           )}
+          <button
+            onClick={() => {
+              setIsValidated(false);
+              setHasPassed(false);
+            }}
+            className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+          >
+            Réessayer
+          </button>
         </>
       )}
     </div>
