@@ -28,9 +28,10 @@ export default function ExpressionsEquivalentes() {
           [`${baseValue}`, `${baseValue * 2} / 2`],
         ];
         const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+        const isCorrect = Number(randomExpression[0]) === Number(eval(randomExpression[1]));
         return {
           expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+          isCorrect,
         };
       } else if (index < 24) {
         const randomValue1 = Math.floor(Math.random() * 50) + 1;
@@ -40,9 +41,10 @@ export default function ExpressionsEquivalentes() {
           [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
         ];
         const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+        const isCorrect = Number(randomExpression[0]) === Number(eval(randomExpression[1]));
         return {
           expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+          isCorrect,
         };
       } else {
         const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
@@ -66,28 +68,40 @@ export default function ExpressionsEquivalentes() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+  
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
-
+  
     let allCorrect = true;
-    const newAnswers = [...answers];
+    const newAnswers = [...answers]; // Créer une copie des réponses existantes
+  
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const question = questions[globalIndex];
-
+  
       if (question.isCorrect !== undefined && answer !== question.isCorrect) {
         allCorrect = false;
       } else if (question.correctAnswer && answer !== question.correctAnswer) {
         allCorrect = false;
       }
+  
+      // Mettre à jour newAnswers avec la réponse correcte ou réinitialiser en cas d'erreur
+      if (answer !== question.correctAnswer && question.correctAnswer) {
+        newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
+      } else if (answer !== question.isCorrect && question.isCorrect !== undefined) {
+        newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
+      }
     });
-
+  
+    // Mettre à jour les réponses dans l'état avec les nouvelles valeurs
+    setAnswers(newAnswers);
+  
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
+  
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
