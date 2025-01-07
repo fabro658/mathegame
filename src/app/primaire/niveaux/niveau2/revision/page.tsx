@@ -5,8 +5,7 @@ import Link from "next/link";
 
 type Question =
   | { type: "multiplication"; question: string; correctAnswer: string }
-  | { type: "division"; question: string; correctAnswer: string }
-  | { type: "fraction"; question: string; correctAnswer: string };
+  | { type: "division"; question: string; correctAnswer: string };
 
 export default function RevisionNiveau2() {
   const totalQuestions = 36;
@@ -24,7 +23,7 @@ export default function RevisionNiveau2() {
   const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
 
   const generateMultiplication = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
+    return Array.from({ length: totalQuestions / 2 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
@@ -36,7 +35,7 @@ export default function RevisionNiveau2() {
   };
 
   const generateDivision = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
+    return Array.from({ length: totalQuestions / 2 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
@@ -47,32 +46,10 @@ export default function RevisionNiveau2() {
     });
   };
 
-  const generateFraction = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
-      const a1 = Math.floor(Math.random() * 9) + 1;
-      const b1 = Math.floor(Math.random() * 9) + 1;
-      const a2 = Math.floor(Math.random() * 9) + 1;
-      const b2 = Math.floor(Math.random() * 9) + 1;
-
-      const numerator = a1 * a2;
-      const denominator = b1 * b2;
-
-      return {
-        type: "fraction",
-        question: `${a1}/${b1} × ${a2}/${b2}`,
-        correctAnswer: `${numerator}/${denominator}`,
-      };
-    });
-  };
-
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    setQuestions([
-      ...generateMultiplication(),
-      ...generateDivision(),
-      ...generateFraction(),
-    ]);
+    setQuestions([...generateMultiplication(), ...generateDivision()]);
   }, []);
 
   const handleChange = (index: number, value: string) => {
