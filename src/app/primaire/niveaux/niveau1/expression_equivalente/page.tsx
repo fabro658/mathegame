@@ -13,22 +13,35 @@ export default function ExpressionsEquivalentes() {
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    const value = 52; // Valeur cible
-    const expressions = [
-      [`${value}`, `${40 + 12}`],
-      [`${25 + 27}`, `${40 + 12}`],
-      [`${value}`, `${104 / 2}`],
-      [`${30 + 22}`, `${value}`],
-      [`${value}`, `${60 - 8}`],
-      [`${50 + 2}`, `${52}`],
-    ];
+    const baseValue = 52; // Valeur de base pour générer les équivalences
+    const expressions = [];
+
+    if (index < 12) {
+      expressions.push(
+        [`${baseValue}`, `${40 + 12}`],
+        [`${25 + 27}`, `${40 + 12}`],
+        [`${baseValue}`, `${104 / 2}`]
+      );
+    } else if (index < 24) {
+      expressions.push(
+        [`${30 + 22}`, `${baseValue}`],
+        [`${60 - 8}`, `${baseValue}`],
+        [`${50 + 2}`, `${baseValue}`]
+      );
+    } else {
+      const randomValue1 = Math.floor(Math.random() * 50) + 1;
+      const randomValue2 = baseValue - randomValue1;
+      expressions.push(
+        [`${randomValue1} + ${randomValue2}`, `${baseValue}`],
+        [`${baseValue}`, `${randomValue1} + ${randomValue2}`]
+      );
+    }
 
     const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-    const isCorrect = eval(randomExpression[0]) === eval(randomExpression[1]);
 
     return {
       expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-      isCorrect,
+      isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]), // Vérification de l'égalité
     };
   });
 
@@ -79,13 +92,12 @@ export default function ExpressionsEquivalentes() {
     }
   };
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -99,17 +111,9 @@ export default function ExpressionsEquivalentes() {
         Retour
       </Link>
 
-      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
@@ -132,35 +136,37 @@ export default function ExpressionsEquivalentes() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ expression }, index) => (
-              <div key={index} className="flex flex-col items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {expression}
+            {questions
+              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+              .map(({ expression }, index) => (
+                <div key={index} className="flex flex-col items-center gap-4">
+                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                    {expression}
+                  </div>
+                  <div className="flex gap-4">
+                    <button
+                      className={`py-2 px-4 rounded-lg font-bold ${
+                        answers[currentPage * questionsPerPage + index] === true
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                      onClick={() => handleChange(currentPage * questionsPerPage + index, true)}
+                    >
+                      Vrai
+                    </button>
+                    <button
+                      className={`py-2 px-4 rounded-lg font-bold ${
+                        answers[currentPage * questionsPerPage + index] === false
+                          ? "bg-red-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                      onClick={() => handleChange(currentPage * questionsPerPage + index, false)}
+                    >
+                      Faux
+                    </button>
+                  </div>
                 </div>
-                <div className="flex gap-4">
-                  <button
-                    className={`py-2 px-4 rounded-lg font-bold ${
-                      answers[currentPage * questionsPerPage + index] === true
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200"
-                    }`}
-                    onClick={() => handleChange(currentPage * questionsPerPage + index, true)}
-                  >
-                    Vrai
-                  </button>
-                  <button
-                    className={`py-2 px-4 rounded-lg font-bold ${
-                      answers[currentPage * questionsPerPage + index] === false
-                        ? "bg-red-500 text-white"
-                        : "bg-gray-200"
-                    }`}
-                    onClick={() => handleChange(currentPage * questionsPerPage + index, false)}
-                  >
-                    Faux
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           <div className="mt-6 flex gap-4">
