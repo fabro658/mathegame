@@ -18,28 +18,28 @@ export default function Page() {
       {/* Conteneur des boutons */}
       <div className="grid grid-cols-2 gap-8 mt-12">
         <Link
-          href="/niveaux/niveau4/perimetre"
+          href="/primaire/niveaux/niveau4/perimetre"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
         >
           Périmètre
         </Link>
 
         <Link
-          href="/niveaux/niveau4/aire"
+          href="/primaire/niveaux/niveau4/aire"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
         >
           Aire
         </Link>
 
         <Link
-          href="/niveaux/niveau4/geometrie"
+          href="/primaire/niveaux/niveau4/geometrie"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
         >
           Géométrie
         </Link>
 
         <Link
-          href="/niveaux/niveau4/volume"
+          href="/primaire/niveaux/niveau4/volume"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
         >
           Volume
