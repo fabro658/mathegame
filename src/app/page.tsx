@@ -35,15 +35,15 @@ export default function Home() {
 
         {/* Liens vers les niveaux */}
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-          <Link href="/scoalire">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <Link href="/scolaire">
+            <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
               Primaire
-            </a>
+            </div>
           </Link>
           <Link href="/scolaire">
-            <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
               Secondaire
-            </a>
+            </div>
           </Link>
         </div>
       </main>
