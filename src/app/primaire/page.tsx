@@ -30,7 +30,7 @@ export default function Primaire() {
         </Link>
         <Link href="/primaire/niveaux/niveau4">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
+            Géométrie
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau5">
