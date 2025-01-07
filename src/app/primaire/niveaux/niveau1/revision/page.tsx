@@ -5,8 +5,7 @@ import Link from "next/link";
 
 type Question =
   | { type: "addition"; question: string; correctAnswer: string }
-  | { type: "subtraction"; question: string; correctAnswer: string }
-  | { type: "fraction"; question: string; correctAnswer: string };
+  | { type: "subtraction"; question: string; correctAnswer: string };
 
 export default function Revision() {
   const totalQuestions = 36;
@@ -24,7 +23,7 @@ export default function Revision() {
   const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
 
   const generateAddition = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
+    return Array.from({ length: totalQuestions / 2 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
@@ -36,7 +35,7 @@ export default function Revision() {
   };
 
   const generateSubtraction = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
+    return Array.from({ length: totalQuestions / 2 }, () => {
       const a = Math.floor(Math.random() * 9) + 1;
       const b = Math.floor(Math.random() * 9) + 1;
       return {
@@ -47,38 +46,10 @@ export default function Revision() {
     });
   };
 
-  const generateFraction = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
-      const a1 = Math.floor(Math.random() * 9) + 1;
-      const b1 = Math.floor(Math.random() * 9) + 1;
-      const a2 = Math.floor(Math.random() * 9) + 1;
-      const b2 = Math.floor(Math.random() * 9) + 1;
-
-      const commonDenominator = b1 * b2;
-      const numerator1 = a1 * b2;
-      const numerator2 = a2 * b1;
-
-      const numeratorResult = numerator1 - numerator2;
-      const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-      const divisor = gcd(Math.abs(numeratorResult), commonDenominator);
-      const [simplifiedNumerator, simplifiedDenominator] = [numeratorResult / divisor, commonDenominator / divisor];
-
-      return {
-        type: "fraction",
-        question: `${a1}/${b1} - ${a2}/${b2}`,
-        correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-      };
-    });
-  };
-
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    setQuestions([
-      ...generateAddition(),
-      ...generateSubtraction(),
-      ...generateFraction(),
-    ]);
+    setQuestions([...generateAddition(), ...generateSubtraction()]);
   }, []);
 
   const handleChange = (index: number, value: string) => {
@@ -92,13 +63,11 @@ export default function Revision() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
@@ -106,7 +75,7 @@ export default function Revision() {
       const globalIndex = startIndex + index;
       if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
