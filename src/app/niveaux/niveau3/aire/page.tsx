@@ -178,7 +178,7 @@ export default function Aire() {
                <input
                 type="text"
                 inputMode="text"
-               className="border border-gray-400 p-8 rounded w-96 text-center text-black text-lg mx-auto"
+               className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
                value={answers[currentPage * questionsPerPage + index] || ""}
                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
