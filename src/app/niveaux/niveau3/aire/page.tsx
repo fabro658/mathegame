@@ -172,20 +172,20 @@ export default function Aire() {
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                 type="text"
-                  inputMode="text"
-                 className="border border-gray-400 p-8 rounded w-96 text-center text-black text-lg mx-auto"
-                  value={answers[currentPage * questionsPerPage + idx] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                  />
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+            <div key={index} className="flex flex-col items-start gap-2">
+             <div className="font-bold text-black">{questionText}</div>
+               <input
+                type="text"
+                inputMode="text"
+               className="border border-gray-400 p-8 rounded w-96 text-center text-black text-lg mx-auto"
+               value={answers[currentPage * questionsPerPage + index] || ""}
+               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
               </div>
             ))}
             </div>
-  
+            
             <div className="mt-6 flex gap-4">
               <button
                 onClick={handlePreviousPage}
