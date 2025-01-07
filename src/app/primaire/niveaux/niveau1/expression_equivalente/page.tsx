@@ -115,7 +115,7 @@ export default function ExpressionsEquivalentes() {
 
   // Utiliser useEffect pour éviter que la question change quand on clique sur une réponse
   useEffect(() => {
-    // Vérifiez si la page actuelle et les réponses doivent être mises à jour
+    // Vérifier si la page actuelle est différente et réinitialiser l'état de validation
     setIsValidated(false);
     setHasPassed(false);
   }, [currentPage]);
