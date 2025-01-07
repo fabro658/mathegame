@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExpressionsEquivalentes() {
@@ -16,7 +16,6 @@ export default function ExpressionsEquivalentes() {
     const baseValue = Math.floor(Math.random() * 81) + 20; // Nombre aléatoire entre 20 et 100
 
     if (index < 12) {
-      // Première vague : Équivalences simples avec variations
       const expressions = [
         [`${baseValue}`, `${Math.floor(baseValue / 2)} + ${Math.ceil(baseValue / 2)}`],
         [`${baseValue}`, `${baseValue - 10} + 10`],
@@ -30,7 +29,6 @@ export default function ExpressionsEquivalentes() {
         isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
       };
     } else if (index < 24) {
-      // Deuxième vague : Équivalences un peu plus complexes
       const randomValue1 = Math.floor(Math.random() * 50) + 1;
       const randomValue2 = baseValue - randomValue1;
       const expressions = [
@@ -45,8 +43,7 @@ export default function ExpressionsEquivalentes() {
         isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
       };
     } else {
-      // Troisième vague : Compléter l'équation
-      const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10; // Assurer que randomValue1 est < baseValue
+      const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
       const missingValue = baseValue - randomValue1;
 
       return {
@@ -115,6 +112,13 @@ export default function ExpressionsEquivalentes() {
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
+
+  // Utiliser useEffect pour éviter que la question change quand on clique sur une réponse
+  useEffect(() => {
+    // Vérifiez si la page actuelle et les réponses doivent être mises à jour
+    setIsValidated(false);
+    setHasPassed(false);
+  }, [currentPage]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
