@@ -190,11 +190,11 @@ export default function ExpressionsEquivalentes() {
                     <input
                       type="text"
                       className="py-2 px-4 border rounded-lg text-center"
-                       placeholder="?"
-                        value={answers[currentPage * questionsPerPage + index] === null ? "" : answers[currentPage * questionsPerPage + index]}
-                        onChange={(e) =>
+                      placeholder="?"
+                      value={answers[currentPage * questionsPerPage + index] === null ? "" : String(answers[currentPage * questionsPerPage + index])}
+                      onChange={(e) =>
                         handleChange(currentPage * questionsPerPage + index, e.target.value)
-                     }
+                      }
                     />
                   )}
                 </div>
