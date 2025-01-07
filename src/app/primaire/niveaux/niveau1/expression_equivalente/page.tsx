@@ -10,7 +10,7 @@ export default function EquationsEquivalentes() {
   const [questions, setQuestions] = useState<
     { equationLeft: string; equationRight: string }[]
   >([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(
+  const [answers, setAnswers] = useState<(boolean | null)[]>(
     Array(totalQuestions).fill(null)
   );
   const [isValidated, setIsValidated] = useState(false);
@@ -39,9 +39,9 @@ export default function EquationsEquivalentes() {
   }, []);
 
   // Gestion des réponses
-  const handleChange = (index: number, value: string): void => {
+  const handleAnswer = (index: number, value: boolean): void => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = value;
     setAnswers(newAnswers);
   };
 
@@ -53,11 +53,11 @@ export default function EquationsEquivalentes() {
 
     // Vérifier si toutes les réponses sont remplies
     const allAnswersFilled = pageAnswers.every(
-      (answer) => answer && answer.trim() !== ""
+      (answer) => answer !== null
     );
 
     if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+      alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
@@ -65,13 +65,14 @@ export default function EquationsEquivalentes() {
     let allCorrect = true;
     const updatedAnswers = [...answers];
     pageAnswers.forEach((answer, index) => {
-      const userAnswer = parseFloat(answer || "0");
       const question = questions[startIndex + index];
 
       const leftValue = eval(question.equationLeft); // Évalue l'équation de gauche
       const rightValue = eval(question.equationRight); // Évalue l'équation de droite
 
-      if (userAnswer !== leftValue && userAnswer !== rightValue) {
+      const isEquivalent = leftValue === rightValue;
+
+      if (answer !== isEquivalent) {
         updatedAnswers[startIndex + index] = null; // Efface la réponse incorrecte
         allCorrect = false;
       }
@@ -175,20 +176,32 @@ export default function EquationsEquivalentes() {
                   <div className="font-bold text-black">
                     {equationLeft} = {equationRight}
                   </div>
-                  <input
-                    type="text"
-                    inputMode="text"
-                    className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-                    value={
-                      answers[currentPage * questionsPerPage + index] || ""
-                    }
-                    onChange={(e) =>
-                      handleChange(
-                        currentPage * questionsPerPage + index,
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div className="flex gap-4">
+                    <button
+                      className={`py-2 px-6 rounded font-bold ${
+                        answers[currentPage * questionsPerPage + index] === true
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-300 text-black"
+                      }`}
+                      onClick={() =>
+                        handleAnswer(currentPage * questionsPerPage + index, true)
+                      }
+                    >
+                      Vrai
+                    </button>
+                    <button
+                      className={`py-2 px-6 rounded font-bold ${
+                        answers[currentPage * questionsPerPage + index] === false
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-300 text-black"
+                      }`}
+                      onClick={() =>
+                        handleAnswer(currentPage * questionsPerPage + index, false)
+                      }
+                    >
+                      Faux
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>
