@@ -1,34 +1,34 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function Primaire() {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
-        <Link href="/niveaux/niveau1">
-          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        <Link href="/scolaire/niveaux/niveau1">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Niveau 1
-          </a>
+          </div>
         </Link>
-        <Link href="/niveaux/niveau2">
-          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        <Link href="/scolaire/niveaux/niveau2">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Niveau 2
-          </a>
+          </div>
         </Link>
-        <Link href="/niveaux/niveau3">
-          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        <Link href="/scolaire/niveaux/niveau3">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Niveau 3
-          </a>
+          </div>
         </Link>
-        <Link href="/niveaux/niveau4">
-          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        <Link href="/scolaire/niveaux/niveau4">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Niveau 4
-          </a>
+          </div>
         </Link>
-        <Link href="/niveaux/niveau5">
-          <a className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        <Link href="/scolaire/niveaux/niveau5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Niveau 5
-          </a>
+          </div>
         </Link>
       </div>
     </div>
