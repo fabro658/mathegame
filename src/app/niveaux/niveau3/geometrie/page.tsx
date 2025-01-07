@@ -167,7 +167,7 @@ export default function GeometryPractice() {
                 <input
                   type="text"
                   inputMode="text"
-                  className="border border-gray-400 p-6 rounded w-80 text-center text-black text-lg"
+                  className="border border-gray-400 p-5 rounded w-100 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + idx] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
                 />
