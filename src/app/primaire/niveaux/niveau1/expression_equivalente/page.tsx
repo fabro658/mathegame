@@ -3,122 +3,114 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function ExpressionsEquivalentes() {
-  const totalQuestions = 36;
-  const questionsPerPage = 6;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+export default function EquationsEquivalentes() {
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Nombre de questions par vague
 
-  const [answers, setAnswers] = useState<(boolean | string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<Array<{ expression: string; isCorrect?: boolean; correctAnswer?: string }>>([]);
+  const [questions, setQuestions] = useState<
+    { equationLeft: string; equationRight: string }[]
+  >([]);
+  const [answers, setAnswers] = useState<(string | null)[]>(
+    Array(totalQuestions).fill(null)
+  );
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
   useEffect(() => {
-    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
-      const baseValue = Math.floor(Math.random() * 81) + 20; // Nombre aléatoire entre 20 et 100
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, () => {
+        const leftSide = `${Math.floor(Math.random() * 10) + 1} + ${
+          Math.floor(Math.random() * 10) + 1
+        }`;
+        const rightSide = `${Math.floor(Math.random() * 10) + 1} - ${
+          Math.floor(Math.random() * 10) + 1
+        }`;
 
-      if (index < 12) {
-        const expressions = [
-          [`${baseValue}`, `${Math.floor(baseValue / 2)} + ${Math.ceil(baseValue / 2)}`],
-          [`${baseValue}`, `${baseValue - 10} + 10`],
-          [`${baseValue}`, `${baseValue * 2} / 2`],
-        ];
-        const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
         return {
-          expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+          equationLeft: leftSide,
+          equationRight: rightSide,
         };
-      } else if (index < 24) {
-        const randomValue1 = Math.floor(Math.random() * 50) + 1;
-        const randomValue2 = baseValue - randomValue1;
-        const expressions = [
-          [`${randomValue1} + ${randomValue2}`, `${baseValue}`],
-          [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
-        ];
-        const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-        return {
-          expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-          isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
-        };
-      } else {
-        const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10;
-        const missingValue = baseValue - randomValue1;
-        return {
-          expression: `${baseValue} = ${randomValue1} + _`,
-          correctAnswer: missingValue.toString(),
-        };
-      }
-    });
-    setQuestions(generatedQuestions);
+      });
+    };
+
+    // Génération initiale des questions
+    setQuestions(generateQuestions());
   }, []);
 
-  const handleChange = (index: number, value: boolean | string) => {
+  // Gestion des réponses
+  const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
-    newAnswers[index] = value;
+    newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
-  const handleValidation = () => {
+  // Validation des réponses
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-  
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+
+    // Vérifier si toutes les réponses sont remplies
+    const allAnswersFilled = pageAnswers.every(
+      (answer) => answer && answer.trim() !== ""
+    );
+
+    if (!allAnswersFilled) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
-  
+
+    // Validation des équations
     let allCorrect = true;
-    const newAnswers = [...answers]; // Créer une copie des réponses existantes
-  
+    const updatedAnswers = [...answers];
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const question = questions[globalIndex];
-  
-      if (question.isCorrect !== undefined && answer !== question.isCorrect) {
+      const userAnswer = parseFloat(answer || "0");
+      const question = questions[startIndex + index];
+
+      const leftValue = eval(question.equationLeft); // Évalue l'équation de gauche
+      const rightValue = eval(question.equationRight); // Évalue l'équation de droite
+
+      if (userAnswer !== leftValue && userAnswer !== rightValue) {
+        updatedAnswers[startIndex + index] = null; // Efface la réponse incorrecte
         allCorrect = false;
-      } else if (question.correctAnswer && answer !== question.correctAnswer) {
-        allCorrect = false;
-      }
-  
-      // Mettre à jour newAnswers avec la réponse correcte ou réinitialiser en cas d'erreur
-      if (answer !== question.correctAnswer && question.correctAnswer) {
-        newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
-      } else if (answer !== question.isCorrect && question.isCorrect !== undefined) {
-        newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
       }
     });
-  
-    // Mettre à jour les réponses dans l'état avec les nouvelles valeurs
-    setAnswers(newAnswers);
-  
+
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
-  };
-  
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
+    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+        setIsValidated(false);
+      }, 1500);
     }
   };
 
-  const handlePreviousPage = () => {
+  const handleNextPage = (): void => {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
+      setCurrentPage(currentPage + 1);
+      setIsValidated(false);
+    }
+  };
+
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const completionPercentage = Math.round(
+    (completedAnswers / totalQuestions) * 100
+  );
+
+  const radius = 50; // Rayon pour la barre circulaire
+  const strokeWidth = 10; // Largeur de la barre
+  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -129,7 +121,7 @@ export default function ExpressionsEquivalentes() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -137,7 +129,14 @@ export default function ExpressionsEquivalentes() {
 
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
           <circle
             cx="50%"
             cy="50%"
@@ -146,61 +145,50 @@ export default function ExpressionsEquivalentes() {
             stroke="#3b82f6"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeDashoffset={
+              circumference - (circumference * completionPercentage) / 100
+            }
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">
+            {completionPercentage}%
+          </span>
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Reconnaître des expressions équivalentes</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        Questions sur les équations équivalentes
+      </h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
+          <div className="flex flex-col gap-6">
             {questions
-              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map((question, index) => (
-                <div key={index} className="flex flex-col items-center gap-4">
-                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                    {question.expression}
+              .slice(
+                currentPage * questionsPerPage,
+                (currentPage + 1) * questionsPerPage
+              )
+              .map(({ equationLeft, equationRight }, index) => (
+                <div key={index} className="flex flex-col items-start gap-2">
+                  <div className="font-bold text-black">
+                    {equationLeft} = {equationRight}
                   </div>
-                  {question.correctAnswer === undefined ? (
-                    <div className="flex gap-4">
-                      <button
-                        className={`py-2 px-4 rounded-lg font-bold ${
-                          answers[currentPage * questionsPerPage + index] === true
-                            ? "bg-green-500 text-white"
-                            : "bg-gray-200"
-                        }`}
-                        onClick={() => handleChange(currentPage * questionsPerPage + index, true)}
-                      >
-                        Vrai
-                      </button>
-                      <button
-                        className={`py-2 px-4 rounded-lg font-bold ${
-                          answers[currentPage * questionsPerPage + index] === false
-                            ? "bg-red-500 text-white"
-                            : "bg-gray-200"
-                        }`}
-                        onClick={() => handleChange(currentPage * questionsPerPage + index, false)}
-                      >
-                        Faux
-                      </button>
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      className="py-2 px-4 border rounded-lg text-center"
-                      placeholder="?"
-                      value={answers[currentPage * questionsPerPage + index] === true ? "Vrai" : answers[currentPage * questionsPerPage + index] || ""}
-                      onChange={(e) =>
-                        handleChange(currentPage * questionsPerPage + index, e.target.value)
-                      }
-                    />
-                  )}
+                  <input
+                    type="text"
+                    inputMode="text"
+                    className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
+                    value={
+                      answers[currentPage * questionsPerPage + index] || ""
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        currentPage * questionsPerPage + index,
+                        e.target.value
+                      )
+                    }
+                  />
                 </div>
               ))}
           </div>
@@ -233,19 +221,30 @@ export default function ExpressionsEquivalentes() {
       {isValidated && (
         <>
           {hasPassed ? (
-            <h2 className="text-2xl font-bold text-green-500">Bravo, vous avez tout juste !</h2>
+            <div>
+              <p className="text-green-600 font-bold text-xl">
+                Bravo ! Toutes vos réponses sont correctes.
+              </p>
+              <button
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            </div>
           ) : (
-            <h2 className="text-2xl font-bold text-red-500">Il y a des erreurs, essayez à nouveau !</h2>
+            <div>
+              <p className="text-red-600 font-bold text-xl">
+                Certaines réponses sont incorrectes. Corrigez-les.
+              </p>
+              <button
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                onClick={() => setIsValidated(false)}
+              >
+                Revenir pour corriger
+              </button>
+            </div>
           )}
-          <button
-            onClick={() => {
-              setIsValidated(false);
-              setHasPassed(false);
-            }}
-            className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          >
-            Réessayer
-          </button>
         </>
       )}
     </div>
