@@ -6,49 +6,61 @@ import Link from "next/link";
 export default function ExpressionsEquivalentes() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const [answers, setAnswers] = useState<(boolean | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(boolean | string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    const baseValue = 52; // Valeur de base pour générer les équivalences
-    const expressions = [];
+    const baseValue = Math.floor(Math.random() * 81) + 20; // Nombre aléatoire entre 20 et 100
 
     if (index < 12) {
-      expressions.push(
-        [`${baseValue}`, `${40 + 12}`],
-        [`${25 + 27}`, `${40 + 12}`],
-        [`${baseValue}`, `${104 / 2}`]
-      );
+      // Première vague : Équivalences simples avec variations
+      const expressions = [
+        [`${baseValue}`, `${Math.floor(baseValue / 2)} + ${Math.ceil(baseValue / 2)}`],
+        [`${baseValue}`, `${baseValue - 10} + 10`],
+        [`${baseValue}`, `${baseValue * 2} / 2`],
+      ];
+      const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+
+      return {
+        type: "trueFalse",
+        expression: `${randomExpression[0]} = ${randomExpression[1]}`,
+        isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+      };
     } else if (index < 24) {
-      expressions.push(
-        [`${30 + 22}`, `${baseValue}`],
-        [`${60 - 8}`, `${baseValue}`],
-        [`${50 + 2}`, `${baseValue}`]
-      );
-    } else {
+      // Deuxième vague : Équivalences un peu plus complexes
       const randomValue1 = Math.floor(Math.random() * 50) + 1;
       const randomValue2 = baseValue - randomValue1;
-      expressions.push(
+      const expressions = [
         [`${randomValue1} + ${randomValue2}`, `${baseValue}`],
-        [`${baseValue}`, `${randomValue1} + ${randomValue2}`]
-      );
+        [`${baseValue}`, `${randomValue1} + ${randomValue2}`],
+      ];
+      const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
+
+      return {
+        type: "trueFalse",
+        expression: `${randomExpression[0]} = ${randomExpression[1]}`,
+        isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]),
+      };
+    } else {
+      // Troisième vague : Compléter l'équation
+      const randomValue1 = Math.floor(Math.random() * (baseValue - 10)) + 10; // Assurer que randomValue1 est < baseValue
+      const missingValue = baseValue - randomValue1;
+
+      return {
+        type: "fillInTheBlank",
+        expression: `${baseValue} = ${randomValue1} + _`,
+        correctAnswer: missingValue.toString(),
+      };
     }
-
-    const randomExpression = expressions[Math.floor(Math.random() * expressions.length)];
-
-    return {
-      expression: `${randomExpression[0]} = ${randomExpression[1]}`,
-      isCorrect: eval(randomExpression[0]) === eval(randomExpression[1]), // Vérification de l'égalité
-    };
   });
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const handleChange = (index: number, value: boolean) => {
+  const handleChange = (index: number, value: boolean | string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
@@ -67,8 +79,16 @@ export default function ExpressionsEquivalentes() {
     let allCorrect = true;
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex].isCorrect) {
-        allCorrect = false;
+      const question = questions[globalIndex];
+
+      if (question.type === "trueFalse") {
+        if (answer !== question.isCorrect) {
+          allCorrect = false;
+        }
+      } else if (question.type === "fillInTheBlank") {
+        if (answer !== question.correctAnswer) {
+          allCorrect = false;
+        }
       }
     });
 
@@ -138,33 +158,45 @@ export default function ExpressionsEquivalentes() {
           <div className="grid grid-cols-3 gap-6">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(({ expression }, index) => (
+              .map((question, index) => (
                 <div key={index} className="flex flex-col items-center gap-4">
                   <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                    {expression}
+                    {question.expression}
                   </div>
-                  <div className="flex gap-4">
-                    <button
-                      className={`py-2 px-4 rounded-lg font-bold ${
-                        answers[currentPage * questionsPerPage + index] === true
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-200"
-                      }`}
-                      onClick={() => handleChange(currentPage * questionsPerPage + index, true)}
-                    >
-                      Vrai
-                    </button>
-                    <button
-                      className={`py-2 px-4 rounded-lg font-bold ${
-                        answers[currentPage * questionsPerPage + index] === false
-                          ? "bg-red-500 text-white"
-                          : "bg-gray-200"
-                      }`}
-                      onClick={() => handleChange(currentPage * questionsPerPage + index, false)}
-                    >
-                      Faux
-                    </button>
-                  </div>
+                  {question.type === "trueFalse" ? (
+                    <div className="flex gap-4">
+                      <button
+                        className={`py-2 px-4 rounded-lg font-bold ${
+                          answers[currentPage * questionsPerPage + index] === true
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => handleChange(currentPage * questionsPerPage + index, true)}
+                      >
+                        Vrai
+                      </button>
+                      <button
+                        className={`py-2 px-4 rounded-lg font-bold ${
+                          answers[currentPage * questionsPerPage + index] === false
+                            ? "bg-red-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() => handleChange(currentPage * questionsPerPage + index, false)}
+                      >
+                        Faux
+                      </button>
+                    </div>
+                  ) : (
+                    <input
+                      type="text"
+                      className="py-2 px-4 border rounded-lg text-center"
+                       placeholder="?"
+                        value={answers[currentPage * questionsPerPage + index] === null ? "" : answers[currentPage * questionsPerPage + index]}
+                        onChange={(e) =>
+                        handleChange(currentPage * questionsPerPage + index, e.target.value)
+                     }
+                    />
+                  )}
                 </div>
               ))}
           </div>
