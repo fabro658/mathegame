@@ -20,16 +20,12 @@ export default function EquationsEquivalentes() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        const leftSide = `${Math.floor(Math.random() * 10) + 1} + ${
-          Math.floor(Math.random() * 10) + 1
-        }`;
-        const rightSide = `${Math.floor(Math.random() * 10) + 1} - ${
-          Math.floor(Math.random() * 10) + 1
-        }`;
+        const leftValue = Math.floor(Math.random() * 20) + 1;
+        const rightValue = Math.random() > 0.5 ? leftValue : Math.floor(Math.random() * 20) + 1;
 
         return {
-          equationLeft: leftSide,
-          equationRight: rightSide,
+          equationLeft: leftValue.toString(),
+          equationRight: rightValue.toString(),
         };
       });
     };
@@ -39,9 +35,16 @@ export default function EquationsEquivalentes() {
   }, []);
 
   // Gestion des réponses
-  const handleAnswer = (index: number, value: boolean): void => {
+  const handleAnswer = (index: number, isTrue: boolean): void => {
     const newAnswers = [...answers];
-    newAnswers[index] = value;
+    const question = questions[index];
+
+    const leftValue = parseInt(question.equationLeft);
+    const rightValue = parseInt(question.equationRight);
+
+    // Vérification si les deux côtés sont équivalents
+    const isCorrect = (leftValue === rightValue) === isTrue;
+    newAnswers[index] = isCorrect;
     setAnswers(newAnswers);
   };
 
@@ -52,33 +55,16 @@ export default function EquationsEquivalentes() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     // Vérifier si toutes les réponses sont remplies
-    const allAnswersFilled = pageAnswers.every(
-      (answer) => answer !== null
-    );
+    const allAnswersFilled = pageAnswers.every((answer) => answer !== null);
 
     if (!allAnswersFilled) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    // Validation des équations
-    let allCorrect = true;
-    const updatedAnswers = [...answers];
-    pageAnswers.forEach((answer, index) => {
-      const question = questions[startIndex + index];
+    // Validation des réponses
+    const allCorrect = pageAnswers.every((answer) => answer === true);
 
-      const leftValue = eval(question.equationLeft); // Évalue l'équation de gauche
-      const rightValue = eval(question.equationRight); // Évalue l'équation de droite
-
-      const isEquivalent = leftValue === rightValue;
-
-      if (answer !== isEquivalent) {
-        updatedAnswers[startIndex + index] = null; // Efface la réponse incorrecte
-        allCorrect = false;
-      }
-    });
-
-    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
 
@@ -178,26 +164,18 @@ export default function EquationsEquivalentes() {
                   </div>
                   <div className="flex gap-4">
                     <button
-                      className={`py-2 px-6 rounded font-bold ${
-                        answers[currentPage * questionsPerPage + index] === true
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-300 text-black"
-                      }`}
                       onClick={() =>
                         handleAnswer(currentPage * questionsPerPage + index, true)
                       }
+                      className="bg-green-500 text-white py-2 px-4 rounded font-bold"
                     >
                       Vrai
                     </button>
                     <button
-                      className={`py-2 px-6 rounded font-bold ${
-                        answers[currentPage * questionsPerPage + index] === false
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-300 text-black"
-                      }`}
                       onClick={() =>
                         handleAnswer(currentPage * questionsPerPage + index, false)
                       }
+                      className="bg-red-500 text-white py-2 px-4 rounded font-bold"
                     >
                       Faux
                     </button>
