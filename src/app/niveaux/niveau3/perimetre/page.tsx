@@ -158,12 +158,12 @@ export default function Perimetre() {
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
+                 type="text"
+                  inputMode="text"
+                 className="border border-gray-400 p-8 rounded w-96 text-center text-black text-lg mx-auto"
+                  value={answers[currentPage * questionsPerPage + idx] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+                  />
               </div>
             ))}
           </div>
