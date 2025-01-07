@@ -1,4 +1,4 @@
-import Link from 'next/link'; // Si vous utilisez Next.js
+import Link from 'next/link';
 
 export default function Page() {
   return (
@@ -25,19 +25,16 @@ export default function Page() {
             Soustraction de fraction
           </Link>
         </div>
-        {/* Deuxième ligne avec 2 boutons */}
         <div className="flex justify-center gap-8">
           <Link
             href="/niveaux/niveau3/multiplicationfraction"
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            aria-label="Page de multiplication de fraction"
           >
             Multiplication de fraction
           </Link>
           <Link
             href="/niveaux/niveau3/divisionfraction"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            aria-label="Page de division de fraction"
           >
             Division de fraction
           </Link>
