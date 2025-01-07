@@ -13,13 +13,13 @@ export default function Page() {
             Retour
           </Link>
           <Link
-            href="/niveaux/niveau3/additionfraction"
+            href="/primaire/niveaux/niveau3/additionfraction"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Addition de fraction
           </Link>
           <Link
-            href="/niveaux/niveau3/soustractionfraction"
+            href="/primaire/niveaux/niveau3/soustractionfraction"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Soustraction de fraction
@@ -27,20 +27,20 @@ export default function Page() {
         </div>
         <div className="flex justify-center gap-8">
           <Link
-            href="/niveaux/niveau3/multiplicationfraction"
+            href="/primaire/niveaux/niveau3/multiplicationfraction"
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Multiplication de fraction
           </Link>
           <Link
-            href="/niveaux/niveau3/divisionfraction"
+            href="/primaire/niveaux/niveau3/divisionfraction"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Division de fraction
           </Link>
         </div>
         <Link
-          href="/niveaux/niveau3/comparer_fraction"
+          href="/primaire/niveaux/niveau3/comparer_fraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Comparaison de fraction
