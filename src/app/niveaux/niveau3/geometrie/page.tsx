@@ -165,12 +165,12 @@ export default function GeometryPractice() {
               <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
-                 type="text"
+                  type="text"
                   inputMode="text"
-                 className="border border-gray-400 p-4 rounded w-64 text-center text-black text-lg"
+                  className="border border-gray-400 p-6 rounded w-80 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + idx] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-              />
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+                />
               </div>
             ))}
           </div>
