@@ -41,7 +41,7 @@ export default function Home() {
            </div>
           </Link>
 
-          <Link href="/scolaire">
+          <Link href="/secondaire">
             <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
               Secondaire
             </div>
