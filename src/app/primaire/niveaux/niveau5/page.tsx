@@ -6,7 +6,7 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">Niveau 4 - Choisissez une opération</h1>
       <div className="grid grid-cols-2 gap-8">
       <Link
-        href="/"
+        href="/primaire"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

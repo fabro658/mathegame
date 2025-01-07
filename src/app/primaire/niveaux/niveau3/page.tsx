@@ -7,7 +7,7 @@ export default function Page() {
       <div className="flex flex-col items-center gap-8">
         <div className="flex gap-8">
           <Link
-            href="/"
+            href="/primaire"
             className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
           >
             Retour
