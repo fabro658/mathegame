@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -9,8 +7,6 @@ export default function ExponentsPractice() {
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
@@ -69,14 +65,10 @@ export default function ExponentsPractice() {
       setAnswers(updatedAnswers);
     }
 
-    setIsValidated(true);
-    setHasPassed(allCorrect);
-
     // Passe automatiquement à la page suivante si tout est correct
     if (allCorrect && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-        setIsValidated(false);
       }, 1500);
     }
   };
@@ -84,14 +76,12 @@ export default function ExponentsPractice() {
   const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
