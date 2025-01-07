@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Primaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900">
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
         <Link href="/primaire/niveaux/niveau1">
