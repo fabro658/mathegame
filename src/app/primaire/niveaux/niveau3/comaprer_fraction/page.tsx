@@ -3,181 +3,211 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Perimetre() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
+type Question =
+  | { type: "compare", fractions: [string, string], correctAnswer: string }
+  | { type: "equivalence", fractions: string[], correctAnswer: string };
+
+export default function PractiqueFractions() {
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const generateSameDenominator = (): Question[] => {
+    return Array.from({ length: totalQuestions / 6 }, () => {
+      const denominator = Math.floor(Math.random() * 8) + 2;
+      const num1 = Math.floor(Math.random() * 9) + 1;
+      const num2 = Math.floor(Math.random() * 9) + 1;
+      return {
+        type: "compare",
+        fractions: [`${num1}/${denominator}`, `${num2}/${denominator}`],
+        correctAnswer: num1 > num2 ? "greater" : num1 < num2 ? "less" : "equal",
+      };
+    });
+  };
+
+  const generateSameNumerator = (): Question[] => {
+    return Array.from({ length: totalQuestions / 6 }, () => {
+      const numerator = Math.floor(Math.random() * 9) + 1;
+      const den1 = Math.floor(Math.random() * 8) + 2;
+      const den2 = Math.floor(Math.random() * 8) + 2;
+      return {
+        type: "compare",
+        fractions: [`${numerator}/${den1}`, `${numerator}/${den2}`],
+        correctAnswer: den1 > den2 ? "less" : den1 < den2 ? "greater" : "equal",
+      };
+    });
+  };
+
+  const generateNonReducedFractions = (): Question[] => {
+    return Array.from({ length: totalQuestions / 6 }, () => {
+      const multiplier1 = Math.floor(Math.random() * 5) + 1;
+      const multiplier2 = Math.floor(Math.random() * 5) + 1;
+      const num = Math.floor(Math.random() * 8) + 1;
+      const den = Math.floor(Math.random() * 8) + 2;
+
+      return {
+        type: "compare",
+        fractions: [`${num * multiplier1}/${den * multiplier1}`, `${num * multiplier2}/${den * multiplier2}`],
+        correctAnswer: "equal",
+      };
+    });
+  };
+
+  const generateEquivalences = (): Question[] => {
+    return Array.from({ length: totalQuestions / 6 }, () => {
+      const num = Math.floor(Math.random() * 9) + 1;
+      const den = Math.floor(Math.random() * 8) + 2;
+      const multiplier1 = Math.floor(Math.random() * 5) + 1;
+      const multiplier2 = Math.floor(Math.random() * 5) + 1;
+      const nonEquivalent = `${num + 1}/${den + 1}`;
+
+      return {
+        type: "equivalence",
+        fractions: [
+          `${num}/${den}`,
+          `${num * multiplier1}/${den * multiplier1}`,
+          `${num * multiplier2}/${den * multiplier2}`,
+          nonEquivalent,
+        ],
+        correctAnswer: `${num}/${den}`,
+      };
+    });
+  };
+
+  const [questions, setQuestions] = useState<Question[]>([]);
+
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 4);
-        let questionText = "";
-        let correctAnswer = 0;
-
-        if (shapeType === 0) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
-          correctAnswer = 4 * side;
-        } else if (shapeType === 1) {
-          const length = Math.floor(Math.random() * 10) + 1;
-          const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-          correctAnswer = 2 * (length + width);
-        } else if (shapeType === 2) {
-          const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
-          correctAnswer = 2 * Math.PI * radius;
-        } else {
-          const side1 = Math.floor(Math.random() * 10) + 1;
-          const side2 = Math.floor(Math.random() * 10) + 1;
-          const side3 = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
-          correctAnswer = side1 + side2 + side3;
-        }
-
-        return {
-          questionText,
-          correctAnswer: correctAnswer.toFixed(2),
-        };
-      });
-    };
-
-    setQuestions(generateQuestions());
+    setQuestions([
+      ...generateSameDenominator(),
+      ...generateSameNumerator(),
+      ...generateNonReducedFractions(),
+      ...generateEquivalences(),
+    ]);
   }, []);
 
-  const completedAnswers = answers.filter((answer) => answer !== null && answer !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  const handleChange = (index: number, value: string): void => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
 
-    // Vérifier si toutes les réponses sont remplies
-    const allAnswersFilled = pageAnswers.every(answer => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Vérification des réponses avec une marge d'erreur
-    const marginOfError = 0.01;
+    const newAnswers = [...answers];
     let allCorrect = true;
-    const updatedAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
-      const userAnswer = parseFloat(answer || "0");
-      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
-      
-      if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
-        updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
+      const globalIndex = startIndex + index;
+      if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
+        newAnswers[globalIndex] = null;
       }
     });
 
-    setAnswers(updatedAnswers); // Mettre à jour les réponses
+    setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
-
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      // Passer à la série suivante si toutes les réponses sont correctes
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500); // Attendre un peu avant de passer à la série suivante pour l'effet
-    }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau3" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/niveaux/niveau2"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
+      <h1 className="text-3xl font-bold mb-6">Pratique - Comparaison de Fractions</h1>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
-
-      {/* Affichage des questions */}
       {!isValidated && (
         <>
-          <div className="flex flex-col gap-6">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-           <div className="font-bold text-black">{questionText}</div>
-           <input
-              type="text"
-             inputMode="text"
-              className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
+          <div className="grid grid-cols-3 gap-6">
+            {questions
+              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+              .map((question, index) => (
+                <div key={index} className="flex flex-col items-center gap-4">
+                  {question.type === "compare" ? (
+                    <div className="text-lg font-bold">
+                      {question.fractions[0]} vs {question.fractions[1]}
+                    </div>
+                  ) : (
+                    <div className="text-lg font-bold">
+                      Quelles fractions sont équivalentes ?
+                      <ul>
+                        {question.fractions.map((frac, idx) => (
+                          <li key={idx}>{frac}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <input
+                    type="text"
+                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                    placeholder="Réponse"
+                    value={answers[currentPage * questionsPerPage + index] || ""}
+                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  />
+                </div>
+              ))}
           </div>
-            ))}
-          </div>
+
           <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+            {currentPage > 0 && (
+              <button
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handlePreviousPage}
+              >
+                Précédent
+              </button>
+            )}
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+            >
               Valider les réponses
             </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
+            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            )}
           </div>
         </>
       )}
@@ -185,20 +215,16 @@ export default function Perimetre() {
       {isValidated && (
         <>
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold" onClick={handleNextPage}>
-                Suivant
-              </button>
-            </div>
+            <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
-              </button>
-            </div>
+            <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
           )}
+          <button
+            className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+            onClick={() => setIsValidated(false)}
+          >
+            Revenir pour corriger
+          </button>
         </>
       )}
     </div>

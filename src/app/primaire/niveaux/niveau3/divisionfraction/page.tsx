@@ -151,22 +151,22 @@ export default function DivisionFraction() {
 {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex flex-row items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
-                  disabled
-                >
-                  {fraction1} ÷ {fraction2}
+          <div className="grid grid-cols-2 grid-rows-3 gap-6">
+         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+           <div key={index} className="flex flex-row items-center gap-4">
+             <button
+              className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
+               disabled
+             >
+                   {fraction1} × {fraction2}
                 </button>
-                <input
-                  type="text"
-                  className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
+               <input
+            type="text"
+          className="border border-gray-400 p-3 rounded w-32 text-center text-black"
+         onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
               </div>
-            ))}
+             ))}
           </div>
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (

@@ -13,29 +13,14 @@ export default function Primaire() {
 
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-        <Link href="/primaire/niveaux/niveau1">
+        <Link href="/primaire/niveaux/niveau5">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Addition et Soustraction
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau2">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Multiplication et Division
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau3">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Fraction
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau4">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 4
+            exposant
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau5">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Niveau 5
+            priorite operation
           </div>
         </Link>
       </div>
