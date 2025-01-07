@@ -18,36 +18,21 @@ export default function Page() {
         {/* Conteneur pour les deux premiers boutons */}
         <div className="flex flex-wrap justify-center gap-8">
           <a
-            href="/niveaux/niveau1/addition"
+            href="/primaire/niveaux/niveau1/addition"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Addition
           </a>
           <a
-            href="/niveaux/niveau1/soustraction"
+            href="/primaire/niveaux/niveau1/soustraction"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Soustraction
           </a>
         </div>
-        {/* Conteneur pour les deux autres boutons */}
-        <div className="flex flex-wrap justify-center gap-8">
-          <a
-            href="/niveaux/niveau1/soustractionfraction"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-          >
-            Soustraction de fraction
-          </a>
-          <a
-            href="/niveaux/niveau1/additionfraction"
-            className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-          >
-            Addition de fraction
-          </a>
-        </div>
         {/* Bouton centré en dessous */}
         <a
-          href="/niveaux/niveau1/revision"
+          href="/primaire/niveaux/niveau1/revision"
           className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Révision

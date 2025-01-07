@@ -18,43 +18,24 @@ export default function Page() {
         {/* Première ligne avec 2 boutons */}
         <div className="flex justify-center gap-8">
           <Link
-            href="/niveaux/niveau2/multiplication"
+            href="/primaire/niveaux/niveau2/multiplication"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             aria-label="Page de multiplication"
           >
             Multiplication
           </Link>
           <Link
-            href="/niveaux/niveau2/division"
+            href="/primaire/niveaux/niveau2/division"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             aria-label="Page de division"
           >
             Division
           </Link>
         </div>
-
-        {/* Deuxième ligne avec 2 boutons */}
-        <div className="flex justify-center gap-8">
-          <Link
-            href="/niveaux/niveau2/multiplicationfraction"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            aria-label="Page de multiplication de fraction"
-          >
-            Multiplication de fraction
-          </Link>
-          <Link
-            href="/niveaux/niveau2/divisionfraction"
-            className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            aria-label="Page de division de fraction"
-          >
-            Division de fraction
-          </Link>
-        </div>
-
         {/* Dernière ligne avec 1 bouton centré */}
         <div className="flex justify-center">
           <Link
-            href="/niveaux/niveau2/revision"
+            href="/primaire/niveaux/niveau2/revision"
             className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             >
             Révision

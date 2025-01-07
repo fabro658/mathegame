@@ -3,7 +3,7 @@ import Link from 'next/link'; // Si vous utilisez Next.js
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
-      <h1 className="text-4xl font-bold mb-12">Niveau 3 - Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12">Niveau 3  - Les fractions</h1>
       <div className="flex flex-col items-center gap-8">
         <div className="flex gap-8">
         <Link
@@ -24,18 +24,23 @@ export default function Page() {
             Soustraction de fraction
           </Link>
         </div>
-        <Link
-          href="/niveaux/niveau3/multiplicationfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        {/* Deuxième ligne avec 2 boutons */}
+        <div className="flex justify-center gap-8">
+          <Link
+            href="/niveaux/niveau2/multiplicationfraction"
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            aria-label="Page de multiplication de fraction"
           >
-          Multiplication de fraction
-        </Link>
-        <Link
-          href="/niveaux/niveau3/divisionfraction"
-          className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            Multiplication de fraction
+          </Link>
+          <Link
+            href="/niveaux/niveau2/divisionfraction"
+            className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            aria-label="Page de division de fraction"
           >
-          Division de fraction
-        </Link>
+            Division de fraction
+          </Link>
+        </div>
         <Link
           href="/niveaux/niveau3/comparer_fraction"
           className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
