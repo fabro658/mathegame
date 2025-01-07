@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ExponentsLevel3() {
   const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Questions affichées par vague
+  const questionsPerPage = 6; // 6 questions par page
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
@@ -24,7 +24,6 @@ export default function ExponentsLevel3() {
         let questionText = "";
         let correctAnswer = "";
 
-        // Alternance entre différents types d'expressions
         const type = Math.random();
         if (type < 0.33) {
           questionText = `Que vaut (${base1} + ${base2})^${exponent} ?`;
@@ -156,7 +155,7 @@ export default function ExponentsLevel3() {
 
       {!isValidated && (
         <>
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-2 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
               <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>

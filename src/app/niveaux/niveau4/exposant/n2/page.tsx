@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function ExponentsPracticeLevel2() {
+export default function ExponentsPractice() {
   const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Questions affichées par page
+  const questionsPerPage = 3; // Questions affichées par vague
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
@@ -16,22 +16,31 @@ export default function ExponentsPracticeLevel2() {
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      const superscriptMap: Record<string, string> = {
-        0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵",
-        6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹",
-      };
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let base, exponent, questionText, correctAnswer;
 
-      return Array.from({ length: totalQuestions }, () => {
-        const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
-        const exponent = 2; // Exposant fixé à 2
-        const correctAnswer = Math.sqrt(base ** exponent).toString();
+        // Niveau 1 : Simple et progressif
+        if (index < 10) {
+          base = 2; // Base fixe
+          exponent = index + 1; // Exposants croissants de 1 à 10
+          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(base, exponent).toString();
+        } else {
+          // Niveau supérieur : Diversité
+          base = Math.floor(Math.random() * 6) + 2;
+          exponent = Math.floor(Math.random() * 3) + 1;
 
-        const exponentUnicode = String(exponent)
-          .split("")
-          .map((digit) => superscriptMap[digit])
-          .join("");
+          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(base, exponent).toString();
 
-        const questionText = `Que vaut x si x${exponentUnicode} = ${base ** exponent} ?`;
+          // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
+          if (index >= 15 && Math.random() > 0.5) {
+            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+            correctAnswer = Math.pow(baseAlt, exponent).toString();
+          }
+        }
+
         return { questionText, correctAnswer };
       });
     };
@@ -39,7 +48,7 @@ export default function ExponentsPracticeLevel2() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des changements de réponses
+  // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -53,27 +62,28 @@ export default function ExponentsPracticeLevel2() {
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.some((answer) => !answer)) {
+    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
+
+    if (!allAnswersFilled) {
       alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const allCorrect = pageAnswers.every((answer, idx) => answer === pageCorrectAnswers[idx]);
-    if (!allCorrect) {
-      const updatedAnswers = [...answers];
-      pageAnswers.forEach((answer, idx) => {
-        if (answer !== pageCorrectAnswers[idx]) {
-          updatedAnswers[startIndex + idx] = null; // Réinitialise les réponses incorrectes
-        }
-      });
-      setAnswers(updatedAnswers);
-    }
+    let allCorrect = true;
+    const updatedAnswers = [...answers];
 
+    pageAnswers.forEach((answer, index) => {
+      if (answer !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null;
+        allCorrect = false;
+      }
+    });
+
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
 
-    // Passe automatiquement à la page suivante si tout est correct
-    if (allCorrect && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
         setIsValidated(false);
@@ -82,7 +92,7 @@ export default function ExponentsPracticeLevel2() {
   };
 
   const handleNextPage = (): void => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
@@ -105,18 +115,29 @@ export default function ExponentsPracticeLevel2() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
       </Link>
-      <Link href="/niveaux/niveau4/exposant" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/niveaux/niveau4/exposant"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Retour
       </Link>
 
-      {/* Barre de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
           <circle
             cx="50%"
             cy="50%"
@@ -134,51 +155,75 @@ export default function ExponentsPracticeLevel2() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
-      {!isValidated ? (
-        <div className="flex flex-col gap-6">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
-            <div key={idx} className="flex flex-col items-start gap-2">
-              <div className="font-bold text-black">{questionText}</div>
-              <input
-                type="text"
-                inputMode="numeric"
-                className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                value={answers[currentPage * questionsPerPage + idx] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-              />
-            </div>
-          ))}
-        </div>
-      ) : hasPassed ? (
-        <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-      ) : (
-        <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+      {!isValidated && (
+        <>
+          <div className="flex flex-col gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+              <div key={index} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex gap-4">
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+            >
+              Valider les réponses
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
+          </div>
+        </>
       )}
 
-      <div className="mt-6 flex gap-4">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-      </div>
+      {isValidated && (
+        <>
+          {hasPassed ? (
+            <div>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <button
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            </div>
+          ) : (
+            <div>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <button
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                onClick={() => setIsValidated(false)}
+              >
+                Revenir pour corriger
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
