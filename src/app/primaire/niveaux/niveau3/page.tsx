@@ -12,7 +12,7 @@ export default function Page() {
       >
         Retour
       </Link><Link
-            href="/niveaux/niveau3/additionfracion"
+            href="/niveaux/niveau3/additionfraction"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
             Addition de de fraction
@@ -32,13 +32,13 @@ export default function Page() {
         </Link>
         <Link
           href="/niveaux/niveau3/divisionfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-green-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Division de fraction
         </Link>
         <Link
           href="/niveaux/niveau3/comparer_fraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Comparaison de fraction
         </Link>
