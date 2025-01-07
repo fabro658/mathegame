@@ -13,38 +13,26 @@ export default function ExponentsPracticeLevel2() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
+     // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        const base1 = Math.floor(Math.random() * 5) + 2; // Base entre 2 et 6
-        const base2 = Math.floor(Math.random() * 5) + 2; // Autre base entre 2 et 6
-        const exponent = Math.floor(Math.random() * 4) + 1; // Exposant entre 1 et 4
-
-        let questionText = "";
-        let correctAnswer = "";
-
-        const type = Math.random();
-        if (type < 0.33) {
-          questionText = `Que vaut (${base1} + ${base2})^${exponent} ?`;
-          correctAnswer = Math.pow(base1 + base2, exponent).toString();
-        } else if (type < 0.66) {
-          questionText = `Que vaut (${base1} * ${base2})^${exponent} ?`;
-          correctAnswer = Math.pow(base1 * base2, exponent).toString();
-        } else {
-          questionText = `Que vaut (${base1} - ${base2})^${exponent} ?`;
-          correctAnswer = Math.pow(base1 - base2, exponent).toString();
-        }
-
+        const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
+        const exponent = 2; // Exposant fixé à 2
+        const correctAnswer = Math.sqrt(base ** exponent).toString(); // Racine carrée
+  
+        const questionText = `Si x^${exponent} = ${base ** exponent}, que vaut x ?`;
+  
         return {
           questionText,
           correctAnswer,
         };
       });
     };
-
+  
     setQuestions(generateQuestions());
   }, []);
+  
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
@@ -120,7 +108,7 @@ export default function ExponentsPracticeLevel2() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau4"
+        href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -153,7 +141,7 @@ export default function ExponentsPracticeLevel2() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Pratique des Exposants</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
 
       {!isValidated && (
         <>
