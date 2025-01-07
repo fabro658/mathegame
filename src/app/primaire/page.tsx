@@ -6,7 +6,7 @@ export default function Primaire() {
       {/* Bouton Retour */}
       <Link
         href="/"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
       </Link>
