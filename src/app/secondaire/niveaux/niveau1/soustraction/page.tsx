@@ -18,13 +18,14 @@ export default function Soustraction() {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 35) return [100 + Math.floor(Math.random() * 901), 50 + Math.floor(Math.random() * 451)]; // Niveau 4
-    return [1000 + Math.floor(Math.random() * 9000), 1000 + Math.floor(Math.random() * 9000)]; // Niveau 5 : Soustractions avec 4 chiffres
-  });
+const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
+  if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
+  if (index < 30) return [100 + Math.floor(Math.random() * 400), 50 + Math.floor(Math.random() * 200)]; // Niveau 3
+  if (index < 36) return [100 + Math.floor(Math.random() * 800), 100 + Math.floor(Math.random() * 800)]; // Niveau 4
+  return [0, 0]; // Fallback (ne sera jamais utilisé avec totalQuestions = 36)
+});
+
 
   // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;

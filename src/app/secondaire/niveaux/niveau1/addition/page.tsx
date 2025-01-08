@@ -1,28 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 12) {
-      // 12 premières questions : 2 chiffres (10-99)
-      return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
-    } else if (index < 24) {
-      // 12 suivantes : 3 chiffres (100-999)
-      return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
-    } else {
-      // Dernières : 4 chiffres (1000-9999)
-      return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
-    }
-  });
+  // Générer les questions une seule fois lors du montage
+  useEffect(() => {
+    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
+      if (index < 12) {
+        // 12 premières questions : 2 chiffres (10-99)
+        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
+      } else if (index < 24) {
+        // 12 suivantes : 3 chiffres (100-999)
+        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+      } else {
+        // Dernières : 4 chiffres (1000-9999)
+        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+      }
+    });
+    setQuestions(generatedQuestions);
+  }, []);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -127,7 +132,7 @@ export default function Addition() {
 
       <h1 className="text-4xl font-bold mb-6">Sommes</h1>
 
-      {!isValidated && (
+      {questions.length > 0 && !isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
