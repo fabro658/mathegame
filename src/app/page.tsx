@@ -32,9 +32,9 @@ export default function Home() {
         {/* Section Titre */}
         <div className="text-center mb-16">
           {/* Titre 1 */}
-          <h1 className="text-white text-5xl sm:text-6xl font-bold">Mathegame</h1>
+          <h1 className="text-white text-6xl sm:text-7xl font-bold mb-6">Mathegame</h1>
           {/* Titre 2 */}
-          <h1 className="text-white text-4xl sm:text-5xl font-semibold mt-4">Mathématique</h1>
+          <h1 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h1>
         </div>
 
         {/* Boutons Primaire et Secondaire */}
