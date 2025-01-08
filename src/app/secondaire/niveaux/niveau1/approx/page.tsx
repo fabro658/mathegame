@@ -14,11 +14,15 @@ export default function Arrondissement() {
   const generateQuestions = (type: string) => {
     return Array.from({ length: totalQuestions }, () => {
       const number = Math.random() * 100;
-      return type === "unité" ? number.toFixed(0) : number.toFixed(1);
+      const rounded = type === "unité" ? Math.round(number) : parseFloat(number.toFixed(1));
+      return {
+        text: type === "unité" ? number.toFixed(0) : number.toFixed(1),
+        correctAnswer: rounded,
+      };
     });
   };
 
-  const questions = currentPage % 2 === 0 ? generateQuestions("unité") : generateQuestions("dixième");
+  const questions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -28,43 +32,32 @@ export default function Arrondissement() {
   };
 
   const handleValidation = () => {
-  const startIndex = currentPage * questionsPerPage;
-  const endIndex = startIndex + questionsPerPage;
-  const pageAnswers = answers.slice(startIndex, endIndex);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
 
-  if (pageAnswers.includes(null)) {
-    alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
-    return;
-  }
-
-  let allCorrect = true;
-  const newAnswers = [...answers]; // Créer une copie des réponses existantes
-
-  pageAnswers.forEach((answer, index) => {
-    const globalIndex = startIndex + index;
-    const question = questions[globalIndex];
-
-    if (question.isCorrect !== undefined && answer !== question.isCorrect) {
-      allCorrect = false;
-    } else if (question.correctAnswer && answer !== question.correctAnswer) {
-      allCorrect = false;
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      return;
     }
 
-    // Mettre à jour newAnswers avec la réponse correcte ou réinitialiser en cas d'erreur
-    if (answer !== question.correctAnswer && question.correctAnswer) {
-      newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
-    } else if (answer !== question.isCorrect && question.isCorrect !== undefined) {
-      newAnswers[globalIndex] = null;  // Réinitialiser la mauvaise réponse
-    }
-  });
+    let allCorrect = true;
+    const newAnswers = [...answers]; // Copie des réponses existantes
 
-  // Mettre à jour les réponses dans l'état avec les nouvelles valeurs
-  setAnswers(newAnswers);
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      const question = questions[globalIndex % questions.length];
 
-  setIsValidated(true);
-  setHasPassed(allCorrect);
-};
+      if (answer !== question.correctAnswer) {
+        allCorrect = false;
+        newAnswers[globalIndex] = null; // Réinitialiser la mauvaise réponse
+      }
+    });
 
+    setAnswers(newAnswers);
+    setIsValidated(true);
+    setHasPassed(allCorrect);
+  };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
@@ -140,7 +133,7 @@ export default function Arrondissement() {
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {question}
+                  {question.text}
                 </div>
                 <input
                   type="text"
