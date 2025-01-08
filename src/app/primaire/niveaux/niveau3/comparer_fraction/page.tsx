@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 type Question =
   | { type: "compare", fractions: [string, string], correctAnswer: "greater" | "less" }
