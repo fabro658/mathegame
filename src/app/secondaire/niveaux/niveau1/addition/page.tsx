@@ -12,18 +12,16 @@ export default function Addition() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    // Questions simples pour les 10 premières (1 à 2 chiffres)
-    if (index < 10) return [Math.floor(Math.random() * 21) + 1, Math.floor(Math.random() * 21) + 1];
-
-    // Questions avec des nombres plus grands (de 20 à 50)
-    if (index < 20) return [Math.floor(Math.random() * 31) + 20, Math.floor(Math.random() * 31) + 20];
-
-    // Questions plus complexes avec des valeurs de 50 à 100
-    if (index < 30) return [Math.floor(Math.random() * 51) + 50, Math.floor(Math.random() * 51) + 50];
-
-    // Questions avancées avec des nombres entre 100 et 200
-    // Ajout de chiffres jusqu'à 4 nombres
-    return [Math.floor(Math.random() * 101) + 100, Math.floor(Math.random() * 101) + 100];
+    if (index < 12) {
+      // 12 premières questions : 2 chiffres (10-99)
+      return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
+    } else if (index < 24) {
+      // 12 suivantes : 3 chiffres (100-999)
+      return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+    } else {
+      // Dernières : 4 chiffres (1000-9999)
+      return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+    }
   });
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
