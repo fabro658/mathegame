@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire et Secondaire */}
-      <div className="absolute bottom-[36px] w-full flex justify-between">
+      <div className="absolute bottom-[38px] w-full flex justify-between">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
@@ -53,7 +53,7 @@ export default function Home() {
         <Link href="/secondaire">
           <div
             className="absolute rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{ left: '70%' }}
+            style={{ left: '71%' }}
           >
             Secondaire
           </div>
