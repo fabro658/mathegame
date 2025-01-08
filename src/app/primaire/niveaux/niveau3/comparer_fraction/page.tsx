@@ -88,9 +88,9 @@ export default function PractiqueFractions() {
     ]);
   }, []);
 
-  const handleChange = (index: number, value: string) => {
+  const handleAnswer = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = value;
     setAnswers(newAnswers);
   };
 
@@ -145,13 +145,13 @@ export default function PractiqueFractions() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/primaire/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Pratique - Comparaison de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Comparaison de Fractions</h1>
 
       {!isValidated && (
         <>
@@ -174,13 +174,20 @@ export default function PractiqueFractions() {
                       </ul>
                     </div>
                   )}
-                  <input
-                    type="text"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                    placeholder="Réponse"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+                  <div className="flex gap-4">
+                    <button
+                      className="bg-green-500 text-white py-2 px-6 rounded font-bold"
+                      onClick={() => handleAnswer(currentPage * questionsPerPage + index, "greater")}
+                    >
+                      Vrai
+                    </button>
+                    <button
+                      className="bg-red-500 text-white py-2 px-6 rounded font-bold"
+                      onClick={() => handleAnswer(currentPage * questionsPerPage + index, "less")}
+                    >
+                      Faux
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>
