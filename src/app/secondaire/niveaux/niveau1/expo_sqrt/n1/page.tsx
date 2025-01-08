@@ -104,7 +104,7 @@ export default function ExponentsPractice() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau4/exposant"
+        href="/secondaire/niveaux/niveau1/expo_sqrt"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
