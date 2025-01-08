@@ -39,8 +39,8 @@ export default function Home() {
             <div
               className="absolute"
               style={{
-                top: "70%", // Position plus basse
-                left: "25%",
+                top: "50%", // Position plus basse
+                left: "15%",
                 transform: "translate(-50%, -50%)",
               }}
             >
@@ -55,8 +55,8 @@ export default function Home() {
             <div
               className="absolute"
               style={{
-                top: "70%", // Position plus basse
-                left: "75%",
+                top: "50%", // Position plus basse
+                left: "45%",
                 transform: "translate(-50%, -50%)",
               }}
             >
