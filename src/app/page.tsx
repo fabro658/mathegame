@@ -30,7 +30,7 @@ export default function Home() {
       {/* Section Titre */}
       <div className="flex flex-col items-center text-center mb-[3cm]">
         {/* Titre 1 */}
-        <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm' }}>
+        <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm', marginTop: '0.5cm' }}>
           Mathegame
         </h1>
         {/* Titre 2 */}
@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire et Secondaire */}
-      <div className="absolute bottom-[37px] w-full flex justify-between">
+      <div className="absolute bottom-[36px] w-full flex justify-between">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
