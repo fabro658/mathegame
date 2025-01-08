@@ -3,7 +3,15 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black">
+    <div
+      className="grid grid-rows-[20px_1fr] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+      style={{
+        backgroundImage: "url('/fond_mathegame.png')",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       <header className="absolute top-4 left-4">
         <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
@@ -20,25 +28,24 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start mt-10">
         <div className="flex flex-col items-center gap-4">
-          {/* Logo remonté en ajustant les marges */}
+          {/* Logo */}
           <Image
             className="dark:invert"
             src="/logo.png"
             alt="Mon logo"
-            width={500}  // Taille du logo ajustée pour plus de visibilité
-            height={100}  // Hauteur proportionnelle pour garder les bonnes proportions
+            width={500}
+            height={100}
             priority
           />
-          {/* Nom remonté en ajustant la marge */}
-          <span className="text-5xl sm:text-6xl font-bold text-white mt-2">MathGame</span>  {/* Texte agrandi mais pas trop */}
+          <span className="text-5xl sm:text-6xl font-bold text-white mt-2">MathGame</span>
         </div>
 
         {/* Liens vers les niveaux */}
         <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2">
           <Link href="/primaire">
-           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-             Primaire
-           </div>
+            <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+              Primaire
+            </div>
           </Link>
 
           <Link href="/secondaire">

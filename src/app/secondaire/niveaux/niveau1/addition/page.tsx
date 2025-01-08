@@ -6,15 +6,15 @@ import Link from "next/link";
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions une seule fois lors du montage
+  // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
-    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       if (index < 12) {
         // 12 premières questions : 2 chiffres (10-99)
         return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
@@ -27,14 +27,16 @@ export default function Addition() {
       }
     });
     setQuestions(generatedQuestions);
-  }, []);
+  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
+
+  const correctAnswers = questions.map(([num1, num2]) => num1 + num2);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
+    const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
@@ -54,8 +56,7 @@ export default function Addition() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [a, b] = questions[globalIndex];
-      if (answer !== a + b) {
+      if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
         newAnswers[globalIndex] = null;
       }
@@ -82,8 +83,9 @@ export default function Addition() {
     }
   };
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
+  // Calcul pour dessiner le cercle de progression
+  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
+  const strokeWidth = 10; // Définir la largeur du cercle
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -130,16 +132,20 @@ export default function Addition() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Sommes</h1>
+      <h1 className="text-3xl font-bold mb-6">Addition</h1>
 
-      {questions.length > 0 && !isValidated && (
+      {/* Questions pour la page actuelle */}
+      {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+          <div className="grid grid-cols-3 grid-rows-2 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([num1, num2], index) => (
               <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {a} + {b}
-                </div>
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  disabled
+                >
+                  {num1} + {num2}
+                </button>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -151,48 +157,61 @@ export default function Addition() {
             ))}
           </div>
 
+          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
+            {currentPage > 0 && (
+              <button
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
+                onClick={handlePreviousPage}
+              >
+                Précédent
+              </button>
+            )}
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
             >
               Valider les réponses
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
+            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            )}
           </div>
         </>
       )}
 
+      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
+              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+                  onClick={handleNextPage}
+                >
+                  Passer à la série suivante
+                </button>
+              ) : (
+                <button
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+                  onClick={() => alert("Vous avez complété toutes les questions !")}
+                >
+                  Terminer
+                </button>
+              )}
             </div>
           ) : (
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
