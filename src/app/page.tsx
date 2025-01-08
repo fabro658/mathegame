@@ -4,15 +4,14 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div
-      className="relative min-h-screen"
+      className="relative grid items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       style={{
-        backgroundImage: "url('/fond_mathegame.png')", // Votre image ici
+        backgroundImage: "url('/fond_mathegame.png')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
-      {/* Menu en haut à gauche */}
       <header className="absolute top-4 left-4">
         <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
@@ -21,51 +20,53 @@ export default function Home() {
             <span>Apprendre</span>
           </Link>
           <Link href="/menu/options" className="flex items-center gap-2 text-white hover:underline">
-            <Image src="/globe.svg" alt="À propos Icon" width={20} height={20} />
+            <Image src="/globe.svg" alt="Option Icon" width={20} height={20} />
             <span>À propos</span>
           </Link>
         </div>
       </header>
 
-      {/* Boutons positionnés sur les demi-cercles */}
-      <div className="relative w-full h-full">
-        {/* Bouton Primaire */}
-        <Link href="/primaire">
-          <button
-            className="absolute bg-yellow-400 text-black font-bold py-2 px-4 rounded-lg hover:bg-yellow-500"
-            style={{
-              bottom: '15%', // Ajustez la position verticale
-              left: '20%', // Ajustez la position horizontale
-              transform: 'translate(-50%, 50%)', // Centre le bouton sur le demi-cercle
-            }}
-          >
-            Primaire
-          </button>
-        </Link>
+      <main className="relative">
+        {/* Titre */}
+        <div className="text-center mb-8">
+          <h1 className="text-white text-5xl sm:text-6xl font-bold">Mathegame</h1>
+        </div>
 
-        {/* Bouton Secondaire */}
-        <Link href="/secondaire">
-          <button
-            className="absolute bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600"
-            style={{
-              bottom: '15%', // Ajustez la position verticale
-              right: '20%', // Ajustez la position horizontale
-              transform: 'translate(50%, 50%)', // Centre le bouton sur le demi-cercle
-            }}
-          >
-            Secondaire
-          </button>
-        </Link>
-      </div>
+        {/* Boutons Primaire et Secondaire */}
+        <div className="flex justify-center items-center gap-8">
+          {/* Bouton Primaire */}
+          <Link href="/primaire">
+            <div
+              className="absolute"
+              style={{
+                top: "70%", // Position plus basse
+                left: "25%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
+                Primaire
+              </div>
+            </div>
+          </Link>
 
-      {/* Bouton Avancé en bas au centre */}
-      <div className="absolute bottom-10 w-full flex justify-center">
-        <Link href="/avancé">
-          <button className="bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600">
-            Avancé
-          </button>
-        </Link>
-      </div>
+          {/* Bouton Secondaire */}
+          <Link href="/secondaire">
+            <div
+              className="absolute"
+              style={{
+                top: "70%", // Position plus basse
+                left: "75%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <div className="rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400">
+                Secondaire
+              </div>
+            </div>
+          </Link>
+        </div>
+      </main>
     </div>
   );
 }
