@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function EquationsEquivalentes() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Nombre de questions par vague
 
   const [questions, setQuestions] = useState<
     { equationLeft: string; equationRight: string }[]
@@ -13,8 +13,8 @@ export default function EquationsEquivalentes() {
   const [answers, setAnswers] = useState<(boolean | null)[]>(
     Array(totalQuestions).fill(null)
   );
-  const [buttonStates, setButtonStates] = useState<string[]>(
-    Array(totalQuestions).fill("default")
+  const [selectedButtons, setSelectedButtons] = useState<string[]>( // Pour suivre quel bouton est sélectionné
+    Array(totalQuestions).fill("")
   );
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -24,8 +24,7 @@ export default function EquationsEquivalentes() {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
         const leftValue = Math.floor(Math.random() * 20) + 1;
-        const rightValue =
-          Math.random() > 0.5 ? leftValue : Math.floor(Math.random() * 20) + 1;
+        const rightValue = Math.random() > 0.5 ? leftValue : Math.floor(Math.random() * 20) + 1;
 
         return {
           equationLeft: leftValue.toString(),
@@ -34,34 +33,37 @@ export default function EquationsEquivalentes() {
       });
     };
 
+    // Génération initiale des questions
     setQuestions(generateQuestions());
   }, []);
 
+  // Gestion des réponses
   const handleAnswer = (index: number, isTrue: boolean): void => {
     const newAnswers = [...answers];
-    const newButtonStates = [...buttonStates];
-    const question = questions[index];
+    const newSelectedButtons = [...selectedButtons];
 
+    const question = questions[index];
     const leftValue = parseInt(question.equationLeft);
     const rightValue = parseInt(question.equationRight);
 
+    // Vérification si les deux côtés sont équivalents
     const isCorrect = (leftValue === rightValue) === isTrue;
     newAnswers[index] = isCorrect;
 
-    // Déterminer l'état du bouton (vert, rouge ou bleu)
-    newButtonStates[index] = isCorrect
-      ? "correct"
-      : "incorrect";
+    // Met à jour le bouton sélectionné pour cette question
+    newSelectedButtons[index] = isTrue ? "true" : "false";
 
     setAnswers(newAnswers);
-    setButtonStates(newButtonStates);
+    setSelectedButtons(newSelectedButtons);
   };
 
+  // Validation des réponses
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérifier si toutes les réponses sont remplies
     const allAnswersFilled = pageAnswers.every((answer) => answer !== null);
 
     if (!allAnswersFilled) {
@@ -69,6 +71,7 @@ export default function EquationsEquivalentes() {
       return;
     }
 
+    // Validation des réponses
     const allCorrect = pageAnswers.every((answer) => answer === true);
 
     setIsValidated(true);
@@ -101,8 +104,8 @@ export default function EquationsEquivalentes() {
     (completedAnswers / totalQuestions) * 100
   );
 
-  const radius = 50;
-  const strokeWidth = 10;
+  const radius = 50; // Rayon pour la barre circulaire
+  const strokeWidth = 10; // Largeur de la barre
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -174,14 +177,9 @@ export default function EquationsEquivalentes() {
                         handleAnswer(currentPage * questionsPerPage + index, true)
                       }
                       className={`py-2 px-4 rounded font-bold ${
-                        buttonStates[currentPage * questionsPerPage + index] ===
-                        "correct"
-                          ? "bg-green-500 text-white"
-                          : buttonStates[
-                              currentPage * questionsPerPage + index
-                            ] === "incorrect"
-                          ? "bg-red-500 text-white"
-                          : "bg-blue-500 text-white"
+                        selectedButtons[currentPage * questionsPerPage + index] === "true"
+                          ? "bg-blue-500"
+                          : "bg-green-500 text-white"
                       }`}
                     >
                       Vrai
@@ -191,14 +189,9 @@ export default function EquationsEquivalentes() {
                         handleAnswer(currentPage * questionsPerPage + index, false)
                       }
                       className={`py-2 px-4 rounded font-bold ${
-                        buttonStates[currentPage * questionsPerPage + index] ===
-                        "correct"
-                          ? "bg-green-500 text-white"
-                          : buttonStates[
-                              currentPage * questionsPerPage + index
-                            ] === "incorrect"
-                          ? "bg-red-500 text-white"
-                          : "bg-blue-500 text-white"
+                        selectedButtons[currentPage * questionsPerPage + index] === "false"
+                          ? "bg-blue-500"
+                          : "bg-red-500 text-white"
                       }`}
                     >
                       Faux
