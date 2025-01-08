@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Secondaire() {
+export default function Niveau1() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Bouton Retour */}
@@ -10,9 +10,9 @@ export default function Secondaire() {
       >
         Retour
       </Link>
-  {/* Liens vers les niveaux */}
-    <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-      <Link href="/secondaire/niveaux/niveau1/addition">
+      {/* Liens vers les niveaux */}
+      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+        <Link href="/secondaire/niveaux/niveau1/addition">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Sommes
           </div>
@@ -44,22 +44,22 @@ export default function Secondaire() {
         </Link>
         <Link href="/secondaire/niveaux/niveau1/classifier">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Classifier 
+            Classifier
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau1/expo_sqrt">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-          Les exposants et les racines
+            Les exposants et les racines
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau1/priooperation">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-          Priorité d'opération 
+            Priorité d&apos;opération
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau1/egalite">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-          Relation d'égalité 
+            Relation d&apos;égalité
           </div>
         </Link>
       </div>

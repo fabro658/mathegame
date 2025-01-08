@@ -236,10 +236,10 @@ export default function ComparerFractions() {
             <p className="text-red-500 font-bold text-lg">Certaines réponses sont incorrectes.</p>
           )}
           <button
-            onClick={() => setIsValidated(false)}
+            onClick={handleNextPage}
             className="mt-4 bg-gray-500 text-white py-2 px-6 rounded"
           >
-            Revoir les réponses
+            Suivant
           </button>
         </div>
       )}
