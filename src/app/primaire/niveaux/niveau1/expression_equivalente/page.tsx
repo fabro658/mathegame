@@ -49,10 +49,19 @@ export default function EquationsEquivalentes() {
       return Array.from({ length: totalQuestions }, (_, index) => {
         const level = Math.ceil(((index + 1) / totalQuestions) * levels); // Détermine le niveau
         const leftEquation = generateEquation(level);
+
         const isEquivalent = Math.random() > 0.5; // Définit si les deux côtés sont équivalents
-        const rightEquation = isEquivalent
-          ? leftEquation
-          : generateEquation(level);
+        let rightEquation;
+
+        if (isEquivalent) {
+          // Si équivalent, les deux côtés doivent être identiques
+          rightEquation = leftEquation;
+        } else {
+          // Sinon, génère jusqu'à ce que le côté droit soit différent
+          do {
+            rightEquation = generateEquation(level);
+          } while (rightEquation.result === leftEquation.result);
+        }
 
         return {
           equationLeft: leftEquation.equation,
