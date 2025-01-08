@@ -12,7 +12,7 @@ export default function Page() {
       </Link>
 
       {/* Titre principal */}
-      <h1 className="text-4xl font-bold mb-12">Niveau 4 - Pratiquer la géométrie</h1>
+      <h1 className="text-4xl font-bold mb-12">Pratiquer la géométrie</h1>
 
       {/* Conteneur des boutons */}
       <div className="grid grid-cols-2 gap-8 mt-12 w-full max-w-5xl">
