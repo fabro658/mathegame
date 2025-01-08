@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div
-      className="relative grid items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+      className="relative flex flex-col items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       style={{
         backgroundImage: "url('/mathegame.png')",
         backgroundSize: "cover",
@@ -27,36 +27,33 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Section */}
-      <main className="relative w-full h-full">
-        {/* Section Titre */}
-        <div className="text-center mb-16">
-          {/* Titre 1 */}
-          <h1 className="text-white text-6xl sm:text-7xl font-bold mb-6">Mathegame</h1>
-          {/* Titre 2 */}
-          <h1 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h1>
-        </div>
+      {/* Section Titre */}
+      <div className="flex flex-col items-center text-center">
+        {/* Titre 1 */}
+        <h1 className="text-white text-6xl sm:text-7xl font-bold mb-4">Mathegame</h1>
+        {/* Titre 2 */}
+        <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
+      </div>
 
-        {/* Boutons Primaire et Secondaire */}
-        <div className="absolute bottom-[48px] w-full flex justify-between px-16">
-          {/* Bouton Primaire */}
-          <Link href="/primaire">
-            <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
-              Primaire
-            </div>
-          </Link>
+      {/* Boutons Primaire et Secondaire */}
+      <div className="absolute bottom-[48px] w-full flex justify-between px-16">
+        {/* Bouton Primaire */}
+        <Link href="/primaire">
+          <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
+            Primaire
+          </div>
+        </Link>
 
-          {/* Spacer pour centrer */}
-          <div className="flex-1"></div>
+        {/* Spacer pour centrer */}
+        <div className="flex-1"></div>
 
-          {/* Bouton Secondaire */}
-          <Link href="/secondaire">
-            <div className="rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400">
-              Secondaire
-            </div>
-          </Link>
-        </div>
-      </main>
+        {/* Bouton Secondaire */}
+        <Link href="/secondaire">
+          <div className="rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400">
+            Secondaire
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
