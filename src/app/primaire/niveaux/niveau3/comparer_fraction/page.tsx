@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Question =
-  | { type: "compare", fractions: [string, string], correctAnswer: "equal" | "not_equal" }
-  | { type: "equivalence", fractions: string[], correctAnswer: string };
+  | { type: "compare", fractions: [string, string], correctAnswer: boolean }
+  | { type: "equivalence", fractions: string[], correctAnswer: boolean };
 
-export default function ComparerFractions() {  // Nom modifié ici
+export default function ComparerFractions() {
   const totalQuestions = 30;
   const questionsPerPage = 3;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(boolean | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -24,7 +24,7 @@ export default function ComparerFractions() {  // Nom modifié ici
         return {
           type: "compare",
           fractions: [`${num1}/${denominator}`, `${num2}/${denominator}`],
-          correctAnswer: num1 === num2 ? "equal" : "not_equal",
+          correctAnswer: num1 === num2,
         };
       });
     };
@@ -37,7 +37,7 @@ export default function ComparerFractions() {  // Nom modifié ici
         return {
           type: "compare",
           fractions: [`${numerator}/${den1}`, `${numerator}/${den2}`],
-          correctAnswer: den1 === den2 ? "equal" : "not_equal",
+          correctAnswer: den1 === den2,
         };
       });
     };
@@ -51,7 +51,7 @@ export default function ComparerFractions() {  // Nom modifié ici
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (globalIndex: number, value: string) => {
+  const handleAnswer = (globalIndex: number, value: boolean) => {
     const updatedAnswers = [...answers];
     updatedAnswers[globalIndex] = value;
     setAnswers(updatedAnswers);
@@ -150,29 +150,29 @@ export default function ComparerFractions() {  // Nom modifié ici
                 <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center">
                   <p className="text-lg font-bold mb-4">
                     {question.type === "compare"
-                      ? `${question.fractions[0]} vs ${question.fractions[1]}`
+                      ? `${question.fractions[0]} = ${question.fractions[1]}`
                       : "Equivalence des fractions"}
                   </p>
                   <div className="flex justify-center gap-4">
                     <button
                       className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === "equal"
+                        answers[globalIndex] === true
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => handleAnswer(globalIndex, "equal")}
+                      onClick={() => handleAnswer(globalIndex, true)}
                     >
-                      =
+                      Vrai
                     </button>
                     <button
                       className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === "not_equal"
+                        answers[globalIndex] === false
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => handleAnswer(globalIndex, "not_equal")}
+                      onClick={() => handleAnswer(globalIndex, false)}
                     >
-                      ≠
+                      Faux
                     </button>
                   </div>
                 </div>
