@@ -126,7 +126,7 @@ export default function Multiplication() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
+      <h1 className="text-3xl font-bold mb-6">Produit</h1>
 
       {!isValidated && (
         <>

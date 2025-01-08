@@ -141,7 +141,7 @@ export default function Division() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Quotient</h1>
 
       {/* Questions pour la page actuelle */}
       {!isValidated && (
