@@ -28,7 +28,7 @@ export default function Home() {
       </header>
 
       {/* Section Titre */}
-      <div className="flex flex-col items-center text-center">
+      <div className="flex flex-col items-center text-center mb-[4cm]">
         {/* Titre 1 */}
         <h1 className="text-white text-6xl sm:text-7xl font-bold mb-4">Mathegame</h1>
         {/* Titre 2 */}
@@ -36,16 +36,13 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire et Secondaire */}
-      <div className="absolute bottom-[48px] w-full flex justify-between px-16">
+      <div className="absolute bottom-[48px] w-full flex justify-around px-[12%]">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
             Primaire
           </div>
         </Link>
-
-        {/* Spacer pour centrer */}
-        <div className="flex-1"></div>
 
         {/* Bouton Secondaire */}
         <Link href="/secondaire">
