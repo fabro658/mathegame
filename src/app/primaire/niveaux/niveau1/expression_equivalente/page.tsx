@@ -44,6 +44,11 @@ export default function EquationsEquivalentes() {
     return { equation: `${left} ${op} ${right}`, result };
   };
 
+  const formatEquation = (equation: string) => {
+    // Remplace le symbole `*` par `x` pour l'affichage
+    return equation.replace(/\*/g, "x");
+  };
+
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
@@ -154,7 +159,7 @@ export default function EquationsEquivalentes() {
               .map(({ equationLeft, equationRight }, index) => (
                 <div key={index} className="flex flex-col items-start gap-2">
                   <div className="font-bold text-black">
-                    {equationLeft} = {equationRight}
+                    {formatEquation(equationLeft)} = {formatEquation(equationRight)}
                   </div>
                   <div className="flex gap-4">
                     <button
