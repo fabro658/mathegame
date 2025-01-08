@@ -42,7 +42,29 @@ export default function ComparerFractions() {
       });
     };
 
-    return [...generateSameDenominator(), ...generateSameNumerator()];
+    const generateNonReducedFractions = (): Question[] => {
+      return Array.from({ length: totalQuestions / 6 }, () => {
+        const numerator = Math.floor(Math.random() * 9) + 1;
+        const denominator = Math.floor(Math.random() * 8) + 2;
+        const multiplier = Math.floor(Math.random() * 5) + 2; // multiplier to create non-reduced fractions
+        const num1 = numerator * multiplier;
+        const den1 = denominator * multiplier;
+        const num2 = numerator * multiplier;
+        const den2 = denominator * multiplier;
+
+        return {
+          type: "compare",
+          fractions: [`${num1}/${den1}`, `${num2}/${den2}`],
+          correctAnswer: numerator === num2 / multiplier && denominator === den2 / multiplier,
+        };
+      });
+    };
+
+    return [
+      ...generateSameDenominator(),
+      ...generateSameNumerator(),
+      ...generateNonReducedFractions(),
+    ];
   };
 
   const [questions, setQuestions] = useState<Question[]>([]);
