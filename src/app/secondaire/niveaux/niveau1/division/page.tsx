@@ -3,81 +3,50 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-type Question =
-  | { type: "multiplication"; question: string; correctAnswer: string }
-  | { type: "division"; question: string; correctAnswer: string }
-  | { type: "fraction"; question: string; correctAnswer: string };
-
-export default function RevisionNiveau2() {
+export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // Nombre de questions par page
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<[number, number][]>([]); // Le type est maintenant explicitement [number, number][]
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius; // Circonférence du cercle
-
-  const answeredCount = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
-
-  const generateMultiplication = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
-      const a = Math.floor(Math.random() * 9) + 1;
-      const b = Math.floor(Math.random() * 9) + 1;
-      return {
-        type: "multiplication",
-        question: `${a} × ${b}`,
-        correctAnswer: (a * b).toString(),
-      };
-    });
-  };
-
-  const generateDivision = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
-      const a = Math.floor(Math.random() * 9) + 1;
-      const b = Math.floor(Math.random() * 9) + 1;
-      return {
-        type: "division",
-        question: `${a * b} ÷ ${b}`,
-        correctAnswer: a.toString(),
-      };
-    });
-  };
-
-  const generateFraction = (): Question[] => {
-    return Array.from({ length: totalQuestions / 3 }, () => {
-      const a1 = Math.floor(Math.random() * 9) + 1;
-      const b1 = Math.floor(Math.random() * 9) + 1;
-      const a2 = Math.floor(Math.random() * 9) + 1;
-      const b2 = Math.floor(Math.random() * 9) + 1;
-
-      const numerator = a1 * a2;
-      const denominator = b1 * b2;
-
-      return {
-        type: "fraction",
-        question: `${a1}/${b1} × ${a2}/${b2}`,
-        correctAnswer: `${numerator}/${denominator}`,
-      };
-    });
-  };
-
-  const [questions, setQuestions] = useState<Question[]>([]);
-
+  // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
-    setQuestions([
-      ...generateMultiplication(),
-      ...generateDivision(),
-      ...generateFraction(),
-    ]);
-  }, []);
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+      let numerator: number, denominator: number;
+
+      // Les premières questions avec des multiples simples
+      if (index < 10) {
+        denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
+        numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
+      } else if (index < 20) {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 10) + 1;
+      } else if (index < 30) {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 20) + 1;
+      } else {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 50) + 1;
+      }
+
+      return [numerator, denominator]; // Ici, le type est bien [number, number]
+    });
+
+    setQuestions(generatedQuestions); // Stocker les questions générées dans le state
+  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
+
+  const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
+
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    const parsedValue = parseFloat(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
 
@@ -86,21 +55,19 @@ export default function RevisionNiveau2() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
-    // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
+      if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -125,8 +92,14 @@ export default function RevisionNiveau2() {
     }
   };
 
+  // Calcul pour dessiner le cercle de progression
+  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
+  const strokeWidth = 10; // Définir la largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -134,12 +107,13 @@ export default function RevisionNiveau2() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau2"
+        href="/primaire/niveaux/niveau2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
+      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -167,36 +141,36 @@ export default function RevisionNiveau2() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Révision - Niveau 2</h1>
+      <h1 className="text-3xl font-bold mb-6">Division</h1>
 
+      {/* Questions pour la page actuelle */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions
-              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(({ question }, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <button
-                    className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                    disabled
-                  >
-                    {question}
-                  </button>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
-                </div>
-              ))}
+          <div className="grid grid-cols-3 grid-rows-2 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+              <div key={index} className="flex items-center gap-4">
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
+                  disabled
+                >
+                  {numerator} ÷ {denominator}
+                </button>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
           </div>
 
+          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={handlePreviousPage}
               >
                 Précédent
@@ -204,13 +178,13 @@ export default function RevisionNiveau2() {
             )}
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
             >
               Valider les réponses
             </button>
-            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={handleNextPage}
               >
                 Suivant
@@ -220,6 +194,7 @@ export default function RevisionNiveau2() {
         </>
       )}
 
+      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
@@ -227,14 +202,14 @@ export default function RevisionNiveau2() {
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
                 <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                   onClick={handleNextPage}
                 >
                   Passer à la série suivante
                 </button>
               ) : (
                 <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
                   onClick={() => alert("Vous avez complété toutes les questions !")}
                 >
                   Terminer
@@ -245,7 +220,7 @@ export default function RevisionNiveau2() {
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
