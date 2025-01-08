@@ -33,13 +33,13 @@ export default function Home() {
         </div>
 
         {/* Boutons Primaire et Secondaire */}
-        <div className="flex justify-center items-center gap-8">
+        <div className="flex justify-center items-center gap-16">
           {/* Bouton Primaire */}
           <Link href="/primaire">
             <div
               className="absolute"
               style={{
-                top: "85%", // Position plus basse
+                top: "90%", // Position plus basse
                 left: "20%", // Position plus à gauche
                 transform: "translate(-50%, -50%)",
               }}
@@ -55,7 +55,7 @@ export default function Home() {
             <div
               className="absolute"
               style={{
-                top: "85%", // Position plus basse
+                top: "90%", // Position plus basse
                 left: "80%", // Position plus à droite
                 transform: "translate(-50%, -50%)",
               }}
