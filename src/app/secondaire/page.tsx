@@ -44,7 +44,7 @@ export default function Secondaire() {
         </Link>
         <Link href="/secondaire/niveaux/niveau7">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            MAthématiques discètes
+            Mathématiques discètes
           </div>
         </Link>
       </div>

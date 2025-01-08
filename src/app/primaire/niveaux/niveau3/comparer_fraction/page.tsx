@@ -7,7 +7,7 @@ type Question =
   | { type: "compare", fractions: [string, string], correctAnswer: "equal" | "not_equal" }
   | { type: "equivalence", fractions: string[], correctAnswer: string };
 
-export default function comparerFractions() {
+export default function ComparerFractions() {  // Nom modifié ici
   const totalQuestions = 30;
   const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
