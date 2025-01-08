@@ -155,11 +155,11 @@ export default function PractiqueFractions() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 gap-10"> {/* Augmenter l'espace entre les questions */}
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
               .map((question, index) => (
-                <div key={index} className="flex flex-col items-center gap-4">
+                <div key={index} className="flex flex-col items-center gap-8"> {/* Augmenter l'espace entre les questions */}
                   {question.type === "compare" ? (
                     <div className="text-lg font-bold">
                       {question.fractions[0]} vs {question.fractions[1]}
@@ -174,15 +174,15 @@ export default function PractiqueFractions() {
                       </ul>
                     </div>
                   )}
-                  <div className="flex gap-4">
+                  <div className="flex gap-8"> {/* Espacer les boutons */}
                     <button
-                      className="bg-green-500 text-white py-2 px-6 rounded font-bold"
+                      className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                       onClick={() => handleAnswer(currentPage * questionsPerPage + index, "greater")}
                     >
                       Vrai
                     </button>
                     <button
-                      className="bg-red-500 text-white py-2 px-6 rounded font-bold"
+                      className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
                       onClick={() => handleAnswer(currentPage * questionsPerPage + index, "less")}
                     >
                       Faux
