@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire et Secondaire */}
-      <div className="absolute bottom-[50px] w-full flex justify-between">
+      <div className="absolute bottom-[70px] w-full flex justify-between">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
