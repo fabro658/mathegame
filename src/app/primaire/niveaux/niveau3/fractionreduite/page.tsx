@@ -3,73 +3,68 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function EquationsEquivalentes() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
+export default function FractionsReduites() {
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Nombre de questions par vague
 
   const [questions, setQuestions] = useState<
-    { equationLeft: string; equationRight: string }[]
+    { fraction: string; correctAnswer: string }[]
   >([]);
-  const [answers, setAnswers] = useState<(boolean | null)[]>(
-    Array(totalQuestions).fill(null)
-  );
-  const [buttonStates, setButtonStates] = useState<string[]>(
-    Array(totalQuestions).fill("default")
-  );
+  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const leftValue = Math.floor(Math.random() * 20) + 1;
-        const rightValue =
-          Math.random() > 0.5 ? leftValue : Math.floor(Math.random() * 20) + 1;
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
 
-        return {
-          equationLeft: leftValue.toString(),
-          equationRight: rightValue.toString(),
-        };
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        const numerator = Math.floor(Math.random() * 20) + 1;
+        const denominator = Math.floor(Math.random() * 20) + 1;
+        const divisor = gcd(numerator, denominator);
+        const reducedFraction = `${numerator / divisor}/${denominator / divisor}`;
+
+        if (index < totalQuestions / 4) {
+          return { fraction: `${numerator}/${denominator}`, correctAnswer: reducedFraction };
+        } else {
+          const operation = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
+          const secondNumerator = Math.floor(Math.random() * 10) + 1;
+          const secondDenominator = Math.floor(Math.random() * 10) + 1;
+          const expression = `${numerator}/${denominator} ${operation} ${secondNumerator}/${secondDenominator}`;
+          const correctAnswer = "TODO"; // Implémenter le calcul
+          return { fraction: expression, correctAnswer };
+        }
       });
     };
 
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, isTrue: boolean): void => {
+  const handleAnswer = (index: number, answer: string): void => {
     const newAnswers = [...answers];
-    const newButtonStates = [...buttonStates];
-    const question = questions[index];
-
-    const leftValue = parseInt(question.equationLeft);
-    const rightValue = parseInt(question.equationRight);
-
-    const isCorrect = (leftValue === rightValue) === isTrue;
-    newAnswers[index] = isCorrect;
-
-    // Déterminer l'état du bouton (vert, rouge ou bleu)
-    newButtonStates[index] = isCorrect
-      ? "correct"
-      : "incorrect";
-
+    newAnswers[index] = answer;
     setAnswers(newAnswers);
-    setButtonStates(newButtonStates);
   };
 
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
+    const correctAnswers = questions
+      .slice(startIndex, endIndex)
+      .map((q) => q.correctAnswer);
 
-    const allAnswersFilled = pageAnswers.every((answer) => answer !== null);
+    const allAnswersFilled = pageAnswers.every((answer) => answer.trim() !== "");
 
     if (!allAnswersFilled) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    const allCorrect = pageAnswers.every((answer) => answer === true);
+    const allCorrect = pageAnswers.every(
+      (answer, idx) => answer.trim() === correctAnswers[idx]
+    );
 
     setIsValidated(true);
     setHasPassed(allCorrect);
@@ -96,13 +91,13 @@ export default function EquationsEquivalentes() {
     }
   };
 
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completedAnswers = answers.filter((answer) => answer.trim() !== "").length;
   const completionPercentage = Math.round(
     (completedAnswers / totalQuestions) * 100
   );
 
-  const radius = 50;
-  const strokeWidth = 10;
+  const radius = 50; // Rayon pour la barre circulaire
+  const strokeWidth = 10; // Largeur de la barre
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -114,7 +109,7 @@ export default function EquationsEquivalentes() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -152,7 +147,7 @@ export default function EquationsEquivalentes() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">
-        Questions sur les équations équivalentes
+        Questions sur les fractions réduites
       </h1>
 
       {!isValidated && (
@@ -163,47 +158,23 @@ export default function EquationsEquivalentes() {
                 currentPage * questionsPerPage,
                 (currentPage + 1) * questionsPerPage
               )
-              .map(({ equationLeft, equationRight }, index) => (
+              .map(({ fraction }, index) => (
                 <div key={index} className="flex flex-col items-start gap-2">
-                  <div className="font-bold text-black">
-                    {equationLeft} = {equationRight}
-                  </div>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() =>
-                        handleAnswer(currentPage * questionsPerPage + index, true)
-                      }
-                      className={`py-2 px-4 rounded font-bold ${
-                        buttonStates[currentPage * questionsPerPage + index] ===
-                        "correct"
-                          ? "bg-green-500 text-white"
-                          : buttonStates[
-                              currentPage * questionsPerPage + index
-                            ] === "incorrect"
-                          ? "bg-red-500 text-white"
-                          : "bg-blue-500 text-white"
-                      }`}
-                    >
-                      Vrai
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleAnswer(currentPage * questionsPerPage + index, false)
-                      }
-                      className={`py-2 px-4 rounded font-bold ${
-                        buttonStates[currentPage * questionsPerPage + index] ===
-                        "correct"
-                          ? "bg-green-500 text-white"
-                          : buttonStates[
-                              currentPage * questionsPerPage + index
-                            ] === "incorrect"
-                          ? "bg-red-500 text-white"
-                          : "bg-blue-500 text-white"
-                      }`}
-                    >
-                      Faux
-                    </button>
-                  </div>
+                  <div className="font-bold text-black">{fraction}</div>
+                  <input
+                    type="text"
+                    placeholder="Réponse"
+                    value={
+                      answers[currentPage * questionsPerPage + index] || ""
+                    }
+                    onChange={(e) =>
+                      handleAnswer(
+                        currentPage * questionsPerPage + index,
+                        e.target.value
+                      )
+                    }
+                    className="border border-gray-300 p-2 rounded"
+                  />
                 </div>
               ))}
           </div>
@@ -225,7 +196,9 @@ export default function EquationsEquivalentes() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+              disabled={
+                currentPage === Math.floor(totalQuestions / questionsPerPage) - 1
+              }
             >
               Suivant
             </button>

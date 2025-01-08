@@ -45,6 +45,12 @@ export default function Page() {
         >
           Comparaison de fraction
         </Link>
+        <Link
+          href="/primaire/niveaux/niveau3/fractionreduite"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Fraction réudite
+        </Link>
       </div>
     </div>
   );
