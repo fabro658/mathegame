@@ -13,7 +13,7 @@ export default function Page() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-12">Niveau 2 - Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12">Choisissez une opération</h1>
       <div className="flex flex-col items-center gap-8">
         {/* Première ligne avec 2 boutons */}
         <div className="flex justify-center gap-8">

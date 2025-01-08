@@ -163,7 +163,6 @@ export default function FractionsReduites() {
                   <div className="font-bold text-black">{fraction}</div>
                   <input
                     type="text"
-                    placeholder="Réponse"
                     value={
                       answers[currentPage * questionsPerPage + index] || ""
                     }

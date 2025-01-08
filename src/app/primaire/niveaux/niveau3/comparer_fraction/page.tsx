@@ -8,8 +8,8 @@ type Question =
   | { type: "equivalence", fractions: string[], correctAnswer: string };
 
 export default function PractiqueFractions() {
-  const totalQuestions = 36;
-  const questionsPerPage = 6;
+  const totalQuestions = 30;
+  const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
