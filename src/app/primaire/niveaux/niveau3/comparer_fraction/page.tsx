@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Question =
-  | { type: "compare", fractions: [string, string], correctAnswer: "greater" | "less" }
+  | { type: "compare", fractions: [string, string], correctAnswer: "equal" | "not_equal" }
   | { type: "equivalence", fractions: string[], correctAnswer: string };
 
-export default function PractiqueFractions() {
+export default function comparerFractions() {
   const totalQuestions = 30;
   const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
@@ -24,7 +24,7 @@ export default function PractiqueFractions() {
         return {
           type: "compare",
           fractions: [`${num1}/${denominator}`, `${num2}/${denominator}`],
-          correctAnswer: num1 > num2 ? "greater" : "less",
+          correctAnswer: num1 === num2 ? "equal" : "not_equal",
         };
       });
     };
@@ -37,7 +37,7 @@ export default function PractiqueFractions() {
         return {
           type: "compare",
           fractions: [`${numerator}/${den1}`, `${numerator}/${den2}`],
-          correctAnswer: den1 > den2 ? "less" : "greater",
+          correctAnswer: den1 === den2 ? "equal" : "not_equal",
         };
       });
     };
@@ -156,23 +156,23 @@ export default function PractiqueFractions() {
                   <div className="flex justify-center gap-4">
                     <button
                       className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === "greater"
+                        answers[globalIndex] === "equal"
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => handleAnswer(globalIndex, "greater")}
+                      onClick={() => handleAnswer(globalIndex, "equal")}
                     >
-                      Vrai
+                      =
                     </button>
                     <button
                       className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === "less"
+                        answers[globalIndex] === "not_equal"
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => handleAnswer(globalIndex, "less")}
+                      onClick={() => handleAnswer(globalIndex, "not_equal")}
                     >
-                      Faux
+                      ≠
                     </button>
                   </div>
                 </div>
