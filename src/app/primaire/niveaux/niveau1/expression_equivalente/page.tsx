@@ -6,6 +6,7 @@ import Link from "next/link";
 export default function EquationsEquivalentes() {
   const totalQuestions = 30; // Nombre total de questions
   const questionsPerPage = 3; // Nombre de questions par vague
+  const levels = 3; // Nombre de niveaux
 
   const [questions, setQuestions] = useState<
     { equationLeft: string; equationRight: string }[]
@@ -17,15 +18,45 @@ export default function EquationsEquivalentes() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const generateEquation = (level: number) => {
+    const operations = ["+", "-"]; // Opérations pour le niveau simple
+    if (level >= 2) operations.push("*"); // Ajouter la multiplication au niveau intermédiaire
+    if (level >= 3) operations.push("/"); // Ajouter la division au niveau avancé
+
+    const op = operations[Math.floor(Math.random() * operations.length)];
+    let left, right;
+
+    if (op === "+") {
+      left = Math.floor(Math.random() * 20) + 1;
+      right = Math.floor(Math.random() * 20) + 1;
+    } else if (op === "-") {
+      left = Math.floor(Math.random() * 20) + 10; // Assure un résultat positif
+      right = Math.floor(Math.random() * 10) + 1;
+    } else if (op === "*") {
+      left = Math.floor(Math.random() * 10) + 1;
+      right = Math.floor(Math.random() * 10) + 1;
+    } else if (op === "/") {
+      right = Math.floor(Math.random() * 9) + 1; // Diviseur non nul
+      left = right * (Math.floor(Math.random() * 10) + 1); // Assure un résultat entier
+    }
+
+    const result = eval(`${left} ${op} ${right}`);
+    return { equation: `${left} ${op} ${right}`, result };
+  };
+
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const leftValue = Math.floor(Math.random() * 20) + 1;
-        const rightValue = Math.random() > 0.5 ? leftValue : Math.floor(Math.random() * 20) + 1;
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        const level = Math.ceil(((index + 1) / totalQuestions) * levels); // Détermine le niveau
+        const leftEquation = generateEquation(level);
+        const isEquivalent = Math.random() > 0.5; // Définit si les deux côtés sont équivalents
+        const rightEquation = isEquivalent
+          ? leftEquation
+          : generateEquation(level);
 
         return {
-          equationLeft: leftValue.toString(),
-          equationRight: rightValue.toString(),
+          equationLeft: leftEquation.equation,
+          equationRight: rightEquation.equation,
         };
       });
     };
@@ -60,8 +91,9 @@ export default function EquationsEquivalentes() {
     const allCorrect = questions
       .slice(startIndex, endIndex)
       .every((question, i) => {
-        const correctAnswer =
-          question.equationLeft === question.equationRight ? "true" : "false";
+        const leftResult = eval(question.equationLeft);
+        const rightResult = eval(question.equationRight);
+        const correctAnswer = leftResult === rightResult ? "true" : "false";
         return pageAnswers[i] === correctAnswer;
       });
 
