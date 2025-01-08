@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -17,7 +15,7 @@ export default function Division() {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       let numerator: number, denominator: number;
 
-      // Les premières questions avec des multiples simples
+      // Les premières questions avec des dénominateurs simples
       if (index < 10) {
         denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
         numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
@@ -25,11 +23,11 @@ export default function Division() {
         numerator = Math.floor(Math.random() * 100) + 1;
         denominator = Math.floor(Math.random() * 10) + 1;
       } else if (index < 30) {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 20) + 1;
+        numerator = Math.floor(Math.random() * 1000) + 1; // Numérateur entre 1 et 1000
+        denominator = Math.floor(Math.random() * 50) + 1; // Dénominateur entre 1 et 50
       } else {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 50) + 1;
+        numerator = Math.floor(Math.random() * 10000) + 1; // Numérateur entre 1 et 10000
+        denominator = Math.floor(Math.random() * 100) + 1; // Dénominateur entre 1 et 100
       }
 
       return [numerator, denominator]; // Ici, le type est bien [number, number]

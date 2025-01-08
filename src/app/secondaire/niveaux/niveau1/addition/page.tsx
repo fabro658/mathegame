@@ -12,10 +12,18 @@ export default function Addition() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1];
-    if (index < 20) return [10 + index - 9, 5 + index - 9];
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)];
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
+    // Questions simples pour les 10 premières (1 à 2 chiffres)
+    if (index < 10) return [Math.floor(Math.random() * 21) + 1, Math.floor(Math.random() * 21) + 1];
+
+    // Questions avec des nombres plus grands (de 20 à 50)
+    if (index < 20) return [Math.floor(Math.random() * 31) + 20, Math.floor(Math.random() * 31) + 20];
+
+    // Questions plus complexes avec des valeurs de 50 à 100
+    if (index < 30) return [Math.floor(Math.random() * 51) + 50, Math.floor(Math.random() * 51) + 50];
+
+    // Questions avancées avec des nombres entre 100 et 200
+    // Ajout de chiffres jusqu'à 4 nombres
+    return [Math.floor(Math.random() * 101) + 100, Math.floor(Math.random() * 101) + 100];
   });
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -119,7 +127,7 @@ export default function Addition() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Addition</h1>
+      <h1 className="text-4xl font-bold mb-6">Sommes</h1>
 
       {!isValidated && (
         <>

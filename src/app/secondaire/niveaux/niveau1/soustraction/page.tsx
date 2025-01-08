@@ -22,8 +22,8 @@ export default function Soustraction() {
     if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
     if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
     if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+    if (index < 35) return [100 + Math.floor(Math.random() * 901), 50 + Math.floor(Math.random() * 451)]; // Niveau 4
+    return [1000 + Math.floor(Math.random() * 9000), 1000 + Math.floor(Math.random() * 9000)]; // Niveau 5 : Soustractions avec 4 chiffres
   });
 
   // Calcul du pourcentage de progression
@@ -84,18 +84,18 @@ export default function Soustraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-    {/* Boutons de navigation */}
-    <Link
-      href="/menu/apprendre"
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-    >
-      Apprendre
-    </Link>
-    <Link
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
         href="/secondaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
-       Retour
+        Retour
       </Link>
 
       {/* Cercle de progression */}
@@ -119,7 +119,7 @@ export default function Soustraction() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
+      <h1 className="text-4xl font-bold mb-6">Différence</h1>
 
       {/* Questions et réponses */}
       {!isValidated && (
