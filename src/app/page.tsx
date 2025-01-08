@@ -6,12 +6,13 @@ export default function Home() {
     <div
       className="relative grid items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       style={{
-        backgroundImage: "url('/fond_mathegame.png')",
+        backgroundImage: "url('/mathegame.png')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
+      {/* Header */}
       <header className="absolute top-4 left-4">
         <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
@@ -26,43 +27,29 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Main Section */}
       <main className="relative">
-        {/* Titre */}
-        <div className="text-center mb-8">
+        {/* Section Titre */}
+        <div className="text-center mb-16">
+          {/* Titre 1 */}
           <h1 className="text-white text-5xl sm:text-6xl font-bold">Mathegame</h1>
+          {/* Titre 2 */}
+          <h1 className="text-white text-4xl sm:text-5xl font-semibold mt-4">Mathématique</h1>
         </div>
 
         {/* Boutons Primaire et Secondaire */}
-        <div className="flex justify-center items-center gap-16">
+        <div className="absolute bottom-16 w-full flex justify-around px-8">
           {/* Bouton Primaire */}
           <Link href="/primaire">
-            <div
-              className="absolute"
-              style={{
-                top: "95%", // Position dans le quart inférieur
-                left: "20%", // Position plus à gauche
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
-                Primaire
-              </div>
+            <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
+              Primaire
             </div>
           </Link>
 
           {/* Bouton Secondaire */}
           <Link href="/secondaire">
-            <div
-              className="absolute"
-              style={{
-                top: "95%", // Position dans le quart inférieur
-                left: "80%", // Position plus à droite
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <div className="rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400">
-                Secondaire
-              </div>
+            <div className="rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400">
+              Secondaire
             </div>
           </Link>
         </div>
