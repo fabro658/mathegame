@@ -4,16 +4,17 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div
-      className="grid grid-rows-[20px_1fr] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+      className="relative min-h-screen flex flex-col items-center justify-center"
       style={{
-        backgroundImage: "url('/fond_mathegame.png')",
+        backgroundImage: "url('/fond_mathegame.png')", // Chemin de l'image uploadée
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
+      {/* Contenu de la page */}
       <header className="absolute top-4 left-4">
-        <nav className="menu flex flex-col gap-4">
+        <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-lg mb-4 text-white">Menu</span>
           <Link href="/menu/apprendre" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/file.svg" alt="Apprendre Icon" width={20} height={20} />
@@ -23,22 +24,28 @@ export default function Home() {
             <Image src="/globe.svg" alt="Option Icon" width={20} height={20} />
             <span>À propos</span>
           </Link>
-        </nav>
+        </div>
       </header>
 
-      <main className="flex flex-col items-center justify-center mt-16 gap-8">
-        {/* Liens vers les niveaux */}
-        <div className="flex flex-row gap-8">
-          <Link href="/primaire">
-            <div className="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:scale-105 transition-all">
-              Primaire
-            </div>
-          </Link>
+      <main className="text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-10">MathGame</h1>
 
+        {/* Boutons */}
+        <div className="flex flex-col gap-4">
+          <Link href="/primaire">
+            <button className="bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500">
+              Primaire
+            </button>
+          </Link>
           <Link href="/secondaire">
-            <div className="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:scale-105 transition-all">
+            <button className="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600">
               Secondaire
-            </div>
+            </button>
+          </Link>
+          <Link href="/avancé">
+            <button className="bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600">
+              Avancé
+            </button>
           </Link>
         </div>
       </main>
