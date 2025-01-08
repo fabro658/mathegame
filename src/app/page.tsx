@@ -28,7 +28,7 @@ export default function Home() {
       </header>
 
       {/* Main Section */}
-      <main className="relative">
+      <main className="relative w-full h-full">
         {/* Section Titre */}
         <div className="text-center mb-16">
           {/* Titre 1 */}
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
 
         {/* Boutons Primaire et Secondaire */}
-        <div className="absolute bottom-16 w-full flex justify-around px-8">
+        <div className="absolute bottom-[48px] w-full flex justify-around px-8">
           {/* Bouton Primaire */}
           <Link href="/primaire">
             <div className="rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400">
