@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type Question =
   | { type: "compare", fractions: [string, string], correctAnswer: "greater" | "less" }
@@ -93,8 +94,52 @@ export default function PractiqueFractions() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">Comparaison de Fractions</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/primaire/niveaux/niveau3"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
+
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={50}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={10}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={50}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * (currentPage + 1)) / totalQuestions}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">
+            {Math.round(((currentPage + 1) / totalQuestions) * 100)}%
+          </span>
+        </div>
+      </div>
+
+      <h1 className="text-3xl font-bold mb-6">
+        Comparaison de Fractions
+      </h1>
 
       {!isValidated && (
         <>
