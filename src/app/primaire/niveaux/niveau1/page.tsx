@@ -18,13 +18,13 @@ export default function Page() {
         {/* Boutons en deux rangées de deux */}
         <a
           href="/primaire/niveaux/niveau1/addition"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-purple-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Addition
         </a>
         <a
           href="/primaire/niveaux/niveau1/soustraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-green-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Soustraction
         </a>
@@ -36,7 +36,7 @@ export default function Page() {
         </a>
         <a
           href="/primaire/niveaux/niveau1/revision"
-          className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-red-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Révision
         </a>
