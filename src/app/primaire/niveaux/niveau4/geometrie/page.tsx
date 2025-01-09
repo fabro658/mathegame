@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+// Liste des formes géométriques avec leurs propriétés
 const shapes = [
   { name: "Triangle", sides: 3 },
   { name: "Carré", sides: 4 },
@@ -18,8 +19,11 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
+  const [completed, setCompleted] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3;
+
+  const shapesPerPage = 3;
+  const totalPages = Math.ceil(shapes.length / shapesPerPage);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -28,12 +32,15 @@ const ShapesPracticePage = () => {
   };
 
   const handleValidation = () => {
-    const allCorrect = shapes.every((shape, idx) => answers[idx] === shape.name);
-    if (allCorrect) {
-      alert("Bravo ! Vous avez tout réussi !");
-    } else {
-      alert("Certaines réponses sont incorrectes. Essayez encore !");
-    }
+    const startIndex = currentPage * shapesPerPage;
+    const endIndex = startIndex + shapesPerPage;
+    const currentShapes = shapes.slice(startIndex, endIndex);
+
+    const allCorrect = currentShapes.every(
+      (shape, idx) => answers[startIndex + idx] === shape.name
+    );
+
+    setCompleted(allCorrect);
   };
 
   const drawShape = (sides: number) => {
@@ -61,6 +68,7 @@ const ShapesPracticePage = () => {
         const y = centerY + radius * Math.sin(angle);
         points.push(`${x},${y}`);
       }
+
       return (
         <svg width="100" height="100" viewBox="0 0 100 100">
           <polygon points={points.join(" ")} fill="lightblue" stroke="black" strokeWidth="2" />
@@ -69,13 +77,20 @@ const ShapesPracticePage = () => {
     }
   };
 
-  const shapesToDisplay = shapes.slice(
-    currentPage * itemsPerPage,
-    currentPage * itemsPerPage + itemsPerPage
-  );
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const startIndex = currentPage * shapesPerPage;
+  const endIndex = startIndex + shapesPerPage;
+  const currentShapes = shapes.slice(startIndex, endIndex);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -91,62 +106,76 @@ const ShapesPracticePage = () => {
 
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
-      <div className="flex flex-col gap-6 items-center">
-        {shapesToDisplay.map((shape, idx) => (
-          <div
-            key={idx}
-            className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
-            onDrop={(e) => {
-              e.preventDefault();
-              handleDrop(currentPage * itemsPerPage + idx, e.dataTransfer.getData("name"));
-            }}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            {drawShape(shape.sides)}
-            <div className="mt-2">{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-            {answers[currentPage * itemsPerPage + idx] && (
-              <div className="mt-2 text-sm font-bold text-blue-500">
-                {answers[currentPage * itemsPerPage + idx]}
-              </div>
-            )}
-          </div>
-        ))}
-
-        <div className="grid grid-cols-3 gap-4 mt-4">
-          {shapesToDisplay.map((shape, idx) => (
+      <div className="flex flex-col items-center gap-8">
+        {/* Zone des formes */}
+        <div className="flex gap-8">
+          {currentShapes.map((shape, idx) => (
             <div
-              key={idx}
-              className="p-2 border border-blue-500 cursor-pointer text-center"
-              draggable
-              onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
+              key={startIndex + idx}
+              className="w-48 h-48 border-2 border-gray-500 flex flex-col items-center justify-center"
+              onDrop={(e) => {
+                e.preventDefault();
+                handleDrop(startIndex + idx, e.dataTransfer.getData("name"));
+              }}
+              onDragOver={(e) => e.preventDefault()}
             >
-              {shape.name}
+              {drawShape(shape.sides)}
+              <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
+              {answers[startIndex + idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">{answers[startIndex + idx]}</div>
+              )}
+
+              {/* Options de noms à glisser */}
+              <div className="flex flex-wrap justify-center mt-4 gap-2">
+                {[shape.name, "Option 1", "Option 2", "Option 3"].map((option, i) => (
+                  <div
+                    key={i}
+                    className="p-2 border border-blue-500 cursor-pointer text-center"
+                    draggable
+                    onDragStart={(e) => e.dataTransfer.setData("name", option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
-      </div>
 
-      <div className="mt-6 flex gap-4">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
-          className="bg-gray-500 text-white py-2 px-4 rounded"
-        >
-          Précédent
-        </button>
-        <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(shapes.length / itemsPerPage) - 1))
-          }
-          className="bg-gray-500 text-white py-2 px-4 rounded"
-        >
-          Suivant
-        </button>
+        {/* Boutons de navigation */}
+        <div className="flex justify-between w-full max-w-xl mt-4">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 0}
+            className="bg-gray-500 text-white py-2 px-6 rounded font-bold disabled:opacity-50"
+          >
+            Précédent
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages - 1}
+            className="bg-gray-500 text-white py-2 px-6 rounded font-bold disabled:opacity-50"
+          >
+            Suivant
+          </button>
+        </div>
+
         <button
           onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold mt-6"
         >
           Valider les réponses
         </button>
+
+        {completed !== null && (
+          <div className="mt-6 text-xl font-bold">
+            {completed ? (
+              <div className="text-green-600">Bravo ! Vous avez réussi à associer toutes les formes correctement.</div>
+            ) : (
+              <div className="text-red-600">Certaines associations sont incorrectes. Essayez encore !</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
