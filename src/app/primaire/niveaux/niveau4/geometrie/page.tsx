@@ -16,7 +16,7 @@ const shapes = [
 ];
 
 const ShapesPracticePage = () => {
-  const [answers, setAnswers] = useState<string[]>(new Array(shapes.length).fill(''));
+  const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [completed, setCompleted] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -130,7 +130,7 @@ const ShapesPracticePage = () => {
           {currentShapes.map((shape, idx) => (
             <div
               key={idx}
-              className="w-32 h-32 border-2 border-gray-500 flex items-center justify-center"
+              className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
               onDrop={(e) => {
                 e.preventDefault();
                 handleDrop(startIndex + idx, e.dataTransfer.getData("name"));
@@ -140,6 +140,13 @@ const ShapesPracticePage = () => {
               {/* Affichage du dessin de la forme */}
               {drawShape(shape.sides)}
               <div>{shape.sides} côtés</div>
+
+              {/* Affichage du nom de la forme sous la forme si elle est associée */}
+              {answers[startIndex + idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">
+                  {answers[startIndex + idx]}
+                </div>
+              )}
             </div>
           ))}
         </div>
