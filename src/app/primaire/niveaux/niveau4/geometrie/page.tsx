@@ -1,117 +1,68 @@
-'use client';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
-export default function GeometryPractice() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 3; // Questions affichées par vague
+const shapes = [
+  { id: 1, name: "Triangle", sides: 3 },
+  { id: 2, name: "Carré", sides: 4 },
+  { id: 3, name: "Pentagone", sides: 5 },
+  { id: 4, name: "Hexagone", sides: 6 },
+  { id: 5, name: "Heptagone", sides: 7 },
+  { id: 6, name: "Octogone", sides: 8 },
+  { id: 7, name: "Ennéagone", sides: 9 },
+  { id: 8, name: "Décagone", sides: 10 },
+];
 
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+export default function GeometryRecognition() {
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Questions affichées par vague
+  const [answers, setAnswers] = useState<(string | null)[]>(new Array(totalQuestions).fill(null));
+  const [currentPage, setCurrentPage] = useState(0);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions de géométrie
-  useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        let questionText = "";
-        let correctAnswer = "";
+  // Gestion du drag and drop
+  const handleDragStart = (event: React.DragEvent, name: string) => {
+    event.dataTransfer.setData("text", name);
+  };
 
-        const conceptChoice = Math.floor(Math.random() * 3); // Choix aléatoire de concept
-
-        if (conceptChoice === 0) {
-          // Question sur les angles
-          const angle1 = Math.floor(Math.random() * 90) + 1; // Angle aléatoire
-          const angle2 = Math.floor(Math.random() * (180 - angle1)) + 1; // Angle complémentaire
-          questionText = `Quel est le troisième angle d'un triangle si les deux premiers sont ${angle1}° et ${angle2}° ?`;
-          correctAnswer = (180 - angle1 - angle2).toString();
-        } else if (conceptChoice === 1) {
-          // Question sur les lignes
-          questionText = `Quel type de lignes sont toujours équidistantes et ne se croisent jamais ?`;
-          correctAnswer = "parallèles";
-        } else {
-          // Question sur les polygones
-          const sides = Math.floor(Math.random() * 6) + 3; // Nombre de côtés (3 à 8)
-          questionText = `Comment appelle-t-on un polygone à ${sides} côtés ?`;
-          correctAnswer = ["triangle", "quadrilatère", "pentagone", "hexagone", "heptagone", "octogone"][sides - 3];
-        }
-
-        return {
-          questionText,
-          correctAnswer,
-        };
-      });
-    };
-
-    setQuestions(generateQuestions());
-  }, []);
-
-  // Gestion des changements de réponse
-  const handleChange = (index: number, value: string): void => {
+  const handleDrop = (event: React.DragEvent, index: number) => {
+    event.preventDefault();
+    const draggedItem = event.dataTransfer.getData("text");
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = draggedItem;
     setAnswers(newAnswers);
   };
 
-  // Validation des réponses
-  const handleValidation = (): void => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
-
-    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
-      return;
-    }
-
-    let allCorrect = true;
-    const updatedAnswers = [...answers];
-
-    pageAnswers.forEach((answer, idx) => {
-      if (answer !== pageCorrectAnswers[idx]) {
-        updatedAnswers[startIndex + idx] = null;
-        allCorrect = false;
-      }
-    });
-
-    setAnswers(updatedAnswers);
+  const handleValidation = () => {
+    const correctAnswers = [
+      "Triangle", "Carré", "Pentagone", "Hexagone", "Heptagone", "Octogone", "Ennéagone", "Décagone",
+    ];
+    const correctCount = answers.filter((answer, index) => answer === correctAnswers[index]).length;
+    setHasPassed(correctCount === totalQuestions);
     setIsValidated(true);
-    setHasPassed(allCorrect);
-
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500);
-    }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-    }
-  };
+  // Calcul du pourcentage de réussite
+  const completionPercentage = (answers.filter((answer, index) => answer === shapes[index]?.name).length / totalQuestions) * 100;
 
-  const handlePreviousPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-    }
-  };
-
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  // Barre circulaire de progression
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
+
+  const startIndex = currentPage * questionsPerPage;
+  const endIndex = startIndex + questionsPerPage;
+
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -151,7 +102,7 @@ export default function GeometryPractice() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">{Math.round(completionPercentage)}%</span>
         </div>
       </div>
 
@@ -160,16 +111,18 @@ export default function GeometryPractice() {
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
+            {shapes.slice(startIndex, endIndex).map(({ name }, idx) => (
               <div key={idx} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                  type="text"
-                  inputMode="text"
+                <div className="font-bold text-black">
+                  Quelle forme a {shapes[startIndex + idx]?.sides} côtés ?
+                </div>
+                <div
                   className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-                  value={answers[currentPage * questionsPerPage + idx] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                />
+                  onDrop={(e) => handleDrop(e, startIndex + idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                >
+                  {answers[startIndex + idx] || "Déposez ici"}
+                </div>
               </div>
             ))}
           </div>
@@ -224,6 +177,21 @@ export default function GeometryPractice() {
           )}
         </>
       )}
+
+      <div className="mt-6">
+        <div className="flex gap-6">
+          {shapes.map(({ name }) => (
+            <div
+              key={name}
+              draggable
+              onDragStart={(e) => handleDragStart(e, name)}
+              className="bg-gray-300 p-4 rounded cursor-pointer"
+            >
+              {name}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
