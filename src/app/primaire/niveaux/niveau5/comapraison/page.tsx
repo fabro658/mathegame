@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function AdditionFractions() {
+export default function Comparaison() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const radius = 50;
@@ -35,7 +35,6 @@ export default function AdditionFractions() {
 
       const num1 = fraction1[0] * fraction2[1];
       const num2 = fraction2[0] * fraction1[1];
-      const commonDenominator = fraction1[1] * fraction2[1];
 
       // Comparaison des fractions
       if (num1 < num2) {
