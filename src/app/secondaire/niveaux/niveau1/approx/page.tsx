@@ -28,7 +28,7 @@ export default function Arrondissement() {
   useEffect(() => {
     const newQuestions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
     setQuestions(newQuestions);
-  }, [answers]);
+  }, [answers, currentPage]);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
