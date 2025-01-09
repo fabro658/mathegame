@@ -18,27 +18,27 @@ export default function Page() {
         {/* Première ligne avec 2 boutons */}
         <div className="flex justify-center gap-8">
           <Link
-            href="/primaire/niveaux/niveau2/multiplication"
+            href="/primaire/niveaux/niveau2/comparaison"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             aria-label="Page de multiplication"
           >
-            Multiplication
+            Comparaisons
           </Link>
           <Link
-            href="/primaire/niveaux/niveau2/division"
+            href="/primaire/niveaux/niveau2/expression_equivalente"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             aria-label="Page de division"
           >
-            Division
+            Expression équivalente
           </Link>
         </div>
         {/* Dernière ligne avec 1 bouton centré */}
         <div className="flex justify-center">
           <Link
-            href="/primaire/niveaux/niveau2/revision"
+            href="/primaire/niveaux/niveau2/comparer_fraction"
             className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             >
-            Révision
+            Comparaison de fraction
           </Link>
         </div>
       </div>

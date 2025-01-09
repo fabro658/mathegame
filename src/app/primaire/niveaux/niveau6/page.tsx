@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
-      <h1 className="text-4xl font-bold mb-12">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12">Priorité d&#39;opération</h1>
       <div className="grid grid-cols-2 gap-8">
       <Link
         href="/primaire"
@@ -11,12 +11,6 @@ export default function Page() {
       >
         Retour
       </Link>
-      <Link
-          href="/primaire/niveaux/niveau6/expression_equivalente"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-          >
-          Expression Équivalente
-          </Link>
           <Link
           href="/primaire/niveaux/niveau6/priooperation"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
