@@ -37,13 +37,18 @@ export default function Home() {
         <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
       </div>
 
-      {/* Boutons Primaire et Secondaire */}
+      {/* Boutons Primaire, Secondaire et À venir */}
       <div className="absolute bottom-[150px] w-full flex justify-between">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="absolute rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400"
-            style={{ left: '25%' }}
+            className="absolute bg-yellow-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-yellow-400"
+            style={{
+              borderTopLeftRadius: '100% 50%',
+              borderTopRightRadius: '100% 50%',
+              left: '15%',
+              transform: 'translateX(-50%)',
+            }}
           >
             Primaire
           </div>
@@ -52,8 +57,13 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/secondaire">
           <div
-            className="absolute rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{ left: '75%' }}
+            className="absolute bg-orange-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-orange-400"
+            style={{
+              borderTopLeftRadius: '100% 50%',
+              borderTopRightRadius: '100% 50%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
           >
             Secondaire
           </div>
@@ -62,8 +72,13 @@ export default function Home() {
         {/* Bouton À venir */}
         <Link href="/avenir">
           <div
-            className="absolute rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{ left: '50%', transform: 'translateX(-50%)' }}
+            className="absolute bg-green-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-green-400"
+            style={{
+              borderTopLeftRadius: '100% 50%',
+              borderTopRightRadius: '100% 50%',
+              left: '85%',
+              transform: 'translateX(-50%)',
+            }}
           >
             À venir
           </div>
