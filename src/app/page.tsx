@@ -63,7 +63,7 @@ export default function Home() {
         <Link href="/avenir">
           <div
             className="absolute rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{ left: '50%' }}
+            style={{ left: '50%', transform: 'translateX(-50%)' }}
           >
             À venir
           </div>
