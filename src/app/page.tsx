@@ -43,7 +43,7 @@ export default function Home() {
         <Link href="/primaire">
           <div
             className="absolute rounded-full bg-yellow-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-yellow-400"
-            style={{ left: '19%' }}
+            style={{ left: '25%' }}
           >
             Primaire
           </div>
@@ -53,7 +53,7 @@ export default function Home() {
         <Link href="/secondaire">
           <div
             className="absolute rounded-full bg-orange-500 text-black text-sm sm:text-base h-12 sm:h-14 w-32 sm:w-36 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{ left: '71%' }}
+            style={{ left: '75%' }}
           >
             Secondaire
           </div>
