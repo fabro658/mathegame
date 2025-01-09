@@ -32,7 +32,7 @@ export default function Comparaison() {
 
   const generateQuestions = () => {
     return Array.from({ length: totalQuestions }, (_, index) => {
-      let fraction1, fraction2, correctAnswer;
+      let correctAnswer;
 
       if (index < 10) {
         const number1 = Math.floor(Math.random() * 10) + 1;
