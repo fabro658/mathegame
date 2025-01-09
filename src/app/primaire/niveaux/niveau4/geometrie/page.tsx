@@ -167,9 +167,8 @@ const ShapesPracticePage = () => {
       <div className="mt-6">
         <button
           onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
+         className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+              Valider les réponses
         </button>
       </div>
 

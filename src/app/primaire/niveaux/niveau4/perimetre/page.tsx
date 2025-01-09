@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Perimetre() {
   const totalQuestions = 30;
-  const questionsPerPage = 3; // Affiche 6 questions par page (2 colonnes de 3 lignes)
+  const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
@@ -15,35 +15,30 @@ export default function Perimetre() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 5); // Choisir parmi 5 formes
+        const shapeType = Math.floor(Math.random() * 5);
         let questionText = "";
         let correctAnswer = 0;
 
         if (shapeType === 0) {
-          // Carré
           const side = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
           correctAnswer = 4 * side;
         } else if (shapeType === 1) {
-          // Rectangle
           const length = Math.floor(Math.random() * 10) + 1;
           const width = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
           correctAnswer = 2 * (length + width);
         } else if (shapeType === 2) {
-          // Triangle
           const side1 = Math.floor(Math.random() * 10) + 1;
           const side2 = Math.floor(Math.random() * 10) + 1;
           const side3 = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
           correctAnswer = side1 + side2 + side3;
         } else if (shapeType === 3) {
-          // Losange
           const side = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
           correctAnswer = 4 * side;
         } else {
-          // Trapèze
           const side1 = Math.floor(Math.random() * 10) + 1;
           const side2 = Math.floor(Math.random() * 10) + 1;
           const side3 = Math.floor(Math.random() * 10) + 1;
@@ -77,7 +72,6 @@ export default function Perimetre() {
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
 
-    // Vérifier si toutes les réponses sont remplies
     const allAnswersFilled = pageAnswers.every(answer => answer && answer.trim() !== "");
 
     if (!allAnswersFilled) {
@@ -85,7 +79,6 @@ export default function Perimetre() {
       return;
     }
 
-    // Vérification des réponses avec une marge d'erreur
     const marginOfError = 0.01;
     let allCorrect = true;
     const updatedAnswers = [...answers];
@@ -95,21 +88,20 @@ export default function Perimetre() {
       const correctAnswer = parseFloat(pageCorrectAnswers[index]);
       
       if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
-        updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
+        updatedAnswers[startIndex + index] = null;
         allCorrect = false;
       }
     });
 
-    setAnswers(updatedAnswers); // Mettre à jour les réponses
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
 
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      // Passer à la série suivante si toutes les réponses sont correctes
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
         setIsValidated(false);
-      }, 1500); // Attendre un peu avant de passer à la série suivante pour l'effet
+      }, 1500);
     }
   };
 
@@ -166,7 +158,7 @@ export default function Perimetre() {
       {/* Affichage des questions */}
       {!isValidated && (
         <>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-4">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
