@@ -14,30 +14,37 @@ export default function Comparison() {
 
   useEffect(() => {
     const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
-      let left = 0;
-      let right = 0;
+      let leftText = '';
+      let rightText = '';
+      let leftValue = 0;
+      let rightValue = 0;
       let answer = '';
 
       if (index < 12) {
         // Questions avec des nombres entiers
-        left = Math.floor(Math.random() * 90) + 10;
-        right = Math.floor(Math.random() * 90) + 10;
+        leftValue = Math.floor(Math.random() * 90) + 10;
+        rightValue = Math.floor(Math.random() * 90) + 10;
+        leftText = leftValue.toString();
+        rightText = rightValue.toString();
       } else if (index < 24) {
         // Questions avec des nombres entiers plus grands
-        left = Math.floor(Math.random() * 900) + 100;
-        right = Math.floor(Math.random() * 900) + 100;
+        leftValue = Math.floor(Math.random() * 900) + 100;
+        rightValue = Math.floor(Math.random() * 900) + 100;
+        leftText = leftValue.toString();
+        rightText = rightValue.toString();
       } else {
         // Questions avec des fractions
         const numerator1 = Math.floor(Math.random() * 9) + 1;
         const denominator1 = Math.floor(Math.random() * 9) + 1;
         const numerator2 = Math.floor(Math.random() * 9) + 1;
         const denominator2 = Math.floor(Math.random() * 9) + 1;
-        left = `${numerator1}/${denominator1}`;
-        right = `${numerator2}/${denominator2}`;
+
+        leftText = `${numerator1}/${denominator1}`;
+        rightText = `${numerator2}/${denominator2}`;
 
         // Calculer les valeurs des fractions pour comparaison
-        const leftValue = numerator1 * denominator2;
-        const rightValue = numerator2 * denominator1;
+        leftValue = numerator1 * denominator2; // Fraction gauche
+        rightValue = numerator2 * denominator1; // Fraction droite
 
         // Comparer les fractions
         if (leftValue < rightValue) {
@@ -49,7 +56,7 @@ export default function Comparison() {
         }
       }
 
-      return { left: left.toString(), right: right.toString(), answer };
+      return { left: leftText, right: rightText, answer };
     });
 
     setQuestions(generatedQuestions);
