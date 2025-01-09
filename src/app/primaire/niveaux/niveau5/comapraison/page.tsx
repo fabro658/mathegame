@@ -11,7 +11,7 @@ export default function Comparaison() {
   const circumference = 2 * Math.PI * radius;
 
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ left: string; right: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,58 +32,51 @@ export default function Comparaison() {
 
   const generateQuestions = () => {
     return Array.from({ length: totalQuestions }, (_, index) => {
-      let correctAnswer;
+      let left, right, correctAnswer;
 
       if (index < 10) {
         const number1 = Math.floor(Math.random() * 10) + 1;
         const number2 = Math.floor(Math.random() * 10) + 1;
         correctAnswer = number1 < number2 ? "<" : number1 > number2 ? ">" : "=";
-
-        return {
-          fraction1: `${number1}`,
-          fraction2: `${number2}`,
-          correctAnswer,
-        };
+        left = `${number1}`;
+        right = `${number2}`;
       } else if (index < 20) {
         const sign1 = Math.random() < 0.5 ? -1 : 1;
         const sign2 = Math.random() < 0.5 ? -1 : 1;
         const number1 = sign1 * (Math.floor(Math.random() * 10) + 1);
         const number2 = sign2 * (Math.floor(Math.random() * 10) + 1);
         correctAnswer = number1 < number2 ? "<" : number1 > number2 ? ">" : "=";
-
-        return {
-          fraction1: `${number1}`,
-          fraction2: `${number2}`,
-          correctAnswer,
-        };
+        left = `${number1}`;
+        right = `${number2}`;
       } else {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
+        const numerator1 = Math.floor(Math.random() * 9) + 1;
+        const denominator1 = Math.floor(Math.random() * 9) + 1;
+        const numerator2 = Math.floor(Math.random() * 9) + 1;
+        const denominator2 = Math.floor(Math.random() * 9) + 1;
+        left = `${numerator1}/${denominator1}`;
+        right = `${numerator2}/${denominator2}`;
 
-        const commonDenominator = b1 * b2;
-        const numerator1 = a1 * b2;
-        const numerator2 = a2 * b1;
+        const commonDenominator = denominator1 * denominator2;
+        const numerator1Common = numerator1 * denominator2;
+        const numerator2Common = numerator2 * denominator1;
 
-        const simplifiedNum1 = simplifyFraction(numerator1, commonDenominator);
-        const simplifiedNum2 = simplifyFraction(numerator2, commonDenominator);
+        const simplifiedNum1 = simplifyFraction(numerator1Common, commonDenominator);
+        const simplifiedNum2 = simplifyFraction(numerator2Common, commonDenominator);
 
-        let result: string;
         if (simplifiedNum1[0] / simplifiedNum1[1] < simplifiedNum2[0] / simplifiedNum2[1]) {
-          result = "<";
+          correctAnswer = "<";
         } else if (simplifiedNum1[0] / simplifiedNum1[1] > simplifiedNum2[0] / simplifiedNum2[1]) {
-          result = ">";
+          correctAnswer = ">";
         } else {
-          result = "=";
+          correctAnswer = "=";
         }
-
-        return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer: result,
-        };
       }
+
+      return {
+        left,
+        right,
+        correctAnswer,
+      };
     });
   };
 
@@ -182,10 +175,10 @@ export default function Comparaison() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(({ fraction1, fraction2 }, index) => (
+              .map(({ left, right }, index) => (
                 <div key={index} className="flex items-center gap-6">
                   <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full shadow-md hover:bg-blue-600 transition" disabled>
-                    {fraction1} et {fraction2}
+                    {left} et {right}
                   </button>
                   <select
                     className="border border-gray-400 p-4 rounded-lg w-32 text-center text-black text-lg focus:ring focus:ring-blue-500"
@@ -223,7 +216,7 @@ export default function Comparaison() {
             </button>
           </div>
         </>
-      )}
+    )}
 
       {isValidated && (
         <>
