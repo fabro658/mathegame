@@ -16,39 +16,45 @@ export default function AdditionFractions() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Simplification de la fraction
-  const simplifyFraction = (numerator: number, denominator: number) => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
+  // Fonction pour générer des questions avec fractions et comparer les résultats
+  const generateQuestions = () => {
+    return Array.from({ length: totalQuestions }, (_, index) => {
+      let fraction1, fraction2, correctAnswer;
+
+      // Augmenter la difficulté avec les index des questions
+      if (index < 10) {
+        fraction1 = [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1]; // Petites fractions
+        fraction2 = [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1];
+      } else if (index < 20) {
+        fraction1 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1]; // Moyennes fractions
+        fraction2 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1];
+      } else {
+        fraction1 = [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1]; // Grandes fractions
+        fraction2 = [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1];
+      }
+
+      const num1 = fraction1[0] * fraction2[1];
+      const num2 = fraction2[0] * fraction1[1];
+      const commonDenominator = fraction1[1] * fraction2[1];
+
+      // Comparaison des fractions
+      if (num1 < num2) {
+        correctAnswer = "<";
+      } else if (num1 > num2) {
+        correctAnswer = ">";
+      } else {
+        correctAnswer = "=";
+      }
+
+      return {
+        fraction1: `${fraction1[0]}/${fraction1[1]}`,
+        fraction2: `${fraction2[0]}/${fraction2[1]}`,
+        correctAnswer,
+      };
+    });
   };
 
-  // Génération des questions
   useEffect(() => {
-    const generateQuestions = () =>
-      Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
-
-        const commonDenominator = b1 * b2;
-        const numerator1 = a1 * b2;
-        const numerator2 = a2 * b1;
-
-        // Calcul de la fraction résultante sans simplification
-        const numeratorResult = numerator1 + numerator2;
-
-        // Comparaison des fractions pour déterminer la bonne réponse
-        const correctAnswer = numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=";
-
-        return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer: correctAnswer,
-        };
-      });
-
     setQuestions(generateQuestions());
   }, []);
 
@@ -136,7 +142,7 @@ export default function AdditionFractions() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-8">Comparer les Fractions</h1>
 
       {!isValidated && (
         <>
@@ -144,7 +150,7 @@ export default function AdditionFractions() {
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
               <div key={index} className="flex items-center gap-6">
                 <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
-                  {fraction1} + {fraction2}
+                  {fraction1} et {fraction2}
                 </button>
                 
                 {/* Menu déroulant pour la comparaison */}

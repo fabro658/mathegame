@@ -3,62 +3,80 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function AdditionFractions() {
-  const totalQuestions = 36;
-  const questionsPerPage = 6;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+type Question =
+  | { type: "compare", fractions: [string, string], correctAnswer: boolean }
+  | { type: "equivalence", fractions: string[], correctAnswer: boolean };
 
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
+export default function ComparerFractions() {
+  const totalQuestions = 30;
+  const questionsPerPage = 3;
+  const [answers, setAnswers] = useState<(boolean | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
-  useEffect(() => {
-    const generateQuestions = () =>
-      Array.from({ length: totalQuestions }, (_, index) => {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
-
-        let numerator1, numerator2, commonDenominator;
-
-        // Pour les premières questions, on crée des fractions plus simples
-        if (index < totalQuestions / 2) {
-          commonDenominator = b1 * b2;
-          numerator1 = a1 * b2;
-          numerator2 = a2 * b1;
-        } else {
-          // Pour les dernières questions, on utilise des numérateurs et dénominateurs plus grands pour rendre les fractions non réduites
-          commonDenominator = b1 * b2 * 2;  // Un facteur multiplicatif pour augmenter la difficulté
-          numerator1 = a1 * b2 * 2;         // Multiplication des numérateurs pour rendre les fractions non réduites
-          numerator2 = a2 * b1 * 2;
-        }
-
-        // Calcul de la fraction résultante sans simplification
-        const numeratorResult = numerator1 + numerator2;
-
-        // Comparaison des fractions pour déterminer la bonne réponse
-        const correctAnswer = numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=";
-
+  const generateQuestions = (): Question[] => {
+    const generateSameDenominator = (): Question[] => {
+      return Array.from({ length: totalQuestions / 6 }, () => {
+        const denominator = Math.floor(Math.random() * 8) + 2;
+        const num1 = Math.floor(Math.random() * 9) + 1;
+        const num2 = Math.floor(Math.random() * 9) + 1;
         return {
-          fraction1: `${numerator1}/${commonDenominator}`,
-          fraction2: `${numerator2}/${commonDenominator}`,
-          correctAnswer: correctAnswer,
+          type: "compare",
+          fractions: [`${num1}/${denominator}`, `${num2}/${denominator}`],
+          correctAnswer: num1 === num2,
         };
       });
+    };
 
+    const generateSameNumerator = (): Question[] => {
+      return Array.from({ length: totalQuestions / 6 }, () => {
+        const numerator = Math.floor(Math.random() * 9) + 1;
+        const den1 = Math.floor(Math.random() * 8) + 2;
+        const den2 = Math.floor(Math.random() * 8) + 2;
+        return {
+          type: "compare",
+          fractions: [`${numerator}/${den1}`, `${numerator}/${den2}`],
+          correctAnswer: den1 === den2,
+        };
+      });
+    };
+
+    const generateNonReducedFractions = (): Question[] => {
+      return Array.from({ length: totalQuestions / 6 }, () => {
+        const numerator = Math.floor(Math.random() * 9) + 1;
+        const denominator = Math.floor(Math.random() * 8) + 2;
+        const multiplier = Math.floor(Math.random() * 5) + 2; // multiplier to create non-reduced fractions
+        const num1 = numerator * multiplier;
+        const den1 = denominator * multiplier;
+        const num2 = numerator * multiplier;
+        const den2 = denominator * multiplier;
+
+        return {
+          type: "compare",
+          fractions: [`${num1}/${den1}`, `${num2}/${den2}`],
+          correctAnswer: numerator === num2 / multiplier && denominator === den2 / multiplier,
+        };
+      });
+    };
+
+    return [
+      ...generateSameDenominator(),
+      ...generateSameNumerator(),
+      ...generateNonReducedFractions(),
+    ];
+  };
+
+  const [questions, setQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
-    setAnswers(newAnswers);
+  const handleAnswer = (globalIndex: number, value: boolean) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[globalIndex] = value;
+    setAnswers(updatedAnswers);
   };
 
   const handleValidation = () => {
@@ -66,43 +84,36 @@ export default function AdditionFractions() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null) || pageAnswers.some((answer) => answer === "")) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+    if (pageAnswers.includes(null)) {
+      alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    const newAnswers = [...answers];
-    let allCorrect = true;
-
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
-        allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
-      }
+    const isCorrect = pageAnswers.every((answer, index) => {
+      const questionIndex = startIndex + index;
+      return questions[questionIndex] && answer === questions[questionIndex].correctAnswer;
     });
 
-    setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
+    setHasPassed(isCorrect);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-    }
+    setCurrentPage((prev) => prev + 1);
+    setIsValidated(false);
+    setHasPassed(false);
   };
 
   const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-    }
+    setCurrentPage((prev) => prev - 1);
+    setIsValidated(false);
+    setHasPassed(false);
   };
 
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const currentQuestions = questions.slice(
+    currentPage * questionsPerPage,
+    (currentPage + 1) * questionsPerPage
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -121,98 +132,116 @@ export default function AdditionFractions() {
 
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
-            r={radius}
+            r={50}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={10}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={50}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * (currentPage + 1)) / totalQuestions}
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">
+            {Math.round(((currentPage + 1) / totalQuestions) * 100)}%
+          </span>
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        Comparaison de Fractions
+      </h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-6">
-                <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
-                  {fraction1} + {fraction2}
-                </button>
-                
-                {/* Menu déroulant pour la comparaison */}
-                <select
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                >
-                  <option value="">Choisir</option>
-                  <option value="<">&lt;</option>
-                  <option value=">">&gt;</option>
-                  <option value="=">=</option>
-                </select>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            {currentQuestions.map((question, localIndex) => {
+              const globalIndex = currentPage * questionsPerPage + localIndex;
+              return (
+                <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center">
+                  <p className="text-lg font-bold mb-4">
+                    {question.type === "compare"
+                      ? `${question.fractions[0]} = ${question.fractions[1]}`
+                      : "Equivalence des fractions"}
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      className={`py-2 px-4 rounded font-bold ${
+                        answers[globalIndex] === true
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-200"
+                      }`}
+                      onClick={() => handleAnswer(globalIndex, true)}
+                    >
+                      Vrai
+                    </button>
+                    <button
+                      className={`py-2 px-4 rounded font-bold ${
+                        answers[globalIndex] === false
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-200"
+                      }`}
+                      onClick={() => handleAnswer(globalIndex, false)}
+                    >
+                      Faux
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="flex gap-6 mt-8">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
+          <div className="flex gap-4">
+            {currentPage > 0 && (
+              <button
+                onClick={handlePreviousPage}
+                className="bg-gray-500 text-white py-2 px-6 rounded"
+              >
+                Précédent
+              </button>
+            )}
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+              className="bg-blue-500 text-white py-2 px-6 rounded"
             >
-              Valider les réponses
+              Valider
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
-            >
-              Suivant
-            </button>
+            {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+              <button
+                onClick={handleNextPage}
+                className="bg-gray-500 text-white py-2 px-6 rounded"
+              >
+                Suivant
+              </button>
+            )}
           </div>
         </>
       )}
 
       {isValidated && (
-        <>
+        <div>
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-                onClick={() => alert("Vous avez complété toutes les questions !")}
-              >
-                Terminer
-              </button>
-            </div>
+            <p className="text-green-500 font-bold text-lg">Toutes les réponses sont correctes !</p>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
+            <p className="text-red-500 font-bold text-lg">Certaines réponses sont incorrectes.</p>
           )}
-        </>
+          <button
+            onClick={handleNextPage}
+            className="mt-4 bg-gray-500 text-white py-2 px-6 rounded"
+          >
+            Suivant
+          </button>
+        </div>
       )}
     </div>
   );
