@@ -20,38 +20,58 @@ export default function Comparaison() {
   const generateQuestions = () => {
     return Array.from({ length: totalQuestions }, (_, index) => {
       let fraction1, fraction2, correctAnswer;
-
-      // Augmenter la difficulté avec les index des questions
+  
       if (index < 10) {
-        fraction1 = [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1]; // Petites fractions
-        fraction2 = [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1];
+        // Entiers positifs seulement
+        const number1 = Math.floor(Math.random() * 10) + 1; // Entiers positifs
+        const number2 = Math.floor(Math.random() * 10) + 1; // Entiers positifs
+        correctAnswer = number1 < number2 ? "<" : (number1 > number2 ? ">" : "=");
+        
+        return {
+          fraction1: `${number1}`,
+          fraction2: `${number2}`,
+          correctAnswer,
+        };
       } else if (index < 20) {
-        fraction1 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1]; // Moyennes fractions
-        fraction2 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1];
+        // Entiers positifs ou négatifs
+        const sign1 = Math.random() < 0.5 ? -1 : 1;  // Génère un signe aléatoire
+        const sign2 = Math.random() < 0.5 ? -1 : 1;  // Génère un signe aléatoire
+        const number1 = sign1 * (Math.floor(Math.random() * 10) + 1); // Entier aléatoire avec signe
+        const number2 = sign2 * (Math.floor(Math.random() * 10) + 1); // Entier aléatoire avec signe
+        correctAnswer = number1 < number2 ? "<" : (number1 > number2 ? ">" : "=");
+        
+        return {
+          fraction1: `${number1}`,
+          fraction2: `${number2}`,
+          correctAnswer,
+        };
       } else {
-        fraction1 = [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1]; // Grandes fractions
-        fraction2 = [Math.floor(Math.random() * 20) + 1, Math.floor(Math.random() * 20) + 1];
+        // Fractions avec entiers ou négatifs
+        const sign1 = Math.random() < 0.5 ? -1 : 1;  // Génère un signe aléatoire
+        const sign2 = Math.random() < 0.5 ? -1 : 1;  // Génère un signe aléatoire
+        fraction1 = [sign1 * (Math.floor(Math.random() * 10) + 1), Math.floor(Math.random() * 10) + 1]; // Fraction avec numérateur et dénominateur
+        fraction2 = [sign2 * (Math.floor(Math.random() * 10) + 1), Math.floor(Math.random() * 10) + 1]; // Fraction avec numérateur et dénominateur
+  
+        const num1 = fraction1[0] * fraction2[1];
+        const num2 = fraction2[0] * fraction1[1];
+  
+        if (num1 < num2) {
+          correctAnswer = "<";
+        } else if (num1 > num2) {
+          correctAnswer = ">";
+        } else {
+          correctAnswer = "=";
+        }
+  
+        return {
+          fraction1: `${fraction1[0]}/${fraction1[1]}`,
+          fraction2: `${fraction2[0]}/${fraction2[1]}`,
+          correctAnswer,
+        };
       }
-
-      const num1 = fraction1[0] * fraction2[1];
-      const num2 = fraction2[0] * fraction1[1];
-
-      // Comparaison des fractions
-      if (num1 < num2) {
-        correctAnswer = "<";
-      } else if (num1 > num2) {
-        correctAnswer = ">";
-      } else {
-        correctAnswer = "=";
-      }
-
-      return {
-        fraction1: `${fraction1[0]}/${fraction1[1]}`,
-        fraction2: `${fraction2[0]}/${fraction2[1]}`,
-        correctAnswer,
-      };
     });
   };
+  
 
   useEffect(() => {
     setQuestions(generateQuestions());
