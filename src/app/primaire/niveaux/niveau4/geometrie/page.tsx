@@ -13,17 +13,11 @@ const shapes = [
   { name: "Octogone", sides: 8 },
   { name: "Nonagone", sides: 9 },
   { name: "Décagone", sides: 10 },
-  { name: "Trapèze", sides: 4 },
-  { name: "Cercle", sides: 0 },
 ];
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [completed, setCompleted] = useState<boolean | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const shapesPerPage = 3;
-  const totalPages = Math.ceil(shapes.length / shapesPerPage);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -32,17 +26,19 @@ const ShapesPracticePage = () => {
   };
 
   const handleValidation = () => {
-    const startIndex = currentPage * shapesPerPage;
-    const endIndex = startIndex + shapesPerPage;
-    const currentShapes = shapes.slice(startIndex, endIndex);
+    console.log("Current answers:", answers); // Vérifier les réponses associées
+    const allCorrect = shapes.every((shape, idx) => answers[idx] === shape.name);
 
-    const allCorrect = currentShapes.every(
-      (shape, idx) => answers[startIndex + idx] === shape.name
-    );
-
-    setCompleted(allCorrect);
+    if (allCorrect) {
+      setCompleted(true);
+      console.log("Validation réussie : Toutes les réponses sont correctes.");
+    } else {
+      setCompleted(false);
+      console.log("Validation échouée : Certaines réponses sont incorrectes.");
+    }
   };
 
+  // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
   const drawShape = (sides: number) => {
     const points = [];
     const centerX = 50;
@@ -50,18 +46,14 @@ const ShapesPracticePage = () => {
     const radius = 40;
 
     if (sides === 0) {
+      // Dessiner un cercle
       return (
         <svg width="100" height="100" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
         </svg>
       );
-    } else if (sides === 4 && shapes.some((shape) => shape.name === "Trapèze")) {
-      return (
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <polygon points="30,90 70,90 90,50 10,50" fill="lightblue" stroke="black" strokeWidth="2" />
-        </svg>
-      );
     } else {
+      // Dessiner les autres formes géométriques
       for (let i = 0; i < sides; i++) {
         const angle = (i * 2 * Math.PI) / sides;
         const x = centerX + radius * Math.cos(angle);
@@ -76,18 +68,6 @@ const ShapesPracticePage = () => {
       );
     }
   };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 1);
-  };
-
-  const startIndex = currentPage * shapesPerPage;
-  const endIndex = startIndex + shapesPerPage;
-  const currentShapes = shapes.slice(startIndex, endIndex);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -108,75 +88,59 @@ const ShapesPracticePage = () => {
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
-        <div className="flex gap-8">
-          {currentShapes.map((shape, idx) => (
+        <div className="flex gap-8 justify-center">
+          {shapes.map((shape, idx) => (
             <div
-              key={startIndex + idx}
-              className="w-48 h-48 border-2 border-gray-500 flex flex-col items-center justify-center"
+              key={idx}
+              className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
               onDrop={(e) => {
                 e.preventDefault();
-                handleDrop(startIndex + idx, e.dataTransfer.getData("name"));
+                handleDrop(idx, e.dataTransfer.getData("name"));
               }}
               onDragOver={(e) => e.preventDefault()}
             >
               {drawShape(shape.sides)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-              {answers[startIndex + idx] && (
-                <div className="mt-2 text-sm font-bold text-blue-500">{answers[startIndex + idx]}</div>
+              {answers[idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">{answers[idx]}</div>
               )}
-
-              {/* Options de noms à glisser */}
-              <div className="flex flex-wrap justify-center mt-4 gap-2">
-                {[shape.name, "Option 1", "Option 2", "Option 3"].map((option, i) => (
-                  <div
-                    key={i}
-                    className="p-2 border border-blue-500 cursor-pointer text-center"
-                    draggable
-                    onDragStart={(e) => e.dataTransfer.setData("name", option)}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
             </div>
           ))}
         </div>
 
-        {/* Boutons de navigation */}
-        <div className="flex justify-between w-full max-w-xl mt-4">
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 0}
-            className="bg-gray-500 text-white py-2 px-6 rounded font-bold disabled:opacity-50"
-          >
-            Précédent
-          </button>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages - 1}
-            className="bg-gray-500 text-white py-2 px-6 rounded font-bold disabled:opacity-50"
-          >
-            Suivant
-          </button>
+        {/* Zone des noms des formes */}
+        <div className="grid grid-cols-5 gap-4 mt-8">
+          {shapes.map((shape, idx) => (
+            <div
+              key={idx}
+              className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
+              draggable
+              onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
+            >
+              {shape.name}
+            </div>
+          ))}
         </div>
+      </div>
 
+      <div className="mt-6">
         <button
           onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold mt-6"
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
         >
           Valider les réponses
         </button>
-
-        {completed !== null && (
-          <div className="mt-6 text-xl font-bold">
-            {completed ? (
-              <div className="text-green-600">Bravo ! Vous avez réussi à associer toutes les formes correctement.</div>
-            ) : (
-              <div className="text-red-600">Certaines associations sont incorrectes. Essayez encore !</div>
-            )}
-          </div>
-        )}
       </div>
+
+      {completed !== null && (
+        <div className="mt-6 text-xl font-bold">
+          {completed ? (
+            <div className="text-green-600">Bravo ! Vous avez réussi à associer toutes les formes correctement.</div>
+          ) : (
+            <div className="text-red-600">Certaines associations sont incorrectes. Essayez encore !</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
