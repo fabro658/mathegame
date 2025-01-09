@@ -36,12 +36,6 @@ export default function Page() {
           Division de fraction
         </Link>
         <Link
-          href="/primaire/niveaux/niveau3/comparer_fraction"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-        >
-          Comparaison de fraction
-        </Link>
-        <Link
           href="/primaire/niveaux/niveau3/fractionreduite"
           className="bg-red-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >

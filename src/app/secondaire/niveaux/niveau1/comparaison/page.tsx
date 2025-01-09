@@ -6,7 +6,7 @@ import Link from "next/link";
 type Question =
   | { type: "compare", numbers: [string, string], correctAnswer: string };
 
-export default function ComparerEntiers() {
+export default function Comparer() {
   const totalQuestions = 30;
   const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
