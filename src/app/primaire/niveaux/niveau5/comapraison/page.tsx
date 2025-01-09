@@ -34,18 +34,19 @@ export default function Comparison() {
         const denominator2 = Math.floor(Math.random() * 9) + 1;
         left = `${numerator1}/${denominator1}`;
         right = `${numerator2}/${denominator2}`;
-      }
 
-      // Comparer les valeurs
-      const leftValue = eval(left);
-      const rightValue = eval(right);
+        // Calculer les valeurs des fractions pour comparaison
+        const leftValue = numerator1 * denominator2;
+        const rightValue = numerator2 * denominator1;
 
-      if (leftValue < rightValue) {
-        answer = "<";
-      } else if (leftValue > rightValue) {
-        answer = ">";
-      } else {
-        answer = "=";
+        // Comparer les fractions
+        if (leftValue < rightValue) {
+          answer = "<";
+        } else if (leftValue > rightValue) {
+          answer = ">";
+        } else {
+          answer = "=";
+        }
       }
 
       return { left: left.toString(), right: right.toString(), answer };
