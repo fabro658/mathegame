@@ -7,21 +7,24 @@ import Link from "next/link";
 const shapes = [
   { name: "Triangle", sides: 3 },
   { name: "Carré", sides: 4 },
+  { name: "Cercle", sides: 0 },
+  { name: "Rectangle", sides: 4 },
   { name: "Pentagone", sides: 5 },
   { name: "Hexagone", sides: 6 },
   { name: "Heptagone", sides: 7 },
   { name: "Octogone", sides: 8 },
   { name: "Nonagone", sides: 9 },
-  { name: "Décagone", sides: 10 },
+  { name: "Trapèze", sides: 4 },
 ];
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [completed, setCompleted] = useState<boolean | null>(null);
+  const [currentShapes, setCurrentShapes] = useState(0);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[index] = droppedName;
+    updatedAnswers[currentShapes + index] = droppedName;
     setAnswers(updatedAnswers);
   };
 
@@ -36,6 +39,14 @@ const ShapesPracticePage = () => {
       setCompleted(false);
       console.log("Validation échouée : Certaines réponses sont incorrectes.");
     }
+  };
+
+  const handleNext = () => {
+    setCurrentShapes((prev) => (prev + 3) % shapes.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
   // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
@@ -89,7 +100,7 @@ const ShapesPracticePage = () => {
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
         <div className="flex gap-8 justify-center mb-12">
-          {shapes.map((shape, idx) => (
+          {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
             <div
               key={idx}
               className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
@@ -101,8 +112,8 @@ const ShapesPracticePage = () => {
             >
               {drawShape(shape.sides)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-              {answers[idx] && (
-                <div className="mt-2 text-sm font-bold text-blue-500">{answers[idx]}</div>
+              {answers[currentShapes + idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
               )}
             </div>
           ))}
@@ -124,14 +135,24 @@ const ShapesPracticePage = () => {
 
         {/* Zone des boutons */}
         <div className="flex gap-4 mt-8">
-          <button className="bg-gray-400 text-white py-2 px-6 rounded font-bold">Précédent</button>
+          <button
+            onClick={handlePrevious}
+            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
+          >
+            Précédent
+          </button>
           <button
             onClick={handleValidation}
             className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
           >
             Valider les réponses
           </button>
-          <button className="bg-gray-400 text-white py-2 px-6 rounded font-bold">Suivant</button>
+          <button
+            onClick={handleNext}
+            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
+          >
+            Suivant
+          </button>
         </div>
       </div>
 
