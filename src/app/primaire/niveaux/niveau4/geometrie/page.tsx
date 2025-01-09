@@ -131,7 +131,8 @@ const ShapesPracticePage = () => {
       {completed && (
         <div className="mt-6 text-green-600 font-bold text-xl">
           Bravo ! Vous avez réussi à associer toutes les formes correctement.
-        </div)}
+        </div>
+      )}
 
       {!completed && completed !== null && (
         <div className="mt-6 text-red-600 font-bold text-xl">
