@@ -12,13 +12,13 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau4/exposant"
+          href="/primaire/niveaux/niveau6/expression_equivalente"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
-          Exposant
+          Expression Équivalente
           </Link>
           <Link
-          href="/niveaux/niveau4/priooperation"
+          href="/primaire/niveaux/niveau6/priooperation"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Priorité d&#39;opération

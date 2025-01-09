@@ -18,12 +18,6 @@ export default function Page() {
           Exposant
           </Link>
           <Link
-          href="/primaire/niveaux/niveau5/priooperation"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
-          Priorité d&#39;opération
-          </Link>
-          <Link
           href="/primaire/niveaux/niveau5/comparaison"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
