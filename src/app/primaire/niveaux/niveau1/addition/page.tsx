@@ -11,6 +11,7 @@ export default function Addition() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Questions générées dynamiquement
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -21,9 +22,10 @@ export default function Addition() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Gérer les changements d'entrée utilisateur
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
+    const parsedValue = parseInt(value, 10);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
@@ -71,6 +73,7 @@ export default function Addition() {
     }
   };
 
+  // Propriétés pour le cercle de progression
   const radius = 50; // Rayon du cercle
   const strokeWidth = 10; // Largeur du cercle
   const circumference = 2 * Math.PI * radius;
@@ -80,13 +83,13 @@ export default function Addition() {
       {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
       >
         Apprendre
       </Link>
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
       >
         Retour
       </Link>
@@ -132,7 +135,7 @@ export default function Addition() {
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
@@ -143,20 +146,20 @@ export default function Addition() {
           <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
               disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
@@ -171,7 +174,7 @@ export default function Addition() {
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
               <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
                 onClick={handleNextPage}
               >
                 Suivant
@@ -181,7 +184,7 @@ export default function Addition() {
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
