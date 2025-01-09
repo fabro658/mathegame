@@ -1,15 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Arrondissement() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const generateQuestions = (type: string) => {
     return Array.from({ length: totalQuestions }, () => {
@@ -22,7 +18,17 @@ export default function Arrondissement() {
     });
   };
 
-  const questions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [isValidated, setIsValidated] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState(generateQuestions("unité"));
+
+  // UseEffect pour régénérer les questions chaque fois que la page ou la réponse change
+  useEffect(() => {
+    const newQuestions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
+    setQuestions(newQuestions);
+  }, [answers]);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
