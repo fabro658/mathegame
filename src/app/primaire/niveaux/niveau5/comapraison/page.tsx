@@ -36,13 +36,16 @@ export default function AdditionFractions() {
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
 
+        // Calcul de la fraction résultante sans simplification
         const numeratorResult = numerator1 + numerator2;
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+
+        // Comparaison des fractions pour déterminer la bonne réponse
+        const correctAnswer = numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=";
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=",
+          correctAnswer: correctAnswer,
         };
       });
 
