@@ -169,28 +169,26 @@ export default function DivisionFraction() {
              ))}
           </div>
           <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}

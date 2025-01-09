@@ -6,19 +6,19 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">Les exposants</h1>
       <div className="flex space-x-8">
         <Link
-          href="/niveaux/niveau4/exposant/n1"
+          href="/primaire/niveaux/niveau5/exposant/n1"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Premier niveau
         </Link>
         <Link
-          href="/niveaux/niveau4/exposant/n2"
+          href="/primaire/niveaux/niveau5/exposant/n2"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Deuxième niveau
         </Link>
         <Link
-          href="/niveaux/niveau4/exposant/n3"
+          href="/primaire/niveaux/niveau5/exposant/n3"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Troisième niveau

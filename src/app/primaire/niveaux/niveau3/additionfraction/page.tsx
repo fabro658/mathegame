@@ -151,24 +151,24 @@ export default function AdditionFractions() {
               </div>
             ))}
           </div>
-          <div className="flex gap-6 mt-8">
+          <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
-              disabled={currentPage === totalQuestions / questionsPerPage - 1}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
             </button>

@@ -22,26 +22,11 @@ export default function Page() {
         >
           Périmètre
         </Link>
-
-        <Link
-          href="/primaire/niveaux/niveau4/aire"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
-        >
-          Aire
-        </Link>
-
         <Link
           href="/primaire/niveaux/niveau4/geometrie"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
         >
           Géométrie
-        </Link>
-
-        <Link
-          href="/primaire/niveaux/niveau4/volume"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
-        >
-          Volume
         </Link>
       </div>
     </div>
