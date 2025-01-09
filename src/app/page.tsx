@@ -28,29 +28,18 @@ export default function Home() {
       </header>
 
       {/* Section Titre */}
-      <div className="flex flex-col items-center text-center mb-[3cm]">
-        {/* Titre 1 */}
-        <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm', marginTop: '0cm' }}>
-          Mathgame
-        </h1>
-        {/* Ligne noire sous le titre */}
-        <div className=" w-64 et sm:w-96 h-1 bg-black mt-2 mb-4"></div>
-        {/* Titre 2 */}
-        <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
+      <div className="flex flex-col items-center text-center mb-16">
+        <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Mathgame</h1>
+        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
+        <h2 className="text-white text-2xl md:text-4xl lg:text-5xl font-semibold">Mathématique</h2>
       </div>
 
       {/* Boutons Primaire, Secondaire et À venir */}
-      <div className="absolute bottom-[150px] w-full flex justify-between">
+      <div className="absolute bottom-16 flex justify-center gap-8 w-full px-4">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="absolute bg-yellow-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-yellow-400"
-            style={{
-              borderTopLeftRadius: '100% 50%',
-              borderTopRightRadius: '100% 50%',
-              left: '30%',
-              transform: 'translateX(-50%)',
-            }}
+            className="bg-yellow-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-40 md:w-64 lg:w-80 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%]"
           >
             Primaire
           </div>
@@ -59,13 +48,7 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/avenir">
           <div
-            className="absolute bg-orange-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-orange-400"
-            style={{
-              borderTopLeftRadius: '100% 50%',
-              borderTopRightRadius: '100% 50%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-            }}
+            className="bg-orange-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-40 md:w-64 lg:w-80 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%]"
           >
             À venir
           </div>
@@ -74,13 +57,7 @@ export default function Home() {
         {/* Bouton À venir */}
         <Link href="/secondaire">
           <div
-            className="absolute bg-green-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-green-400"
-            style={{
-              borderTopLeftRadius: '100% 50%',
-              borderTopRightRadius: '100% 50%',
-              left: '70%',
-              transform: 'translateX(-50%)',
-            }}
+            className="bg-green-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-40 md:w-64 lg:w-80 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%]"
           >
             Secondaire
           </div>
