@@ -42,7 +42,7 @@ export default function Home() {
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="absolute bg-yellow-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-yellow-400"
+            className="absolute bg-yellow-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-yellow-400"
             style={{
               borderTopLeftRadius: '100% 50%',
               borderTopRightRadius: '100% 50%',
@@ -57,7 +57,7 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/secondaire">
           <div
-            className="absolute bg-orange-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-orange-400"
+            className="absolute bg-orange-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-orange-400"
             style={{
               borderTopLeftRadius: '100% 50%',
               borderTopRightRadius: '100% 50%',
@@ -72,7 +72,7 @@ export default function Home() {
         {/* Bouton À venir */}
         <Link href="/avenir">
           <div
-            className="absolute bg-green-500 text-black text-sm sm:text-base h-24 sm:h-28 w-48 sm:w-56 flex items-center justify-center font-bold hover:bg-green-400"
+            className="absolute bg-green-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-green-400"
             style={{
               borderTopLeftRadius: '100% 50%',
               borderTopRightRadius: '100% 50%',
