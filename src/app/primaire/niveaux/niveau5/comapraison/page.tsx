@@ -3,68 +3,55 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Comparison() {
+export default function AdditionFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState<{ left: string; right: string; leftValue: number; rightValue: number; answer: string }[]>([]);
 
+  // Simplification de la fraction
+  const simplifyFraction = (numerator: number, denominator: number) => {
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    const divisor = gcd(numerator, denominator);
+    return [numerator / divisor, denominator / divisor];
+  };
+
+  // Génération des questions
   useEffect(() => {
-    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
-      let leftText = '';
-      let rightText = '';
-      let leftValue = 0;
-      let rightValue = 0;
-      let answer = '';
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 9) + 1;
+        const b1 = Math.floor(Math.random() * 9) + 1;
+        const a2 = Math.floor(Math.random() * 9) + 1;
+        const b2 = Math.floor(Math.random() * 9) + 1;
 
-      if (index < 12) {
-        // Questions avec des nombres entiers
-        leftValue = Math.floor(Math.random() * 90) + 10;
-        rightValue = Math.floor(Math.random() * 90) + 10;
-        leftText = leftValue.toString();
-        rightText = rightValue.toString();
-      } else if (index < 24) {
-        // Questions avec des nombres entiers plus grands
-        leftValue = Math.floor(Math.random() * 900) + 100;
-        rightValue = Math.floor(Math.random() * 900) + 100;
-        leftText = leftValue.toString();
-        rightText = rightValue.toString();
-      } else {
-        // Questions avec des fractions
-        const numerator1 = Math.floor(Math.random() * 9) + 1;
-        const denominator1 = Math.floor(Math.random() * 9) + 1;
-        const numerator2 = Math.floor(Math.random() * 9) + 1;
-        const denominator2 = Math.floor(Math.random() * 9) + 1;
+        const commonDenominator = b1 * b2;
+        const numerator1 = a1 * b2;
+        const numerator2 = a2 * b1;
 
-        leftText = `${numerator1}/${denominator1}`;
-        rightText = `${numerator2}/${denominator2}`;
+        const numeratorResult = numerator1 + numerator2;
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
-        // Calculer les valeurs des fractions pour comparaison (en simplifiant la multiplication des numérateurs et dénominateurs)
-        leftValue = numerator1 * denominator2; // Fraction gauche (numérateur1 * dénominateur2)
-        rightValue = numerator2 * denominator1; // Fraction droite (numérateur2 * dénominateur1)
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=",
+        };
+      });
 
-        // Comparer les fractions
-        if (leftValue < rightValue) {
-          answer = "<";
-        } else if (leftValue > rightValue) {
-          answer = ">";
-        } else {
-          answer = "=";
-        }
-      }
-
-      return { left: leftText, right: rightText, leftValue, rightValue, answer };
-    });
-
-    setQuestions(generatedQuestions);
+    setQuestions(generateQuestions());
   }, []);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value;
+    newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
@@ -73,8 +60,8 @@ export default function Comparison() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (pageAnswers.includes(null) || pageAnswers.some((answer) => answer === "")) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -83,9 +70,9 @@ export default function Comparison() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex].answer) {
+      if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
       }
     });
 
@@ -95,10 +82,9 @@ export default function Comparison() {
   };
 
   const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -106,13 +92,14 @@ export default function Comparison() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -120,26 +107,44 @@ export default function Comparison() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau1"
+        href="/primaire/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Comparaison</h1>
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
-      {/* Questions pour la page actuelle */}
+      <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
+
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 grid-rows-2 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ left, right }, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {left} ? {right}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex items-center gap-6">
+                <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
+                  {fraction1} + {fraction2}
                 </button>
+                
+                {/* Menu déroulant pour la comparaison */}
                 <select
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
@@ -153,61 +158,48 @@ export default function Comparison() {
               </div>
             ))}
           </div>
-
-          <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+          <div className="flex gap-6 mt-8">
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+              disabled={currentPage === totalQuestions / questionsPerPage - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
 
-      {/* Résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
             <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <button
+                className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold"
+                onClick={() => alert("Vous avez complété toutes les questions !")}
+              >
+                Terminer
+              </button>
             </div>
           ) : (
             <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
               <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
+                className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold"
                 onClick={() => setIsValidated(false)}
               >
                 Revenir pour corriger
