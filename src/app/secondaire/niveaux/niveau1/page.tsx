@@ -32,7 +32,7 @@ export default function Niveau1() {
             Quotient
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/comparer">
+        <Link href="/secondaire/niveaux/niveau1/comparaison">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Comparer
           </div>

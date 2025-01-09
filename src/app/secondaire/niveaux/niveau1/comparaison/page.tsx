@@ -56,27 +56,20 @@ export default function ComparerEntiers() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-  
+
     if (pageAnswers.includes(null)) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
-  
-    const newAnswers = [...answers];
-    let allCorrect = true;
-  
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      if (questions[globalIndex] && answer !== questions[globalIndex].correctAnswer) {
-        allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les réponses incorrectes
-      }
+
+    const isCorrect = pageAnswers.every((answer, index) => {
+      const questionIndex = startIndex + index;
+      return questions[questionIndex] && answer === questions[questionIndex].correctAnswer;
     });
-  
-    setAnswers(newAnswers);
+
     setIsValidated(true);
-    setHasPassed(allCorrect);
-  };  
+    setHasPassed(isCorrect);
+  };
 
   const handleNextPage = () => {
     setCurrentPage((prev) => prev + 1);
