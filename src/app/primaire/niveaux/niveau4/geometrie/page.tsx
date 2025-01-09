@@ -29,8 +29,6 @@ const ShapesPracticePage = () => {
     return (correctAnswers / shapes.length) * 100;
   };
 
-  const completionPercentage = calculateCompletionPercentage();
-
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
     updatedAnswers[index] = droppedName;
@@ -112,12 +110,12 @@ const ShapesPracticePage = () => {
             stroke="#3b82f6"
             strokeWidth={10}
             strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * calculateCompletionPercentage()) / 100}
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{Math.round(completionPercentage)}%</span>
+          <span className="text-xl font-bold text-blue-500">{Math.round(calculateCompletionPercentage())}%</span>
         </div>
       </div>
 
