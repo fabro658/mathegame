@@ -133,7 +133,7 @@ export default function ComparerEntiers() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Comparaison d&apos;Entiers</h1>
+      <h1 className="text-3xl font-bold mb-6">Comparaison</h1>
 
       {!isValidated && (
         <>

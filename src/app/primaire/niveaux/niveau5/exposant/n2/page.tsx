@@ -155,7 +155,7 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
 
       {!isValidated && (
         <>

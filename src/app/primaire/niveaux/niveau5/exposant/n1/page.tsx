@@ -98,7 +98,7 @@ export default function ExponentsPractice() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/exposant"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
