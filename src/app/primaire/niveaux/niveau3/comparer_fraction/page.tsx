@@ -19,15 +19,25 @@ export default function AdditionFractions() {
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () =>
-      Array.from({ length: totalQuestions }, () => {
+      Array.from({ length: totalQuestions }, (_, index) => {
         const a1 = Math.floor(Math.random() * 9) + 1;
         const b1 = Math.floor(Math.random() * 9) + 1;
         const a2 = Math.floor(Math.random() * 9) + 1;
         const b2 = Math.floor(Math.random() * 9) + 1;
 
-        const commonDenominator = b1 * b2;
-        const numerator1 = a1 * b2;
-        const numerator2 = a2 * b1;
+        let numerator1, numerator2, commonDenominator;
+
+        // Pour les premières questions, on crée des fractions plus simples
+        if (index < totalQuestions / 2) {
+          commonDenominator = b1 * b2;
+          numerator1 = a1 * b2;
+          numerator2 = a2 * b1;
+        } else {
+          // Pour les dernières questions, on utilise des numérateurs et dénominateurs plus grands pour rendre les fractions non réduites
+          commonDenominator = b1 * b2 * 2;  // Un facteur multiplicatif pour augmenter la difficulté
+          numerator1 = a1 * b2 * 2;         // Multiplication des numérateurs pour rendre les fractions non réduites
+          numerator2 = a2 * b1 * 2;
+        }
 
         // Calcul de la fraction résultante sans simplification
         const numeratorResult = numerator1 + numerator2;
@@ -36,8 +46,8 @@ export default function AdditionFractions() {
         const correctAnswer = numeratorResult < commonDenominator ? "<" : numeratorResult > commonDenominator ? ">" : "=";
 
         return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
+          fraction1: `${numerator1}/${commonDenominator}`,
+          fraction2: `${numerator2}/${commonDenominator}`,
           correctAnswer: correctAnswer,
         };
       });
