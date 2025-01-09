@@ -4,67 +4,31 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Question =
-  | { type: "compare", fractions: [string, string], correctAnswer: boolean }
-  | { type: "equivalence", fractions: string[], correctAnswer: boolean };
+  | { type: "compare", fractions: [string, string], correctAnswer: string };
 
 export default function ComparerFractions() {
   const totalQuestions = 30;
   const questionsPerPage = 3;
-  const [answers, setAnswers] = useState<(boolean | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const generateQuestions = (): Question[] => {
-    const generateSameDenominator = (): Question[] => {
-      return Array.from({ length: totalQuestions / 6 }, () => {
-        const denominator = Math.floor(Math.random() * 8) + 2;
-        const num1 = Math.floor(Math.random() * 9) + 1;
-        const num2 = Math.floor(Math.random() * 9) + 1;
-        return {
-          type: "compare",
-          fractions: [`${num1}/${denominator}`, `${num2}/${denominator}`],
-          correctAnswer: num1 === num2,
-        };
-      });
-    };
+    return Array.from({ length: totalQuestions }, () => {
+      const numerator1 = Math.floor(Math.random() * 9) + 1;
+      const denominator1 = Math.floor(Math.random() * 8) + 2;
+      const numerator2 = Math.floor(Math.random() * 9) + 1;
+      const denominator2 = Math.floor(Math.random() * 8) + 2;
+      const fraction1 = `${numerator1}/${denominator1}`;
+      const fraction2 = `${numerator2}/${denominator2}`;
 
-    const generateSameNumerator = (): Question[] => {
-      return Array.from({ length: totalQuestions / 6 }, () => {
-        const numerator = Math.floor(Math.random() * 9) + 1;
-        const den1 = Math.floor(Math.random() * 8) + 2;
-        const den2 = Math.floor(Math.random() * 8) + 2;
-        return {
-          type: "compare",
-          fractions: [`${numerator}/${den1}`, `${numerator}/${den2}`],
-          correctAnswer: den1 === den2,
-        };
-      });
-    };
+      const value1 = numerator1 / denominator1;
+      const value2 = numerator2 / denominator2;
+      const correctAnswer = value1 > value2 ? ">" : value1 < value2 ? "<" : "=";
 
-    const generateNonReducedFractions = (): Question[] => {
-      return Array.from({ length: totalQuestions / 6 }, () => {
-        const numerator = Math.floor(Math.random() * 9) + 1;
-        const denominator = Math.floor(Math.random() * 8) + 2;
-        const multiplier = Math.floor(Math.random() * 5) + 2; // multiplier to create non-reduced fractions
-        const num1 = numerator * multiplier;
-        const den1 = denominator * multiplier;
-        const num2 = numerator * multiplier;
-        const den2 = denominator * multiplier;
-
-        return {
-          type: "compare",
-          fractions: [`${num1}/${den1}`, `${num2}/${den2}`],
-          correctAnswer: numerator === num2 / multiplier && denominator === den2 / multiplier,
-        };
-      });
-    };
-
-    return [
-      ...generateSameDenominator(),
-      ...generateSameNumerator(),
-      ...generateNonReducedFractions(),
-    ];
+      return { type: "compare", fractions: [fraction1, fraction2], correctAnswer };
+    });
   };
 
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -73,7 +37,7 @@ export default function ComparerFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (globalIndex: number, value: boolean) => {
+  const handleAnswer = (globalIndex: number, value: string) => {
     const updatedAnswers = [...answers];
     updatedAnswers[globalIndex] = value;
     setAnswers(updatedAnswers);
@@ -130,38 +94,7 @@ export default function ComparerFractions() {
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={10}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * (currentPage + 1)) / totalQuestions}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">
-            {Math.round(((currentPage + 1) / totalQuestions) * 100)}%
-          </span>
-        </div>
-      </div>
-
-      <h1 className="text-3xl font-bold mb-6">
-        Comparaison de Fractions
-      </h1>
+      <h1 className="text-3xl font-bold mb-6">Comparaison de Fractions</h1>
 
       {!isValidated && (
         <>
@@ -171,32 +104,18 @@ export default function ComparerFractions() {
               return (
                 <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center">
                   <p className="text-lg font-bold mb-4">
-                    {question.type === "compare"
-                      ? `${question.fractions[0]} = ${question.fractions[1]}`
-                      : "Equivalence des fractions"}
+                    {`${question.fractions[0]} ? ${question.fractions[1]}`}
                   </p>
-                  <div className="flex justify-center gap-4">
-                    <button
-                      className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === true
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-200"
-                      }`}
-                      onClick={() => handleAnswer(globalIndex, true)}
-                    >
-                      Vrai
-                    </button>
-                    <button
-                      className={`py-2 px-4 rounded font-bold ${
-                        answers[globalIndex] === false
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-200"
-                      }`}
-                      onClick={() => handleAnswer(globalIndex, false)}
-                    >
-                      Faux
-                    </button>
-                  </div>
+                  <select
+                    value={answers[globalIndex] || ""}
+                    onChange={(e) => handleAnswer(globalIndex, e.target.value)}
+                    className="py-2 px-4 rounded border-gray-300"
+                  >
+                    <option value="" disabled>Choisissez</option>
+                    <option value="<">&lt;</option>
+                    <option value=">">&gt;</option>
+                    <option value="=">=</option>
+                  </select>
                 </div>
               );
             })}

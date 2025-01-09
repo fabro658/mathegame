@@ -132,7 +132,7 @@ export default function Addition() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Addition</h1>
+      <h1 className="text-3xl font-bold mb-6">Sommes</h1>
 
       {/* Questions pour la page actuelle */}
       {!isValidated && (
