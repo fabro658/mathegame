@@ -88,7 +88,7 @@ const ShapesPracticePage = () => {
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
-        <div className="flex gap-8 justify-center">
+        <div className="flex gap-8 justify-center mb-12">
           {shapes.map((shape, idx) => (
             <div
               key={idx}
@@ -109,7 +109,7 @@ const ShapesPracticePage = () => {
         </div>
 
         {/* Zone des noms des formes */}
-        <div className="grid grid-cols-5 gap-4 mt-8">
+        <div className="grid grid-cols-5 gap-4 mb-12">
           {shapes.map((shape, idx) => (
             <div
               key={idx}
@@ -121,15 +121,18 @@ const ShapesPracticePage = () => {
             </div>
           ))}
         </div>
-      </div>
 
-      <div className="mt-6">
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
+        {/* Zone des boutons */}
+        <div className="flex gap-4 mt-8">
+          <button className="bg-gray-400 text-white py-2 px-6 rounded font-bold">Précédent</button>
+          <button
+            onClick={handleValidation}
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+          >
+            Valider les réponses
+          </button>
+          <button className="bg-gray-400 text-white py-2 px-6 rounded font-bold">Suivant</button>
+        </div>
       </div>
 
       {completed !== null && (
