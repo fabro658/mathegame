@@ -38,6 +38,27 @@ const ShapesPracticePage = () => {
     setCompleted(allCorrect);
   };
 
+  // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
+  const drawShape = (sides: number) => {
+    const points = [];
+    const centerX = 50;
+    const centerY = 50;
+    const radius = 40;
+
+    for (let i = 0; i < sides; i++) {
+      const angle = (i * 2 * Math.PI) / sides;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      points.push(`${x},${y}`);
+    }
+
+    return (
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <polygon points={points.join(" ")} fill="lightblue" stroke="black" strokeWidth="2" />
+      </svg>
+    );
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
@@ -97,7 +118,9 @@ const ShapesPracticePage = () => {
               }}
               onDragOver={(e) => e.preventDefault()}
             >
-              {shape.sides} côtés
+              {/* Affichage du dessin de la forme */}
+              {drawShape(shape.sides)}
+              <div>{shape.sides} côtés</div>
             </div>
           ))}
         </div>
