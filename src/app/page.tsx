@@ -27,6 +27,18 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Section Titre */}
+      <div className="flex flex-col items-center text-center mb-[3cm]">
+        {/* Titre 1 */}
+        <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm', marginTop: '0cm' }}>
+          Mathgame
+        </h1>
+        {/* Ligne noire sous le titre */}
+        <div className="w-32 sm:w-48 h-1 bg-black mt-2 mb-4"></div>
+        {/* Titre 2 */}
+        <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
+      </div>
+
       {/* Boutons Primaire, Secondaire et À venir */}
       <div className="absolute bottom-[150px] w-full flex justify-between">
         {/* Bouton Primaire */}
