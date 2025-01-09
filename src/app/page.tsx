@@ -6,7 +6,7 @@ export default function Home() {
     <div
       className="relative flex flex-col items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       style={{
-        backgroundImage: "url('/mathegame.png')",
+        backgroundImage: "url('/mathgame.png')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -26,16 +26,6 @@ export default function Home() {
           </Link>
         </div>
       </header>
-
-      {/* Section Titre */}
-      <div className="flex flex-col items-center text-center mb-[3cm]">
-        {/* Titre 1 */}
-        <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm', marginTop: '0cm' }}>
-          Mathgame
-        </h1>
-        {/* Titre 2 */}
-        <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
-      </div>
 
       {/* Boutons Primaire, Secondaire et À venir */}
       <div className="absolute bottom-[150px] w-full flex justify-between">
