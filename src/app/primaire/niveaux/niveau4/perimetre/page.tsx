@@ -165,7 +165,7 @@ export default function Perimetre() {
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-6 rounded w-48 text-center text-black text-lg mx-auto"
+                  className="border border-gray-400 p-6 rounded w-64 text-center text-black text-lg mx-auto"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />

@@ -17,16 +17,7 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
-  const [completed, setCompleted] = useState<boolean | null>(null); // Modification pour pouvoir gérer "null" au début
-
-  const itemsPerPage = 3;
-  const [currentPage, setCurrentPage] = useState(0);
-
-  // Pourcentage de progression
-  const calculateCompletionPercentage = () => {
-    const correctAnswers = answers.filter((answer, idx) => answer === shapes[idx].name).length;
-    return (correctAnswers / shapes.length) * 100;
-  };
+  const [completed, setCompleted] = useState<boolean | null>(null);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -35,8 +26,16 @@ const ShapesPracticePage = () => {
   };
 
   const handleValidation = () => {
-    const allCorrect = answers.every((answer, idx) => answer === shapes[idx].name);
-    setCompleted(allCorrect); // On met à jour l'état "completed" pour savoir si l'utilisateur a tout bon
+    console.log("Current answers:", answers); // Vérifier les réponses associées
+    const allCorrect = shapes.every((shape, idx) => answers[idx] === shape.name);
+  
+    if (allCorrect) {
+      setCompleted(true);
+      console.log("Validation réussie : Toutes les réponses sont correctes.");
+    } else {
+      setCompleted(false);
+      console.log("Validation échouée : Certaines réponses sont incorrectes.");
+    }
   };
 
   // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
@@ -60,21 +59,6 @@ const ShapesPracticePage = () => {
     );
   };
 
-  const startIndex = currentPage * itemsPerPage;
-  const currentShapes = shapes.slice(startIndex, startIndex + itemsPerPage);
-
-  const goToNextPage = () => {
-    if (startIndex + itemsPerPage < shapes.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
@@ -90,70 +74,36 @@ const ShapesPracticePage = () => {
         Retour
       </Link>
 
-      {/* Barre circulaire de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={10}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * calculateCompletionPercentage()) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{Math.round(calculateCompletionPercentage())}%</span>
-        </div>
-      </div>
-
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
-      {/* Zone pour les formes à associer */}
       <div className="flex gap-8">
-        {/* Affichage des formes avec nombre de côtés à gauche */}
+        {/* Zone des formes */}
         <div className="flex flex-wrap gap-6">
-          {currentShapes.map((shape, idx) => (
+          {shapes.map((shape, idx) => (
             <div
               key={idx}
               className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
               onDrop={(e) => {
                 e.preventDefault();
-                handleDrop(startIndex + idx, e.dataTransfer.getData("name"));
+                handleDrop(idx, e.dataTransfer.getData("name"));
               }}
               onDragOver={(e) => e.preventDefault()}
             >
-              {/* Affichage du dessin de la forme */}
               {drawShape(shape.sides)}
               <div>{shape.sides} côtés</div>
-
-              {/* Affichage du nom de la forme sous la forme si elle est associée */}
-              {answers[startIndex + idx] && (
-                <div className="mt-2 text-sm font-bold text-blue-500">
-                  {answers[startIndex + idx]}
-                </div>
+              {answers[idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">{answers[idx]}</div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Liste des noms des formes à glisser à droite */}
-        <div className="flex flex-col gap-4 ml-8">
+        {/* Liste des noms des formes à glisser */}
+        <div className="grid grid-cols-5 gap-4">
           {shapes.map((shape, idx) => (
             <div
               key={idx}
-              className="p-2 border border-blue-500 cursor-pointer"
+              className="p-2 border border-blue-500 cursor-pointer text-center"
               draggable
               onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
             >
@@ -163,16 +113,15 @@ const ShapesPracticePage = () => {
         </div>
       </div>
 
-      {/* Validation des réponses */}
       <div className="mt-6">
         <button
           onClick={handleValidation}
-         className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Valider les réponses
         </button>
       </div>
 
-      {/* Résultat de validation */}
       {completed !== null && (
         <div className="mt-6 text-xl font-bold">
           {completed ? (
@@ -182,24 +131,6 @@ const ShapesPracticePage = () => {
           )}
         </div>
       )}
-
-      {/* Navigation entre les pages */}
-      <div className="mt-6">
-        <button
-          onClick={goToPreviousPage}
-          disabled={currentPage === 0}
-          className="bg-gray-400 text-white py-2 px-4 rounded font-bold mr-4"
-        >
-          Précédent
-        </button>
-        <button
-          onClick={goToNextPage}
-          disabled={startIndex + itemsPerPage >= shapes.length}
-          className="bg-gray-400 text-white py-2 px-4 rounded font-bold"
-        >
-          Suivant
-        </button>
-      </div>
     </div>
   );
 };
