@@ -57,6 +57,11 @@ export default function SoustractionFractions() {
   };
 
   const handleValidation = (): void => {
+    if (!areAllAnswersFilled()) {
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      return;
+    }
+
     const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
     setIsValidated(true);
     setHasPassed(allCorrect);
@@ -76,6 +81,7 @@ export default function SoustractionFractions() {
     }
   };
 
+  // Fonction pour vérifier si toutes les réponses sont remplies
   const areAllAnswersFilled = (): boolean => {
     return answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).every((answer) => answer !== null && answer.trim() !== "");
   };
@@ -149,7 +155,7 @@ export default function SoustractionFractions() {
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1 || !areAllAnswersFilled()}
             >
               Suivant
             </button>
