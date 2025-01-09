@@ -10,7 +10,7 @@ export default function Comparison() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState<{ left: string; right: string; answer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ left: string; right: string; leftValue: number; rightValue: number; answer: string }[]>([]);
 
   useEffect(() => {
     const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -42,9 +42,9 @@ export default function Comparison() {
         leftText = `${numerator1}/${denominator1}`;
         rightText = `${numerator2}/${denominator2}`;
 
-        // Calculer les valeurs des fractions pour comparaison
-        leftValue = numerator1 * denominator2; // Fraction gauche
-        rightValue = numerator2 * denominator1; // Fraction droite
+        // Calculer les valeurs des fractions pour comparaison (en simplifiant la multiplication des numérateurs et dénominateurs)
+        leftValue = numerator1 * denominator2; // Fraction gauche (numérateur1 * dénominateur2)
+        rightValue = numerator2 * denominator1; // Fraction droite (numérateur2 * dénominateur1)
 
         // Comparer les fractions
         if (leftValue < rightValue) {
@@ -56,7 +56,7 @@ export default function Comparison() {
         }
       }
 
-      return { left: leftText, right: rightText, answer };
+      return { left: leftText, right: rightText, leftValue, rightValue, answer };
     });
 
     setQuestions(generatedQuestions);
