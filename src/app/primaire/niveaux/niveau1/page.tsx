@@ -28,18 +28,15 @@ export default function Page() {
         >
           Soustraction
         </a>
-        <a
-          href="/primaire/niveaux/niveau1/expression_equivalente"
-          className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-        >
-          Expressions équivalentes
-        </a>
-        <a
-          href="/primaire/niveaux/niveau1/revision"
-          className="bg-red-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-        >
-          Révision
-        </a>
+        {/* Dernière ligne avec 1 bouton centré */}
+        <div className="flex justify-center">
+          <a
+            href="/primaire/niveaux/niveau2/revision"
+            className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            >
+            Révision
+          </a>
+        </div>
       </div>
     </div>
   );
