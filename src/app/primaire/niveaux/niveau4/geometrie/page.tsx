@@ -18,6 +18,10 @@ const shapes = [
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<string[]>(new Array(shapes.length).fill(''));
   const [completed, setCompleted] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Nombre de formes affichées par page
+  const itemsPerPage = 3;
 
   // Pourcentage de progression
   const calculateCompletionPercentage = () => {
@@ -57,6 +61,21 @@ const ShapesPracticePage = () => {
         <polygon points={points.join(" ")} fill="lightblue" stroke="black" strokeWidth="2" />
       </svg>
     );
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const currentShapes = shapes.slice(startIndex, startIndex + itemsPerPage);
+
+  const goToNextPage = () => {
+    if (startIndex + itemsPerPage < shapes.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -108,13 +127,13 @@ const ShapesPracticePage = () => {
       <div className="flex gap-8">
         {/* Affichage des formes avec nombre de côtés */}
         <div className="flex flex-wrap gap-6">
-          {shapes.map((shape, idx) => (
+          {currentShapes.map((shape, idx) => (
             <div
               key={idx}
               className="w-32 h-32 border-2 border-gray-500 flex items-center justify-center"
               onDrop={(e) => {
                 e.preventDefault();
-                handleDrop(idx, e.dataTransfer.getData("name"));
+                handleDrop(startIndex + idx, e.dataTransfer.getData("name"));
               }}
               onDragOver={(e) => e.preventDefault()}
             >
@@ -162,6 +181,24 @@ const ShapesPracticePage = () => {
           Certaines associations sont incorrectes. Essayez encore !
         </div>
       )}
+
+      {/* Navigation entre les pages */}
+      <div className="mt-6">
+        <button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 0}
+          className="bg-gray-400 text-white py-2 px-4 rounded font-bold mr-4"
+        >
+          Précédent
+        </button>
+        <button
+          onClick={goToNextPage}
+          disabled={startIndex + itemsPerPage >= shapes.length}
+          className="bg-gray-400 text-white py-2 px-4 rounded font-bold"
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 };
