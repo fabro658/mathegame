@@ -46,7 +46,7 @@ export default function Home() {
             style={{
               borderTopLeftRadius: '100% 50%',
               borderTopRightRadius: '100% 50%',
-              left: '15%',
+              left: '30%',
               transform: 'translateX(-50%)',
             }}
           >
@@ -76,7 +76,7 @@ export default function Home() {
             style={{
               borderTopLeftRadius: '100% 50%',
               borderTopRightRadius: '100% 50%',
-              left: '85%',
+              left: '70%',
               transform: 'translateX(-50%)',
             }}
           >
