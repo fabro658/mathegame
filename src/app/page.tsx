@@ -34,7 +34,7 @@ export default function Home() {
           Mathgame
         </h1>
         {/* Ligne noire sous le titre */}
-        <div className=" w-48 et sm:w-64 h-1 bg-black mt-2 mb-4"></div>
+        <div className=" w-64 et sm:w-96 h-1 bg-black mt-2 mb-4"></div>
         {/* Titre 2 */}
         <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
       </div>
