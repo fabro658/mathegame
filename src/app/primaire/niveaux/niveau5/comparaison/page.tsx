@@ -10,8 +10,8 @@ type Question = {
 };
 
 export default function ComparerEntiers() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -137,7 +137,7 @@ export default function ComparerEntiers() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {currentQuestions.map((question, localIndex) => {
               const globalIndex = currentPage * questionsPerPage + localIndex;
               return (
