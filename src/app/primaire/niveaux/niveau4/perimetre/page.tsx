@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Perimetre() {
   const totalQuestions = 30;
-  const questionsPerPage = 6; // Affiche 6 questions par page (2 colonnes de 3 lignes)
+  const questionsPerPage = 3; // Affiche 6 questions par page (2 colonnes de 3 lignes)
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
