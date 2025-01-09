@@ -12,22 +12,16 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/primaire/niveaux/niveau5/exposant"
+          href="/niveaux/niveau4/exposant"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
           Exposant
           </Link>
           <Link
-          href="/primaire/niveaux/niveau5/priooperation"
+          href="/niveaux/niveau4/priooperation"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Priorité d&#39;opération
-          </Link>
-          <Link
-          href="/primaire/niveaux/niveau5/comparaison"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
-          Comparaisons
           </Link>
         </div>
       </div>

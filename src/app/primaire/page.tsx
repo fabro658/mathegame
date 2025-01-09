@@ -38,6 +38,11 @@ export default function Primaire() {
             Niveau 5
           </div>
         </Link>
+        <Link href="/primaire/niveaux/niveau6">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Niveau 6
+          </div>
+        </Link>
       </div>
     </div>
   );
