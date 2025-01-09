@@ -18,6 +18,11 @@ export default function EquationsEquivalentes() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Calcul du pourcentage de progression
+  const completionPercentage = Math.floor(
+    (selectedButtons.filter((button) => button !== "").length / totalQuestions) * 100
+  );
+
   const generateEquation = (level: number) => {
     const operations = ["+", "-"]; // Opérations pour le niveau simple
     if (level >= 2) operations.push("*"); // Ajouter la multiplication au niveau intermédiaire
@@ -129,6 +134,11 @@ export default function EquationsEquivalentes() {
     }
   };
 
+  // Propriétés pour le cercle de progression
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
@@ -143,6 +153,34 @@ export default function EquationsEquivalentes() {
       >
         Retour
       </Link>
+
+      {/* Barre circulaire */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">
         Questions sur les équations équivalentes
