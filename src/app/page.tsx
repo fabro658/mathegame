@@ -31,7 +31,7 @@ export default function Home() {
       <div className="flex flex-col items-center text-center mb-[3cm]">
         {/* Titre 1 */}
         <h1 className="text-white text-6xl sm:text-7xl font-bold" style={{ marginBottom: '0.5cm', marginTop: '0cm' }}>
-          Mathegame
+          Mathgame
         </h1>
         {/* Titre 2 */}
         <h2 className="text-white text-4xl sm:text-5xl font-semibold">Mathématique</h2>
@@ -55,7 +55,7 @@ export default function Home() {
         </Link>
 
         {/* Bouton Secondaire */}
-        <Link href="/secondaire">
+        <Link href="/avenir">
           <div
             className="absolute bg-orange-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-orange-400"
             style={{
@@ -65,12 +65,12 @@ export default function Home() {
               transform: 'translateX(-50%)',
             }}
           >
-            Secondaire
+            À venir
           </div>
         </Link>
 
         {/* Bouton À venir */}
-        <Link href="/avenir">
+        <Link href="/Secondaire">
           <div
             className="absolute bg-green-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-green-400"
             style={{
@@ -80,7 +80,7 @@ export default function Home() {
               transform: 'translateX(-50%)',
             }}
           >
-            À venir
+            Secondaire
           </div>
         </Link>
       </div>
