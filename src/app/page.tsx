@@ -72,7 +72,7 @@ export default function Home() {
         </Link>
 
         {/* Bouton À venir */}
-        <Link href="/Secondaire">
+        <Link href="/secondaire">
           <div
             className="absolute bg-green-500 text-black text-lg sm:text-xl h-32 sm:h-40 w-64 sm:w-80 flex items-center justify-center font-bold hover:bg-green-400"
             style={{
