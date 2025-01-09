@@ -17,11 +17,10 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
-  const [completed, setCompleted] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [completed, setCompleted] = useState<boolean | null>(null); // Modification pour pouvoir gérer "null" au début
 
-  // Nombre de formes affichées par page
   const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Pourcentage de progression
   const calculateCompletionPercentage = () => {
@@ -37,7 +36,7 @@ const ShapesPracticePage = () => {
 
   const handleValidation = () => {
     const allCorrect = answers.every((answer, idx) => answer === shapes[idx].name);
-    setCompleted(allCorrect);
+    setCompleted(allCorrect); // On met à jour l'état "completed" pour savoir si l'utilisateur a tout bon
   };
 
   // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
@@ -123,7 +122,7 @@ const ShapesPracticePage = () => {
 
       {/* Zone pour les formes à associer */}
       <div className="flex gap-8">
-        {/* Affichage des formes avec nombre de côtés */}
+        {/* Affichage des formes avec nombre de côtés à gauche */}
         <div className="flex flex-wrap gap-6">
           {currentShapes.map((shape, idx) => (
             <div
@@ -149,8 +148,8 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Liste des noms des formes à glisser */}
-        <div className="flex flex-col gap-4">
+        {/* Liste des noms des formes à glisser à droite */}
+        <div className="flex flex-col gap-4 ml-8">
           {shapes.map((shape, idx) => (
             <div
               key={idx}
@@ -175,15 +174,13 @@ const ShapesPracticePage = () => {
       </div>
 
       {/* Résultat de validation */}
-      {completed && (
-        <div className="mt-6 text-green-600 font-bold text-xl">
-          Bravo ! Vous avez réussi à associer toutes les formes correctement.
-        </div>
-      )}
-
-      {!completed && completed !== null && (
-        <div className="mt-6 text-red-600 font-bold text-xl">
-          Certaines associations sont incorrectes. Essayez encore !
+      {completed !== null && (
+        <div className="mt-6 text-xl font-bold">
+          {completed ? (
+            <div className="text-green-600">Bravo ! Vous avez réussi à associer toutes les formes correctement.</div>
+          ) : (
+            <div className="text-red-600">Certaines associations sont incorrectes. Essayez encore !</div>
+          )}
         </div>
       )}
 
