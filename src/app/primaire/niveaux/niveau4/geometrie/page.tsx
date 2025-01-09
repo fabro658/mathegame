@@ -1,40 +1,26 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function GeometryPractice() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 3; // Questions affichées par vague
-
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const totalQuestions = 36;
+  const questionsPerPage = 3;
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions de géométrie
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
         let questionText = "";
         let correctAnswer = "";
 
-        const conceptChoice = Math.floor(Math.random() * 3); // Choix aléatoire de concept
+        const conceptChoice = Math.floor(Math.random() * 2);
 
         if (conceptChoice === 0) {
-          // Question sur les angles
-          const angle1 = Math.floor(Math.random() * 90) + 1; // Angle aléatoire
-          const angle2 = Math.floor(Math.random() * (180 - angle1)) + 1; // Angle complémentaire
-          questionText = `Quel est le troisième angle d'un triangle si les deux premiers sont ${angle1}° et ${angle2}° ?`;
-          correctAnswer = (180 - angle1 - angle2).toString();
-        } else if (conceptChoice === 1) {
-          // Question sur les lignes
-          questionText = `Quel type de lignes sont toujours équidistantes et ne se croisent jamais ?`;
-          correctAnswer = "parallèles";
-        } else {
-          // Question sur les polygones
-          const sides = Math.floor(Math.random() * 6) + 3; // Nombre de côtés (3 à 8)
+          // Question sur les formes géométriques
+          const sides = Math.floor(Math.random() * 6) + 3; // Choisir un nombre de côtés entre 3 et 8
           questionText = `Comment appelle-t-on un polygone à ${sides} côtés ?`;
           correctAnswer = ["triangle", "quadrilatère", "pentagone", "hexagone", "heptagone", "octogone"][sides - 3];
         }
@@ -49,15 +35,13 @@ export default function GeometryPractice() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des changements de réponse
-  const handleChange = (index: number, value: string): void => {
+  const handleChange = (index, value) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
-  // Validation des réponses
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
@@ -92,14 +76,14 @@ export default function GeometryPractice() {
     }
   };
 
-  const handleNextPage = (): void => {
+  const handleNextPage = () => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
     }
   };
 
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
@@ -109,68 +93,50 @@ export default function GeometryPractice() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Barre circulaire de progression
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+  // Fonction pour générer des formes en SVG
+  const generateShape = (sides) => {
+    const radius = 50; // Rayon pour les formes
+    const points = [];
+    for (let i = 0; i < sides; i++) {
+      const angle = (i * 2 * Math.PI) / sides;
+      points.push(`${radius + radius * Math.cos(angle)},${radius + radius * Math.sin(angle)}`);
+    }
+
+    return (
+      <svg width="100" height="100">
+        <polygon points={points.join(" ")} fill="lightblue" stroke="black" strokeWidth="2" />
+      </svg>
+    );
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau4"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
-
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
+      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">Apprendre</Link>
+      <Link href="/primaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
 
       <h1 className="text-3xl font-bold mb-6">Pratique de la Géométrie</h1>
 
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText, correctAnswer }, idx) => (
               <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
-                <input
-                 type="text"
-                  inputMode="text"
-                 className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
+                {/* Générer l'image de la forme géométrique */}
+                {generateShape(correctAnswer === "triangle" ? 3 : correctAnswer === "quadrilatère" ? 4 : correctAnswer === "pentagone" ? 5 : correctAnswer === "hexagone" ? 6 : correctAnswer === "heptagone" ? 7 : 8)}
+                <select
+                  className="border border-gray-400 p-2 rounded w-96 text-center text-black text-lg mx-auto"
                   value={answers[currentPage * questionsPerPage + idx] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                  />
+                >
+                  <option value="">Choisir une forme</option>
+                  <option value="triangle">Triangle</option>
+                  <option value="quadrilatère">Quadrilatère</option>
+                  <option value="pentagone">Pentagone</option>
+                  <option value="hexagone">Hexagone</option>
+                  <option value="heptagone">Heptagone</option>
+                  <option value="octogone">Octogone</option>
+                </select>
               </div>
             ))}
           </div>
