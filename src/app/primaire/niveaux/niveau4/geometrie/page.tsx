@@ -117,7 +117,7 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Liste des noms des formes à glisser */}
+        {/* Liste des noms des formes à glisser, organisée en 5 colonnes et 2 lignes */}
         <div className="grid grid-cols-5 gap-4">
           {shapes.map((shape, idx) => (
             <div
