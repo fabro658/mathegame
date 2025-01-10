@@ -6,22 +6,34 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">Niveau 5 - Choisissez une opération</h1>
       <div className="grid grid-cols-2 gap-8">
       <Link
-        href="/"
+        href="/secondaire"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau5/fonction"
+          href="/niveaux/niveau5/perimetre"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
-          Fonction
+          Périmètre
+          </Link>
+      <Link
+          href="/niveaux/niveau5/aire"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          >
+          Aire
           </Link>
           <Link
-          href="/niveaux/niveau5/operationalgebre"
+          href="/niveaux/niveau5/volume"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          >
+          Volume
+          </Link>
+          <Link
+          href="/niveaux/niveau5/geometrie"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
-          Oprération algébrique
+          Géométrie
           </Link>
         </div>
       </div>

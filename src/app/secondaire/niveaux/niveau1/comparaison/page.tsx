@@ -17,25 +17,31 @@ export default function Comparer() {
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, (_, index) => {
       if (index < 10) {
-        // Niveau 1 : entiers simples positifs
-        const num1 = Math.floor(Math.random() * 20) + 1;
-        const num2 = Math.floor(Math.random() * 20) + 1;
+        // Niveau 1 : entiers simples avec négatifs
+        const num1 = Math.floor(Math.random() * 40) - 20; // Générer des entiers de -20 à 20
+        const num2 = Math.floor(Math.random() * 40) - 20;
         const correctAnswer = num1 > num2 ? ">" : num1 < num2 ? "<" : "=";
         return { type: "compare", numbers: [String(num1), String(num2)], correctAnswer };
-      } else {
-        // Niveau 2+ : fractions ou nombres plus complexes
+      } else if (index < 20) {
+        // Niveau 2 : fractions
         const numerator1 = Math.floor(Math.random() * 9) + 1;
         const denominator1 = Math.floor(Math.random() * 8) + 2;
         const numerator2 = Math.floor(Math.random() * 9) + 1;
         const denominator2 = Math.floor(Math.random() * 8) + 2;
         const fraction1 = `${numerator1}/${denominator1}`;
         const fraction2 = `${numerator2}/${denominator2}`;
-
+  
         const value1 = numerator1 / denominator1;
         const value2 = numerator2 / denominator2;
         const correctAnswer = value1 > value2 ? ">" : value1 < value2 ? "<" : "=";
-
+  
         return { type: "compare", numbers: [fraction1, fraction2], correctAnswer };
+      } else {
+        // Niveau 3 : Nombres à virgule avec négatifs
+        const num1 = (Math.random() * 40 - 20).toFixed(2); // Générer un nombre flottant entre -20 et 20
+        const num2 = (Math.random() * 40 - 20).toFixed(2);
+        const correctAnswer = parseFloat(num1) > parseFloat(num2) ? ">" : parseFloat(num1) < parseFloat(num2) ? "<" : "=";
+        return { type: "compare", numbers: [num1, num2], correctAnswer };
       }
     });
   };

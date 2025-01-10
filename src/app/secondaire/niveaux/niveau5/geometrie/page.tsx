@@ -1,115 +1,108 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
-export default function GeometryPractice() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 3; // Questions affichées par vague
+const shapes = [
+  { name: "Triangle", sides: 3 },
+  { name: "Carré", sides: 4 },
+  { name: "Cercle", sides: 0 },
+  { name: "Rectangle", sides: 4 },
+  { name: "Pentagone", sides: 5 },
+  { name: "Hexagone", sides: 6 },
+  { name: "Heptagone", sides: 7 },
+  { name: "Octogone", sides: 8 },
+  { name: "Nonagone", sides: 9 },
+  { name: "Trapèze", sides: 4 },
+];
 
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+const ShapesPracticePage = () => {
+  const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
+  const [currentShapes, setCurrentShapes] = useState(0);
+  const [errorIndices, setErrorIndices] = useState<number[]>([]);
+  const [progress, setProgress] = useState(0);
 
-  // Génération des questions de géométrie
-  useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        let questionText = "";
-        let correctAnswer = "";
-
-        const conceptChoice = Math.floor(Math.random() * 3); // Choix aléatoire de concept
-
-        if (conceptChoice === 0) {
-          // Question sur les angles
-          const angle1 = Math.floor(Math.random() * 90) + 1; // Angle aléatoire
-          const angle2 = Math.floor(Math.random() * (180 - angle1)) + 1; // Angle complémentaire
-          questionText = `Quel est le troisième angle d'un triangle si les deux premiers sont ${angle1}° et ${angle2}° ?`;
-          correctAnswer = (180 - angle1 - angle2).toString();
-        } else if (conceptChoice === 1) {
-          // Question sur les lignes
-          questionText = `Quel type de lignes sont toujours équidistantes et ne se croisent jamais ?`;
-          correctAnswer = "parallèles";
-        } else {
-          // Question sur les polygones
-          const sides = Math.floor(Math.random() * 6) + 3; // Nombre de côtés (3 à 8)
-          questionText = `Comment appelle-t-on un polygone à ${sides} côtés ?`;
-          correctAnswer = ["triangle", "quadrilatère", "pentagone", "hexagone", "heptagone", "octogone"][sides - 3];
-        }
-
-        return {
-          questionText,
-          correctAnswer,
-        };
-      });
-    };
-
-    setQuestions(generateQuestions());
-  }, []);
-
-  // Gestion des changements de réponse
-  const handleChange = (index: number, value: string): void => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
-    setAnswers(newAnswers);
-  };
-
-  // Validation des réponses
-  const handleValidation = (): void => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
-
-    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
-      return;
-    }
-
-    let allCorrect = true;
+  const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
+    const targetIndex = currentShapes + index;
 
-    pageAnswers.forEach((answer, idx) => {
-      if (answer !== pageCorrectAnswers[idx]) {
-        updatedAnswers[startIndex + idx] = null;
-        allCorrect = false;
-      }
-    });
+    // Vérifie si la réponse est correcte dès le drop
+    if (shapes[targetIndex].name === droppedName) {
+      setProgress((prev) => prev + (100 / shapes.length)); // Augmenter la progression
+    } else if (updatedAnswers[targetIndex] && shapes[targetIndex].name === updatedAnswers[targetIndex]) {
+      // Si la réponse est changée d'une bonne réponse à une mauvaise, réduire la progression
+      setProgress((prev) => prev - (100 / shapes.length));
+    }
 
+    updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+  };
 
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500);
+  const handleValidation = () => {
+    const startIdx = currentShapes;
+    const endIdx = currentShapes + 3;
+    const errors: number[] = [];
+
+    for (let i = startIdx; i < endIdx; i++) {
+      if (answers[i] !== shapes[i].name) {
+        errors.push(i);
+      }
+    }
+
+    if (errors.length === 0) {
+      // Tout est correct, passer à la série suivante
+      setErrorIndices([]);
+      handleNext();
+    } else {
+      // Réinitialiser uniquement les erreurs
+      setErrorIndices(errors);
+      const updatedAnswers = [...answers];
+      errors.forEach((idx) => {
+        if (updatedAnswers[idx] === shapes[idx].name) {
+          setProgress((prev) => prev - (100 / shapes.length)); // Réduire la progression pour les erreurs
+        }
+        updatedAnswers[idx] = null;
+      });
+      setAnswers(updatedAnswers);
     }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
+  const handleNext = () => {
+    setCurrentShapes((prev) => (prev + 3) % shapes.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
+  };
+
+  const drawShape = (sides: number) => {
+    const points = [];
+    const centerX = 50;
+    const centerY = 50;
+    const radius = 40;
+
+    if (sides === 0) {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else {
+      for (let i = 0; i < sides; i++) {
+        const angle = (i * 2 * Math.PI) / sides;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        points.push(`${x},${y}`);
+      }
+
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <polygon points={points.join(" ")} fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
     }
   };
 
-  const handlePreviousPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-    }
-  };
-
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  // Barre circulaire de progression
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -123,7 +116,7 @@ export default function GeometryPractice() {
         Apprendre
       </Link>
       <Link
-        href="/niveaux/niveau3"
+        href="/primaire/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -147,84 +140,82 @@ export default function GeometryPractice() {
             stroke="#3b82f6"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeDashoffset={circumference - (circumference * progress) / 100}
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">{Math.round(progress)}%</span>
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Pratique de la Géométrie</h1>
+      <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
-              <div key={idx} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                 type="text"
-                  inputMode="text"
-                 className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-                  value={answers[currentPage * questionsPerPage + idx] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                  />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === 0}
+      <div className="flex flex-col items-center gap-8">
+        {/* Zone des formes */}
+        <div className="flex gap-8 justify-center mb-12">
+          {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
+            <div
+              key={idx}
+              className={`w-32 h-32 border-2 ${
+                errorIndices.includes(currentShapes + idx)
+                  ? "border-red-500"
+                  : "border-gray-500"
+              } flex flex-col items-center justify-center`}
+              onDrop={(e) => {
+                e.preventDefault();
+                handleDrop(idx, e.dataTransfer.getData("name"));
+              }}
+              onDragOver={(e) => e.preventDefault()}
             >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
+              {drawShape(shape.sides)}
+              <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
+              {answers[currentShapes + idx] && (
+                <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
+              )}
             </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
+          ))}
+        </div>
+
+        {/* Zone des noms des formes */}
+        <div className="grid grid-cols-5 gap-4 mb-12">
+          {shapes.map((shape, idx) => (
+            <div
+              key={idx}
+              className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
+              draggable
+              onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
+            >
+              {shape.name}
             </div>
-          )}
-        </>
-      )}
+          ))}
+        </div>
+
+        {/* Zone des boutons */}
+        <div className="flex gap-4 mt-8">
+          <button
+            onClick={handlePrevious}
+            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
+          >
+            Précédent
+          </button>
+          <button
+            onClick={handleValidation}
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+          >
+            Valider les réponses
+          </button>
+          <button
+            onClick={handleNext}
+            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
+            disabled={errorIndices.length > 0}
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default ShapesPracticePage;
