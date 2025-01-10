@@ -3,6 +3,23 @@ import Link from "next/link";
 export default function Primaire() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
+      {/* Demi-cercles bleus clairs */}
+      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1/2 h-full flex flex-col justify-between items-center z-0">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <svg
+            key={index}
+            width="100"
+            height="50"
+            className="w-24 h-12"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 50"
+            preserveAspectRatio="none"
+          >
+            <circle cx="50" cy="50" r="50" fill="#93c5fd" />
+          </svg>
+        ))}
+      </div>
+
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -19,10 +36,10 @@ export default function Primaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-10">
         <Link href="/primaire/niveaux/niveau1">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-          Opérations arithmétiques
+            Opérations arithmétiques
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau2">
