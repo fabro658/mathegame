@@ -56,6 +56,17 @@ export default function Secondaire() {
         <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 2 */}
         <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 3 */}
       </div>
+
+      {/* Deux autres cubes empilés à côté */}
+      <div className="absolute left-16 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0">
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 4 */}
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 5 */}
+      </div>
+
+      {/* Dernier cube en bas à côté */}
+      <div className="absolute left-32 bottom-0 flex items-center justify-center z-0">
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 6 */}
+      </div>
     </div>
   );
 }
