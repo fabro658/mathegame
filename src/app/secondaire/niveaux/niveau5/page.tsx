@@ -12,26 +12,26 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau5/perimetre"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          href="/secondaire/niveaux/niveau5/perimetre"
+          className="bg-red-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
           Périmètre
           </Link>
       <Link
-          href="/niveaux/niveau5/aire"
+          href="/secondaire/niveaux/niveau5/aire"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
           Aire
           </Link>
           <Link
-          href="/niveaux/niveau5/volume"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          href="/secondaire/niveaux/niveau5/volume"
+          className="bg-pruple-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
           Volume
           </Link>
           <Link
-          href="/niveaux/niveau5/geometrie"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          href="/secondaire/niveaux/niveau5/geometrie"
+          className="bg-blue-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Géométrie
           </Link>
