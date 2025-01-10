@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
-      <h1 className="text-4xl font-bold mb-12">Niveau 5 - Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12">Géométrie</h1>
       <div className="grid grid-cols-2 gap-8">
       <Link
         href="/secondaire"
