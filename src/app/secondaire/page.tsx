@@ -10,9 +10,10 @@ export default function Secondaire() {
       >
         Retour
       </Link>
-  {/* Liens vers les niveaux */}
-    <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-      <Link href="/secondaire/niveaux/niveau1">
+
+      {/* Liens vers les niveaux */}
+      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+        <Link href="/secondaire/niveaux/niveau1">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Arithmétique
           </div>
@@ -44,9 +45,16 @@ export default function Secondaire() {
         </Link>
         <Link href="/secondaire/niveaux/niveau7">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Mathématiques discètes
+            Mathématiques discrètes
           </div>
         </Link>
+      </div>
+
+      {/* Trois petits cubes placés en L dans le coin en bas à gauche */}
+      <div className="absolute left-0 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0">
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 1 */}
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 2 */}
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 3 */}
       </div>
     </div>
   );
