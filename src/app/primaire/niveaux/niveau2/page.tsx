@@ -19,14 +19,14 @@ export default function Page() {
         <div className="flex justify-center gap-8">
           <Link
             href="/primaire/niveaux/niveau2/comparaison"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
             aria-label="Page de multiplication"
           >
             Comparaisons
           </Link>
           <Link
             href="/primaire/niveaux/niveau2/expression_equivalente"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
             aria-label="Page de division"
           >
             Expression équivalente
@@ -36,8 +36,8 @@ export default function Page() {
         <div className="flex justify-center">
           <Link
             href="/primaire/niveaux/niveau2/comparer_fraction"
-            className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            >
+            className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
+          >
             Comparaison de fraction
           </Link>
         </div>

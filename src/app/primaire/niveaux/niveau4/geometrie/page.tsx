@@ -29,25 +29,27 @@ const ShapesPracticePage = () => {
   };
 
   const handleValidation = () => {
-    console.log("Current answers:", answers); // Vérifier les réponses associées
     const allCorrect = shapes.every((shape, idx) => answers[idx] === shape.name);
 
-    if (allCorrect) {
-      setCompleted(true);
-      console.log("Validation réussie : Toutes les réponses sont correctes.");
-    } else {
-      setCompleted(false);
-      console.log("Validation échouée : Certaines réponses sont incorrectes.");
-    }
+    setCompleted(allCorrect);
   };
 
   const handleNext = () => {
-    setCurrentShapes((prev) => (prev + 3) % shapes.length);
+    if (currentShapes + 3 < shapes.length) {
+      setCurrentShapes((prev) => prev + 3);
+    }
   };
 
   const handlePrevious = () => {
-    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
+    if (currentShapes > 0) {
+      setCurrentShapes((prev) => prev - 3);
+    }
   };
+
+  // Calcul du pourcentage de progression
+  const completionPercentage = Math.floor(
+    (answers.filter((answer, idx) => answer === shapes[idx].name).length / shapes.length) * 100
+  );
 
   // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
   const drawShape = (sides: number) => {
@@ -57,14 +59,12 @@ const ShapesPracticePage = () => {
     const radius = 40;
 
     if (sides === 0) {
-      // Dessiner un cercle
       return (
         <svg width="100" height="100" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
         </svg>
       );
     } else {
-      // Dessiner les autres formes géométriques
       for (let i = 0; i < sides; i++) {
         const angle = (i * 2 * Math.PI) / sides;
         const x = centerX + radius * Math.cos(angle);
@@ -80,8 +80,13 @@ const ShapesPracticePage = () => {
     }
   };
 
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -95,6 +100,35 @@ const ShapesPracticePage = () => {
         Retour
       </Link>
 
+      {/* Cercle de progression */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
+
+      {/* Titre */}
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
       <div className="flex flex-col items-center gap-8">
@@ -119,7 +153,7 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Zone des noms des formes */}
+        {/* Zone des noms */}
         <div className="grid grid-cols-5 gap-4 mb-12">
           {shapes.map((shape, idx) => (
             <div
@@ -133,7 +167,7 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Zone des boutons */}
+        {/* Boutons */}
         <div className="flex gap-4 mt-8">
           <button
             onClick={handlePrevious}
