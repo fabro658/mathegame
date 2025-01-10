@@ -28,13 +28,19 @@ export default function PrioOperation() {
         const op4 = operations[Math.floor(Math.random() * operations.length)];
 
         if (i < totalQuestions / 4) {
+          // Série 1 : Parenthèses simples avec deux nombres
           questionsArray.push(`(${num1} ${op1} ${num2})`);
         } else if (i < totalQuestions / 2) {
+          // Série 2 : Parenthèses simples avec un opérateur extérieur
           questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} ${num3}`);
         } else if (i < (3 * totalQuestions) / 4) {
-          questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} (${num3} ${op3} ${num4})`);
+          // Série 3 : Parenthèses imbriquées
+          questionsArray.push(`(${num1} ${op1} (${num2} ${op2} ${num3}))`);
         } else {
-          questionsArray.push(`(${num1} ${op1} (${num2} ${op2} ${num3})) ${op3} (${num4} ${op4} ${num1})`);
+          // Série 4 : Parenthèses imbriquées complexes
+          questionsArray.push(
+            `(${num1} ${op1} (${num2} ${op2} ${num3})) ${op3} (${num4} ${op4} ${num1})`
+          );
         }
       }
 
@@ -46,7 +52,7 @@ export default function PrioOperation() {
 
   const correctAnswers = questions.map((question) => {
     try {
-      return parseFloat(eval(question).toFixed(2)); // A modifier pour plus de sécurité
+      return parseFloat(eval(question).toFixed(2)); // Attention : eval est utilisé ici à titre de simplification
     } catch {
       return null;
     }
