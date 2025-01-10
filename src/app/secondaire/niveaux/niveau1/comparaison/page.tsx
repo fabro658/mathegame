@@ -87,7 +87,15 @@ export default function Comparer() {
     currentPage * questionsPerPage,
     (currentPage + 1) * questionsPerPage
   );
+ // Propriétés pour le cercle de progression
+ const radius = 50; // Rayon du cercle
+ const strokeWidth = 10; // Largeur du cercle
+ const circumference = 2 * Math.PI * radius;
 
+ // Calculer le pourcentage de progression
+ const answeredCount = answers.filter((answer) => answer !== null).length;
+ const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
+ 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
@@ -97,11 +105,39 @@ export default function Comparer() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau3"
+        href="/secondaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
+
+      {/* Barre circulaire */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">Comparaison de Nombres</h1>
 

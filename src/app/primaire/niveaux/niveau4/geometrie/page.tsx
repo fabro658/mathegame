@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-// Liste des formes géométriques avec leurs propriétés
 const shapes = [
   { name: "Triangle", sides: 3 },
   { name: "Carré", sides: 4 },
@@ -19,39 +18,63 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
-  const [completed, setCompleted] = useState<boolean | null>(null);
   const [currentShapes, setCurrentShapes] = useState(0);
+  const [errorIndices, setErrorIndices] = useState<number[]>([]);
+  const [progress, setProgress] = useState(0);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[currentShapes + index] = droppedName;
+    const targetIndex = currentShapes + index;
+
+    // Vérifie si la réponse est correcte dès le drop
+    if (shapes[targetIndex].name === droppedName) {
+      setProgress((prev) => prev + (100 / shapes.length)); // Augmenter la progression
+    } else if (updatedAnswers[targetIndex] && shapes[targetIndex].name === updatedAnswers[targetIndex]) {
+      // Si la réponse est changée d'une bonne réponse à une mauvaise, réduire la progression
+      setProgress((prev) => prev - (100 / shapes.length));
+    }
+
+    updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
   };
 
   const handleValidation = () => {
-    const allCorrect = shapes.every((shape, idx) => answers[idx] === shape.name);
+    const startIdx = currentShapes;
+    const endIdx = currentShapes + 3;
+    const errors: number[] = [];
 
-    setCompleted(allCorrect);
+    for (let i = startIdx; i < endIdx; i++) {
+      if (answers[i] !== shapes[i].name) {
+        errors.push(i);
+      }
+    }
+
+    if (errors.length === 0) {
+      // Tout est correct, passer à la série suivante
+      setErrorIndices([]);
+      handleNext();
+    } else {
+      // Réinitialiser uniquement les erreurs
+      setErrorIndices(errors);
+      const updatedAnswers = [...answers];
+      errors.forEach((idx) => {
+        if (updatedAnswers[idx] === shapes[idx].name) {
+          setProgress((prev) => prev - (100 / shapes.length)); // Réduire la progression pour les erreurs
+        }
+        updatedAnswers[idx] = null;
+      });
+      setAnswers(updatedAnswers);
+    }
   };
 
   const handleNext = () => {
-    if (currentShapes + 3 < shapes.length) {
-      setCurrentShapes((prev) => prev + 3);
-    }
+    setCurrentShapes((prev) => (prev + 3) % shapes.length);
   };
 
   const handlePrevious = () => {
-    if (currentShapes > 0) {
-      setCurrentShapes((prev) => prev - 3);
-    }
+    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
-  // Calcul du pourcentage de progression
-  const completionPercentage = Math.floor(
-    (answers.filter((answer, idx) => answer === shapes[idx].name).length / shapes.length) * 100
-  );
-
-  // Fonction pour dessiner une forme géométrique avec un nombre spécifique de côtés
   const drawShape = (sides: number) => {
     const points = [];
     const centerX = 50;
@@ -86,7 +109,6 @@ const ShapesPracticePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -100,7 +122,6 @@ const ShapesPracticePage = () => {
         Retour
       </Link>
 
-      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -119,16 +140,15 @@ const ShapesPracticePage = () => {
             stroke="#3b82f6"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeDashoffset={circumference - (circumference * progress) / 100}
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">{Math.round(progress)}%</span>
         </div>
       </div>
 
-      {/* Titre */}
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
       <div className="flex flex-col items-center gap-8">
@@ -137,7 +157,11 @@ const ShapesPracticePage = () => {
           {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
             <div
               key={idx}
-              className="w-32 h-32 border-2 border-gray-500 flex flex-col items-center justify-center"
+              className={`w-32 h-32 border-2 ${
+                errorIndices.includes(currentShapes + idx)
+                  ? "border-red-500"
+                  : "border-gray-500"
+              } flex flex-col items-center justify-center`}
               onDrop={(e) => {
                 e.preventDefault();
                 handleDrop(idx, e.dataTransfer.getData("name"));
@@ -153,7 +177,7 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Zone des noms */}
+        {/* Zone des noms des formes */}
         <div className="grid grid-cols-5 gap-4 mb-12">
           {shapes.map((shape, idx) => (
             <div
@@ -167,7 +191,7 @@ const ShapesPracticePage = () => {
           ))}
         </div>
 
-        {/* Boutons */}
+        {/* Zone des boutons */}
         <div className="flex gap-4 mt-8">
           <button
             onClick={handlePrevious}
@@ -184,21 +208,12 @@ const ShapesPracticePage = () => {
           <button
             onClick={handleNext}
             className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
+            disabled={errorIndices.length > 0}
           >
             Suivant
           </button>
         </div>
       </div>
-
-      {completed !== null && (
-        <div className="mt-6 text-xl font-bold">
-          {completed ? (
-            <div className="text-green-600">Bravo ! Vous avez réussi à associer toutes les formes correctement.</div>
-          ) : (
-            <div className="text-red-600">Certaines associations sont incorrectes. Essayez encore !</div>
-          )}
-        </div>
-      )}
     </div>
   );
 };

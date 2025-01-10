@@ -11,12 +11,14 @@ export default function Page() {
         Retour
       </Link>
       <div className="flex items-center justify-center w-full">
-        <Link
-          href="/primaire/niveaux/niveau6/priooperation"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center"
-        >
-          Priorité d&#39;opération
-        </Link>
+        <div className="flex justify-center w-full">
+          <Link
+            href="/primaire/niveaux/niveau6/priooperation"
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center"
+          >
+            Priorité d&#39;opération
+          </Link>
+        </div>
       </div>
     </div>
   );
