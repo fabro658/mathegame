@@ -4,13 +4,11 @@ export default function Primaire() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Demi-cercles bleus clairs collés à gauche et tournés à 90 degrés */}
-      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1/4 h-full flex flex-col justify-between items-center z-0">
+      <div className="absolute left-0 top-0 h-full flex flex-col justify-between items-center z-0">
         {Array.from({ length: 5 }).map((_, index) => (
           <svg
             key={index}
-            width="50"
-            height="100"
-            className="w-12 h-24 transform rotate-90" // Rotation de 90 degrés
+            className="w-24 h-48 transform rotate-90" // Ajusté pour correspondre à la taille de l'écran
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 100"
             preserveAspectRatio="none"
