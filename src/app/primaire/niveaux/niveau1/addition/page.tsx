@@ -81,7 +81,7 @@ export default function Addition() {
       {/* Bouton Apprendre */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700 sm:bottom-24 sm:left-6"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700 sm:bottom-8 sm:left-8 sm:mb-4"
       >
         Apprendre
       </Link>
@@ -89,13 +89,13 @@ export default function Addition() {
       {/* Bouton Retour */}
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600 sm:top-8 sm:right-8"
       >
         Retour
       </Link>
 
       {/* Barre circulaire */}
-      <div className="absolute top-4 left-4 w-32 h-32">
+      <div className="absolute top-4 left-4 w-32 h-32 sm:top-8 sm:left-8">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
@@ -145,7 +145,7 @@ export default function Addition() {
               ))}
           </div>
 
-          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row">
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
