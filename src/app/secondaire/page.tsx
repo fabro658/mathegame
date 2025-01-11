@@ -11,6 +11,13 @@ export default function Secondaire() {
         Retour
       </Link>
 
+      {/* Section Titre */}
+      <div className="flex flex-col items-center text-center mb-8">
+        <h1 className="text-black text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Secondaire</h1>
+        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
+        <h2 className="text-black text-2xl md:text-4xl lg:text-5xl font-semibold">Choisi un sujet!</h2>
+      </div>
+
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
         <Link href="/secondaire/niveaux/niveau1">
@@ -51,23 +58,22 @@ export default function Secondaire() {
       </div>
 
       {/* Trois petits cubes placés en L dans le coin en bas à gauche */}
-      <div className="absolute left-0 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0">
+      <div className="absolute left-0 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
         <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 1 */}
         <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 2 */}
         <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 3 */}
       </div>
 
       {/* Deux autres cubes empilés à côté */}
-      <div className="absolute left-16 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0">
+      <div className="absolute left-16 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
         <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 4 */}
         <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 5 */}
       </div>
 
       {/* Dernier cube aligné à la même base */}
-      <div className="absolute left-32 bottom-0 flex items-center justify-end mb-8 ml-8 z-0">
+      <div className="absolute left-32 bottom-0 flex items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
         <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 6 */}
       </div>
     </div>
   );
 }
-

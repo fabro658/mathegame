@@ -1,23 +1,8 @@
 import Link from "next/link";
 
-export default function Primaire() {
+export default function Secondaire() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
-      {/* Demi-cercles bleus clairs collés à gauche et tournés à 90 degrés */}
-      <div className="absolute left-0 top-0 h-full flex flex-col justify-between items-center z-0 hidden md:flex">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <svg
-            key={index}
-            className="w-24 h-48 transform rotate-90"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 50 100"
-            preserveAspectRatio="none"
-          >
-            <circle cx="25" cy="50" r="25" fill="#ADD8E6" />
-          </svg>
-        ))}
-      </div>
-
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -26,45 +11,61 @@ export default function Primaire() {
         Retour
       </Link>
 
-      {/* Section Titre */}
-      <div className="flex flex-col items-center text-center mb-8">
-        <h1 className="text-black text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Primaire</h1>
-        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
-        <h2 className="text-black text-2xl md:text-4xl lg:text-5xl font-semibold">Choisi un sujet!</h2>
-      </div>
-
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 md:absolute md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 z-0 items-center md:items-start md:w-auto">
-        <Link href="/primaire/niveaux/niveau1">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
-            Opérations arithmétiques
+      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+        <Link href="/secondaire/niveaux/niveau1">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Arithmétique
           </div>
         </Link>
-        <Link href="/primaire/niveaux/niveau2">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
-            Comparaisons
+        <Link href="/secondaire/niveaux/niveau2">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Algèbre
           </div>
         </Link>
-        <Link href="/primaire/niveaux/niveau3">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
-            Fraction
+        <Link href="/secondaire/niveaux/niveau3">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Probabilités
           </div>
         </Link>
-        <Link href="/primaire/niveaux/niveau4">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
+        <Link href="/secondaire/niveaux/niveau4">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Statistique
+          </div>
+        </Link>
+        <Link href="/secondaire/niveaux/niveau5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Géométrie
           </div>
         </Link>
-        <Link href="/primaire/niveaux/niveau5">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
-            Exposants
+        <Link href="/secondaire/niveaux/niveau6">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Géométrie analytique
           </div>
         </Link>
-        <Link href="/primaire/niveaux/niveau6">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-80 px-4 sm:px-5">
-            Priorité d&#39;opération
+        <Link href="/secondaire/niveaux/niveau7">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Mathématiques discrètes
           </div>
         </Link>
+      </div>
+
+      {/* Trois petits cubes placés en L dans le coin en bas à gauche */}
+      <div className="absolute left-0 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 1 */}
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 2 */}
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 3 */}
+      </div>
+
+      {/* Deux autres cubes empilés à côté */}
+      <div className="absolute left-16 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
+        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 4 */}
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 5 */}
+      </div>
+
+      {/* Dernier cube aligné à la même base */}
+      <div className="absolute left-32 bottom-0 flex items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
+        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 6 */}
       </div>
     </div>
   );

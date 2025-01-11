@@ -29,17 +29,17 @@ export default function Home() {
 
       {/* Section Titre */}
       <div className="flex flex-col items-center text-center mb-16">
-        <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Mathgame</h1>
-        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
-        <h2 className="text-white text-2xl md:text-4xl lg:text-5xl font-semibold">Mathématique</h2>
+        <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Mathgame</h1>
+        <div className="w-32 sm:w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
+        <h2 className="text-white text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">Mathématique</h2>
       </div>
 
       {/* Boutons Primaire, Secondaire et À venir */}
-      <div className="absolute bottom-16 flex flex-col md:flex-row justify-center md:gap-8 w-full px-4">
+      <div className="absolute bottom-16 flex flex-col sm:flex-row justify-center sm:gap-8 w-full px-4">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="bg-yellow-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
+            className="bg-yellow-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%] sm:rounded-md"
           >
             Primaire
           </div>
@@ -48,7 +48,7 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/avenir">
           <div
-            className="bg-orange-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
+            className="bg-orange-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%] sm:rounded-md"
           >
             À venir
           </div>
@@ -57,7 +57,7 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/secondaire">
           <div
-            className="bg-green-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
+            className="bg-green-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%] sm:rounded-md"
           >
             Secondaire
           </div>
