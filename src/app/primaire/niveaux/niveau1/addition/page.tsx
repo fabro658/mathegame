@@ -38,13 +38,11 @@ export default function Addition() {
     }
 
     const newAnswers = [...answers];
-    let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a + b) {
-        allCorrect = false;
         newAnswers[globalIndex] = null;
       }
     });
