@@ -14,10 +14,10 @@ export default function Page() {
       </Link>
 
       {/* Titre de la page */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
-      
+      <h1 className="text-3xl font-bold mb-8 text-center mt-16 sm:mt-12">Choisissez une opération</h1>
+
       {/* Grille des boutons */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full px-4 sm:px-8 lg:px-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full px-4 sm:px-8 lg:px-32">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
@@ -44,7 +44,7 @@ export default function Page() {
         </a>
         <a
           href="/primaire/niveaux/niveau3/fractionreduite"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center md:col-span-2"
         >
           Fraction réduite
         </a>
