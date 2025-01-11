@@ -40,8 +40,8 @@ export default function Primaire() {
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau4">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-pruple-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Géométrie
+        <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+        Géométrie
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau5">
@@ -50,7 +50,7 @@ export default function Primaire() {
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau6">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
             Priorité d&#39;opération
           </div>
         </Link>

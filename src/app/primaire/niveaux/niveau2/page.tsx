@@ -32,8 +32,9 @@ export default function Page() {
             Expression équivalente
           </Link>
         </div>
+
         {/* Dernière ligne avec 1 bouton centré */}
-        <div className="flex justify-center sm:w-full sm:justify-center">
+        <div className="flex sm:w-full sm:justify-center sm:flex-col sm:items-center">
           <Link
             href="/primaire/niveaux/niveau2/comparer_fraction"
             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
