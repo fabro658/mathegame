@@ -39,16 +39,16 @@ export default function Home() {
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="bg-yellow-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%] sm:rounded-md"
+            className="bg-yellow-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%] sm:rounded-t-lg md:rounded-t-xl"
           >
             Primaire
           </div>
         </Link>
 
-        {/* Bouton Secondaire */}
+        {/* Bouton À venir */}
         <Link href="/avenir">
           <div
-            className="bg-orange-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%] sm:rounded-md"
+            className="bg-orange-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%] sm:rounded-t-lg md:rounded-t-xl"
           >
             À venir
           </div>
@@ -57,7 +57,7 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/secondaire">
           <div
-            className="bg-green-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%] sm:rounded-md"
+            className="bg-green-500 text-black text-sm sm:text-base md:text-lg lg:text-xl h-16 sm:h-24 md:h-32 lg:h-40 w-full sm:w-32 md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%] sm:rounded-t-lg md:rounded-t-xl"
           >
             Secondaire
           </div>
