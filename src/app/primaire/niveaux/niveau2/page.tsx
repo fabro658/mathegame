@@ -14,9 +14,12 @@ export default function Page() {
       </Link>
 
       <h1 className="text-4xl font-bold mb-6 sm:mb-12 text-center">Choisissez une opération</h1>
+      
+      {/* Disposition des boutons en colonnes pour les petits écrans et en rangées pour les plus grands */}
       <div className="flex flex-col sm:flex-row sm:gap-8 sm:w-full sm:justify-center">
+        
         {/* Première ligne avec 2 boutons */}
-        <div className="flex flex-col sm:flex-row sm:gap-8 sm:w-full sm:justify-center">
+        <div className="flex flex-col sm:flex-row sm:w-full sm:justify-center gap-0 sm:gap-8">
           <Link
             href="/primaire/niveaux/niveau2/comparaison"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
