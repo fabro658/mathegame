@@ -99,13 +99,13 @@ export default function ExponentsPractice() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
         href="/menu/apprendre/exposant"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute sm:bottom-4 sm:left-4 sm:right-auto sm:top-auto sm:w-auto sm:py-3 sm:px-8 sm:rounded sm:font-bold sm:bg-black sm:text-white w-full bg-blue-500 text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
         href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
@@ -172,6 +172,16 @@ export default function ExponentsPractice() {
         >
           Suivant
         </button>
+      </div>
+
+      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
+      <div className="mt-6 w-full sm:hidden">
+        <Link
+          href="/menu/apprendre/exposant"
+          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
+        >
+          Apprendre
+        </Link>
       </div>
     </div>
   );
