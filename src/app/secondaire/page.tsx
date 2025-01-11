@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 export default function Secondaire() {
@@ -21,60 +19,42 @@ export default function Secondaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 sm:flex-col sm:gap-4 sm:items-center absolute sm:w-full sm:relative sm:top-0 sm:translate-y-0 sm:right-0 sm:mt-8 sm:px-4 sm:text-center md:flex-row md:gap-4 md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 md:w-[calc(100%-2rem)] md:text-left">
+      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-start md:w-auto z-0">
         <Link href="/secondaire/niveaux/niveau1">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Arithmétique
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau2">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Algèbre
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau3">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Probabilités
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau4">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Statistique
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau5">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Géométrie
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau6">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Géométrie analytique
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau7">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-full md:w-64">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5">
             Mathématiques discrètes
           </div>
         </Link>
-      </div>
-
-      {/* Trois petits cubes placés en L dans le coin en bas à gauche */}
-      <div className="absolute left-0 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
-        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 1 */}
-        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 2 */}
-        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 3 */}
-      </div>
-
-      {/* Deux autres cubes empilés à côté */}
-      <div className="absolute left-16 bottom-0 flex flex-col items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
-        <div className="w-12 h-12 bg-blue-500 mb-2"></div> {/* Cube 4 */}
-        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 5 */}
-      </div>
-
-      {/* Dernier cube aligné à la même base */}
-      <div className="absolute left-32 bottom-0 flex items-center justify-end mb-8 ml-8 z-0 hidden md:flex">
-        <div className="w-12 h-12 bg-blue-500"></div> {/* Cube 6 */}
       </div>
     </div>
   );
