@@ -43,7 +43,6 @@ export default function Page() {
         {/* Disposition ordinateur : grille avec 3 lignes */}
         {/* Première ligne avec 2 boutons */}
         <div className="flex justify-center gap-8">
-        </div>
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           <a
             href="/primaire/niveaux/niveau2/comparaison"
@@ -57,15 +56,16 @@ export default function Page() {
           >
             Expression équivalente
           </a>
+          </div>
           {/* Dernière ligne avec 1 bouton centré */}
         <div className="flex justify-center">
-        </div>
           <a
             href="/primaire/niveaux/niveau2/comparer_fraction"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 lg:col-span-1 lg:col-start-2"
           >
             Comparaison de fraction
           </a>
+          </div>
         </div>
       </div>
     </div>

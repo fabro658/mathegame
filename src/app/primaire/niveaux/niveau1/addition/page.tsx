@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 3; // 3 questions par page
+  const questionsPerPage = 6; // 6 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Questions générées dynamiquement
+  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -22,7 +22,6 @@ export default function Addition() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Gérer les changements d'entrée utilisateur
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value, 10);
@@ -73,20 +72,21 @@ export default function Addition() {
     }
   };
 
-  // Propriétés pour le cercle de progression
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative p-4">
-      {/* Boutons de navigation */}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton Apprendre */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700 sm:bottom-24 sm:left-6"
       >
         Apprendre
       </Link>
+
+      {/* Bouton Retour */}
       <Link
         href="/primaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
@@ -95,7 +95,7 @@ export default function Addition() {
       </Link>
 
       {/* Barre circulaire */}
-      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-20 h-20 sm:w-32 sm:h-32">
+      <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
@@ -118,48 +118,50 @@ export default function Addition() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-sm sm:text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
         </div>
       </div>
 
-      <h1 className="text-2xl sm:text-4xl font-bold mb-6">Addition</h1>
+      <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 md:grid-cols-3">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4 justify-center">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {a} + {b}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {questions
+              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+              .map(([a, b], index) => (
+                <div key={index} className="flex items-center gap-4 justify-center">
+                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                    {a} + {b}
+                  </div>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    value={answers[currentPage * questionsPerPage + index] || ""}
+                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  />
                 </div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-2 sm:p-4 rounded w-full sm:w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+              ))}
           </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-2 px-4 sm:py-3 sm:px-8 rounded font-bold hover:bg-gray-600 w-full sm:w-auto"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-4 sm:py-3 sm:px-8 rounded font-bold hover:bg-blue-600 w-full sm:w-auto"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-2 px-4 sm:py-3 sm:px-8 rounded font-bold hover:bg-blue-600 w-full sm:w-auto"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
               disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
