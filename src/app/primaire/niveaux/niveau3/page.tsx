@@ -14,7 +14,7 @@ export default function Page() {
       </Link>
 
       {/* Titre de la page */}
-      <h1 className="text-3xl font-bold mb-8 text-center mt-16 sm:mt-12">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
       {/* Grille des boutons */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full px-4 sm:px-8 lg:px-32">
