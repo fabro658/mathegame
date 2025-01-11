@@ -9,8 +9,6 @@ export default function ExponentsLevel3() {
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions pour le niveau 3
@@ -77,13 +75,10 @@ export default function ExponentsLevel3() {
     });
 
     setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
 
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-        setIsValidated(false);
       }, 1500);
     }
   };
@@ -91,27 +86,20 @@ export default function ExponentsLevel3() {
   const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
         href="/primaire/niveaux/niveau5"
         className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
@@ -119,7 +107,6 @@ export default function ExponentsLevel3() {
         Retour
       </Link>
 
-      {/* Barre de progression circulaire (visible uniquement sur grands écrans) */}
       <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
@@ -142,7 +129,6 @@ export default function ExponentsLevel3() {
 
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
-      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
@@ -183,7 +169,6 @@ export default function ExponentsLevel3() {
         </button>
       </div>
 
-      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
       <div className="mt-6 w-full sm:hidden">
         <Link
           href="/menu/apprendre/exposant"
@@ -195,4 +180,3 @@ export default function ExponentsLevel3() {
     </div>
   );
 }
-

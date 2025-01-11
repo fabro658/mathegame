@@ -9,8 +9,6 @@ export default function ExponentsPractice() {
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
@@ -80,13 +78,10 @@ export default function ExponentsPractice() {
     });
 
     setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
 
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-        setIsValidated(false);
       }, 1500);
     }
   };
@@ -94,14 +89,12 @@ export default function ExponentsPractice() {
   const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
@@ -110,8 +103,8 @@ export default function ExponentsPractice() {
 
   // Barre circulaire de progression
   const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+  const strokeWidth = 10; // Variable supprimée de l'état car elle n'est pas utilisée en dehors du calcul
+  const circumference = 2 * Math.PI * radius; // Variable supprimée de l'état pour la même raison
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -126,16 +119,16 @@ export default function ExponentsPractice() {
       {/* Barre de progression circulaire (visible uniquement sur grands écrans) */}
       <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
-            r={50}
+            r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
