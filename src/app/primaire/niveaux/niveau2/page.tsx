@@ -15,11 +15,11 @@ export default function Page() {
 
       {/* Titre de la page */}
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
-      
-      {/* Grille des boutons */}
-      <div className="grid gap-4 px-4 sm:px-8 w-full lg:w-2/3">
-        {/* Mobile layout: une seule colonne */}
-        <div className="grid grid-cols-1 gap-4 md:hidden">
+
+      {/* Conteneur des boutons */}
+      <div className="w-full px-4 sm:px-8 flex justify-center">
+        {/* Disposition mobile : boutons alignés verticalement */}
+        <div className="grid grid-cols-1 gap-4 w-full max-w-xs md:hidden">
           <a
             href="/primaire/niveaux/niveau2/comparaison"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
@@ -40,7 +40,7 @@ export default function Page() {
           </a>
         </div>
 
-        {/* Desktop layout: grille avec 3 lignes */}
+        {/* Disposition ordinateur : grille avec 3 lignes */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           <a
             href="/primaire/niveaux/niveau2/comparaison"
