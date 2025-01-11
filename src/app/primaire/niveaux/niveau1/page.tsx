@@ -13,7 +13,8 @@ export default function Page() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-12">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
