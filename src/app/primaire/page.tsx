@@ -2,16 +2,18 @@ import Link from "next/link";
 
 export default function Primaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
-      {/* Demi-cercles bleus clairs collés à gauche et tournés à 90 degrés */}
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
+      {/* Demi-cercles bleus clairs collés à gauche */}
       <div className="absolute left-0 top-0 h-full flex flex-col justify-between items-center z-0">
         {Array.from({ length: 5 }).map((_, index) => (
           <svg
             key={index}
-            className="w-24 h-48 transform rotate-90" // Ajusté pour correspondre à la taille de l'écran
+            className="w-24 h-48 transform rotate-90"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 100"
-            preserveAspectRatio="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            aria-label="Demi-cercle décoratif"
           >
             <circle cx="25" cy="50" r="25" fill="#ADD8E6" />
           </svg>
@@ -34,37 +36,21 @@ export default function Primaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-        <Link href="/primaire/niveaux/niveau1">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Opérations arithmétiques
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau2">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Comparaisons
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau3">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Fraction
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau4">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Géométrie
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau5">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Exposants
-          </div>
-        </Link>
-        <Link href="/primaire/niveaux/niveau6">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Priorité d&#39;opération
-          </div>
-        </Link>
+      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-10">
+        {[
+          { href: "/primaire/niveaux/niveau1", text: "Opérations arithmétiques" },
+          { href: "/primaire/niveaux/niveau2", text: "Comparaisons" },
+          { href: "/primaire/niveaux/niveau3", text: "Fraction" },
+          { href: "/primaire/niveaux/niveau4", text: "Géométrie" },
+          { href: "/primaire/niveaux/niveau5", text: "Exposants" },
+          { href: "/primaire/niveaux/niveau6", text: "Priorité d'opération" },
+        ].map(({ href, text }) => (
+          <Link href={href} key={href}>
+            <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+              {text}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
