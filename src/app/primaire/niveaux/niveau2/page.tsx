@@ -16,7 +16,7 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-6 sm:mb-12 text-center">Choisissez une opération</h1>
 
       {/* Disposition des boutons */}
-      <div className="flex flex-col items-center gap-8 sm:flex-row sm:gap-4">
+      <div className="flex flex-col items-center sm:flex-row sm:gap-4 sm:w-full">
         {/* Première ligne avec 2 boutons */}
         <div className="flex flex-col sm:flex-row sm:gap-4 sm:w-full sm:justify-center">
           <Link
