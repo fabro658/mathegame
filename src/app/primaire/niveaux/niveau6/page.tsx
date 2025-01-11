@@ -1,11 +1,11 @@
-import Link from 'next/link';
+"use client";
+
+import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      <h1 className="text-4xl font-bold mb-12">Priorité d&#39;opération</h1>
-
-      {/* Bouton retour dans le coin supérieur droit */}
+      {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -13,14 +13,16 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Conteneur du bouton avec flexibilité pour mobile et grands écrans */}
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:w-full sm:justify-center">
-        <Link
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+        {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
+        <a
           href="/primaire/niveaux/niveau6/priooperation"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-[320px] h-[120px]"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Priorité d&#39;opération
-        </Link>
+        </a>
       </div>
     </div>
   );
