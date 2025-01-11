@@ -14,12 +14,12 @@ export default function Page() {
       </Link>
 
       <h1 className="text-4xl font-bold mb-6 sm:mb-12 text-center">Choisissez une opération</h1>
-      
-      {/* Disposition des boutons en colonnes pour les petits écrans et en rangées pour les plus grands */}
-      <div className="flex flex-col sm:flex-row sm:gap-8 sm:w-full sm:justify-center">
+
+      {/* Disposition des boutons */}
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:gap-8 sm:w-full sm:justify-center">
         
         {/* Première ligne avec 2 boutons */}
-        <div className="flex flex-col sm:flex-row sm:w-full sm:justify-center gap-0 sm:gap-8">
+        <div className="flex sm:w-full sm:justify-between gap-0 sm:gap-8">
           <Link
             href="/primaire/niveaux/niveau2/comparaison"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
@@ -37,7 +37,7 @@ export default function Page() {
         </div>
 
         {/* Deuxième ligne avec 1 bouton centré */}
-        <div className="flex sm:w-full sm:justify-center sm:flex-col sm:items-center gap-0 sm:gap-8">
+        <div className="flex sm:w-full sm:justify-center sm:items-center gap-0 sm:gap-8">
           <Link
             href="/primaire/niveaux/niveau2/comparer_fraction"
             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
