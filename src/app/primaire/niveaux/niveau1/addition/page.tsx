@@ -8,7 +8,6 @@ export default function Addition() {
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -52,14 +51,12 @@ export default function Addition() {
 
     setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -67,7 +64,6 @@ export default function Addition() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
