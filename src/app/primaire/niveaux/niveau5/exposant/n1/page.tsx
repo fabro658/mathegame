@@ -121,18 +121,6 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      {/* Barre de progression verticale (visible uniquement sur mobile) */}
-      <div className="absolute top-4 left-4 w-16 sm:hidden">
-        <progress
-          className="w-full h-2 bg-gray-300 rounded-full transform rotate-90"
-          value={completionPercentage}
-          max={100}
-        />
-        <div className="flex justify-center mt-2">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
       {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
