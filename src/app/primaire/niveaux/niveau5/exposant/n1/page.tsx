@@ -133,7 +133,8 @@ export default function ExponentsPractice() {
 
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
-      <div className="grid grid-cols-2 gap-6">
+      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => (
@@ -142,7 +143,7 @@ export default function ExponentsPractice() {
               <input
                 type="text"
                 inputMode="numeric"
-                className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
                 value={answers[currentPage * questionsPerPage + idx] || ""}
                 onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
               />
@@ -150,7 +151,7 @@ export default function ExponentsPractice() {
           ))}
       </div>
 
-      <div className="mt-6 flex gap-4">
+      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
         <button
           onClick={handlePreviousPage}
           className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
