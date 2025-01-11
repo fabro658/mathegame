@@ -11,7 +11,6 @@ export default function Addition() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -81,7 +80,7 @@ export default function Addition() {
       {/* Bouton Apprendre */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700 sm:bottom-8 sm:left-8 sm:mb-4"
+        className="absolute bottom-6 left-6 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
       >
         Apprendre
       </Link>
@@ -89,13 +88,13 @@ export default function Addition() {
       {/* Bouton Retour */}
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600 sm:top-8 sm:right-8"
+        className="absolute top-6 right-6 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
       >
         Retour
       </Link>
 
       {/* Barre circulaire */}
-      <div className="absolute top-4 left-4 w-32 h-32 sm:top-8 sm:left-8">
+      <div className="absolute top-6 left-6 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
@@ -126,11 +125,11 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
               .map(([a, b], index) => (
-                <div key={index} className="flex items-center gap-4 justify-center">
+                <div key={index} className="flex flex-col items-center gap-4">
                   <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                     {a} + {b}
                   </div>
@@ -145,7 +144,7 @@ export default function Addition() {
               ))}
           </div>
 
-          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
