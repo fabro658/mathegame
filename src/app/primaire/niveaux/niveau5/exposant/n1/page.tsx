@@ -97,15 +97,10 @@ export default function ExponentsPractice() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre/exposant"
-        className="absolute sm:bottom-4 sm:left-4 sm:right-auto sm:top-auto sm:w-auto sm:py-3 sm:px-8 sm:rounded sm:font-bold sm:bg-black sm:text-white w-full bg-blue-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
+      {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
         href="/primaire/niveaux/niveau5"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
       >
         Retour
       </Link>
