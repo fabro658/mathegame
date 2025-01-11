@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 3; // 3 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -126,9 +126,9 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 sm:w-full">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4">
+              <div key={index} className="flex items-center gap-4 justify-center">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {a} + {b}
                 </div>
@@ -143,7 +143,7 @@ export default function Addition() {
             ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex justify-between gap-4 sm:w-full">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"

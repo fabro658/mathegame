@@ -20,14 +20,14 @@ export default function Page() {
           <Link
             href="/primaire/niveaux/niveau2/comparaison"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
-            aria-label="Page de multiplication"
+            aria-label="Page de comparaison"
           >
             Comparaisons
           </Link>
           <Link
             href="/primaire/niveaux/niveau2/expression_equivalente"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
-            aria-label="Page de division"
+            aria-label="Page d'expression équivalente"
           >
             Expression équivalente
           </Link>
@@ -36,7 +36,7 @@ export default function Page() {
         <div className="flex justify-center sm:w-full sm:justify-center">
           <Link
             href="/primaire/niveaux/niveau2/comparer_fraction"
-            className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
           >
             Comparaison de fraction
           </Link>

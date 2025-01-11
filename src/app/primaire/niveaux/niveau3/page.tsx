@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 export default function Page() {
@@ -47,7 +49,7 @@ export default function Page() {
         <div className="flex justify-center sm:w-full sm:justify-center">
           <Link
             href="/primaire/niveaux/niveau3/fractionreduite"
-            className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
           >
             Fraction réduite
           </Link>
