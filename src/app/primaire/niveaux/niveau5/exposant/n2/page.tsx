@@ -108,19 +108,56 @@ export default function ExponentsPractice() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Barre circulaire de progression
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Lien Apprendre */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
+      <Link
+        href="/secondaire/niveaux/niveau1/expo_sqrt"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
+
+      {/* Cercle de progression visible uniquement sur ordinateur */}
+      <div className="hidden md:block absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
-      {/* Questions et Réponses */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
@@ -130,7 +167,7 @@ export default function ExponentsPractice() {
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-full text-center text-black text-lg"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
@@ -138,7 +175,7 @@ export default function ExponentsPractice() {
             ))}
           </div>
 
-          <div className="mt-6 flex flex-col gap-4">
+          <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
@@ -163,7 +200,6 @@ export default function ExponentsPractice() {
         </>
       )}
 
-      {/* Résultats */}
       {isValidated && (
         <>
           {hasPassed ? (
