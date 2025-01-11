@@ -90,11 +90,6 @@ export default function ExponentsPractice() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Barre circulaire de progression
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Bouton "Retour" visible uniquement sur grand écran */}
@@ -105,23 +100,35 @@ export default function ExponentsPractice() {
         Retour
       </Link>
 
-      {/* Barre de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
+      {/* Barre de progression circulaire (visible uniquement sur grands écrans) */}
+      <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
           <circle
             cx="50%"
             cy="50%"
-            r={radius}
+            r={50}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
+
+      {/* Barre de progression horizontale (visible uniquement sur mobile) */}
+      <div className="absolute top-4 left-4 w-full sm:hidden">
+        <progress
+          className="w-full h-4 bg-gray-300 rounded-full"
+          value={completionPercentage}
+          max={100}
+        />
+        <div className="flex justify-center mt-2">
           <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
         </div>
       </div>
