@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsPractice() {
-  const totalQuestions = 30; // Nombre total de questions
+  const totalQuestions = 36; // Nombre total de questions
   const questionsPerPage = 6; // Questions affichées par page (2 colonnes x 3 lignes)
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
