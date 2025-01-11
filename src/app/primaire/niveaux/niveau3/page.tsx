@@ -15,17 +15,17 @@ export default function Page() {
         Retour
       </Link>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full sm:w-full sm:justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full sm:w-full sm:justify-center">
         {/* Première ligne avec 2 boutons */}
         <Link
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
         >
           Addition de fraction
         </Link>
         <Link
           href="/primaire/niveaux/niveau3/soustractionfraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
         >
           Soustraction de fraction
         </Link>
@@ -33,13 +33,13 @@ export default function Page() {
         {/* Deuxième ligne avec 2 boutons */}
         <Link
           href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
         >
           Multiplication de fraction
         </Link>
         <Link
           href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
         >
           Division de fraction
         </Link>
@@ -48,7 +48,7 @@ export default function Page() {
         <div className="col-span-2 flex justify-center">
           <Link
             href="/primaire/niveaux/niveau3/fractionreduite"
-            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
           >
             Fraction réduite
           </Link>
