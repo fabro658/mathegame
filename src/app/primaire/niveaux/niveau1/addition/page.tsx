@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 6 questions par page
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
@@ -81,6 +81,7 @@ export default function Addition() {
       <Link
         href="/menu/apprendre/opérations arithmétiques"
         className="absolute bottom-6 left-6 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
+        style={{ height: "60px" }}
       >
         Apprendre
       </Link>
@@ -89,6 +90,7 @@ export default function Addition() {
       <Link
         href="/primaire/niveaux/niveau1"
         className="absolute top-6 right-6 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
+        style={{ height: "60px" }}
       >
         Retour
       </Link>
@@ -125,18 +127,20 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-1">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
               .map(([a, b], index) => (
-                <div key={index} className="flex flex-col items-center gap-4">
-                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                    {a} + {b}
-                  </div>
+                <div
+                  key={index}
+                  className="flex flex-row justify-between items-center bg-white rounded shadow p-4"
+                  style={{ height: "70px" }}
+                >
+                  <span className="text-lg font-bold text-black">{a} + {b}</span>
                   <input
                     type="text"
                     inputMode="numeric"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 p-2 rounded w-32 text-center text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
                     value={answers[currentPage * questionsPerPage + index] || ""}
                     onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                   />
@@ -144,10 +148,11 @@ export default function Addition() {
               ))}
           </div>
 
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+          <div className="mt-8 flex flex-row justify-center gap-4">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+              style={{ height: "60px" }}
               disabled={currentPage === 0}
             >
               Précédent
@@ -155,43 +160,19 @@ export default function Addition() {
             <button
               onClick={handleValidation}
               className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              style={{ height: "60px" }}
             >
-              Valider les réponses
+              Valider
             </button>
             <button
               onClick={handleNextPage}
               className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              style={{ height: "60px" }}
               disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
             </button>
           </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
         </>
       )}
     </div>
