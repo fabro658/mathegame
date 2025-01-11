@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
+    <div className="min-h-screen flex flex-col justify-start items-center bg-gray-100 text-gray-900 relative py-16">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"
@@ -13,9 +13,10 @@ export default function Page() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-12 mt-16 sm:mt-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+      {/* Disposition des boutons */}
+      <div className="flex flex-col items-center gap-6">
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
@@ -43,7 +44,7 @@ export default function Page() {
         </a>
         
         {/* Dernier bouton centré */}
-        <div className="col-span-2 flex justify-center">
+        <div className="flex justify-center">
           <a
             href="/primaire/niveaux/niveau3/fractionreduite"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
