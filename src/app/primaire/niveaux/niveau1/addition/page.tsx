@@ -1,15 +1,17 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 6;
+  const questionsPerPage = 3; // 3 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Questions générées dynamiquement
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -20,6 +22,7 @@ export default function Addition() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Gérer les changements d'entrée utilisateur
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value, 10);
@@ -38,23 +41,27 @@ export default function Addition() {
     }
 
     const newAnswers = [...answers];
+    let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a + b) {
+        allCorrect = false;
         newAnswers[globalIndex] = null;
       }
     });
 
     setAnswers(newAnswers);
     setIsValidated(true);
+    setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -62,35 +69,33 @@ export default function Addition() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
+  // Propriétés pour le cercle de progression
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
   const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton Apprendre */}
+      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-6 left-6 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
-        style={{ height: "60px" }}
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold hover:bg-gray-700"
       >
         Apprendre
       </Link>
-
-      {/* Bouton Retour */}
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-6 right-6 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
-        style={{ height: "60px" }}
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hover:bg-orange-600"
       >
         Retour
       </Link>
 
       {/* Barre circulaire */}
-      <div className="absolute top-6 left-6 w-32 h-32">
+      <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
@@ -121,54 +126,73 @@ export default function Addition() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-1">
-            {questions
-              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(([a, b], index) => (
-                <div
-                  key={index}
-                  className="flex flex-row justify-between items-center bg-white rounded shadow p-4"
-                  style={{ height: "70px" }}
-                >
-                  <span className="text-lg font-bold text-black">{a} + {b}</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className="border border-gray-400 p-2 rounded w-32 text-center text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 sm:w-full">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+              <div key={index} className="flex items-center gap-4 justify-center">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                  {a} + {b}
                 </div>
-              ))}
-          </div>
+                <input
+                 type="text"
+                 inputMode="numeric"
+                 className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                 value={answers[currentPage * questionsPerPage + index] || ""}
+                 onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+               />
+             </div>
+           ))}
+         </div>
 
-          <div className="mt-8 flex flex-row justify-center gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              style={{ height: "60px" }}
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              style={{ height: "60px" }}
-            >
-              Valider
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              style={{ height: "60px" }}
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-  );
+         <div className="mt-6 flex justify-between gap-4 sm:w-full">
+           <button
+             onClick={handlePreviousPage}
+             className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+             disabled={currentPage === 0}
+           >
+             Précédent
+           </button>
+           <button
+             onClick={handleValidation}
+             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+           >
+             Valider les réponses
+           </button>
+           <button
+             onClick={handleNextPage}
+             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+             disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+           >
+             Suivant
+           </button>
+         </div>
+       </>
+     )}
+
+     {isValidated && (
+       <>
+         {hasPassed ? (
+           <div>
+             <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+             <button
+               className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+               onClick={handleNextPage}
+             >
+               Suivant
+             </button>
+           </div>
+         ) : (
+           <div>
+             <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+             <button
+               className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+               onClick={() => setIsValidated(false)}
+             >
+               Revenir pour corriger
+             </button>
+           </div>
+         )}
+       </>
+     )}
+   </div>
+ );
 }
