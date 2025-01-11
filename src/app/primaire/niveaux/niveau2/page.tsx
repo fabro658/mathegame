@@ -27,6 +27,12 @@ export default function Page() {
             Comparaisons
           </a>
           <a
+            href="/primaire/niveaux/niveau2/comparaison_decimaux"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
+          >
+            Comparaisons nombre décimaux
+          </a>
+          <a
             href="/primaire/niveaux/niveau2/expression_equivalente"
             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
           >
