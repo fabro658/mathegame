@@ -41,8 +41,8 @@ export default function Page() {
         </div>
 
         {/* Disposition ordinateur : grille avec 3 lignes */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <a
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+        <a
             href="/primaire/niveaux/niveau2/comparaison"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
           >

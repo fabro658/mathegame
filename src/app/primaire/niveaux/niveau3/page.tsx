@@ -25,7 +25,9 @@ export default function Page() {
       >
         Retour
       </Link>
-      <h1 className="text-3xl font-bold mb-8 text-center mt-16 sm:mt-12">Choisissez une opération</h1>
+      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
+        Choisissez une opération
+      </h1>
     </>
   );
 
@@ -67,7 +69,7 @@ export default function Page() {
 
   // Affichage des boutons pour ordinateur
   const DesktopButtons = () => (
-    <div className="grid grid-cols-2 gap-4 w-full px-4 sm:px-8 lg:px-32">
+    <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
       <a
         href="/primaire/niveaux/niveau3/additionfraction"
         className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
@@ -94,7 +96,7 @@ export default function Page() {
       </a>
       <a
         href="/primaire/niveaux/niveau3/fractionreduite"
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2"
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
       >
         Fraction réduite
       </a>
