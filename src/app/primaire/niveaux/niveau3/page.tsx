@@ -19,31 +19,31 @@ export default function Page() {
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] w-full sm:w-auto"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Addition de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/soustractionfraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] w-full sm:w-auto"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Soustraction de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] w-full sm:w-auto"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Multiplication de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] w-full sm:w-auto"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Division de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/fractionreduite"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] w-full sm:w-auto"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Fraction réduite
         </a>
