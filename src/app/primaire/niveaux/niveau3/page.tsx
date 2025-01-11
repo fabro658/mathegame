@@ -44,7 +44,7 @@ export default function Page() {
         <div className="col-span-1 sm:col-span-2 flex justify-center w-full">
           <a
             href="/primaire/niveaux/niveau3/fractionreduite"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full max-w-[300px]"
           >
             Fraction réduite
           </a>
