@@ -35,7 +35,7 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire, Secondaire et À venir */}
-      <div className="absolute bottom-16 flex flex-col sm:flex-row sm:gap-8 w-full px-4">
+      <div className="absolute bottom-16 flex flex-col sm:flex-row sm:justify-center sm:items-center sm:gap-8 w-full px-4">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
