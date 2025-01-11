@@ -121,10 +121,10 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      {/* Barre de progression horizontale (visible uniquement sur mobile) */}
-      <div className="absolute top-4 left-4 w-full sm:hidden">
+      {/* Barre de progression verticale (visible uniquement sur mobile) */}
+      <div className="absolute top-4 left-4 w-16 sm:hidden">
         <progress
-          className="w-full h-4 bg-gray-300 rounded-full"
+          className="w-full h-2 bg-gray-300 rounded-full transform rotate-90"
           value={completionPercentage}
           max={100}
         />
