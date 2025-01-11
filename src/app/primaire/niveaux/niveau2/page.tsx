@@ -16,7 +16,7 @@ export default function Page() {
       {/* Titre centré, en haut de la page */}
       <h1 className="text-4xl font-bold mb-12 text-center mt-16 sm:mt-0">Choisissez une opération</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 justify-center items-center w-full">
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
