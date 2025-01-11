@@ -8,7 +8,7 @@ export default function Primaire() {
         {Array.from({ length: 5 }).map((_, index) => (
           <svg
             key={index}
-            className="w-24 h-48 transform rotate-90" // Ajusté pour correspondre à la taille de l'écran
+            className="w-24 h-48 transform rotate-90"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 100"
             preserveAspectRatio="none"
@@ -34,7 +34,7 @@ export default function Primaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 md:absolute md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 z-0 w-full md:w-auto items-center">
+      <div className="flex flex-col gap-4 w-full px-4 md:absolute md:right-8 md:top-1/2 md:transform md:-translate-y-1/2 z-0 items-center md:items-start md:w-auto">
         <Link href="/primaire/niveaux/niveau1">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Opérations arithmétiques

@@ -35,11 +35,11 @@ export default function Home() {
       </div>
 
       {/* Boutons Primaire, Secondaire et À venir */}
-      <div className="absolute bottom-0 flex flex-col md:flex-row justify-around gap-4 md:gap-8 w-full px-4 py-4 bg-opacity-80 bg-blue-200">
+      <div className="absolute bottom-16 flex flex-col md:flex-row justify-center md:gap-8 w-full px-4">
         {/* Bouton Primaire */}
         <Link href="/primaire">
           <div
-            className="bg-yellow-500 text-black text-sm md:text-lg lg:text-xl h-16 md:h-24 lg:h-32 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-md"
+            className="bg-yellow-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
           >
             Primaire
           </div>
@@ -48,16 +48,16 @@ export default function Home() {
         {/* Bouton Secondaire */}
         <Link href="/avenir">
           <div
-            className="bg-orange-500 text-black text-sm md:text-lg lg:text-xl h-16 md:h-24 lg:h-32 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-md"
+            className="bg-orange-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-orange-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
           >
             À venir
           </div>
         </Link>
 
-        {/* Bouton À venir */}
+        {/* Bouton Secondaire */}
         <Link href="/secondaire">
           <div
-            className="bg-green-500 text-black text-sm md:text-lg lg:text-xl h-16 md:h-24 lg:h-32 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-md"
+            className="bg-green-500 text-black text-sm md:text-lg lg:text-xl h-24 md:h-32 lg:h-40 w-full md:w-40 lg:w-64 flex items-center justify-center font-bold hover:bg-green-400 rounded-t-[100%] md:rounded-t-[100%] md:rounded-md"
           >
             Secondaire
           </div>
