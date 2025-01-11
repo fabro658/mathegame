@@ -20,7 +20,7 @@ export default function Page() {
         <a
             href="/primaire/niveaux/niveau2/comparaison_decimaux"
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-        >
+            >
           Comparaisons nombre décimaux
         </a>
         <a
