@@ -15,11 +15,11 @@ export default function Page() {
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
-        {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
+      <div className="flex flex-col items-center justify-center gap-8">
+        {/* Le bouton centré */}
         <a
           href="/primaire/niveaux/niveau6/priooperation"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] max-w-[500px]"
         >
           Priorité d&#39;opération
         </a>
