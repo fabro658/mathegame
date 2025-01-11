@@ -13,38 +13,30 @@ export default function Page() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-6 sm:mb-12 text-center">Choisissez une opération</h1>
-
-      {/* Disposition des boutons */}
-      <div className="flex flex-col sm:flex-row sm:gap-4 sm:w-full sm:justify-center">
-        {/* Première ligne avec 2 boutons */}
-        <div className="flex flex-col sm:flex-row sm:gap-4 sm:w-full sm:justify-center">
-          <Link
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+        {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
+        <a
             href="/primaire/niveaux/niveau2/comparaison"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
-            aria-label="Page de comparaison"
-          >
-            Comparaisons
-          </Link>
-          <Link
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Comparaisons
+        </a>
+        <a
             href="/primaire/niveaux/niveau2/expression_equivalente"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
-            aria-label="Page d'expression équivalente"
-          >
-            Expression équivalente
-          </Link>
-        </div>
-
-        {/* Deuxième ligne avec 1 bouton centré */}
-        <div className="flex justify-center sm:w-full">
-          <Link
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Expression équivalente
+        </a>
+        <a
             href="/primaire/niveaux/niveau2/comparer_fraction"
-            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[320px] h-[120px]"
-          >
-            Comparaison de fraction
-          </Link>
-        </div>
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Comparaison de fraction
+        </a>
       </div>
     </div>
   );
 }
+
