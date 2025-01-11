@@ -16,11 +16,10 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
       {/* Disposition des boutons */}
-      <div className="flex flex-col items-center gap-6">
-        {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl sm:text-xl md:text-lg shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px] md:h-[100px]"
         >
           Addition de fraction
         </a>
@@ -42,9 +41,7 @@ export default function Page() {
         >
           Division de fraction
         </a>
-        
-        {/* Dernier bouton centré */}
-        <div className="flex justify-center">
+        <div className="col-span-1 sm:col-span-2 flex justify-center">
           <a
             href="/primaire/niveaux/niveau3/fractionreduite"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
