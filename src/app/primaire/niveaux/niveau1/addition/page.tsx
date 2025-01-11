@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -64,7 +64,7 @@ export default function Addition() {
       setHasPassed(false);
     }
   };
-
+  
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -121,7 +121,6 @@ export default function Addition() {
           <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
         </div>
       </div>
-
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
       {!isValidated && (
@@ -133,66 +132,66 @@ export default function Addition() {
                   {a} + {b}
                 </div>
                 <input
-                 type="text"
-                 inputMode="numeric"
-                 className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                 value={answers[currentPage * questionsPerPage + index] || ""}
-                 onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-               />
-             </div>
-           ))}
-         </div>
+                  type="text"
+                  inputMode="numeric"
+                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
 
-         <div className="mt-6 flex justify-between gap-4 sm:w-full">
-           <button
-             onClick={handlePreviousPage}
-             className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-             disabled={currentPage === 0}
-           >
-             Précédent
-           </button>
-           <button
-             onClick={handleValidation}
-             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-           >
-             Valider les réponses
-           </button>
-           <button
-             onClick={handleNextPage}
-             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-             disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-           >
-             Suivant
-           </button>
-         </div>
-       </>
-     )}
+          <div className="mt-6 flex justify-between gap-4 sm:w-full">
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+            >
+              Valider les réponses
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
+          </div>
+        </>
+      )}
 
-     {isValidated && (
-       <>
-         {hasPassed ? (
-           <div>
-             <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-             <button
-               className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-               onClick={handleNextPage}
-             >
-               Suivant
-             </button>
-           </div>
-         ) : (
-           <div>
-             <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-             <button
-               className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-               onClick={() => setIsValidated(false)}
-             >
-               Revenir pour corriger
-             </button>
-           </div>
-         )}
-       </>
-     )}
-   </div>
- );
+      {isValidated && (
+        <>
+          {hasPassed ? (
+            <div>
+              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
+              <button
+                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+                onClick={handleNextPage}
+              >
+                Suivant
+              </button>
+            </div>
+          ) : (
+            <div>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <button
+                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
+                onClick={() => setIsValidated(false)}
+              >
+                Revenir pour corriger
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
 }
