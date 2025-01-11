@@ -19,25 +19,25 @@ export default function Page() {
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[90%] sm:w-full md:w-full"
         >
           Comparaisons nombre décimaux
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparaison"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[90%] sm:w-full md:w-full"
         >
           Comparaisons
         </a>
         <a
           href="/primaire/niveaux/niveau2/expression_equivalente"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[90%] sm:w-full md:w-full"
         >
           Expression équivalente
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-full"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[90%] sm:w-full md:w-full"
         >
           Comparaison de fraction
         </a>
