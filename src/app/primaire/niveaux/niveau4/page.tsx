@@ -15,16 +15,16 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">Pratiquer la géométrie</h1>
 
       {/* Conteneur des boutons */}
-      <div className="grid grid-cols-2 gap-8 mt-12 w-full max-w-5xl">
+      <div className="flex flex-col sm:flex-row sm:gap-8 gap-4 sm:w-full sm:justify-center items-center mt-12 w-full max-w-5xl">
         <Link
           href="/primaire/niveaux/niveau4/perimetre"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out w-[320px] h-[120px]"
         >
           Périmètre
         </Link>
         <Link
           href="/primaire/niveaux/niveau4/geometrie"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center transition duration-300 ease-in-out w-[320px] h-[120px]"
         >
           Géométrie
         </Link>

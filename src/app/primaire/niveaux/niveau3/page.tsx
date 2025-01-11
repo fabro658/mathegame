@@ -12,33 +12,39 @@ export default function Page() {
         Retour
       </Link>
 
-      <div className="grid grid-cols-2 gap-8">
-        <Link
-          href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
-        >
-          Addition de fraction
-        </Link>
-        <Link
-          href="/primaire/niveaux/niveau3/soustractionfraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
-        >
-          Soustraction de fraction
-        </Link>
-        <Link
-          href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
-        >
-          Multiplication de fraction
-        </Link>
-        <Link
-          href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
-        >
-          Division de fraction
-        </Link>
+      <div className="flex flex-col items-center gap-8 sm:flex-row sm:gap-8 sm:w-full sm:justify-center">
+        {/* Première ligne avec 2 boutons */}
+        <div className="flex flex-col sm:flex-row gap-8 sm:gap-8 sm:w-full sm:justify-center">
+          <Link
+            href="/primaire/niveaux/niveau3/additionfraction"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          >
+            Addition de fraction
+          </Link>
+          <Link
+            href="/primaire/niveaux/niveau3/soustractionfraction"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          >
+            Soustraction de fraction
+          </Link>
+        </div>
+        {/* Deuxième ligne avec 2 boutons */}
+        <div className="flex flex-col sm:flex-row gap-8 sm:gap-8 sm:w-full sm:justify-center">
+          <Link
+            href="/primaire/niveaux/niveau3/multiplicationfraction"
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          >
+            Multiplication de fraction
+          </Link>
+          <Link
+            href="/primaire/niveaux/niveau3/divisionfraction"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
+          >
+            Division de fraction
+          </Link>
+        </div>
         {/* Dernière ligne avec 1 bouton centré */}
-        <div className="col-span-2 flex justify-center">
+        <div className="flex justify-center sm:w-full sm:justify-center">
           <Link
             href="/primaire/niveaux/niveau3/fractionreduite"
             className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] h-[120px]"
