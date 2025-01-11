@@ -111,7 +111,7 @@ export default function ExponentsPractice() {
       {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
         href="/primaire/niveaux/niveau5"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold sm:block hidden"
       >
         Retour
       </Link>

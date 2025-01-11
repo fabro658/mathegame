@@ -1,178 +1,161 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Addition() {
-  // Déclarations des constantes
-  const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
+export default function ExponentsPractice() {
+  const totalQuestions = 36; // Nombre total de questions
+  const questionsPerPage = 6; // Questions affichées par page (2 colonnes x 3 lignes)
 
-  // États
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
-  });
+  useEffect(() => {
+    const generateQuestions = () => {
+      const superscriptMap: Record<string, string> = {
+        0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵",
+        6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹",
+      };
 
-  // Calcul du pourcentage de progression
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+      return Array.from({ length: totalQuestions }, () => {
+        const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
+        const exponent = 2; // Exposant fixé à 2
+        const correctAnswer = Math.sqrt(base ** exponent).toString();
 
-  // Gestion des réponses
-  const handleChange = (index: number, value: string) => {
+        const exponentUnicode = String(exponent)
+          .split("")
+          .map((digit) => superscriptMap[digit])
+          .join("");
+
+        const questionText = `Que vaut x si x${exponentUnicode} = ${base ** exponent} ?`;
+        return { questionText, correctAnswer };
+      });
+    };
+
+    setQuestions(generateQuestions());
+  }, []);
+
+  // Gestion des changements de réponse
+  const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
-  const handleValidation = () => {
+  // Validation des réponses
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (pageAnswers.some((answer) => !answer)) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const newAnswers = [...answers];
+    const allCorrect = pageAnswers.every((answer, idx) => answer === pageCorrectAnswers[idx]);
+    if (!allCorrect) {
+      const updatedAnswers = [...answers];
+      pageAnswers.forEach((answer, idx) => {
+        if (answer !== pageCorrectAnswers[idx]) {
+          updatedAnswers[startIndex + idx] = null; // Réinitialise les réponses incorrectes
+        }
+      });
+      setAnswers(updatedAnswers);
+    }
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const [a, b] = questions[globalIndex];
-      if (answer !== a + b) {
-        newAnswers[globalIndex] = null;
-      }
-    });
-
-    setAnswers(newAnswers);
-    setIsValidated(true);
+    // Passe automatiquement à la page suivante si tout est correct
+    if (allCorrect && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+      }, 1500);
+    }
   };
 
-  // Navigation
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
+
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
+      {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
-        href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        href="/primaire/niveaux/niveau5"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
       >
         Retour
       </Link>
 
-      {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+      {/* Grille responsive : 1 colonne sur mobiles, 2 colonnes sur grands écrans */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText }, idx) => (
+            <div key={idx} className="flex flex-col items-start gap-2">
+              <div className="font-bold text-black">{questionText}</div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
+                value={answers[currentPage * questionsPerPage + idx] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+              />
+            </div>
+          ))}
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Addition</h1>
+      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
+          Suivant
+        </button>
+      </div>
 
-      {/* Questions et réponses */}
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} + {b}</div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
+      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
+      <div className="mt-6 w-full sm:hidden">
+        <Link
+          href="/menu/apprendre/exposant"
+          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
+        >
+          Apprendre
+        </Link>
+      </div>
 
-      {/* Résultats après validation */}
-      {isValidated && (
-        <>
-          <p className={`text-xl font-bold ${answers.every((answer, index) => answer === questions[index][0] + questions[index][1]) ? 'text-green-600' : 'text-red-600'}`}>
-            {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-              ? 'Bravo ! Toutes vos réponses sont correctes.'
-              : 'Certaines réponses sont incorrectes. Corrigez-les.'}
-          </p>
-          <button
-            className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
-            onClick={handleNextPage}
-          >
-            Suivant
-          </button>
-        </>
-      )}
+      {/* Bouton Apprendre pour écran plus large */}
+      <Link
+        href="/menu/apprendre/exposant"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold sm:block hidden"
+      >
+        Apprendre
+      </Link>
     </div>
   );
 }

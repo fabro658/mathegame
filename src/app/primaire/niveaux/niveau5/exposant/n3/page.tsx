@@ -100,9 +100,10 @@ export default function ExponentsLevel3() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton "Retour" visible uniquement sur grand écran et à droite */}
       <Link
         href="/primaire/niveaux/niveau5"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
       >
         Retour
       </Link>
