@@ -111,20 +111,24 @@ export default function ExponentsLevel3() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton Apprendre visible sur mobile uniquement */}
       <Link
         href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold sm:hidden"
       >
         Apprendre
       </Link>
+      
+      {/* Bouton Retour visible sur ordinateur uniquement */}
       <Link
         href="/secondaire/niveaux/niveau1/expo_sqrt"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
       >
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
+      {/* Barre de progression circulaire visible uniquement sur ordinateur */}
+      <div className="absolute top-4 left-4 w-32 h-32 hidden sm:block">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
@@ -155,14 +159,14 @@ export default function ExponentsLevel3() {
 
       {!isValidated && (
         <>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
               <div key={idx} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + idx] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
                 />
@@ -170,7 +174,7 @@ export default function ExponentsLevel3() {
             ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold"

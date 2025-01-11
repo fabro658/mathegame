@@ -159,14 +159,14 @@ export default function ExponentsPractice() {
 
       {!isValidated && (
         <>
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
               <div key={index} className="flex flex-col items-start gap-2">
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                   type="text"
                   inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                  className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
@@ -174,7 +174,7 @@ export default function ExponentsPractice() {
             ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex gap-4 flex-wrap justify-center">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
