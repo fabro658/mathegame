@@ -100,6 +100,38 @@ export default function ExponentsPractice() {
         Retour
       </Link>
 
+      {/* Affichage du cercle de progression uniquement sur grand écran */}
+      <div className="hidden sm:block absolute top-16 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r="48"
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth="4"
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r="48"
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth="4"
+            strokeDasharray={2 * Math.PI * 48}
+            strokeDashoffset={
+              (2 * Math.PI * 48 * (100 - completionPercentage)) / 100
+            }
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">
+            {completionPercentage}%
+          </span>
+        </div>
+      </div>
+
       {/* Grille responsive : 1 colonne sur mobiles, 2 colonnes sur grands écrans */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
