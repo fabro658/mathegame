@@ -12,22 +12,22 @@ export default function Niveau1() {
       </Link>
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-        <Link href="/secondaire/niveaux/niveau1/addition">
+        <Link href="/secondaire/niveaux/niveau1/sommes">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Sommes
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/soustraction">
+        <Link href="/secondaire/niveaux/niveau1/difference">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Différence
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/multiplication">
+        <Link href="/secondaire/niveaux/niveau1/produit">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Produit
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/division">
+        <Link href="/secondaire/niveaux/niveau1/quotient">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Quotient
           </div>
@@ -40,11 +40,6 @@ export default function Niveau1() {
         <Link href="/secondaire/niveaux/niveau1/approx">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Approximer
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau1/classifier">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Classifier
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau1/expo_sqrt">

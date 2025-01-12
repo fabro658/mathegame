@@ -58,12 +58,6 @@ export default function Page() {
       >
         Division de fraction
       </a>
-      <a
-        href="/primaire/niveaux/niveau3/fractionreduite"
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Fraction réduite
-      </a>
     </div>
   );
 
@@ -93,12 +87,6 @@ export default function Page() {
         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
       >
         Division de fraction
-      </a>
-      <a
-        href="/primaire/niveaux/niveau3/fractionreduite"
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
-      >
-        Fraction réduite
       </a>
     </div>
   );

@@ -3,34 +3,57 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function ClasserNombresSpecials() {
-  const totalQuestions = 20; // Nombre total de questions
-  const questionsPerPage = 5; // Nombre de questions par vague
+export default function ConversionDecimale() {
+  const totalQuestions = 30; // Nombre total de questions
+  const questionsPerPage = 3; // Nombre de questions par vague
 
-  const [questions, setQuestions] = useState<number[]>([]);
+  const [questions, setQuestions] = useState<
+    { question: string; correctAnswer: string }[]
+  >([]);
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const generateQuestions = () =>
-      Array.from({ length: totalQuestions }, () => Math.floor(Math.random() * 100) + 1);
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        // Génération des questions
+        let question = "";
+        let correctAnswer = "";
+
+        if (index < totalQuestions / 3) {
+          // Pourcentage -> Décimale
+          const percentage = Math.floor(Math.random() * 100) + 1;
+          question = `${percentage}%`;
+          correctAnswer = (percentage / 100).toFixed(2);
+        } else if (index < (2 * totalQuestions) / 3) {
+          // Fraction -> Décimale
+          const numerator = Math.floor(Math.random() * 20) + 1;
+          const denominator = Math.floor(Math.random() * 20) + 1;
+          question = `${numerator}/${denominator}`;
+          correctAnswer = (numerator / denominator).toFixed(2);
+        } else {
+          // Mélange des pourcentages et des fractions
+          const isPercentage = Math.random() > 0.5;
+          if (isPercentage) {
+            const percentage = Math.floor(Math.random() * 100) + 1;
+            question = `${percentage}%`;
+            correctAnswer = (percentage / 100).toFixed(2);
+          } else {
+            const numerator = Math.floor(Math.random() * 20) + 1;
+            const denominator = Math.floor(Math.random() * 20) + 1;
+            question = `${numerator}/${denominator}`;
+            correctAnswer = (numerator / denominator).toFixed(2);
+          }
+        }
+
+        return { question, correctAnswer };
+      });
+    };
+
     setQuestions(generateQuestions());
   }, []);
-
-  const isPrime = (num: number): boolean => {
-    if (num < 2) return false;
-    for (let i = 2; i <= Math.sqrt(num); i++) {
-      if (num % i === 0) return false;
-    }
-    return true;
-  };
-
-  const isPerfectSquare = (num: number): boolean => {
-    const sqrt = Math.sqrt(num);
-    return sqrt === Math.floor(sqrt);
-  };
 
   const handleAnswer = (index: number, answer: string): void => {
     const newAnswers = [...answers];
@@ -42,12 +65,9 @@ export default function ClasserNombresSpecials() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
-    const correctAnswers = questions.slice(startIndex, endIndex).map((num) => {
-      if (isPerfectSquare(num)) return "carré parfait";
-      if (isPrime(num)) return "nombre premier";
-      return "nombre composé";
-    });
+    const correctAnswers = questions
+      .slice(startIndex, endIndex)
+      .map((q) => q.correctAnswer);
 
     const allAnswersFilled = pageAnswers.every((answer) => answer.trim() !== "");
 
@@ -57,7 +77,7 @@ export default function ClasserNombresSpecials() {
     }
 
     const allCorrect = pageAnswers.every(
-      (answer, idx) => answer === correctAnswers[idx]
+      (answer, idx) => answer.trim() === correctAnswers[idx]
     );
 
     setIsValidated(true);
@@ -85,10 +105,19 @@ export default function ClasserNombresSpecials() {
     }
   };
 
+  const completedAnswers = answers.filter((answer) => answer.trim() !== "").length;
+  const completionPercentage = Math.round(
+    (completedAnswers / totalQuestions) * 100
+  );
+
+  const radius = 50; // Rayon pour la barre circulaire
+  const strokeWidth = 10; // Largeur de la barre
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
@@ -100,8 +129,39 @@ export default function ClasserNombresSpecials() {
         Retour
       </Link>
 
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={
+              circumference - (circumference * completionPercentage) / 100
+            }
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">
+            {completionPercentage}%
+          </span>
+        </div>
+      </div>
+
       <h1 className="text-3xl font-bold mb-6">
-        Classez les nombres en carrés parfaits, nombres premiers, ou nombres composés
+        Questions sur les conversions en décimale
       </h1>
 
       {!isValidated && (
@@ -112,10 +172,11 @@ export default function ClasserNombresSpecials() {
                 currentPage * questionsPerPage,
                 (currentPage + 1) * questionsPerPage
               )
-              .map((number, index) => (
+              .map(({ question }, index) => (
                 <div key={index} className="flex flex-col items-start gap-2">
-                  <div className="font-bold text-black">{number}</div>
-                  <select
+                  <div className="font-bold text-black">{question}</div>
+                  <input
+                    type="text"
                     value={
                       answers[currentPage * questionsPerPage + index] || ""
                     }
@@ -126,14 +187,7 @@ export default function ClasserNombresSpecials() {
                       )
                     }
                     className="border border-gray-300 p-2 rounded"
-                  >
-                    <option value="" disabled>
-                      Choisissez une option
-                    </option>
-                    <option value="carré parfait">Carré Parfait</option>
-                    <option value="nombre premier">Nombre Premier</option>
-                    <option value="nombre composé">Nombre Composé</option>
-                  </select>
+                  />
                 </div>
               ))}
           </div>
@@ -141,23 +195,21 @@ export default function ClasserNombresSpecials() {
           <div className="mt-6 flex gap-4">
             <button
               onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
             >
               Valider les réponses
             </button>
             <button
               onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={
-                currentPage === Math.floor(totalQuestions / questionsPerPage) - 1
-              }
+              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
               Suivant
             </button>
