@@ -13,15 +13,8 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Briques en bas */}
-      <div className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0">
-        {Array.from({ length: 20 }).map((_, index) => (
-          <div
-            key={index}
-            className="w-8 h-8 bg-orange-500 mx-1"
-          ></div>
-        ))}
-      </div>
+      {/* Ligne horizontale rectangle en bas de l'écran */}
+      <div className="absolute bottom-0 left-0 w-full h-[60px] bg-blue-500 z-0"></div>
 
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
