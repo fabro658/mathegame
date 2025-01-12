@@ -43,13 +43,7 @@ export default function Secondaire() {
             backgroundColor: "#ADD8E6",
             clipPath:
               "polygon(0% 0%, 0% 100%, 33% 100%, 33% 67%, 67% 67%, 67% 33%, 100% 33%, 100% 0%)",
-          }}
-        ></div>
-        <div
-          className="absolute top-0 left-0 border-4 border-purple-500 rounded-md"
-          style={{
-            width: "150px",
-            height: "150px",
+            transform: "rotate(-90deg)", // Rotation de 1/4 de tour vers la gauche
           }}
         ></div>
       </div>
