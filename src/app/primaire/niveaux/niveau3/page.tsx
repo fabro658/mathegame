@@ -6,8 +6,8 @@ import Link from "next/link";
 function DemiCercleAvecQuartiers() {
   return (
     <div className="relative">
-      {/* Demi-cercle */}
-      <div className="absolute top-4 left-4 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden relative">
+      {/* Demi-cercle placé en haut à gauche */}
+      <div className="absolute top-0 left-0 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden">
         {/* Trois triangles dans le demi-cercle */}
         {Array.from({ length: 3 }).map((_, index) => (
           <div
