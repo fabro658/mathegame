@@ -65,8 +65,17 @@ export default function Primaire() {
             style={{
               marginBottom: index === 5 ? "0" : "1.5rem", // Espacement entre les cercles
             }}
-          ></div>
+          >
+          </div>
         ))}
+      </div>
+      {/* Vague arrondie en bas */}
+      <div
+        className="absolute top-0 left-0 w-screen h-[100px] bg-orange-500 z-0"
+        style={{
+          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
+        }}
+      >
       </div>
     </div>
   );
