@@ -5,22 +5,23 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Bouton de retour en haut à droite */}
-      <Link
-        href="/primaire"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
-
-      {/* Vague arrondie en bas */}
+      {/* Vague arrondie en haut */}
       <div
         className="absolute top-0 left-0 w-screen h-[100px] bg-orange-500 z-0"
         style={{
           clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
+          transform: "rotate(180deg)"
         }}
       >
       </div>
+
+      {/* Bouton de retour en haut à droite */}
+      <Link
+        href="/primaire"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+      >
+        Retour
+      </Link>
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
