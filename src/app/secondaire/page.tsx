@@ -55,8 +55,9 @@ export default function Secondaire() {
             Mathématiques discrètes
           </div>
         </Link>
-        {/* Forme en escalier */}
-      <div className="absolute bottom-0 left-0">
+      </div>
+              {/* Forme en escalier */}
+              <div className="absolute bottom-0 left-0">
         <div
           className="relative"
           style={{
@@ -69,7 +70,6 @@ export default function Secondaire() {
           }}
         >
         </div>
-      </div>
       </div>
     </div>
   );
