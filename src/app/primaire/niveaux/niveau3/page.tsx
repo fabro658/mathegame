@@ -31,36 +31,6 @@ export default function Page() {
     </>
   );
 
-  // Affichage des boutons pour mobile
-  const MobileButtons = () => (
-    <div className="flex flex-col gap-4 w-3/4 mx-auto">
-      <a
-        href="/primaire/niveaux/niveau3/additionfraction"
-        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Addition de fraction
-      </a>
-      <a
-        href="/primaire/niveaux/niveau3/soustractionfraction"
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Soustraction de fraction
-      </a>
-      <a
-        href="/primaire/niveaux/niveau3/multiplicationfraction"
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Multiplication de fraction
-      </a>
-      <a
-        href="/primaire/niveaux/niveau3/divisionfraction"
-        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Division de fraction
-      </a>
-    </div>
-  );
-
   // Affichage des boutons pour ordinateur
   const DesktopButtons = () => (
     <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
@@ -93,11 +63,11 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Header commun */}
-      <CommonHeader />
-
-      {/* Affichage conditionnel */}
-      {isMobile ? <MobileButtons /> : <DesktopButtons />}
+      {/* Nuage en haut à gauche */}
+      <div className="absolute top-4 left-4 w-40 h-20 bg-gradient-to-b from-white to-gray-300 rounded-full shadow-lg">
+        <div className="absolute w-24 h-24 bg-gradient-to-b from-white to-gray-300 rounded-full -top-6 -left-6"></div>
+        <div className="absolute w-16 h-16 bg-gradient-to-b from-white to-gray-300 rounded-full -top-4 right-4"></div>
+      </div>
     </div>
   );
 }
