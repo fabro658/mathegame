@@ -13,6 +13,17 @@ export default function Page() {
         Retour
       </Link>
 
+      <div className="absolute bottom-0 left-0 w-full h-8 bg-gray-800 flex">
+        {/* Briques */}
+        {Array.from({ length: 20 }).map((_, index) => (
+         <div
+          key={index}
+          className="w-8 h-8 bg-orange-500 mx-1"
+          >
+          </div>
+        ))}
+      </div>
+
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">

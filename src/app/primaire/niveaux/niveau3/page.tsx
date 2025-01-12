@@ -5,10 +5,23 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Nuage en haut à gauche */}
-      <div className="absolute top-4 left-4 w-40 h-20 bg-gradient-to-b from-white to-gray-300 rounded-full shadow-lg">
-        <div className="absolute w-24 h-24 bg-gradient-to-b from-white to-gray-300 rounded-full -top-6 -left-6"></div>
-        <div className="absolute w-16 h-16 bg-gradient-to-b from-white to-gray-300 rounded-full -top-4 right-4"></div>
+      {/* Demi-cercle */}
+      <div className="absolute top-4 left-4 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden relative">
+        <div className="absolute inset-0 w-full h-full bg-orange-500 rounded-t-full"></div>
+
+        {/* Lignes divisant le demi-cercle */}
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="absolute w-1/2 h-1 bg-orange-300"
+            style={{
+              top: `calc(25% + ${index * 25}%)`,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 1,
+            }}
+          ></div>
+        ))}
       </div>
 
       {/* Bouton de retour */}
@@ -51,26 +64,6 @@ export default function Page() {
           Division de fraction
         </a>
       </div>
-      <div className="absolute top-4 left-4">
-  {/* Soleil */}
-  <div className="relative w-24 h-24 flex justify-center items-center">
-    {/* Cercle central */}
-    <div className="w-16 h-16 bg-yellow-400 rounded-full shadow-lg"></div>
-    
-    {/* Rayons */}
-    {Array.from({ length: 12 }).map((_, index) => (
-      <div
-        key={index}
-        className="absolute w-4 h-8 bg-yellow-400"
-        style={{
-          transform: `rotate(${index * 30}deg) translate(30px) rotate(-${index * 30}deg)`,
-          clipPath: "polygon(50% 100%, 100% 0%, 0% 0%)", // Triangle avec base plane
-        }}
-      ></div>
-    ))}
-  </div>
-</div>
-
     </div>
   );
 }
