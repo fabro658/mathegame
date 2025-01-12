@@ -7,7 +7,9 @@ export default function Page() {
       {/* Lignes verticales vertes */}
       <div className="absolute inset-y-0 left-0 flex space-x-4 pl-4">
         {/* Ligne vert clair */}
-        <div className="w-4 bg-green-300"></div>
+        <div className="w-4 bg-green-700"></div>
+        {/* Ligne vert foncé */}
+        <div className="w-4 bg-green-700"></div>
         {/* Ligne vert foncé */}
         <div className="w-4 bg-green-700"></div>
       </div>
@@ -45,7 +47,7 @@ export default function Page() {
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
+          className="bg-blue-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
         >
           Comparaison de fraction
         </a>
