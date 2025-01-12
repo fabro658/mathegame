@@ -5,11 +5,11 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
       {/* Lignes verticales vertes */}
-      <div className="absolute inset-y-0 left-0 flex">
+      <div className="absolute inset-y-0 left-0 flex space-x-4 pl-4">
         {/* Ligne vert clair */}
-        <div className="w-2 bg-green-300"></div>
+        <div className="w-4 bg-green-300"></div>
         {/* Ligne vert foncé */}
-        <div className="w-2 bg-green-700"></div>
+        <div className="w-4 bg-green-700"></div>
       </div>
 
       {/* Bouton de retour */}
