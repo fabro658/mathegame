@@ -11,9 +11,6 @@ export default function Niveau1() {
         Retour
       </Link>
 
-        {/* Titre */}
-        <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
-
       {/* Section Titre */}
       <div className="flex flex-col items-center text-center mb-8">
         <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Arithmétique</h1>
