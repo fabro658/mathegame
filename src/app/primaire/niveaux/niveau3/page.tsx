@@ -51,6 +51,26 @@ export default function Page() {
           Division de fraction
         </a>
       </div>
+      <div className="absolute top-4 left-4">
+  {/* Soleil */}
+  <div className="relative w-24 h-24 flex justify-center items-center">
+    {/* Cercle central */}
+    <div className="w-16 h-16 bg-yellow-400 rounded-full shadow-lg"></div>
+    
+    {/* Rayons */}
+    {Array.from({ length: 12 }).map((_, index) => (
+      <div
+        key={index}
+        className="absolute w-4 h-8 bg-yellow-400"
+        style={{
+          transform: `rotate(${index * 30}deg) translate(30px) rotate(-${index * 30}deg)`,
+          clipPath: "polygon(50% 100%, 100% 0%, 0% 0%)", // Triangle avec base plane
+        }}
+      ></div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 }

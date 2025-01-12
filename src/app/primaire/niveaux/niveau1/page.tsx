@@ -42,26 +42,14 @@ export default function Page() {
           Division
         </a>
       </div>
-
-      <div className="absolute top-4 left-4">
-  {/* Soleil */}
-  <div className="relative w-24 h-24 flex justify-center items-center">
-    {/* Cercle central */}
-    <div className="w-16 h-16 bg-yellow-400 rounded-full shadow-lg"></div>
-    
-    {/* Rayons */}
-    {Array.from({ length: 12 }).map((_, index) => (
+      {/* Vague arrondie en bas */}
       <div
-        key={index}
-        className="absolute w-4 h-4 bg-yellow-400 transform rotate-[30deg]"
+        className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0"
         style={{
-          transform: `rotate(${index * 30}deg) translate(40px) rotate(-${index * 30}deg)`,
-          clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)", // Triangle
+          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
         }}
-      ></div>
-    ))}
+      >
   </div>
 </div>
-    </div>
   );
 }
