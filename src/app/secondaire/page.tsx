@@ -56,6 +56,40 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
+
+      {/* Colonnes de cubes sur le côté gauche */}
+      <div className="absolute left-4 bottom-8 flex space-x-8">
+        {/* Première colonne (3 cubes) */}
+        <div className="flex flex-col space-y-8">
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className="w-12 h-12 bg-blue-800"
+              style={{
+                height: `${10 + 3 * index}vh`, // Ajuste la hauteur pour les cubes de la colonne 1
+              }}
+            ></div>
+          ))}
+        </div>
+
+        {/* Deuxième colonne (2 cubes) */}
+        <div className="flex flex-col space-y-8">
+          {[...Array(2)].map((_, index) => (
+            <div
+              key={index}
+              className="w-12 h-12 bg-blue-800"
+              style={{
+                height: `${10 + 3 * index}vh`, // Ajuste la hauteur pour les cubes de la colonne 2
+              }}
+            ></div>
+          ))}
+        </div>
+
+        {/* Troisième colonne (1 cube) */}
+        <div className="flex flex-col space-y-8">
+          <div className="w-12 h-12 bg-blue-800" style={{ height: `16vh` }}></div>
+        </div>
+      </div>
     </div>
   );
 }

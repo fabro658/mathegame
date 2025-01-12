@@ -40,8 +40,8 @@ export default function Primaire() {
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau4">
-        <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-        Géométrie
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+            Géométrie
           </div>
         </Link>
         <Link href="/primaire/niveaux/niveau5">
@@ -54,6 +54,19 @@ export default function Primaire() {
             Priorité d&#39;opération
           </div>
         </Link>
+      </div>
+
+      {/* Cercles bleu foncé sur le côté gauche de l'écran */}
+      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 space-y-6 pl-4">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="w-16 h-16 bg-blue-800 rounded-full"
+            style={{
+              marginBottom: index === 5 ? "0" : "1.5rem", // Espacement entre les cercles
+            }}
+          ></div>
+        ))}
       </div>
     </div>
   );
