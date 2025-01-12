@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -25,42 +24,21 @@ export default function Page() {
       >
         Retour
       </Link>
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
-        Choisissez une opération
-      </h1>
+      <div className="relative w-full flex justify-center items-center">
+        {/* Forme jaune en arrière-plan */}
+        <div
+          className="absolute bg-yellow-500 h-40 w-full max-w-5xl"
+          style={{
+            clipPath: "path('M0,60 Q150,0 300,60 T600,60 T900,60 L900,160 L0,160 Z')",
+          }}
+        ></div>
+        {/* Titre */}
+        <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12 relative z-10">
+          Choisissez une opération
+        </h1>
+      </div>
     </>
   );
-
-  // Affichage des boutons pour mobile
-  const MobileButtons = () => (
-    <div className="flex flex-col gap-4 w-3/4 mx-auto">
-      <a
-          href="/primaire/niveaux/niveau2/comparaison_decimaux"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Comparaisons nombre décimaux
-      </a>
-      <a
-          href="/primaire/niveaux/niveau2/comparaison"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Comparaisons
-      </a>
-      <a
-          href="/primaire/niveaux/niveau2/expression_equivalente"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-       Expression équivalente
-      </a>
-      <a
-          href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Comparaison de fraction
-      </a>
-    </div>
-  );
-
   // Affichage des boutons pour ordinateur
   const DesktopButtons = () => (
     <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
@@ -88,16 +66,6 @@ export default function Page() {
       >
         Comparaison de fraction
       </a>
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Header commun */}
-      <CommonHeader />
-
-      {/* Affichage conditionnel */}
-      {isMobile ? <MobileButtons /> : <DesktopButtons />}
     </div>
   );
 }
