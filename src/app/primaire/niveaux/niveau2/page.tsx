@@ -1,23 +1,24 @@
 "use client";
+
 import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
        
-    {/* Design*/}
-    <div className="flex h-screen absolute top-0 left-0">
-  {/* Ligne vert foncé */}
-  <div className="h-full w-1/6 bg-green-700"></div>
-  {/* Ligne vert légèrement plus clair */}
-  <div className="h-full w-1/6 bg-green-600"></div>
-  {/* Ligne vert moyen */}
-  <div className="h-full w-1/6 bg-green-500"></div>
-  {/* Ligne vert clair */}
-  <div className="h-full w-1/6 bg-green-400"></div>
-  {/* Ligne vert très clair */}
-  <div className="h-full w-1/6 bg-green-300"></div>
-</div>
+      {/* Design */}
+      <div className="flex h-screen absolute top-0 left-0">
+        {/* Ligne vert foncé */}
+        <div className="h-full w-1/6 bg-green-700"></div>
+        {/* Ligne vert légèrement plus clair */}
+        <div className="h-full w-1/6 bg-green-600"></div>
+        {/* Ligne vert moyen */}
+        <div className="h-full w-1/6 bg-green-500"></div>
+        {/* Ligne vert clair */}
+        <div className="h-full w-1/6 bg-green-400"></div>
+        {/* Ligne vert très clair */}
+        <div className="h-full w-1/6 bg-green-300"></div>
+      </div>
 
       {/* Bouton de retour */}
       <Link
