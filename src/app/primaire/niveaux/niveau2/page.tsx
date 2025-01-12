@@ -12,19 +12,6 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Forme jaune en arrière-plan */}
-      <div className="relative w-full flex justify-center items-center">
-        <div
-          className="absolute bg-yellow-500 h-40 w-full"
-          style={{
-            clipPath: "path('M0,60 Q150,0 300,60 T600,60 T900,60 L900,160 L0,160 Z')",
-          }}
-        ></div>
-        <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12 relative z-10">
-          Choisissez une opération
-        </h1>
-      </div>
-
       {/* Boutons */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
         <a

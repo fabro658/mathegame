@@ -49,7 +49,8 @@ export default function Page() {
         style={{
           clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
         }}
-      ></div>
+      >
+      </div>
     </div>
   );
 }
