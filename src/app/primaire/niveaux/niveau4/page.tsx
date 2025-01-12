@@ -5,15 +5,25 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Vague arrondie en haut */}
+      {/* Brique en bas */}
       <div
-        className="absolute top-0 left-0 w-screen h-[100px] bg-orange-500 z-0"
-        style={{
-          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
-          transform: "rotate(180deg)"
-        }}
-      >
-      </div>
+  className="absolute bottom-0 left-0 w-full h-[100px] bg-orange-500 z-0"
+  style={{
+    clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
+    transform: "rotate(180deg)"
+  }}
+>
+  <div className="absolute bottom-0 left-0 w-full h-full flex">
+    {/* Création de cubes */}
+    {Array.from({ length: 20 }).map((_, index) => (
+      <div
+        key={index}
+        className="w-8 h-8 bg-orange-500 mx-1"
+      />
+    ))}
+  </div>
+</div>
+
 
       {/* Bouton de retour en haut à droite */}
       <Link

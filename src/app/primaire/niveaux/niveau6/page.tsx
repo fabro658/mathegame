@@ -12,34 +12,35 @@ export default function Page() {
       >
         Retour
       </Link>
+
       <div className="relative w-40 h-40 mx-auto mt-16">
-  {/* Demi-cercle bleu clair */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100 rounded-t-full"
-  ></div>
+        {/* Conteneur des demi-cercle */}
+        <div className="absolute bottom-0 left-0 w-full flex justify-start">
+          {/* Demi-cercle bleu clair */}
+          <div className="w-1/2 h-1/2 bg-blue-100 rounded-t-full"></div>
 
-  {/* Demi-cercle bleu */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300 rounded-t-full"
-    style={{ bottom: '20px' }}
-  ></div>
+          {/* Demi-cercle bleu */}
+          <div
+            className="w-1/2 h-1/2 bg-blue-300 rounded-t-full"
+            style={{ bottom: '20px' }}
+          ></div>
 
-  {/* Demi-cercle bleu foncé */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500 rounded-t-full"
-    style={{ bottom: '40px' }}
-  ></div>
+          {/* Demi-cercle bleu foncé */}
+          <div
+            className="w-1/2 h-1/2 bg-blue-500 rounded-t-full"
+            style={{ bottom: '40px' }}
+          ></div>
 
-  {/* Demi-cercle bleu très foncé */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 rounded-t-full"
-    style={{ bottom: '60px' }}
-  ></div>
-</div>
-
+          {/* Demi-cercle bleu très foncé */}
+          <div
+            className="w-1/2 h-1/2 bg-blue-700 rounded-t-full"
+            style={{ bottom: '60px' }}
+          ></div>
+        </div>
+      </div>
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
-      
+
       <div className="flex flex-col items-center justify-center gap-8">
         {/* Le bouton centré */}
         <a

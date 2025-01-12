@@ -8,7 +8,22 @@ function DemiCercleAvecQuartiers() {
     <div className="relative">
       {/* Demi-cercle */}
       <div className="absolute top-4 left-4 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden relative">
-        <div className="absolute inset-0 w-full h-full bg-orange-500 rounded-t-full"></div>
+        {/* Quartiers avec triangles */}
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div
+            key={index}
+            className="absolute w-0 h-0 border-l-[40px] border-r-[40px] border-b-[60px]"
+            style={{
+              top: "50%",
+              left: "50%",
+              transform: `translate(-50%, -50%) rotate(${index * 90}deg)`,
+              borderBottomColor: "orange", // Couleur du triangle
+              borderLeftColor: "transparent",
+              borderRightColor: "transparent",
+              borderTopColor: "transparent",
+            }}
+          ></div>
+        ))}
 
         {/* Lignes divisant le demi-cercle en quartiers */}
         {Array.from({ length: 3 }).map((_, index) => (
@@ -27,6 +42,7 @@ function DemiCercleAvecQuartiers() {
     </div>
   );
 }
+
 
 // Page principale
 export default function Page() {
