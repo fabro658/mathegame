@@ -12,6 +12,9 @@ export default function Page() {
         Retour
       </Link>
 
+      {/* Titre */}
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+
       {/* Boutons */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
         <a
