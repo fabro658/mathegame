@@ -13,6 +13,15 @@ export default function Page() {
         Retour
       </Link>
 
+      {/* Vague arrondie en bas */}
+      <div
+        className="absolute top-0 left-0 w-screen h-[100px] bg-orange-500 z-0"
+        style={{
+          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
+        }}
+      >
+      </div>
+
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
