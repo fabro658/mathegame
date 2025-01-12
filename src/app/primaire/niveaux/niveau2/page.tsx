@@ -2,25 +2,38 @@
 
 import Link from "next/link";
 
+// Fonction pour afficher les quartiers dans un demi-cercle
+function DemiCercleAvecQuartiers() {
+  return (
+    <div className="relative">
+      {/* Demi-cercle */}
+      <div className="absolute top-4 left-4 w-1/5 h-16 bg-orange-500 rounded-t-full overflow-hidden relative">
+        {/* Trois triangles dans le demi-cercle */}
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="absolute w-0 h-0"
+            style={{
+              top: "50%",
+              left: "50%",
+              transform: `translate(-50%, -50%) rotate(${index * 120}deg)`,
+              borderLeft: "40px solid transparent", // Transparent à gauche
+              borderRight: "40px solid transparent", // Transparent à droite
+              borderBottom: "60px solid rgba(255, 165, 0, 0.5)", // Triangle orange pâle
+            }}
+          ></div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Page principale
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      
-      {/* Design */}
-      <div className="absolute inset-0 flex">
-        {/* Ligne vert foncé */}
-        <div className="h-full w-1/6 bg-green-700"></div>
-        {/* Ligne vert légèrement plus clair */}
-        <div className="h-full w-1/6 bg-green-600"></div>
-        {/* Ligne vert moyen */}
-        <div className="h-full w-1/6 bg-green-500"></div>
-        {/* Ligne vert clair */}
-        <div className="h-full w-1/6 bg-green-400"></div>
-        {/* Ligne vert très clair */}
-        <div className="h-full w-1/6 bg-green-300"></div>
-        {/* Espace restant pour alignement */}
-        <div className="h-full w-1/6 bg-transparent"></div>
-      </div>
+      {/* Affichage du demi-cercle avec quartiers */}
+      <DemiCercleAvecQuartiers />
 
       {/* Bouton de retour */}
       <Link
@@ -31,35 +44,35 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center z-10">
+      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
         Choisissez une opération
       </h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8 z-10">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
         <a
-          href="/primaire/niveaux/niveau2/comparaison_decimaux"
+          href="/primaire/niveaux/niveau3/additionfraction"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+        >
+          Addition de fraction
+        </a>
+        <a
+          href="/primaire/niveaux/niveau3/soustractionfraction"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
-          Comparaisons nombre décimaux
+          Soustraction de fraction
         </a>
         <a
-          href="/primaire/niveaux/niveau2/comparaison"
+          href="/primaire/niveaux/niveau3/multiplicationfraction"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
-          Comparaisons
+          Multiplication de fraction
         </a>
         <a
-          href="/primaire/niveaux/niveau2/expression_equivalente"
+          href="/primaire/niveaux/niveau3/divisionfraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
-          Expression équivalente
-        </a>
-        <a
-          href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="bg-blue-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
-        >
-          Comparaison de fraction
+          Division de fraction
         </a>
       </div>
     </div>

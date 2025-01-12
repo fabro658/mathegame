@@ -20,13 +20,13 @@ export default function Page() {
         
         {/* Demi-cercle bleu */}
         <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300 rounded-t-full"
+          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300 square-t-full"
           style={{ bottom: '20px' }}
         ></div>
         
         {/* Demi-cercle bleu foncé */}
         <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500 rounded-t-full"
+          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500 square-t-full"
           style={{ bottom: '40px' }}
         ></div>
         
