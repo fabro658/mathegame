@@ -2,27 +2,38 @@
 
 import Link from "next/link";
 
-export default function Page() {
+// Fonction pour afficher les quartiers dans un demi-cercle
+function DemiCercleAvecQuartiers() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
+    <div className="relative">
       {/* Demi-cercle */}
       <div className="absolute top-4 left-4 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden relative">
         <div className="absolute inset-0 w-full h-full bg-orange-500 rounded-t-full"></div>
 
-        {/* Lignes divisant le demi-cercle */}
+        {/* Lignes divisant le demi-cercle en quartiers */}
         {Array.from({ length: 3 }).map((_, index) => (
           <div
             key={index}
-            className="absolute w-1/2 h-1 bg-orange-300"
+            className="absolute w-px h-16 bg-orange-300"
             style={{
-              top: `calc(25% + ${index * 25}%)`,
+              top: "50%", // Alignement vertical au centre du demi-cercle
               left: "50%",
-              transform: "translateX(-50%)",
+              transform: `translateX(-50%) rotate(${index * 90}deg)`, // Rotation pour chaque ligne (0°, 90°, 180°)
               zIndex: 1,
             }}
           ></div>
         ))}
       </div>
+    </div>
+  );
+}
+
+// Page principale
+export default function Page() {
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
+      {/* Affichage du demi-cercle avec quartiers */}
+      <DemiCercleAvecQuartiers />
 
       {/* Bouton de retour */}
       <Link

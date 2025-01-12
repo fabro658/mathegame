@@ -4,18 +4,21 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-     <div className="flex flex-col space-y-0">
+       
+    {/* Design*/}
+    <div className="flex flex-col space-y-0 h-screen absolute left-0 top-0">
   {/* Ligne vert foncé */}
-  <div className="w-4 h-16 bg-green-700"></div>
+  <div className="w-4 h-full bg-green-700"></div>
   {/* Ligne vert foncé */}
-  <div className="w-4 h-16 bg-green-600"></div>
+  <div className="w-4 h-full bg-green-600"></div>
   {/* Ligne vert foncé */}
-  <div className="w-4 h-16 bg-green-500"></div>
+  <div className="w-4 h-full bg-green-500"></div>
   {/* Ligne vert foncé */}
-  <div className="w-4 h-16 bg-green-400"></div>
+  <div className="w-4 h-full bg-green-400"></div>
   {/* Ligne vert foncé */}
-  <div className="w-4 h-16 bg-green-300"></div>
+  <div className="w-4 h-full bg-green-300"></div>
 </div>
+
 
 
       {/* Bouton de retour */}

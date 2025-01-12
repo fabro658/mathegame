@@ -13,19 +13,20 @@ export default function Page() {
         Retour
       </Link>
 
-      <div className="absolute bottom-0 left-0 w-full h-8 bg-gray-800 flex">
-        {/* Briques */}
+      {/* Briques en bas */}
+      <div className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0">
         {Array.from({ length: 20 }).map((_, index) => (
-         <div
-          key={index}
-          className="w-8 h-8 bg-orange-500 mx-1"
-          >
-          </div>
+          <div
+            key={index}
+            className="w-8 h-8 bg-orange-500 mx-1"
+          ></div>
         ))}
       </div>
 
+      {/* Titre */}
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
-      
+
+      {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
