@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 export default function Secondaire() {
@@ -60,11 +61,11 @@ export default function Secondaire() {
       {/* Colonnes de cubes sur le côté gauche */}
       <div className="absolute left-4 bottom-8 flex space-x-8">
         {/* Première colonne (3 cubes) */}
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-8 items-end">
           {[...Array(3)].map((_, index) => (
             <div
               key={index}
-              className="w-12 h-12 bg-blue-800"
+              className="w-12 bg-blue-800"
               style={{
                 height: `${10 + 3 * index}vh`, // Ajuste la hauteur pour les cubes de la colonne 1
               }}
@@ -73,11 +74,11 @@ export default function Secondaire() {
         </div>
 
         {/* Deuxième colonne (2 cubes) */}
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-8 items-end">
           {[...Array(2)].map((_, index) => (
             <div
               key={index}
-              className="w-12 h-12 bg-blue-800"
+              className="w-12 bg-blue-800"
               style={{
                 height: `${10 + 3 * index}vh`, // Ajuste la hauteur pour les cubes de la colonne 2
               }}
@@ -86,8 +87,8 @@ export default function Secondaire() {
         </div>
 
         {/* Troisième colonne (1 cube) */}
-        <div className="flex flex-col space-y-8">
-          <div className="w-12 h-12 bg-blue-800" style={{ height: `16vh` }}></div>
+        <div className="flex flex-col space-y-8 items-end">
+          <div className="w-12 bg-blue-800" style={{ height: `16vh` }}></div>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
       {/* Vague arrondie en arrière-plan */}
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-gray-200 clip-path-[polygon(0_0%,100%_0%,100%_100%,0_100%)] z-[-1]" style={{clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 100%)'}}></div>
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-200 clip-path-[polygon(0_0%,100%_0%,100%_100%,0_100%)] z-[-1]" style={{clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 100%)'}}></div>
 
       {/* Bouton de retour en haut à droite */}
       <Link
