@@ -5,9 +5,9 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-       
+      
       {/* Design */}
-      <div className="flex h-screen absolute top-0 left-0">
+      <div className="absolute inset-0 flex">
         {/* Ligne vert foncé */}
         <div className="h-full w-1/6 bg-green-700"></div>
         {/* Ligne vert légèrement plus clair */}
@@ -18,6 +18,8 @@ export default function Page() {
         <div className="h-full w-1/6 bg-green-400"></div>
         {/* Ligne vert très clair */}
         <div className="h-full w-1/6 bg-green-300"></div>
+        {/* Espace restant pour alignement */}
+        <div className="h-full w-1/6 bg-transparent"></div>
       </div>
 
       {/* Bouton de retour */}
@@ -29,10 +31,12 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center z-10">
+        Choisissez une opération
+      </h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8 z-10">
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"

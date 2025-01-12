@@ -16,7 +16,7 @@ export default function Page() {
       {/* Conteneur des demi-cercles en bas à gauche */}
       <div className="absolute bottom-0 left-0 w-40 h-40">
         {/* Demi-cercle bleu clair */}
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100 rounded-t-full"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100 square-t-full"></div>
         
         {/* Demi-cercle bleu */}
         <div
@@ -32,7 +32,7 @@ export default function Page() {
         
         {/* Demi-cercle bleu très foncé */}
         <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 rounded-t-full"
+          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 square-t-full"
           style={{ bottom: '60px' }}
         ></div>
       </div>

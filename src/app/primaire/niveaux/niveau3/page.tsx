@@ -2,28 +2,42 @@
 
 import Link from "next/link";
 
-// Fonction pour afficher les quartiers dans un demi-cercle
-function DemiCercleAvecQuartiers() {
+function DemiCercleAvecLignes() {
   return (
-    <div className="relative">
-      {/* Demi-cercle placé en haut à gauche */}
-      <div className="absolute top-0 left-0 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden">
-        {/* Trois triangles dans le demi-cercle */}
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div
-            key={index}
-            className="absolute w-0 h-0"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: `translate(-50%, -50%) rotate(${index * 120}deg)`,
-              borderLeft: "40px solid transparent",  // Transparent à gauche
-              borderRight: "40px solid transparent", // Transparent à droite
-              borderBottom: "60px solid rgba(255, 165, 0, 0.5)", // Triangle orange pâle
-            }}
-          ></div>
-        ))}
-      </div>
+    <div className="absolute top-0 left-0 w-32 h-16 bg-orange-500 rounded-t-full overflow-hidden">
+      {/* Lignes jaunes */}
+      <div
+        className="absolute bg-yellow-400"
+        style={{
+          width: "2px",
+          height: "100%",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      ></div>
+      <div
+        className="absolute bg-yellow-400"
+        style={{
+          width: "2px",
+          height: "100%",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%) rotate(-30deg)",
+          transformOrigin: "top center",
+        }}
+      ></div>
+      <div
+        className="absolute bg-yellow-400"
+        style={{
+          width: "2px",
+          height: "100%",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%) rotate(30deg)",
+          transformOrigin: "top center",
+        }}
+      ></div>
     </div>
   );
 }
@@ -32,8 +46,8 @@ function DemiCercleAvecQuartiers() {
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Affichage du demi-cercle avec quartiers */}
-      <DemiCercleAvecQuartiers />
+      {/* Demi-cercle en haut à gauche */}
+      <DemiCercleAvecLignes />
 
       {/* Bouton de retour */}
       <Link
