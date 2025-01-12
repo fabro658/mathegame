@@ -1,151 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Page() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Détecte si l'écran est un mobile
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Taille d'écran < 768px => mobile
-    };
-    handleResize(); // Vérifie au chargement
-    window.addEventListener("resize", handleResize); // Écoute les changements de taille
-    return () => window.removeEventListener("resize", handleResize); // Nettoyage
-  }, []);
-
-  // Partie commune pour le bouton retour et le titre
-  const CommonHeader = () => (
-    <>
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
+      {/* Bouton Retour à l'accueil */}
       <Link
-        href="/primaire"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
+        href="/"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
-        Choisissez une opération
-      </h1>
-    </>
-  );
 
-  // Affichage des boutons pour mobile
-  const MobileButtons = () => (
-    <div className="flex flex-col gap-4 w-3/4 mx-auto">
-      <a
+      <h1 className="text-4xl font-bold mb-12 underline">Zone d&apos;apprentissage</h1>
+
+      {/* Grille de boutons */}
+      <div className="grid grid-cols-2 gap-8">
+        <Link 
           href="/menu/apprendre/opérations arithmétiques" 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Opérations arithmétiques
-      </a>
-      <a
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Opérations arithmétiques
+        </Link>
+        <Link 
           href="/menu/apprendre/fraction" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Fraction
-      </a>
-      <a
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Fraction
+        </Link>
+        <Link 
           href="/menu/apprendre/aire" 
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Aire
-      </a>
-      <a
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Aire
+        </Link>
+        <Link 
           href="/menu/apprendre/perimetre" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Périmètre
-      </a>
-      <a
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Périmètre
+        </Link>
+        <Link 
           href="/menu/apprendre/exposant" 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Exposant
-      </a>
-      <a
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Exposant
+        </Link>
+        <Link 
           href="/menu/apprendre/prioriteoperation" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Priorité d&apos;opération
-      </a>
-      <a
+          className="bg-blue-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Priorité d&apos;opération
+        </Link>
+        <Link 
           href="/menu/apprendre/algebre" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
-      >
-        Algèbre
-      </a>
-      <a
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Algèbre
+        </Link>
+        <Link 
           href="/menu/apprendre/fonction" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center"
-      >
-        Fonction
-      </a>
-    </div>
-  );
-
-  // Affichage des boutons pour ordinateur
-  const DesktopButtons = () => (
-    <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
-      <a
-          href="/menu/apprendre/opérations arithmétiques" 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Opérations arithmétiques
-      </a>
-      <a
-          href="/menu/apprendre/fraction" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Fraction
-      </a>
-      <a
-          href="/menu/apprendre/aire" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
-      >
-        Aire
-      </a>
-      <a
-          href="/menu/apprendre/perimetre" 
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Périmètre
-      </a>
-      <a
-          href="/menu/apprendre/exposant" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Exposant
-      </a>
-      <a
-          href="/menu/apprendre/prioriteoperation" 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Priorité d&apos;opération
-      </a>
-      <a
-          href="/menu/apprendre/algebre" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-      >
-        Algèbre
-      </a>
-      <a
-          href="/menu/apprendre/fonction" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2 md:col-span-1 md:col-start-2"
-      >
-        Fonction
-      </a>
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Header commun */}
-      <CommonHeader />
-
-      {/* Affichage conditionnel */}
-      {isMobile ? <MobileButtons /> : <DesktopButtons />}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Fonction
+        </Link>
+      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function Page() {
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {/* Boutons en une colonne sur mobile, deux colonnes sur écrans plus grands */}
         <a
           href="/primaire/niveaux/niveau5/exposant/n1"
@@ -29,12 +29,14 @@ export default function Page() {
         >
           Deuxième niveau
         </a>
-        <a
-         href="/primaire/niveaux/niveau5/exposant/n3"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] md:mx-auto md:flex md:justify-center"
+        <div className="col-span-1 sm:col-span-2 flex justify-center">
+          <a
+            href="/primaire/niveaux/niveau5/exposant/n3"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
-           Troisième niveau
-        </a>
+            Troisième niveau
+          </a>
+        </div>
       </div>
     </div>
   );
