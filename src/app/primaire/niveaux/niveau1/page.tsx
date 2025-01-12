@@ -45,9 +45,9 @@ export default function Page() {
 
       {/* Vague arrondie en bas */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[200px] bg-blue-500 z-0"
+        className="absolute bottom-0 left-0 w-full h-[100px] bg-blue-500 z-0"
         style={{
-          clipPath: "path('M0,50 C150,150 350,-50 500,50 C650,150 850,-50 1000,50 L1000,200 L0,200 Z')",
+          clipPath: "path('M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,100 L0,100 Z')",
         }}
       ></div>
     </div>
