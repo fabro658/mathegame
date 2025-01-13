@@ -19,7 +19,7 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
+      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12 text-gray-900">
         Choisissez une opération
       </h1>
 
