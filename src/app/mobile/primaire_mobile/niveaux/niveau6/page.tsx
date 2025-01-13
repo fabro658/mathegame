@@ -12,31 +12,6 @@ export default function Page() {
       >
         Retour
       </Link>
-
-      {/* Conteneur des demi-cercles en bas à gauche */}
-      <div className="absolute bottom-0 left-0 w-40 h-40">
-        {/* Demi-cercle bleu clair */}
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100 square-t-full"></div>
-        
-        {/* Demi-cercle bleu */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300 square-t-full"
-          style={{ bottom: '20px' }}
-        ></div>
-        
-        {/* Demi-cercle bleu foncé */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500 square-t-full"
-          style={{ bottom: '40px' }}
-        ></div>
-        
-        {/* Demi-cercle bleu très foncé */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 round-t-full"
-          style={{ bottom: '60px' }}
-        ></div>
-      </div>
-
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
       <div className="flex flex-col items-center justify-center gap-8">

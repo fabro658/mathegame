@@ -1,33 +1,10 @@
 "use client";
 
 import Link from "next/link";
+
 export default function Page() {
   return (
     <>
-      {/* Conteneur des demi-cercles en haut à gauche */}
-      <div className="absolute top-0 left-0 w-40 h-40">
-        {/* Demi-cercle bleu clair */}
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 square-t-full"></div>
-
-        {/* Demi-cercle bleu */}
-        <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 square-t-full"
-          style={{ bottom: '20px' }}
-        ></div>
-
-        {/* Demi-cercle bleu foncé */}
-        <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 square-t-full"
-          style={{ bottom: '40px' }}
-        ></div>
-
-        {/* Demi-cercle bleu très foncé */}
-        <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-700 round-t-full"
-          style={{ bottom: '60px' }}
-        ></div>
-      </div>
-
       {/* Bouton de retour */}
       <Link
         href="/primaire"
@@ -42,28 +19,28 @@ export default function Page() {
       </h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
+      <div className="flex flex-col gap-4 w-full max-w-md mx-auto px-4">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Addition de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/soustractionfraction"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Soustraction de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Multiplication de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Division de fraction
         </a>
