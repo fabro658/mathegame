@@ -8,17 +8,17 @@ export default function Page() {
       {/* Demi-cercles oranges en haut à gauche */}
       <div className="absolute top-0 left-0 w-40 h-40">
         {/* Demi-cercle orange clair */}
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 square-b-full"></div>
+        <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 rounded-b-full"></div>
         
         {/* Demi-cercle orange */}
         <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 square-b-full"
+          className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 rounded-b-full"
           style={{ top: "20px" }}
         ></div>
         
         {/* Demi-cercle orange foncé */}
         <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 square-b-full"
+          className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 rounded-b-full"
           style={{ top: "40px" }}
         ></div>
         
