@@ -2,33 +2,13 @@
 
 import Link from "next/link";
 
-function Soleil() {
-  return (
-    <div className="absolute top-4 left-4 flex justify-center items-center">
-      {/* Cercle central (jaune) */}
-      <div className="relative w-12 h-12 bg-yellow-400 rounded-full"></div>
-
-      {/* Rayons du soleil */}
-      {[...Array(8)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute bg-yellow-300 w-2 h-6 rounded-full"
-          style={{
-            transform: `rotate(${i * 45}deg) translate(0, -24px)`,
-            top: "50%",
-            left: "50%",
-          }}
-        ></div>
-      ))}
-    </div>
-  );
-}
-
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
-      {/* Soleil en haut à gauche */}
-      <Soleil />
+    <>
+      {/* Emoji palmier 🌴 */}
+      <div className="absolute top-4 left-4 text-3xl">
+        🌴
+      </div>
 
       {/* Bouton de retour */}
       <Link
@@ -70,6 +50,6 @@ export default function Page() {
           Division de fraction
         </a>
       </div>
-    </div>
+    </>
   );
 }
