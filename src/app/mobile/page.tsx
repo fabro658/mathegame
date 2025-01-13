@@ -37,7 +37,7 @@ export default function MobileHome() {
       {/* Boutons Primaire, Secondaire et À venir */}
       <div className="absolute bottom-8 flex flex-row justify-center items-center gap-4 w-full px-4">
         {/* Bouton Primaire */}
-        <Link href="/primaire">
+        <Link href="/mobile/primaire_mobile">
           <div
             className="bg-yellow-500 text-black text-sm h-16 w-16 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-lg"
           >
@@ -55,7 +55,7 @@ export default function MobileHome() {
         </Link>
 
         {/* Bouton Secondaire */}
-        <Link href="/secondaire">
+        <Link href="/mobile/secondaire_mobile">
           <div
             className="bg-green-500 text-black text-sm h-16 w-16 flex items-center justify-center font-bold hover:bg-green-400 rounded-lg"
           >

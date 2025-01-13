@@ -5,30 +5,20 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 overflow-hidden">
-      {/* Conteneur des rectangles sur toute la largeur en bas */}
-<div className="absolute bottom-0 left-0 w-full h-40">
-  {/* Rectangle bleu clair */}
-  <div className="absolute left-0 w-full h-1/2 bg-orange-700"></div>
+      {/* Conteneur des rectangles verticaux à gauche */}
+      <div className="absolute top-0 left-0 h-full w-16 flex flex-col">
+        {/* Rectangle orange très foncé */}
+        <div className="h-1/4 w-full bg-orange-700"></div>
 
-  {/* Rectangle bleu */}
-  <div
-    className="absolute left-0 w-full h-1/2 bg-orange-500"
-    style={{ bottom: "20px" }}
-  ></div>
+        {/* Rectangle orange foncé */}
+        <div className="h-1/4 w-full bg-orange-500"></div>
 
-  {/* Rectangle bleu foncé */}
-  <div
-    className="absolute left-0 w-full h-1/2 bg-orange-300"
-    style={{ bottom: "40px" }}
-  ></div>
+        {/* Rectangle orange moyen */}
+        <div className="h-1/4 w-full bg-orange-300"></div>
 
-  {/* Rectangle bleu très foncé */}
-  <div
-    className="absolute left-0 w-full h-1/2 bg-orange-100"
-    style={{ bottom: "60px" }}
-  ></div>
-</div>
-
+        {/* Rectangle orange clair */}
+        <div className="h-1/4 w-full bg-orange-100"></div>
+      </div>
 
       {/* Bouton de retour */}
       <Link
