@@ -18,6 +18,9 @@ function DesignFleurs() {
             }}
           ></div>
         ))}
+
+        {/* Point jaune au centre */}
+        <div className="absolute top-1/2 left-1/2 w-12 h-12 bg-yellow-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
       </div>
     </div>
   );
@@ -32,7 +35,7 @@ export default function Page() {
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10" // z-10 pour s'assurer que le bouton est au-dessus de la vague
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
       </Link>

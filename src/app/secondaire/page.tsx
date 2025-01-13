@@ -56,21 +56,6 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
-              {/* Forme en escalier */}
-              <div className="absolute bottom-0 left-0">
-        <div
-          className="relative"
-          style={{
-            width: "150px",
-            height: "150px",
-            backgroundColor: "#ADD8E6",
-            clipPath:
-              "polygon(0% 0%, 0% 100%, 33% 100%, 33% 67%, 67% 67%, 67% 33%, 100% 33%, 100% 0%)",
-            transform: "rotate(-90deg)", // Rotation de 1/4 de tour vers la gauche
-          }}
-        >
-        </div>
-      </div>
     </div>
   );
 }

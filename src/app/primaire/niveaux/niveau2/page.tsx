@@ -1,38 +1,34 @@
 "use client";
 
 import Link from "next/link";
-// Fonction pour afficher des étoiles aléatoires
-function Etoiles() {
-  const nombreEtoiles = 30; // Nombre d'étoiles
-  const etoiles = Array.from({ length: nombreEtoiles });
 
+function Soleil() {
   return (
-    <>
-      {etoiles.map((_, index) => (
+    <div className="absolute top-4 left-4 flex justify-center items-center">
+      {/* Cercle central (jaune) */}
+      <div className="relative w-12 h-12 bg-yellow-400 rounded-full"></div>
+
+      {/* Rayons du soleil */}
+      {[...Array(8)].map((_, i) => (
         <div
-          key={index}
-          className="absolute bg-white rounded-full"
+          key={i}
+          className="absolute bg-yellow-300 w-2 h-6 rounded-full"
           style={{
-            width: `${Math.random() * 4 + 2}px`, // Taille entre 2px et 6px
-            height: `${Math.random() * 4 + 2}px`,
-            top: `${Math.random() * 100}%`, // Position verticale aléatoire
-            left: `${Math.random() * 100}%`, // Position horizontale aléatoire
-            opacity: `${Math.random() * 0.8 + 0.2}`, // Opacité entre 0.2 et 1
-            boxShadow: "0 0 6px rgba(255, 234, 0, 0.8)", // Brillance
+            transform: `rotate(${i * 45}deg) translate(0, -24px)`,
+            top: "50%",
+            left: "50%",
           }}
         ></div>
       ))}
-    </>
+    </div>
   );
 }
 
-// Page principale
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
-
-      {/* Affichage des étoiles */}
-      <Etoiles />
+      {/* Soleil en haut à gauche */}
+      <Soleil />
 
       {/* Bouton de retour */}
       <Link
