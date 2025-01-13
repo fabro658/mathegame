@@ -1,4 +1,4 @@
-"use client"
+"use client"; 
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -9,7 +9,6 @@ export default function Home() {
 
   useEffect(() => {
     const checkDeviceType = () => {
-      // Si la largeur de l'écran est inférieure ou égale à 768px, on considère que c'est un appareil mobile
       if (window.innerWidth <= 768) {
         setIsMobile(true);
       } else {
@@ -26,7 +25,6 @@ export default function Home() {
   }, []);
 
   if (isMobile) {
-    // Si l'appareil est mobile, redirigez l'utilisateur vers la version mobile
     return (
       <div
         className="relative flex flex-col items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
