@@ -1,31 +1,30 @@
 "use client";
 
 import Link from "next/link";
-
 export default function Page() {
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 overflow-hidden">
-      {/* Demi-cercles oranges en haut à gauche */}
+    <>
+      {/* Conteneur des demi-cercles en haut à gauche */}
       <div className="absolute top-0 left-0 w-40 h-40">
-        {/* Demi-cercle orange clair */}
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 rounded-b-full"></div>
-        
-        {/* Demi-cercle orange */}
+        {/* Demi-cercle bleu clair */}
+        <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 square-t-full"></div>
+
+        {/* Demi-cercle bleu */}
         <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 rounded-b-full"
-          style={{ top: "20px" }}
+          className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 square-t-full"
+          style={{ bottom: '20px' }}
         ></div>
-        
-        {/* Demi-cercle orange foncé */}
+
+        {/* Demi-cercle bleu foncé */}
         <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 rounded-b-full"
-          style={{ top: "40px" }}
+          className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 square-t-full"
+          style={{ bottom: '40px' }}
         ></div>
-        
-        {/* Demi-cercle orange très foncé */}
+
+        {/* Demi-cercle bleu très foncé */}
         <div
-          className="absolute top-0 left-0 w-full h-1/2 bg-orange-700 rounded-b-full"
-          style={{ top: "60px" }}
+          className="absolute top-0 left-0 w-full h-1/2 bg-orange-700 round-t-full"
+          style={{ bottom: '60px' }}
         ></div>
       </div>
 
@@ -69,6 +68,6 @@ export default function Page() {
           Division de fraction
         </a>
       </div>
-    </div>
+    </>
   );
 }
