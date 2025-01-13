@@ -28,12 +28,40 @@ function DemiCercleAvecQuartiers() {
   );
 }
 
+// Fonction pour afficher des étoiles aléatoires
+function Etoiles() {
+  const nombreEtoiles = 30; // Nombre d'étoiles
+  const etoiles = Array.from({ length: nombreEtoiles });
+
+  return (
+    <>
+      {etoiles.map((_, index) => (
+        <div
+          key={index}
+          className="absolute bg-white rounded-full"
+          style={{
+            width: `${Math.random() * 4 + 2}px`, // Taille entre 2px et 6px
+            height: `${Math.random() * 4 + 2}px`,
+            top: `${Math.random() * 100}%`, // Position verticale aléatoire
+            left: `${Math.random() * 100}%`, // Position horizontale aléatoire
+            opacity: `${Math.random() * 0.8 + 0.2}`, // Opacité entre 0.2 et 1
+            boxShadow: "0 0 6px rgba(255, 255, 255, 0.8)", // Brillance
+          }}
+        ></div>
+      ))}
+    </>
+  );
+}
+
 // Page principale
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
       {/* Affichage du demi-cercle avec quartiers */}
       <DemiCercleAvecQuartiers />
+
+      {/* Affichage des étoiles */}
+      <Etoiles />
 
       {/* Bouton de retour */}
       <Link

@@ -32,7 +32,7 @@ export default function Page() {
         
         {/* Demi-cercle bleu très foncé */}
         <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 square-t-full"
+          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 round-t-full"
           style={{ bottom: '60px' }}
         ></div>
       </div>
