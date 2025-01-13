@@ -13,29 +13,29 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Conteneur des demi-cercles sur toute la largeur en bas */}
-      <div className="absolute bottom-0 left-0 w-full h-40">
-        {/* Demi-cercle bleu clair */}
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100 rounded-t-full"></div>
-        
-        {/* Demi-cercle bleu */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300 rounded-t-full"
-          style={{ bottom: "20px" }}
-        ></div>
-        
-        {/* Demi-cercle bleu foncé */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500 rounded-t-full"
-          style={{ bottom: "40px" }}
-        ></div>
-        
-        {/* Demi-cercle bleu très foncé */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700 rounded-t-full"
-          style={{ bottom: "60px" }}
-        ></div>
-      </div>
+     {/* Conteneur des rectangles sur toute la largeur en bas */}
+<div className="absolute bottom-0 left-0 w-full h-40">
+  {/* Rectangle bleu clair */}
+  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100"></div>
+
+  {/* Rectangle bleu */}
+  <div
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300"
+    style={{ bottom: "20px" }}
+  ></div>
+
+  {/* Rectangle bleu foncé */}
+  <div
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500"
+    style={{ bottom: "40px" }}
+  ></div>
+
+  {/* Rectangle bleu très foncé */}
+  <div
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700"
+    style={{ bottom: "60px" }}
+  ></div>
+</div>
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 

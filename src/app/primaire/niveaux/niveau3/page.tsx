@@ -5,32 +5,28 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 overflow-hidden">
-  <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 overflow-hidden">
-  {/* Demi-cercles oranges tournés de 90 degrés à droite */}
+      {/* Conteneur des rectangles sur toute la largeur en bas */}
+<div className="absolute bottom-0 left-0 w-full h-40">
+  {/* Rectangle bleu clair */}
+  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100"></div>
+
+  {/* Rectangle bleu */}
   <div
-    className="absolute top-0 left-0 w-40 h-40 transform rotate-90 origin-top-left"
-  >
-    {/* Demi-cercle orange clair */}
-    <div className="absolute top-0 left-0 w-full h-1/2 bg-orange-100 rounded-b-full"></div>
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300"
+    style={{ bottom: "20px" }}
+  ></div>
 
-    {/* Demi-cercle orange */}
-    <div
-      className="absolute top-0 left-0 w-full h-1/2 bg-orange-300 rounded-b-full"
-      style={{ top: "20px" }}
-    ></div>
+  {/* Rectangle bleu foncé */}
+  <div
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500"
+    style={{ bottom: "40px" }}
+  ></div>
 
-    {/* Demi-cercle orange foncé */}
-    <div
-      className="absolute top-0 left-0 w-full h-1/2 bg-orange-500 rounded-b-full"
-      style={{ top: "40px" }}
-    ></div>
-
-    {/* Demi-cercle orange très foncé */}
-    <div
-      className="absolute top-0 left-0 w-full h-1/2 bg-orange-700 rounded-b-full"
-      style={{ top: "60px" }}
-    ></div>
-  </div>
+  {/* Rectangle bleu très foncé */}
+  <div
+    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700"
+    style={{ bottom: "60px" }}
+  ></div>
 </div>
 
 
