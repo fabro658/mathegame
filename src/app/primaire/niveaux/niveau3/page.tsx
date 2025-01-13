@@ -8,23 +8,23 @@ export default function Page() {
       {/* Conteneur des rectangles sur toute la largeur en bas */}
 <div className="absolute bottom-0 left-0 w-full h-40">
   {/* Rectangle bleu clair */}
-  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100"></div>
+  <div className="absolute left-0 w-full h-1/2 bg-orange-700"></div>
 
   {/* Rectangle bleu */}
   <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300"
+    className="absolute left-0 w-full h-1/2 bg-orange-500"
     style={{ bottom: "20px" }}
   ></div>
 
   {/* Rectangle bleu foncé */}
   <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500"
+    className="absolute left-0 w-full h-1/2 bg-orange-300"
     style={{ bottom: "40px" }}
   ></div>
 
   {/* Rectangle bleu très foncé */}
   <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700"
+    className="absolute left-0 w-full h-1/2 bg-orange-100"
     style={{ bottom: "60px" }}
   ></div>
 </div>
