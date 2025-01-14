@@ -8,7 +8,7 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12">Menu</h1>
       <div className="grid grid-cols-2 gap-8">
         <Link
-          href="/mobile/menu_mobile/apprendre"
+          href="/mobile/menu_mobile/apprendre_mobile"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Apprendre
