@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Secondaire() {
+export default function Secondaire_mobile() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Bouton Retour */}
