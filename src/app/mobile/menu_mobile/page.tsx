@@ -14,13 +14,7 @@ export default function Page() {
           Apprendre
         </Link>
         <Link
-          href="/mobile/menu_mobile/documentation"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
-          Documentation
-        </Link>
-        <Link
-          href="/menu/options"
+          href="/mobile/menu_mobile/options_mobile"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Option

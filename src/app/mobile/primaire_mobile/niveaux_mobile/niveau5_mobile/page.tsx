@@ -19,19 +19,19 @@ export default function Page() {
       {/* Boutons en une seule colonne */}
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
         <a
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant/n1"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n1_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-full"
         >
           Premier niveau
         </a>
         <a
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant/n2"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n2_mobile"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-full"
         >
           Deuxième niveau
         </a>
         <a
-          href="/mobile/primaire_mobile/niveau_mobilex/niveau5_mobile/exposant/n3"
+          href="/mobile/primaire_mobile/niveau_mobilex/niveau5_mobile/exposant_mobile/n3_mobile"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-full"
         >
           Troisième niveau
