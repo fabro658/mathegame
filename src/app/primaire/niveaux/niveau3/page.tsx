@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen relative bg-gray-100 text-gray-900 flex items-center justify-center">
-      {/* Lignes verticales sur la gauche */}
-      <div className="absolute top-0 left-0 h-full w-1/5 flex flex-col">
-        <div className="flex-1 bg-blue-900"></div>
-        <div className="flex-1 bg-blue-700"></div>
-        <div className="flex-1 bg-blue-500"></div>
-        <div className="flex-1 bg-blue-300"></div>
-        <div className="flex-1 bg-blue-100"></div>
+    <div className="min-h-screen relative bg-gray-100 text-gray-900 flex flex-col items-center justify-center">
+      {/* Lignes verticales */}
+      <div className="absolute top-0 left-0 h-full w-full flex">
+        <div className="w-[5%] bg-blue-900"></div>
+        <div className="w-[5%] bg-blue-700"></div>
+        <div className="w-[5%] bg-blue-500"></div>
+        <div className="w-[5%] bg-blue-300"></div>
+        <div className="w-[5%] bg-blue-100"></div>
       </div>
 
       {/* Contenu principal */}
@@ -28,7 +28,7 @@ export default function Page() {
         <h1 className="text-3xl font-bold mb-12">Choisissez une opération</h1>
 
         {/* Boutons */}
-        <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-4 max-w-4xl mx-auto">
           <a
             href="/primaire/niveaux/niveau3/additionfraction"
             className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
