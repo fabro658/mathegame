@@ -7,22 +7,22 @@ export default function Page() {
     <div className="min-h-screen relative bg-gray-100 text-gray-900 flex flex-col items-center justify-center">
       {/* Lignes verticales */}
       <div className="absolute top-0 left-0 h-full w-full flex">
-        <div className="w-[5%] bg-blue-900"></div>
-        <div className="w-[5%] bg-blue-700"></div>
-        <div className="w-[5%] bg-blue-500"></div>
-        <div className="w-[5%] bg-blue-300"></div>
-        <div className="w-[5%] bg-blue-100"></div>
+        <div className="w-[3%] bg-blue-900"></div>
+        <div className="w-[3%] bg-blue-700"></div>
+        <div className="w-[3%] bg-blue-500"></div>
+        <div className="w-[3%] bg-blue-300"></div>
+        <div className="w-[3%] bg-blue-100"></div>
       </div>
 
       {/* Contenu principal */}
       <div className="relative z-10 text-center">
         {/* Bouton de retour */}
-        <Link
-          href="/primaire"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
-        >
-          Retour
-        </Link>
+      <Link
+        href="/primaire"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
+      >
+        Retour
+      </Link>
 
         {/* Titre */}
         <h1 className="text-3xl font-bold mb-12">Choisissez une opération</h1>
