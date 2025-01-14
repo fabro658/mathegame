@@ -71,32 +71,16 @@ export default function Division() {
     setHasPassed(allCorrect);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre/opérations arithmétiques"
+        href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
         className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -104,21 +88,15 @@ export default function Division() {
 
       <h1 className="text-3xl font-bold mb-6 mt-12">Division</h1>
 
-      {/* Questions pour la page actuelle */}
       {!isValidated && (
-        <div className="space-y-6">
+        <div className="space-y-6 w-full max-w-md">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
-            <div key={index} className="flex items-center gap-4">
-              <button
-                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                disabled
-              >
-                {numerator} ÷ {denominator}
-              </button>
+            <div key={index} className="flex flex-col items-start gap-2">
+              <p className="text-lg font-medium">{numerator} ÷ {denominator}</p>
               <input
                 type="text"
                 inputMode="numeric"
-                className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                className="border border-gray-400 p-3 rounded w-full text-black text-lg"
                 value={answers[currentPage * questionsPerPage + index] || ""}
                 onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
               />
@@ -127,66 +105,23 @@ export default function Division() {
         </div>
       )}
 
-      {/* Boutons de validation et navigation */}
-      <div className="mt-6 flex gap-4 w-full max-w-xs">
-        {currentPage > 0 && (
-          <button
-            className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-            onClick={handlePreviousPage}
-          >
-            Précédent
-          </button>
-        )}
+      <div className="mt-6 w-full max-w-md">
         <button
           onClick={handleValidation}
           className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
         >
           Valider les réponses
         </button>
-        {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-          <button
-            className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-            onClick={handleNextPage}
-          >
-            Suivant
-          </button>
-        )}
       </div>
 
-      {/* Résultats après validation */}
       {isValidated && (
-        <>
+        <div className="mt-6 text-center">
           {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
-            </div>
+            <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
           ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
+            <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
           )}
-        </>
+        </div>
       )}
     </div>
   );

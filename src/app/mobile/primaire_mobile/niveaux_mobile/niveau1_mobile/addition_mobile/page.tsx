@@ -64,13 +64,13 @@ export default function Addition() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
       <Link
-        href="/menu/apprendre/opérations arithmétiques"
+        href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
