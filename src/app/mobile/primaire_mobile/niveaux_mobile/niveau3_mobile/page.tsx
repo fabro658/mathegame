@@ -21,25 +21,25 @@ export default function Page() {
       {/* Boutons */}
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto px-4">
         <a
-          href="/primaire/niveaux/niveau3/additionfraction"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/additionfraction"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Addition de fraction
         </a>
         <a
-          href="/primaire/niveaux/niveau3/soustractionfraction"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/soustractionfraction"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Soustraction de fraction
         </a>
         <a
-          href="/primaire/niveaux/niveau3/multiplicationfraction"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/multiplicationfraction"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Multiplication de fraction
         </a>
         <a
-          href="/primaire/niveaux/niveau3/divisionfraction"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/divisionfraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Division de fraction

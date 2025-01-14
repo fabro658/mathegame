@@ -19,13 +19,13 @@ export default function Page() {
       {/* Boutons en une colonne */}
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
         <a
-          href="/primaire/niveaux/niveau4/perimetre"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/perimetre"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-full"
         >
           Périmètre
         </a>
         <a
-          href="/primaire/niveaux/niveau4/geometrie"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/geometrie"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-full"
         >
           Géométrie
