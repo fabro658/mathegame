@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
 
 export default function Page() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-white text-gray-900 relative">
       {/* Bouton de retour */}
       <Link
-        href="/"
+        href="/mobile/primiare_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
       >
         Retour
@@ -39,12 +37,12 @@ export default function Page() {
           Multiplication de fraction
         </a>
         <a
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/divisionfraction_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/divisionfraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
           Division de fraction
         </a>
       </div>
-    </>
+    </div>
   );
 }
