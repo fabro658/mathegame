@@ -13,9 +13,6 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Ligne horizontale rectangle en bas de l'écran */}
-      <div className="absolute bottom-0 left-0 w-full h-[60px] bg-blue-500 z-0"></div>
-
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
