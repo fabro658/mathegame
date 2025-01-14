@@ -1,37 +1,9 @@
 "use client";
 
 import Link from "next/link";
-
-function DesignFleurs() {
-  return (
-    <div className="absolute top-4 left-4 flex justify-center items-center">
-      {/* Pétales */}
-      <div className="relative w-24 h-24">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-black w-16 h-16 rounded-full"
-            style={{
-              transform: `rotate(${i * 90}deg) translate(0, -50%)`,
-              top: "50%",
-              left: "50%",
-            }}
-          ></div>
-        ))}
-
-        {/* Point jaune au centre */}
-        <div className="absolute top-1/2 left-1/2 w-12 h-12 bg-yellow-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
-      </div>
-    </div>
-  );
-}
-
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
-      {/* Design des fleurs */}
-      <DesignFleurs />
-
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"

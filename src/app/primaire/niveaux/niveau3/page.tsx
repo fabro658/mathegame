@@ -15,17 +15,19 @@ export default function Page() {
       </div>
 
       {/* Contenu principal */}
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 w-full">
         {/* Bouton de retour */}
-      <Link
-        href="/primaire"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
-      >
-        Retour
-      </Link>
+        <Link
+          href="/primaire"
+          className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
+        >
+          Retour
+        </Link>
 
         {/* Titre */}
-        <h1 className="text-3xl font-bold mb-12">Choisissez une opération</h1>
+        <h1 className="text-3xl font-bold mb-12 text-center">
+          Choisissez une opération
+        </h1>
 
         {/* Boutons */}
         <div className="grid grid-cols-2 gap-4 max-w-4xl mx-auto">
