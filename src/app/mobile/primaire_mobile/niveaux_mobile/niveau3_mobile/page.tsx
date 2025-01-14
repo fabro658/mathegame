@@ -7,7 +7,7 @@ export default function Page() {
     <>
       {/* Bouton de retour */}
       <Link
-        href="/mobile/priamire_mobile"
+        href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
       >
         Retour
