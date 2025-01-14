@@ -9,7 +9,6 @@ export default function Division() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
@@ -46,9 +45,7 @@ export default function Division() {
   };
 
   const handleValidation = () => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageAnswers = answers.slice(0, questionsPerPage);
 
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
@@ -59,10 +56,9 @@ export default function Division() {
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      if (answer !== correctAnswers[index]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null;
+        newAnswers[index] = null;
       }
     });
 
@@ -90,15 +86,15 @@ export default function Division() {
 
       {!isValidated && (
         <div className="space-y-6 w-full max-w-md">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+          {questions.slice(0, questionsPerPage).map(([numerator, denominator], index) => (
             <div key={index} className="flex flex-col items-start gap-2">
               <p className="text-lg font-medium">{numerator} ÷ {denominator}</p>
               <input
                 type="text"
                 inputMode="numeric"
                 className="border border-gray-400 p-3 rounded w-full text-black text-lg"
-                value={answers[currentPage * questionsPerPage + index] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                value={answers[index] || ""}
+                onChange={(e) => handleChange(index, e.target.value)}
               />
             </div>
           ))}

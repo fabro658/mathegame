@@ -15,53 +15,53 @@ export default function Page() {
 
       <h1 className="text-4xl font-bold mb-12 underline">Zone d&apos;apprentissage</h1>
 
-      {/* Grille de boutons alignés en une seule colonne */}
-      <div className="flex flex-col gap-8 items-center">
+      {/* Grille de boutons */}
+      <div className="grid grid-cols-2 gap-8">
         <Link 
-          href="/menu/apprendre_mobile/opérations arithmétiques" 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/opérations arithmétiques" 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Opérations arithmétiques
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/fraction" 
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/fraction" 
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Fraction
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/aire" 
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/aire" 
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Aire
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/perimetre" 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/perimetre" 
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Périmètre
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/exposant" 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/exposant" 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Exposant
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/prioriteoperation" 
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/prioriteoperation" 
+          className="bg-blue-500 hover:bg-orange-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Priorité d&apos;opération
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/algebre" 
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/algebre" 
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Algèbre
         </Link>
         <Link 
-          href="/menu/apprendre_mobile/fonction" 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px]"
+          href="/menu/apprendre/fonction" 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Fonction
         </Link>
