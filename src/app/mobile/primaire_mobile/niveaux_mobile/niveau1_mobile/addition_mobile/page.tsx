@@ -83,16 +83,16 @@ export default function Addition() {
       )}
 
       {/* Questions */}
-      <div className="flex flex-col gap-3 w-full max-w-lg">
+      <div className="flex flex-col gap-4 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center justify-between gap-3">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-2xl w-32 text-center">
-              {a} + {b}
+          <div key={index} className="flex items-center gap-4">
+            <div className="flex-1 bg-blue-500 text-white py-3 px-4 rounded-lg font-bold text-center">
+              {a} + {b} =
             </div>
             <input
               type="text"
               inputMode="numeric"
-              className="border border-gray-400 py-4 px-4 rounded text-center text-black text-2xl w-32"
+              className="border border-gray-400 py-2 px-3 rounded text-center text-black text-lg w-24"
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />

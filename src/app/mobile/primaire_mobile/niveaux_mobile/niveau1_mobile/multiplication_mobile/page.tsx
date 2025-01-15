@@ -84,16 +84,16 @@ export default function Multiplication() {
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
-      <div className="flex flex-col gap-6 w-full max-w-lg">
+      <div className="flex flex-col gap-4 w-full max-w-3xl">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-          <div key={index} className="flex items-center gap-6">
-            <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
-              {factor1} × {factor2}
+          <div key={index} className="flex items-center justify-between gap-4">
+            <div className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold text-xl">
+              {factor1} × {factor2} =
             </div>
             <input
               type="text"
               inputMode="numeric"
-              className="flex-1 border border-gray-400 py-4 px-6 rounded-lg text-center text-black text-2xl"
+              className="border border-gray-400 py-2 px-4 rounded w-24 text-center text-black text-xl"
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
