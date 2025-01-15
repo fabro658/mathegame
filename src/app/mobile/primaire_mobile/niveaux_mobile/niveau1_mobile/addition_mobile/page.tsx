@@ -10,7 +10,7 @@ export default function Addition() {
   const [isValidated, setIsValidated] = useState(false);
 
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  const questions = Array.from({ length: totalQuestions }, () => {
     return [Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)];
   });
 

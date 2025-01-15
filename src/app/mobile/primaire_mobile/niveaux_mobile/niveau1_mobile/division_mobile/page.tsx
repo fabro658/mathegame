@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; 
+  const questionsPerPage = 6; // 6 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
+  // Génération des questions au chargement
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       let numerator: number, denominator: number;
@@ -35,8 +35,10 @@ export default function Division() {
     setQuestions(generatedQuestions);
   }, []);
 
-  const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
+  // Calcul des réponses correctes
+  const correctAnswers = questions.map(([numerator, denominator]) => Number((numerator / denominator).toFixed(2)));
 
+  // Gestion des changements dans les réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
@@ -44,6 +46,7 @@ export default function Division() {
     setAnswers(newAnswers);
   };
 
+  // Validation des réponses de la page
   const handleValidation = () => {
     const pageAnswers = answers.slice(0, questionsPerPage);
 
@@ -58,20 +61,26 @@ export default function Division() {
     pageAnswers.forEach((answer, index) => {
       if (answer !== correctAnswers[index]) {
         allCorrect = false;
-        newAnswers[index] = null;
+        newAnswers[index] = null; // Effacer uniquement les réponses incorrectes
       }
     });
 
     setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
+
+    if (allCorrect) {
+      alert("Bravo ! Toutes vos réponses sur cette page sont correctes.");
+    } else {
+      alert("Certaines réponses sont incorrectes. Veuillez corriger.");
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute bottom-10 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
@@ -82,6 +91,7 @@ export default function Division() {
         Retour
       </Link>
 
+      {/* Titre */}
       <h1 className="text-3xl font-bold mb-6 mt-12">Division</h1>
 
       {!isValidated && (
@@ -93,7 +103,7 @@ export default function Division() {
                 type="text"
                 inputMode="numeric"
                 className="border border-gray-400 p-3 rounded w-full text-black text-lg"
-                value={answers[index] || ""}
+                value={answers[index] === null ? "" : answers[index]}
                 onChange={(e) => handleChange(index, e.target.value)}
               />
             </div>
@@ -109,16 +119,6 @@ export default function Division() {
           Valider les réponses
         </button>
       </div>
-
-      {isValidated && (
-        <div className="mt-6 text-center">
-          {hasPassed ? (
-            <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-          ) : (
-            <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-          )}
-        </div>
-      )}
     </div>
   );
 }
