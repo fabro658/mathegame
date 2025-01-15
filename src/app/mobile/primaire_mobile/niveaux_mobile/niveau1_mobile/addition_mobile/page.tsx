@@ -62,7 +62,6 @@ export default function Addition() {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Conteneur pour les boutons */}
       <div className="flex justify-between w-full mb-6">
         <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
           Apprendre
@@ -72,21 +71,18 @@ export default function Addition() {
         </Link>
       </div>
 
-      {/* Titre */}
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
-      {/* Feedback */}
       {feedbackMessage && (
         <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
           {feedbackMessage}
         </p>
       )}
 
-      {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
           <div key={index} className="flex items-center justify-between gap-6">
-            <div className="flex-1 text-right bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
               {a} + {b}
             </div>
             <input
@@ -100,7 +96,6 @@ export default function Addition() {
         ))}
       </div>
 
-      {/* Bouton de validation */}
       <div className="mt-6 flex justify-center w-full">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
