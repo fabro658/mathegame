@@ -3,42 +3,42 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Division() {
+export default function Multiplication() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState<[number, number][]>([]); // Le type est maintenant explicitement [number, number][]
+  const [questions, setQuestions] = useState<[number, number][]>([]);
 
   // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-      let numerator: number, denominator: number;
+      let factor1: number, factor2: number;
 
-      // Les premières questions avec des multiples simples
+      // Niveaux de difficulté progressifs
       if (index < 10) {
-        denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
-        numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
+        // Multiplications simples
+        factor1 = Math.floor(Math.random() * 5) + 1; // Entre 1 et 5
+        factor2 = Math.floor(Math.random() * 5) + 1;
       } else if (index < 20) {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 10) + 1;
-      } else if (index < 30) {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 20) + 1;
+        // Multiplications moyennes
+        factor1 = Math.floor(Math.random() * 10) + 1; // Entre 1 et 10
+        factor2 = Math.floor(Math.random() * 10) + 1;
       } else {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 50) + 1;
+        // Multiplications complexes
+        factor1 = Math.floor(Math.random() * 20) + 1; // Entre 1 et 20
+        factor2 = Math.floor(Math.random() * 20) + 1;
       }
 
-      return [numerator, denominator]; // Ici, le type est bien [number, number]
+      return [factor1, factor2];
     });
 
-    setQuestions(generatedQuestions); // Stocker les questions générées dans le state
-  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
+    setQuestions(generatedQuestions);
+  }, []);
 
-  const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
+  const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
@@ -93,8 +93,8 @@ export default function Division() {
   };
 
   // Calcul pour dessiner le cercle de progression
-  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
-  const strokeWidth = 10; // Définir la largeur du cercle
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -141,19 +141,19 @@ export default function Division() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
 
       {/* Questions pour la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
               <div key={index} className="flex items-center gap-4">
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
                   disabled
                 >
-                  {numerator} ÷ {denominator}
+                  {factor1} × {factor2}
                 </button>
                 <input
                   type="text"
