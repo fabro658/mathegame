@@ -5,9 +5,10 @@ import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 6 questions par page
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   // Génération des questions au chargement
@@ -51,7 +52,7 @@ export default function Division() {
     const pageAnswers = answers.slice(0, questionsPerPage);
 
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -69,53 +70,49 @@ export default function Division() {
     setIsValidated(true);
 
     if (allCorrect) {
-      alert("Bravo ! Toutes vos réponses sur cette page sont correctes.");
+      setFeedbackMessage("Bravo ! Toutes vos réponses sur cette page sont correctes.");
     } else {
-      alert("Certaines réponses sont incorrectes. Veuillez corriger.");
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
-        className="absolute bottom-10 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-6 mt-12">Division</h1>
+      <h1 className="text-4xl font-bold mb-6">Division</h1>
 
-      {!isValidated && (
-        <div className="space-y-6 w-full max-w-md">
-          {questions.slice(0, questionsPerPage).map(([numerator, denominator], index) => (
-            <div key={index} className="flex flex-col items-start gap-2">
-              <p className="text-lg font-medium">{numerator} ÷ {denominator}</p>
-              <input
-                type="text"
-                inputMode="numeric"
-                className="border border-gray-400 p-3 rounded w-full text-black text-lg"
-                value={answers[index] === null ? "" : answers[index]}
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Feedback */}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
 
-      <div className="mt-6 w-full max-w-md">
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-        >
+      {/* Questions et réponses */}
+      <div className="flex flex-col gap-6 w-full max-w-lg">
+        {questions.slice(0, questionsPerPage).map(([numerator, denominator], index) => (
+          <div key={index} className="flex items-center justify-center gap-6">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{numerator} ÷ {denominator}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-24 text-center text-black text-2xl"
+              value={answers[index] ?? ""}
+              onChange={(e) => handleChange(index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Bouton de validation */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
         </button>
       </div>

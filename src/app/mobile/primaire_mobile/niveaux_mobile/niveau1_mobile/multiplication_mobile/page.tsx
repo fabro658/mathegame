@@ -9,6 +9,7 @@ export default function Multiplication() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function Multiplication() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -52,71 +53,61 @@ export default function Multiplication() {
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
 
-    if (!allCorrect) {
-      alert("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
+    if (allCorrect) {
+      setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
     } else {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
+
+    setIsValidated(true);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-20 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
+      {/* Titre */}
+      <h1 className="text-4xl font-bold mb-6">Multiplication</h1>
 
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-4">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-6 rounded w-full"
-                  disabled
-                >
-                  {factor1} × {factor2}
-                </button>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-2 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index]?.toString() || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+      {/* Feedback */}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
+
+      {/* Questions et réponses */}
+      <div className="flex flex-col gap-6 w-full max-w-lg">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
+          <div key={index} className="flex items-center justify-center gap-6">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{factor1} × {factor2}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-24 text-center text-black text-2xl"
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
           </div>
+        ))}
+      </div>
 
-          <div className="mt-6">
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-            >
-              Valider les réponses
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <p className="text-green-600 font-bold text-xl">
-          Bravo ! Toutes les réponses sont correctes. Passage à la série suivante...
-        </p>
-      )}
+      {/* Bouton de validation */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }
