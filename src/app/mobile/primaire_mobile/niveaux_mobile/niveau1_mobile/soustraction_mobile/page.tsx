@@ -4,35 +4,34 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Soustraction() {
-  // Déclarations des constantes
+   // Déclarations des constantes
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 6 questions par page
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [Math.max(10, Math.floor(Math.random() * 41)), Math.floor(Math.random() * 41)]; // Niveau 3
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 4
+    if (index < 10) return [index + 1, index + 1];
+    if (index < 20) return [10 + index - 9, 5 + index - 9];
+    if (index < 30) return [Math.max(10, Math.floor(Math.random() * 41)), Math.floor(Math.random() * 41)];
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
 
-  // Gestion des réponses
-  const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
-    setAnswers(newAnswers);
-  };
+ // Gestion des réponses
+ const handleChange = (index: number, value: string) => {
+  const newAnswers = [...answers];
+  const parsedValue = parseInt(value);
+  newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+  setAnswers(newAnswers);
+};
 
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si tous les champs sont remplis
     if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
@@ -41,12 +40,11 @@ export default function Soustraction() {
     let hasErrors = false;
     const newAnswers = [...answers];
 
-    // Validation des réponses pour la série actuelle
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a - b) {
-        newAnswers[globalIndex] = null; // Réinitialiser la réponse incorrecte
+        newAnswers[globalIndex] = null;
         hasErrors = true;
       }
     });
@@ -58,7 +56,7 @@ export default function Soustraction() {
     } else {
       setFeedbackMessage("");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setCurrentPage(currentPage + 1); // Passer à la page suivante
+        setCurrentPage(currentPage + 1);
       } else {
         setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
       }
@@ -66,20 +64,16 @@ export default function Soustraction() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
@@ -88,9 +82,9 @@ export default function Soustraction() {
       {feedbackMessage && <p className="text-red-500 text-xl mb-4">{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center gap-4">
+          <div key={index} className="flex items-center justify-between gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
             <input
               type="text"
@@ -103,11 +97,9 @@ export default function Soustraction() {
         ))}
       </div>
 
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
+      {/* Bouton de validation */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
         </button>
       </div>
