@@ -54,7 +54,6 @@ export default function Soustraction() {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     } else if (allCorrect) {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
-      // Passe à la page suivante immédiatement après un succès
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
@@ -81,17 +80,17 @@ export default function Soustraction() {
       <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
 
       {/* Feedback */}
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
-      <div className="flex flex-col gap-4 w-full max-w-lg">
+      <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center gap-2">
-            <div className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold text-xl">{a} - {b}</div>
+          <div key={index} className="flex items-center justify-center gap-6">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{a} - {b}</div>
             <input
               type="text"
               inputMode="numeric"
-              className="border border-gray-400 p-2 rounded w-20 text-center text-black text-lg"
+              className="border border-gray-400 p-4 rounded w-24 text-center text-black text-2xl"
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />

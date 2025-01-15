@@ -79,14 +79,15 @@ export default function Addition() {
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && <p className="text-red-500 text-xl mb-4">{feedbackMessage}</p>}
+     {/* Feedback */}
+     {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>{feedbackMessage}</p>}
+
 
       {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
           <div key={index} className="flex items-center justify-between gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} + {b}</div>
             <input
               type="text"
               inputMode="numeric"
