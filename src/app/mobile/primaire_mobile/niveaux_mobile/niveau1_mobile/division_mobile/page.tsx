@@ -5,10 +5,10 @@ import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 36;
-  const questionsPerPage = 6;
+  const questionsPerPage = 6; // 6 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(0); // Gestion de la page actuelle
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   // Génération des questions au chargement
@@ -49,10 +49,12 @@ export default function Division() {
 
   // Validation des réponses de la page
   const handleValidation = () => {
-    const pageAnswers = answers.slice(0, questionsPerPage);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
 
@@ -60,59 +62,73 @@ export default function Division() {
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
-      if (answer !== correctAnswers[index]) {
+      const globalIndex = startIndex + index;
+      if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[index] = null; // Effacer uniquement les réponses incorrectes
+        newAnswers[globalIndex] = 0; // Affiche 0 si la réponse est incorrecte
       }
     });
 
     setAnswers(newAnswers);
     setIsValidated(true);
 
-    if (allCorrect) {
-      setFeedbackMessage("Bravo ! Toutes vos réponses sur cette page sont correctes.");
+    if (!allCorrect) {
+      alert("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
     } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger.");
+      alert("Bravo ! Toutes vos réponses sont correctes.");
+      setCurrentPage(currentPage + 1); // Passer à la page suivante
+      setIsValidated(false); // Réinitialiser la validation pour la prochaine page
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Conteneur pour les boutons */}
-      <div className="flex justify-between w-full mb-6">
-        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
-          Apprendre
-        </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-          Retour
-        </Link>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile"
+        className="absolute bottom-10 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
+        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-12">Division</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
+      {!isValidated && (
+        <div className="space-y-6 w-full max-w-md">
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+            <div key={index} className="flex flex-col items-start gap-2">
+              <p className="text-lg font-medium">{numerator} ÷ {denominator}</p>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-3 rounded w-full text-black text-lg"
+                value={answers[currentPage * questionsPerPage + index] === null ? "" : answers[currentPage * questionsPerPage + index]}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Questions et réponses */}
-      <div className="flex flex-col gap-6 w-full max-w-lg">
-        {questions.slice(0, questionsPerPage).map(([numerator, denominator], index) => (
-          <div key={index} className="flex items-center justify-center gap-6">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{numerator} ÷ {denominator}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-24 text-center text-black text-2xl"
-              value={answers[index] ?? ""}
-              onChange={(e) => handleChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
+      {/* Affichage après validation */}
+      {isValidated && (
+        <p className="text-green-600 font-bold text-xl">
+          Bravo ! Toutes les réponses sont correctes. Passage à la série suivante...
+        </p>
+      )}
 
-      {/* Bouton de validation */}
-      <div className="mt-6 flex justify-center w-full">
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+      <div className="mt-6 w-full max-w-md">
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+        >
           Valider les réponses
         </button>
       </div>
