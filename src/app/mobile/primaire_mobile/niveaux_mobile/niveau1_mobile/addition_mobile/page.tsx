@@ -83,9 +83,9 @@ export default function Addition() {
       )}
 
       {/* Questions */}
-      <div className="flex flex-col gap-4 w-full max-w-lg">
+      <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center gap-4">
+          <div key={index} className="flex items-center justify-center gap-6">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
             {a} + {b} =
             </div>
