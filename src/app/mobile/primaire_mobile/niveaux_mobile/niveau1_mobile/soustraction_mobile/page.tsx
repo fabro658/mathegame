@@ -4,14 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Soustraction() {
-   // Déclarations des constantes
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
@@ -19,13 +17,12 @@ export default function Soustraction() {
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
 
- // Gestion des réponses
- const handleChange = (index: number, value: string) => {
-  const newAnswers = [...answers];
-  const parsedValue = parseInt(value);
-  newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
-  setAnswers(newAnswers);
-};
+  const handleChange = (index: number, value: string) => {
+    const newAnswers = [...answers];
+    const parsedValue = parseInt(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    setAnswers(newAnswers);
+  };
 
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
@@ -38,6 +35,7 @@ export default function Soustraction() {
     }
 
     let hasErrors = false;
+    let allCorrect = true;
     const newAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
@@ -46,6 +44,7 @@ export default function Soustraction() {
       if (answer !== a - b) {
         newAnswers[globalIndex] = null;
         hasErrors = true;
+        allCorrect = false;
       }
     });
 
@@ -53,6 +52,8 @@ export default function Soustraction() {
 
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (allCorrect) {
+      setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
     } else {
       setFeedbackMessage("");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
@@ -79,17 +80,17 @@ export default function Soustraction() {
       <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
 
       {/* Feedback */}
-      {feedbackMessage && <p className="text-red-500 text-xl mb-4">{feedbackMessage}</p>}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
-      <div className="flex flex-col gap-6 w-full max-w-lg">
+      <div className="flex flex-col gap-4 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center justify-between gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
+          <div key={index} className="flex items-center gap-2"> {/* Réduit l'écart entre la question et l'input */}
+            <div className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold text-xl">{a} - {b}</div>
             <input
               type="text"
               inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              className="border border-gray-400 p-2 rounded w-20 text-center text-black text-lg"  // Réduit l'espace de l'input
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
