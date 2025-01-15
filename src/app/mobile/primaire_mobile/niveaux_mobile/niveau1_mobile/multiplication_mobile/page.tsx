@@ -7,7 +7,6 @@ export default function Multiplication() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
@@ -64,8 +63,6 @@ export default function Multiplication() {
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
-
-    setIsValidated(true);
   };
 
   return (
