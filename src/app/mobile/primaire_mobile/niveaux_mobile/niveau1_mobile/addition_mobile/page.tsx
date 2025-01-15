@@ -5,19 +5,13 @@ import Link from "next/link";
 
 export default function Addition() {
   // Déclarations des constantes
-  const totalQuestions = 36;
-  const questionsPerPage = 6; // 6 questions par page
+  const totalQuestions = 6; // Toutes les questions sur une seule page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
+    return [Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)];
   });
 
   // Gestion des réponses
@@ -29,23 +23,18 @@ export default function Addition() {
   };
 
   const handleValidation = () => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
-
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (answers.includes(null)) {
+      alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
     const newAnswers = [...answers];
     let allCorrect = true;
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const [a, b] = questions[globalIndex];
+    answers.forEach((answer, index) => {
+      const [a, b] = questions[index];
       if (answer !== a + b) {
-        newAnswers[globalIndex] = null; // Effacer uniquement les réponses incorrectes
+        newAnswers[index] = null; // Effacer uniquement les réponses incorrectes
         allCorrect = false;
       }
     });
@@ -81,15 +70,15 @@ export default function Addition() {
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+            {questions.map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} + {b}</div>
                 <input
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] ?? ""} // Utilisation de ?? pour afficher 0 ou ""
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  value={answers[index] ?? ""} // Utilisation de ?? pour afficher "" si null
+                  onChange={(e) => handleChange(index, e.target.value)}
                 />
               </div>
             ))}

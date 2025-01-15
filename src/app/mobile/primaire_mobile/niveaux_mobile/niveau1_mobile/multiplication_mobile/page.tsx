@@ -4,26 +4,23 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Multiplication() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 6; // Nombre de questions par page
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions une seule fois lors du montage
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, () => {
-      const factor1 = Math.floor(Math.random() * 12) + 1; // Facteur entre 1 et 12
-      const factor2 = Math.floor(Math.random() * 12) + 1; // Facteur entre 1 et 12
+      const factor1 = Math.floor(Math.random() * 12) + 1;
+      const factor2 = Math.floor(Math.random() * 12) + 1;
       return [factor1, factor2];
     });
 
     setQuestions(generatedQuestions);
   }, []);
 
-  // Calcul des réponses correctes
   const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2);
 
   const handleChange = (index: number, value: string) => {
@@ -50,37 +47,26 @@ export default function Multiplication() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = 0; // Effacer la réponse incorrecte (affiche 0)
       }
     });
 
     setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
-  };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (!allCorrect) {
+      alert("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
+    } else {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute bottom-20 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
@@ -93,7 +79,6 @@ export default function Multiplication() {
 
       <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
 
-      {/* Questions pour la page actuelle */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-4">
@@ -109,23 +94,14 @@ export default function Multiplication() {
                   type="text"
                   inputMode="numeric"
                   className="border border-gray-400 p-2 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  value={answers[currentPage * questionsPerPage + index]?.toString() || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                 />
               </div>
             ))}
           </div>
 
-          {/* Boutons de validation et navigation */}
-          <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+          <div className="mt-6">
             <button
               onClick={handleValidation}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
@@ -136,40 +112,10 @@ export default function Multiplication() {
         </>
       )}
 
-      {/* Résultats après validation */}
       {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
+        <p className="text-green-600 font-bold text-xl">
+          Bravo ! Toutes les réponses sont correctes. Passage à la série suivante...
+        </p>
       )}
     </div>
   );
