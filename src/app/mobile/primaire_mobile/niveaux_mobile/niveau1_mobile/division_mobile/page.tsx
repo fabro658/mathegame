@@ -109,7 +109,7 @@ export default function Division() {
                 type="text"
                 inputMode="numeric"
                 className="border border-gray-400 p-3 rounded w-full text-black text-lg"
-                value={answers[currentPage * questionsPerPage + index] === null ? "" : answers[currentPage * questionsPerPage + index]}
+                value={answers[currentPage * questionsPerPage + index] ?? ""}  // Utilisation de ?? pour afficher "" au lieu de null
                 onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
               />
             </div>
