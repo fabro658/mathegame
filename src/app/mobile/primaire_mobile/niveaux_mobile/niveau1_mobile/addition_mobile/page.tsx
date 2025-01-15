@@ -85,8 +85,10 @@ export default function Addition() {
       {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex flex-col items-center justify-center gap-6">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{a} + {b}</div>
+          <div key={index} className="flex items-center justify-between gap-6">
+            <div className="flex-1 text-right bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
+              {a} + {b}
+            </div>
             <input
               type="text"
               inputMode="numeric"
