@@ -99,10 +99,10 @@ export default function Division() {
 
       <div className="space-y-4 w-full max-w-md">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
-          <div key={index} className="flex items-center justify-between bg-blue-500 p-4 rounded shadow">
-            <p className="text-white text-lg font-semibold">
+          <div key={index} className="flex items-center justify-center gap-6">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
               {numerator} ÷ {denominator}
-            </p>
+            </div>
             <input
               type="text"
               inputMode="numeric"
