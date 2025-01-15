@@ -7,7 +7,6 @@ export default function Division() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 6 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Gestion de la page actuelle
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
@@ -70,14 +69,12 @@ export default function Division() {
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
 
     if (!allCorrect) {
       alert("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
     } else {
       alert("Bravo ! Toutes vos réponses sont correctes.");
       setCurrentPage(currentPage + 1); // Passer à la page suivante
-      setIsValidated(false); // Réinitialiser la validation pour la prochaine page
     }
   };
 
