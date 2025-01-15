@@ -4,14 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Addition() {
-   // Déclarations des constantes
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index + 9, 5 + index + 9];
@@ -19,7 +17,6 @@ export default function Addition() {
     return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
 
-  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
@@ -79,12 +76,16 @@ export default function Addition() {
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
       {/* Feedback */}
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>{feedbackMessage}</p>}
+      {feedbackMessage && (
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+          {feedbackMessage}
+        </p>
+      )}
 
       {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex items-center justify-center gap-6">
+          <div key={index} className="flex flex-col items-center justify-center gap-6">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">{a} + {b}</div>
             <input
               type="text"
