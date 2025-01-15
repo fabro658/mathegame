@@ -8,8 +8,8 @@ export default function Soustraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 6 questions par page
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   // Génération des questions
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
@@ -32,29 +32,36 @@ export default function Soustraction() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérification si tous les champs sont remplis
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
+    let hasErrors = false;
     const newAnswers = [...answers];
+
+    // Validation des réponses pour la série actuelle
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a - b) {
-        newAnswers[globalIndex] = null; // Réinitialiser la réponse en cas d'erreur
+        newAnswers[globalIndex] = null; // Réinitialiser la réponse incorrecte
+        hasErrors = true;
       }
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
-  };
 
-  // Passage à la page suivante
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else {
+      setFeedbackMessage("");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1); // Passer à la page suivante
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
     }
   };
 
@@ -77,52 +84,33 @@ export default function Soustraction() {
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
 
-      {/* Questions et réponses */}
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-          </div>
-        </>
-      )}
+      {/* Feedback */}
+      {feedbackMessage && <p className="text-red-500 text-xl mb-4">{feedbackMessage}</p>}
 
-      {/* Résultats après validation */}
-      {isValidated && (
-        <>
-          <p className={`text-xl font-bold ${answers.every((answer, index) => answer === questions[index][0] - questions[index][1]) ? 'text-green-600' : 'text-red-600'}`}>
-            {answers.every((answer, index) => answer === questions[index][0] - questions[index][1])
-              ? 'Bravo ! Toutes vos réponses sont correctes.'
-              : 'Certaines réponses sont incorrectes. Corrigez-les.'}
-          </p>
-          <div className="mt-6 flex justify-center">
-            <button
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-              onClick={handleNextPage}
-            >
-              Suivant
-            </button>
+      {/* Questions et réponses */}
+      <div className="flex flex-col gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+          <div key={index} className="flex items-center gap-4">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
           </div>
-        </>
-      )}
+        ))}
+      </div>
+
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }
