@@ -60,7 +60,6 @@ export default function Division() {
       return;
     }
 
-    const newAnswers = [...answers];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {

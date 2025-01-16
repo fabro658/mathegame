@@ -77,14 +77,17 @@ export default function ComparerDecimaux() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-6 text-center">
+      <h1 className="text-3xl font-bold mb-6 text-center z-10">
         Comparaison de Nombres Décimaux
       </h1>
 
       {!isValidated && (
         <div className="flex flex-col items-center gap-4">
           {questions.map((question, index) => (
-            <div key={index} className="bg-white p-4 rounded shadow-md text-center w-full max-w-md">
+            <div
+              key={index}
+              className="bg-white p-4 rounded shadow-md text-center w-full max-w-md"
+            >
               <p className="text-lg font-bold mb-4">
                 {`${question.numbers[0]} ? ${question.numbers[1]}`}
               </p>
@@ -100,6 +103,15 @@ export default function ComparerDecimaux() {
                 <option value=">">&gt;</option>
                 <option value="=">=</option>
               </select>
+              {answers[index] === null && isValidated && (
+                <p className="text-red-500 text-sm mt-2">Réponse manquante</p>
+              )}
+              {answers[index] !== null && answers[index] !== question.correctAnswer && isValidated && (
+                <p className="text-red-500 text-sm mt-2">Erreur dans la réponse</p>
+              )}
+              {answers[index] === question.correctAnswer && isValidated && (
+                <p className="text-green-500 text-sm mt-2">Réponse correcte</p>
+              )}
             </div>
           ))}
           <button
