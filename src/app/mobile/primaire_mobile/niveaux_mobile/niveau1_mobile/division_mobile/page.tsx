@@ -46,6 +46,12 @@ export default function Division() {
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+
+    // Effacer l'erreur dès que l'utilisateur commence à modifier une réponse
+    if (message) {
+      setMessage("");
+      setMessageColor("");
+    }
   };
 
   // Validation des réponses de la page
@@ -61,17 +67,25 @@ export default function Division() {
     }
 
     let allCorrect = true;
+    const incorrectAnswers: number[] = []; // Pour mémoriser les indices des réponses incorrectes
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
+        incorrectAnswers.push(index); // Enregistrer l'indice de la réponse incorrecte
       }
     });
 
     if (!allCorrect) {
       setMessage("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
       setMessageColor("text-red-500");
+
+      // Afficher un message spécifique pour les réponses incorrectes
+      incorrectAnswers.forEach((index) => {
+        const answerIndex = startIndex + index;
+        // Vous pouvez ajouter des erreurs spécifiques ici, mais pour cet exemple, on garde le message général.
+      });
     } else {
       setMessage("Bravo ! Toutes vos réponses sont correctes.");
       setMessageColor("text-green-500");
@@ -94,6 +108,9 @@ export default function Division() {
       {/* Titre */}
       <h1 className="text-3xl font-bold mb-8">Division</h1>
 
+      {/* Message d'erreur en haut des questions */}
+      {message && <div className={`mt-4 text-lg font-bold ${messageColor}`}>{message}</div>}
+
       <div className="space-y-4 w-full max-w-md">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
           <div key={index} className="flex items-center justify-center gap-6">
@@ -110,8 +127,6 @@ export default function Division() {
           </div>
         ))}
       </div>
-
-      {message && <div className={`mt-4 text-lg font-bold ${messageColor}`}>{message}</div>}
 
       <button
         onClick={handleValidation}
