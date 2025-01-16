@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default function EquationsEquivalentes() {
   const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Nombre de questions par vague
   const levels = 3; // Nombre de niveaux
 
   const [questions, setQuestions] = useState<
@@ -16,7 +15,6 @@ export default function EquationsEquivalentes() {
   );
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-"];
@@ -82,24 +80,18 @@ export default function EquationsEquivalentes() {
   };
 
   const handleValidation = (): void => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
-
-    const allAnswered = pageAnswers.every((answer) => answer !== "");
+    const allAnswered = selectedButtons.every((answer) => answer !== "");
     if (!allAnswered) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    const allCorrect = questions
-      .slice(startIndex, endIndex)
-      .every((question, i) => {
-        const leftResult = eval(question.equationLeft);
-        const rightResult = eval(question.equationRight);
-        const correctAnswer = leftResult === rightResult ? "true" : "false";
-        return pageAnswers[i] === correctAnswer;
-      });
+    const allCorrect = questions.every((question, i) => {
+      const leftResult = eval(question.equationLeft);
+      const rightResult = eval(question.equationRight);
+      const correctAnswer = leftResult === rightResult ? "true" : "false";
+      return selectedButtons[i] === correctAnswer;
+    });
 
     setIsValidated(true);
     setHasPassed(allCorrect);
@@ -126,46 +118,39 @@ export default function EquationsEquivalentes() {
 
       {!isValidated && (
         <div className="flex flex-col items-center gap-6">
-          {questions
-            .slice(
-              currentPage * questionsPerPage,
-              (currentPage + 1) * questionsPerPage
-            )
-            .map(({ equationLeft, equationRight }, index) => (
-              <div key={index} className="flex flex-col items-center gap-2">
-                <div className="font-bold text-black text-center">
-                  {formatEquation(equationLeft)} = {formatEquation(equationRight)}
-                </div>
-                <div className="flex gap-4 mt-4">
-                  <button
-                    onClick={() =>
-                      handleAnswer(currentPage * questionsPerPage + index, true)
-                    }
-                    className={`py-2 px-4 rounded font-bold ${
-                      selectedButtons[currentPage * questionsPerPage + index] ===
-                      "true"
-                        ? "bg-orange-500 text-white"
-                        : "bg-blue-500 text-white"
-                    }`}
-                  >
-                    Vrai
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleAnswer(currentPage * questionsPerPage + index, false)
-                    }
-                    className={`py-2 px-4 rounded font-bold ${
-                      selectedButtons[currentPage * questionsPerPage + index] ===
-                      "false"
-                        ? "bg-orange-500 text-white"
-                        : "bg-blue-500 text-white"
-                    }`}
-                  >
-                    Faux
-                  </button>
-                </div>
+          {questions.map(({ equationLeft, equationRight }, index) => (
+            <div key={index} className="flex flex-col items-center gap-2">
+              <div className="font-bold text-black text-center">
+                {formatEquation(equationLeft)} = {formatEquation(equationRight)}
               </div>
-            ))}
+              <div className="flex gap-4 mt-4">
+                <button
+                  onClick={() =>
+                    handleAnswer(index, true)
+                  }
+                  className={`py-2 px-4 rounded font-bold ${
+                    selectedButtons[index] === "true"
+                      ? "bg-orange-500 text-white"
+                      : "bg-blue-500 text-white"
+                  }`}
+                >
+                  Vrai
+                </button>
+                <button
+                  onClick={() =>
+                    handleAnswer(index, false)
+                  }
+                  className={`py-2 px-4 rounded font-bold ${
+                    selectedButtons[index] === "false"
+                      ? "bg-orange-500 text-white"
+                      : "bg-blue-500 text-white"
+                  }`}
+                >
+                  Faux
+                </button>
+              </div>
+            </div>
+          ))}
           <div className="mt-6">
             <button
               onClick={handleValidation}

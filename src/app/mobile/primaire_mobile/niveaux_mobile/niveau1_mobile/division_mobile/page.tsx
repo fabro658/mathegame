@@ -83,8 +83,8 @@ export default function Division() {
 
       // Afficher un message spécifique pour les réponses incorrectes
       incorrectAnswers.forEach((index) => {
-        const answerIndex = startIndex + index;
-        // Vous pouvez ajouter des erreurs spécifiques ici, mais pour cet exemple, on garde le message général.
+        // L'index des réponses incorrectes est déjà enregistré dans incorrectAnswers
+        // Si tu veux afficher un message personnalisé pour chaque erreur, tu peux le faire ici
       });
     } else {
       setMessage("Bravo ! Toutes vos réponses sont correctes.");
