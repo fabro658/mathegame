@@ -14,8 +14,11 @@ export default function EquationsEquivalentes() {
   const [selectedButtons, setSelectedButtons] = useState<string[]>(
     Array(totalQuestions).fill("") // État pour suivre les boutons cliqués
   );
+  const [currentPage, setCurrentPage] = useState(0);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackClass, setFeedbackClass] = useState("");
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-"];
@@ -76,26 +79,42 @@ export default function EquationsEquivalentes() {
 
   const handleAnswer = (index: number, isTrue: boolean): void => {
     const newSelectedButtons = [...selectedButtons];
-    newSelectedButtons[index] = isTrue ? "true" : "false";
+    newSelectedButtons[currentPage * questionsPerPage + index] = isTrue ? "true" : "false";
     setSelectedButtons(newSelectedButtons);
   };
 
   const handleValidation = (): void => {
-    const allAnswered = selectedButtons.every((answer) => answer !== "");
-    if (!allAnswered) {
-      alert("Veuillez répondre à toutes les questions avant de valider.");
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+      setFeedbackClass("text-red-500");
       return;
     }
 
-    const allCorrect = questions.every((question, i) => {
+    const allCorrect = questions.slice(startIndex, endIndex).every((question, i) => {
       const leftResult = eval(question.equationLeft);
       const rightResult = eval(question.equationRight);
       const correctAnswer = leftResult === rightResult ? "true" : "false";
-      return selectedButtons[i] === correctAnswer;
+      return selectedButtons[startIndex + i] === correctAnswer;
     });
 
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      setFeedbackClass("text-green-500");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+        setFeedbackMessage(""); // Réinitialiser le feedback
+      } else {
+        setFeedbackMessage("Félicitations ! Vous avez terminé toutes les séries.");
+        setFeedbackClass("text-green-500");
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
+      setFeedbackClass("text-red-500");
+    }
   };
 
   return (
@@ -113,24 +132,25 @@ export default function EquationsEquivalentes() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6 z-10">
+      <h1 className="text-3xl font-bold mb-6 z-10 mt-16">
         Questions sur les équations équivalentes
       </h1>
 
+      {/* Feedback */}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
+
       {!isValidated && (
         <div className="flex flex-col items-center gap-6">
-          {questions.map(({ equationLeft, equationRight }, index) => (
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => (
             <div key={index} className="flex flex-col items-center gap-2">
               <div className="font-bold text-black text-center">
                 {formatEquation(equationLeft)} = {formatEquation(equationRight)}
               </div>
               <div className="flex gap-4 mt-4">
                 <button
-                  onClick={() =>
-                    handleAnswer(index, true)
-                  }
+                  onClick={() => handleAnswer(index, true)}
                   className={`py-2 px-4 rounded font-bold ${
-                    selectedButtons[index] === "true"
+                    selectedButtons[currentPage * questionsPerPage + index] === "true"
                       ? "bg-orange-500 text-white"
                       : "bg-blue-500 text-white"
                   }`}
@@ -138,11 +158,9 @@ export default function EquationsEquivalentes() {
                   Vrai
                 </button>
                 <button
-                  onClick={() =>
-                    handleAnswer(index, false)
-                  }
+                  onClick={() => handleAnswer(index, false)}
                   className={`py-2 px-4 rounded font-bold ${
-                    selectedButtons[index] === "false"
+                    selectedButtons[currentPage * questionsPerPage + index] === "false"
                       ? "bg-orange-500 text-white"
                       : "bg-blue-500 text-white"
                   }`}
