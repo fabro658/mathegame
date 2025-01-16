@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ComparerEntiers() {
@@ -9,13 +9,17 @@ export default function ComparerEntiers() {
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [questions, setQuestions] = useState<{ type: string; numbers: number[]; correctAnswer: string }[]>([]);
 
-  const questions = Array.from({ length: totalQuestions }, () => {
-    const number1 = Math.floor(Math.random() * 100) + 1;
-    const number2 = Math.floor(Math.random() * 100) + 1;
-    const correctAnswer = number1 > number2 ? ">" : number1 < number2 ? "<" : "=";
-    return { type: "compare", numbers: [number1, number2], correctAnswer };
-  });
+  useEffect(() => {
+    const generatedQuestions = Array.from({ length: totalQuestions }, () => {
+      const number1 = Math.floor(Math.random() * 100) + 1;
+      const number2 = Math.floor(Math.random() * 100) + 1;
+      const correctAnswer = number1 > number2 ? ">" : number1 < number2 ? "<" : "=";
+      return { type: "compare", numbers: [number1, number2], correctAnswer };
+    });
+    setQuestions(generatedQuestions);
+  }, []);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
