@@ -14,6 +14,7 @@ export default function ComparerDecimaux() {
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout de l'état pour le feedback
 
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
@@ -48,7 +49,7 @@ export default function ComparerDecimaux() {
 
   const handleValidation = () => {
     if (answers.includes(null)) {
-      alert("Veuillez répondre à toutes les questions avant de valider.");
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
@@ -65,6 +66,7 @@ export default function ComparerDecimaux() {
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
+    setFeedbackMessage(allCorrect ? "Toutes les réponses sont correctes !" : "Certaines réponses sont incorrectes. Veuillez réessayer.");
   };
 
   return (
@@ -128,18 +130,17 @@ export default function ComparerDecimaux() {
         </div>
       )}
 
-      {isValidated && (
-        <div className="text-center">
-          {hasPassed ? (
-            <p className="text-green-500 font-bold text-lg">
-              Toutes les réponses sont correctes !
-            </p>
-          ) : (
-            <p className="text-red-500 font-bold text-lg">
-              Certaines réponses sont incorrectes.
-            </p>
-          )}
-        </div>
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("réessayer") || feedbackMessage.includes("manquante")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
       )}
     </div>
   );

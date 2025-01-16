@@ -18,7 +18,6 @@ export default function EquationsEquivalentes() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [feedbackClass, setFeedbackClass] = useState("");
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-",];
@@ -88,7 +87,6 @@ export default function EquationsEquivalentes() {
 
     if (pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
-      setFeedbackClass("text-red-500");
       return;
     }
 
@@ -101,18 +99,15 @@ export default function EquationsEquivalentes() {
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      setFeedbackClass("text-green-500");
       setHasPassed(true); // Marquer le succès
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
         setFeedbackMessage(""); // Réinitialiser le feedback
       } else {
         setFeedbackMessage("Félicitations ! Vous avez terminé toutes les séries.");
-        setFeedbackClass("text-green-500");
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-      setFeedbackClass("text-red-500");
       setHasPassed(false); // Marquer l'échec
     }
   };
@@ -136,8 +131,8 @@ export default function EquationsEquivalentes() {
         Questions sur les équations équivalentes
       </h1>
 
-{/* Feedback */}
-{feedbackMessage && (
+      {/* Feedback */}
+      {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
             feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
