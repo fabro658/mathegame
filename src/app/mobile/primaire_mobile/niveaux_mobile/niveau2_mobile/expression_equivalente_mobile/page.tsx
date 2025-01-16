@@ -5,23 +5,23 @@ import Link from "next/link";
 
 export default function Division() {
   const totalQuestions = 36;
-  const [questions, setQuestions] = useState(
-    []
-  );
-  const [selectedButtons, setSelectedButtons] = useState(
+  const [questions, setQuestions] = useState<
+    { equationLeft: string; equationRight: string }[]
+  >([]);
+  const [selectedButtons, setSelectedButtons] = useState<string[]>(
     Array(totalQuestions).fill("") // État pour suivre les réponses sélectionnées
   );
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
 
   // Générer une équation avec un niveau donné
-  const generateEquation = (level) => {
+  const generateEquation = (level: number): { equation: string; result: number } => {
     const operations = ["+", "-"];
     if (level >= 2) operations.push("*");
     if (level >= 3) operations.push("/");
 
     const op = operations[Math.floor(Math.random() * operations.length)];
-    let left, right;
+    let left: number, right: number;
 
     if (op === "+") {
       left = Math.floor(Math.random() * 20) + 1;
@@ -42,12 +42,12 @@ export default function Division() {
   };
 
   // Formater une équation pour remplacer * par x
-  const formatEquation = (equation) => {
+  const formatEquation = (equation: string): string => {
     return equation.replace(/\*/g, "x");
   };
 
   useEffect(() => {
-    const generateQuestions = () => {
+    const generateQuestions = (): { equationLeft: string; equationRight: string }[] => {
       return Array.from({ length: totalQuestions }, (_, index) => {
         const level = Math.ceil(((index + 1) / totalQuestions) * 3); // Diviser les questions en 3 niveaux
         const leftEquation = generateEquation(level);
@@ -74,14 +74,14 @@ export default function Division() {
   }, []);
 
   // Gestion de la sélection des réponses
-  const handleAnswer = (index, isTrue) => {
+  const handleAnswer = (index: number, isTrue: boolean): void => {
     const newSelectedButtons = [...selectedButtons];
     newSelectedButtons[index] = isTrue ? "true" : "false";
     setSelectedButtons(newSelectedButtons);
   };
 
   // Valider les réponses
-  const handleValidation = () => {
+  const handleValidation = (): void => {
     const allAnswered = selectedButtons.every((answer) => answer !== "");
     if (!allAnswered) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
