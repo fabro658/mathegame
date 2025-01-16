@@ -22,11 +22,11 @@ export default function Division() {
     setQuestions(generatedQuestions);
   }, []);
 
-  const correctAnswers = questions.map(([numerator, denominator]) => Number((numerator / denominator).toFixed(2)));
+  const correctAnswers = questions.map(([numerator, denominator]) => Math.floor(numerator / denominator));
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
+    const parsedValue = parseInt(value, 10);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
@@ -49,7 +49,7 @@ export default function Division() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = 0; // Effacer la réponse incorrecte (affiche 0)
+        newAnswers[globalIndex] = null; // Effacer la réponse incorrecte
       }
     });
 
@@ -76,7 +76,8 @@ export default function Division() {
         <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
           Apprendre
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" 
+        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>
