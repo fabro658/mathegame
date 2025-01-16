@@ -21,7 +21,7 @@ export default function EquationsEquivalentes() {
   const [feedbackClass, setFeedbackClass] = useState("");
 
   const generateEquation = (level: number) => {
-    const operations = ["+", "-", "*", "/"];
+    const operations = ["+", "-",];
     const op = operations[Math.floor(Math.random() * operations.length)];
 
     let left, right;

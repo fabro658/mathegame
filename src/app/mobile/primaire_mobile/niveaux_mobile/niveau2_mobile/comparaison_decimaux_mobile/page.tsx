@@ -17,8 +17,9 @@ export default function ComparerDecimaux() {
 
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
-      const number1 = (Math.random() * 100).toFixed(2);
-      const number2 = (Math.random() * 100).toFixed(2);
+      // Générer des nombres décimaux et négatifs
+      const number1 = (Math.random() * 200 - 100).toFixed(2); // Plage de -100 à 100
+      const number2 = (Math.random() * 200 - 100).toFixed(2); // Plage de -100 à 100
       const correctAnswer =
         parseFloat(number1) > parseFloat(number2)
           ? ">"
