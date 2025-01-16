@@ -9,6 +9,8 @@ export default function Division() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0); // Gestion de la page actuelle
   const [questions, setQuestions] = useState<[number, number][]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [messageColor, setMessageColor] = useState<string>("");
 
   // Génération des questions au chargement
   useEffect(() => {
@@ -53,7 +55,8 @@ export default function Division() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setMessage("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setMessageColor("text-red-500");
       return;
     }
 
@@ -64,31 +67,30 @@ export default function Division() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = 0; // Affiche 0 si la réponse est incorrecte
       }
     });
 
-    setAnswers(newAnswers);
-
     if (!allCorrect) {
-      alert("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
+      setMessage("Certaines réponses sont incorrectes. Corrigez-les avant de continuer.");
+      setMessageColor("text-red-500");
     } else {
-      alert("Bravo ! Toutes vos réponses sont correctes.");
+      setMessage("Bravo ! Toutes vos réponses sont correctes.");
+      setMessageColor("text-green-500");
       setCurrentPage(currentPage + 1); // Passer à la page suivante
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-    {/* Conteneur pour les boutons */}
-    <div className="flex justify-between w-full mb-6">
-      <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-        Retour
-      </Link>
-    </div>
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
       {/* Titre */}
       <h1 className="text-3xl font-bold mb-8">Division</h1>
@@ -109,6 +111,8 @@ export default function Division() {
           </div>
         ))}
       </div>
+
+      {message && <div className={`mt-4 text-lg font-bold ${messageColor}`}>{message}</div>}
 
       <button
         onClick={handleValidation}
