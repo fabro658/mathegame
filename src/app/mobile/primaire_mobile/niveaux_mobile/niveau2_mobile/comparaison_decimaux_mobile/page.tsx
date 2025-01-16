@@ -13,12 +13,10 @@ export default function ComparerDecimaux() {
   const totalQuestions = 36;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout de l'état pour le feedback
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout du feedback
 
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
-      // Générer des nombres décimaux et négatifs
       const number1 = (Math.random() * 200 - 100).toFixed(2); // Plage de -100 à 100
       const number2 = (Math.random() * 200 - 100).toFixed(2); // Plage de -100 à 100
       const correctAnswer =
@@ -53,88 +51,47 @@ export default function ComparerDecimaux() {
       return;
     }
 
-    let allCorrect = true;
+    let hasErrors = false;
     const newAnswers = [...answers];
 
     answers.forEach((answer, index) => {
       if (questions[index] && answer !== questions[index].correctAnswer) {
-        allCorrect = false;
         newAnswers[index] = null;
+        hasErrors = true;
       }
     });
 
     setAnswers(newAnswers);
+
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez répondu correctement à toutes les questions.");
+    }
+
     setIsValidated(true);
-    setHasPassed(allCorrect);
-    setFeedbackMessage(allCorrect ? "Toutes les réponses sont correctes !" : "Certaines réponses sont incorrectes. Veuillez réessayer.");
   };
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Conteneur pour les boutons */}
+      {/* Navigation Buttons */}
       <div className="flex justify-between w-full mb-6">
-        <Link 
-          href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" 
-          className="bg-black text-white py-3 px-8 rounded font-bold">
-          Apprendre
+        <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile">
+          <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
         </Link>
-        <Link 
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
-        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-          Retour
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile">
+          <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">Retour</div>
         </Link>
       </div>
 
-      {/* Titre */}
+      {/* Title */}
       <h1 className="text-4xl font-bold mb-6">Comparaison</h1>
-
-      {!isValidated && (
-        <div className="flex flex-col items-center gap-4">
-          {questions.map((question, index) => (
-            <div
-              key={index}
-              className="bg-white p-4 rounded shadow-md text-center w-full max-w-md"
-            >
-              <p className="text-lg font-bold mb-4">
-                {`${question.numbers[0]} ? ${question.numbers[1]}`}
-              </p>
-              <select
-                value={answers[index] || ""}
-                onChange={(e) => handleAnswer(index, e.target.value)}
-                className="py-2 px-4 rounded border-gray-300 w-full"
-              >
-                <option value="" disabled>
-                  Choisissez
-                </option>
-                <option value="<">&lt;</option>
-                <option value=">">&gt;</option>
-                <option value="=">=</option>
-              </select>
-              {answers[index] === null && isValidated && (
-                <p className="text-red-500 text-sm mt-2">Réponse manquante</p>
-              )}
-              {answers[index] !== null && answers[index] !== question.correctAnswer && isValidated && (
-                <p className="text-red-500 text-sm mt-2">Erreur dans la réponse</p>
-              )}
-              {answers[index] === question.correctAnswer && isValidated && (
-                <p className="text-green-500 text-sm mt-2">Réponse correcte</p>
-              )}
-            </div>
-          ))}
-          <button
-            onClick={handleValidation}
-            className="bg-blue-500 text-white py-2 px-6 rounded mt-4"
-          >
-            Valider
-          </button>
-        </div>
-      )}
 
       {/* Feedback */}
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
-            feedbackMessage.includes("réessayer") || feedbackMessage.includes("manquante")
+            feedbackMessage.includes("réessayer") || feedbackMessage.includes("incorrectes")
               ? "text-red-500"
               : "text-green-500"
           } text-center`}
@@ -142,6 +99,36 @@ export default function ComparerDecimaux() {
           {feedbackMessage}
         </p>
       )}
+
+      {/* Questions */}
+      <div className="flex flex-col gap-6 w-full max-w-lg">
+        {questions.map((question, index) => (
+          <div key={index} className="flex items-center justify-center gap-6">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
+              {question.numbers[0]} ? {question.numbers[1]}
+            </div>
+            <select
+              value={answers[index] || ""}
+              onChange={(e) => handleAnswer(index, e.target.value)}
+              className="border border-gray-400 py-2 px-3 rounded text-center text-black text-lg w-24"
+            >
+              <option value="" disabled>
+                Choisissez
+              </option>
+              <option value="<">&lt;</option>
+              <option value=">">&gt;</option>
+              <option value="=">=</option>
+            </select>
+          </div>
+        ))}
+      </div>
+
+      {/* Validate Button */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }
