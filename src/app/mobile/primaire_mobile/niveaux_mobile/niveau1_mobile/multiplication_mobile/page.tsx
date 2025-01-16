@@ -9,6 +9,7 @@ export default function Multiplication() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackClass, setFeedbackClass] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function Multiplication() {
 
     if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackClass("text-red-500");
       return;
     }
 
@@ -55,6 +57,7 @@ export default function Multiplication() {
 
     if (allCorrect) {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
+      setFeedbackClass("text-green-500");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
@@ -62,6 +65,7 @@ export default function Multiplication() {
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+      setFeedbackClass("text-red-500");
     }
   };
 
@@ -81,7 +85,7 @@ export default function Multiplication() {
       <h1 className="text-4xl font-bold mb-6">Multiplication</h1>
 
       {/* Feedback */}
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
       <div className="flex flex-col items-center gap-4 w-full">
