@@ -21,7 +21,7 @@ export default function Division() {
     if (level >= 3) operations.push("/");
 
     const op = operations[Math.floor(Math.random() * operations.length)];
-    let left: number, right: number;
+    let left = 0, right = 0;
 
     if (op === "+") {
       left = Math.floor(Math.random() * 20) + 1;
@@ -184,3 +184,6 @@ export default function Division() {
     </div>
   );
 }
+
+
+
