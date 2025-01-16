@@ -8,14 +8,14 @@ export default function Division() {
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackClass, setFeedbackClass] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, () => {
-      let numerator = Math.floor(Math.random() * 100) + 1;
-      let denominator = Math.floor(Math.random() * 10) + 1;
+      const numerator = Math.floor(Math.random() * 100) + 1;
+      const denominator = Math.floor(Math.random() * 10) + 1;
       return [numerator, denominator];
     });
 
@@ -37,16 +37,16 @@ export default function Division() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      setMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setMessageColor("text-red-500");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackClass("text-red-500");
       return;
     }
 
     const newAnswers = [...answers];
     let allCorrect = true;
 
-    pageAnswers.forEach((answer, i) => {
-      const globalIndex = startIndex + i;
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
         newAnswers[globalIndex] = 0; // Effacer la réponse incorrecte (affiche 0)
@@ -56,16 +56,16 @@ export default function Division() {
     setAnswers(newAnswers);
 
     if (allCorrect) {
-      setMessage("Bravo ! Toutes les réponses sont correctes.");
-      setMessageColor("text-green-500");
+      setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
+      setFeedbackClass("text-green-500");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
-        setMessage("Bravo ! Vous avez terminé toutes les questions.");
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
       }
     } else {
-      setMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-      setMessageColor("text-red-500");
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+      setFeedbackClass("text-red-500");
     }
   };
 
@@ -85,12 +85,12 @@ export default function Division() {
       <h1 className="text-4xl font-bold mb-6">Division</h1>
 
       {/* Feedback */}
-      {message && <p className={`text-xl mb-4 ${messageColor}`}>{message}</p>}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
 
       {/* Questions et réponses */}
       <div className="flex flex-col items-center gap-4 w-full">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], i) => (
-          <div key={i} className="flex items-center justify-center gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+          <div key={index} className="flex items-center justify-center gap-6">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
               {numerator} ÷ {denominator}
             </div>
@@ -98,8 +98,8 @@ export default function Division() {
               type="text"
               inputMode="numeric"
               className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
-              value={answers[currentPage * questionsPerPage + i] ?? ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + i, e.target.value)}
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
           </div>
         ))}
