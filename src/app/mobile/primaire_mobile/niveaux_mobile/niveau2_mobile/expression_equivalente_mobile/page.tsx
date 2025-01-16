@@ -136,8 +136,18 @@ export default function EquationsEquivalentes() {
         Questions sur les équations équivalentes
       </h1>
 
-      {/* Feedback */}
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
+{/* Feedback */}
+{feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
       {!isValidated && (
         <div className="flex flex-col items-center gap-6 mt-12">
