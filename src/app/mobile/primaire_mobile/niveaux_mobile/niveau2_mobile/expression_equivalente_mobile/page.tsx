@@ -116,6 +116,15 @@ export default function EquationsEquivalentes() {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
       setFeedbackClass("text-red-500");
       setHasPassed(false); // Marquer l'échec
+
+      // Réinitialiser les réponses en cas d'erreur
+      const newSelectedButtons = [...selectedButtons];
+      selectedButtons.slice(startIndex, endIndex).forEach((answer, i) => {
+        if (answer !== "true" && answer !== "false") {
+          newSelectedButtons[startIndex + i] = ""; // Réinitialiser si erroné
+        }
+      });
+      setSelectedButtons(newSelectedButtons);
     }
   };
 
