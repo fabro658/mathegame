@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -16,7 +14,7 @@ export default function EquationsEquivalentes() {
   );
   const [currentPage, setCurrentPage] = useState(0);
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false); // Utilisation de hasPassed
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const generateEquation = (level: number) => {
@@ -99,7 +97,7 @@ export default function EquationsEquivalentes() {
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      setHasPassed(true); // Marquer le succès
+      setHasPassed(true); // Mise à jour de hasPassed sur la page actuelle
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
         setFeedbackMessage(""); // Réinitialiser le feedback
@@ -108,8 +106,10 @@ export default function EquationsEquivalentes() {
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-      setHasPassed(false); // Marquer l'échec
+      setHasPassed(false); // Mise à jour de hasPassed si certaines réponses sont incorrectes
     }
+
+    setIsValidated(true); // Marquer comme validé
   };
 
   return (
@@ -188,18 +188,6 @@ export default function EquationsEquivalentes() {
 
       {isValidated && (
         <div className="mt-6 flex flex-col items-center">
-         {/* Feedback */}
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("réessayer") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          } text-center`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
           <button
             className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
             onClick={() => setIsValidated(false)}
