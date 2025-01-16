@@ -12,7 +12,6 @@ type Question = {
 export default function ComparerDecimaux() {
   const totalQuestions = 36;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout du feedback
 
   const generateQuestions = (): Question[] => {
@@ -68,8 +67,6 @@ export default function ComparerDecimaux() {
     } else {
       setFeedbackMessage("Bravo ! Vous avez répondu correctement à toutes les questions.");
     }
-
-    setIsValidated(true);
   };
 
   return (
