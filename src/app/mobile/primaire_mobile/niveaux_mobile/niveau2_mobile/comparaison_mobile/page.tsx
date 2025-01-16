@@ -10,7 +10,7 @@ export default function ComparerEntiers() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+  const questions = Array.from({ length: totalQuestions }, () => {
     const number1 = Math.floor(Math.random() * 100) + 1;
     const number2 = Math.floor(Math.random() * 100) + 1;
     const correctAnswer = number1 > number2 ? ">" : number1 < number2 ? "<" : "=";
@@ -39,8 +39,8 @@ export default function ComparerEntiers() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [a, b] = questions[globalIndex];
-      if (answer !== questions[globalIndex].correctAnswer) {
+      const question = questions[globalIndex];
+      if (answer !== question.correctAnswer) {
         newAnswers[globalIndex] = null;
         hasErrors = true;
         allCorrect = false;
@@ -91,8 +91,7 @@ export default function ComparerEntiers() {
 
       {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
-          const globalIndex = currentPage * questionsPerPage + index;
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, globalIndex) => {
           return (
             <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center">
               <p className="text-lg font-bold mb-4">
