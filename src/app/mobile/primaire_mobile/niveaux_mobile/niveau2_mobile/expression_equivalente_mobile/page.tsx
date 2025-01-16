@@ -104,6 +104,7 @@ export default function EquationsEquivalentes() {
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       setFeedbackClass("text-green-500");
+      setHasPassed(true); // Marquer le succès
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
         setFeedbackMessage(""); // Réinitialiser le feedback
@@ -114,6 +115,7 @@ export default function EquationsEquivalentes() {
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
       setFeedbackClass("text-red-500");
+      setHasPassed(false); // Marquer l'échec
     }
   };
 
@@ -121,18 +123,18 @@ export default function EquationsEquivalentes() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
         href="/menu/apprendre"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
       >
         Apprendre
       </Link>
       <Link
         href="/primaire/niveaux/niveau2"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6 z-10 mt-16">
+      <h1 className="text-3xl font-bold mb-6 z-20 mt-24">
         Questions sur les équations équivalentes
       </h1>
 
@@ -140,7 +142,7 @@ export default function EquationsEquivalentes() {
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
 
       {!isValidated && (
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-6 mt-12">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => (
             <div key={index} className="flex flex-col items-center gap-2">
               <div className="font-bold text-black text-center">
