@@ -50,13 +50,11 @@ export default function Addition() {
 
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("");
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setCurrentPage(currentPage + 1);
-      } else {
-        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
-      }
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
