@@ -74,23 +74,16 @@ export default function Division() {
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       setFeedbackClass("text-green-500");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+        setFeedbackMessage(""); // Réinitialiser le feedback
+      } else {
+        setFeedbackMessage("Félicitations ! Vous avez terminé toutes les séries.");
+        setFeedbackClass("text-green-500");
+      }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
       setFeedbackClass("text-red-500");
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setFeedbackMessage(""); // Réinitialiser le feedback
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setFeedbackMessage(""); // Réinitialiser le feedback
     }
   };
 
@@ -131,16 +124,10 @@ export default function Division() {
         ))}
       </div>
 
-      {/* Navigation et validation */}
-      <div className="mt-6 flex justify-between w-full">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
-          Précédent
-        </button>
+      {/* Validation */}
+      <div className="mt-6 flex justify-center w-full">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
           Valider
-        </button>
-        <button onClick={handleNextPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage >= Math.floor(totalQuestions / questionsPerPage) - 1}>
-          Suivant
         </button>
       </div>
     </div>
