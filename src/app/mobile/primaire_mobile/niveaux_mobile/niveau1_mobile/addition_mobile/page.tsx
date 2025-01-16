@@ -77,7 +77,13 @@ export default function Addition() {
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
@@ -87,7 +93,7 @@ export default function Addition() {
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
           <div key={index} className="flex items-center justify-center gap-6">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
-            {a} + {b} =
+              {a} + {b} =
             </div>
             <input
               type="text"
