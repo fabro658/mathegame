@@ -71,8 +71,8 @@ export default function ComparerEntiers() {
           Apprendre
         </Link>
         <Link 
-          href="/mobile/primaire_mobile/niveaux_mobile"
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
+        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>

@@ -3,20 +3,19 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function EquationsEquivalentes() {
-  const totalQuestions = 30; // Nombre total de questions
-  const levels = 3; // Nombre de niveaux
-
-  const [questions, setQuestions] = useState<
-    { equationLeft: string; equationRight: string }[]
-  >([]);
-  const [selectedButtons, setSelectedButtons] = useState<string[]>(
-    Array(totalQuestions).fill("") // État pour suivre les boutons cliqués
+export default function Division() {
+  const totalQuestions = 36;
+  const [questions, setQuestions] = useState(
+    []
+  );
+  const [selectedButtons, setSelectedButtons] = useState(
+    Array(totalQuestions).fill("") // État pour suivre les réponses sélectionnées
   );
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
 
-  const generateEquation = (level: number) => {
+  // Générer une équation avec un niveau donné
+  const generateEquation = (level) => {
     const operations = ["+", "-"];
     if (level >= 2) operations.push("*");
     if (level >= 3) operations.push("/");
@@ -38,18 +37,19 @@ export default function EquationsEquivalentes() {
       left = right * (Math.floor(Math.random() * 10) + 1);
     }
 
-    const result = eval(`${left} ${op} ${right}`);
+    const result = eval(`${left} ${op} ${right}`); // Évaluer le résultat de l'équation
     return { equation: `${left} ${op} ${right}`, result };
   };
 
-  const formatEquation = (equation: string) => {
+  // Formater une équation pour remplacer * par x
+  const formatEquation = (equation) => {
     return equation.replace(/\*/g, "x");
   };
 
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        const level = Math.ceil(((index + 1) / totalQuestions) * levels);
+        const level = Math.ceil(((index + 1) / totalQuestions) * 3); // Diviser les questions en 3 niveaux
         const leftEquation = generateEquation(level);
 
         const isEquivalent = Math.random() > 0.5;
@@ -73,13 +73,15 @@ export default function EquationsEquivalentes() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, isTrue: boolean): void => {
+  // Gestion de la sélection des réponses
+  const handleAnswer = (index, isTrue) => {
     const newSelectedButtons = [...selectedButtons];
     newSelectedButtons[index] = isTrue ? "true" : "false";
     setSelectedButtons(newSelectedButtons);
   };
 
-  const handleValidation = (): void => {
+  // Valider les réponses
+  const handleValidation = () => {
     const allAnswered = selectedButtons.every((answer) => answer !== "");
     if (!allAnswered) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
@@ -99,6 +101,7 @@ export default function EquationsEquivalentes() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Liens de navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -112,6 +115,7 @@ export default function EquationsEquivalentes() {
         Retour
       </Link>
 
+      {/* Titre */}
       <h1 className="text-3xl font-bold mb-6 z-10">
         Questions sur les équations équivalentes
       </h1>
@@ -125,9 +129,7 @@ export default function EquationsEquivalentes() {
               </div>
               <div className="flex gap-4 mt-4">
                 <button
-                  onClick={() =>
-                    handleAnswer(index, true)
-                  }
+                  onClick={() => handleAnswer(index, true)}
                   className={`py-2 px-4 rounded font-bold ${
                     selectedButtons[index] === "true"
                       ? "bg-orange-500 text-white"
@@ -137,9 +139,7 @@ export default function EquationsEquivalentes() {
                   Vrai
                 </button>
                 <button
-                  onClick={() =>
-                    handleAnswer(index, false)
-                  }
+                  onClick={() => handleAnswer(index, false)}
                   className={`py-2 px-4 rounded font-bold ${
                     selectedButtons[index] === "false"
                       ? "bg-orange-500 text-white"

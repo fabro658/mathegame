@@ -75,7 +75,7 @@ export default function ComparerFractions() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau2"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -109,12 +109,9 @@ export default function ComparerFractions() {
             );
           })}
           <div className="flex flex-col items-center mt-4">
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded"
-            >
-              Valider
-            </button>
+          <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Valider
+        </button>
           </div>
         </div>
       )}

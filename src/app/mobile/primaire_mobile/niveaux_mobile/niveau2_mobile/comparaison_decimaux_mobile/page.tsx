@@ -67,19 +67,23 @@ export default function ComparerDecimaux() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Apprendre" en haut à gauche */}
-      <Link
-        href="/menu/apprendre"
-        className="absolute top-4 left-4 bg-black text-white py-2 px-4 rounded font-bold"
-      >
-        Apprendre
-      </Link>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link 
+          href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" 
+          className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link 
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
+        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-6 text-center z-10">
-        Comparaison de Nombres Décimaux
-      </h1>
+      <h1 className="text-4xl font-bold mb-6">Comparaison</h1>
 
       {!isValidated && (
         <div className="flex flex-col items-center gap-4">
