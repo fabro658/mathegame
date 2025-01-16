@@ -188,15 +188,18 @@ export default function EquationsEquivalentes() {
 
       {isValidated && (
         <div className="mt-6 flex flex-col items-center">
-          {hasPassed ? (
-            <p className="text-green-600 font-bold text-xl">
-              Bravo ! Toutes vos réponses sont correctes.
-            </p>
-          ) : (
-            <p className="text-red-600 font-bold text-xl">
-              Certaines réponses sont incorrectes. Corrigez-les.
-            </p>
-          )}
+         {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("réessayer") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
           <button
             className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
             onClick={() => setIsValidated(false)}
