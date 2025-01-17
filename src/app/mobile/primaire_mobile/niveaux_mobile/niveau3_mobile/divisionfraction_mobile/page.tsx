@@ -45,10 +45,6 @@ export default function DivisionFraction() {
 
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
-  // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -83,136 +79,57 @@ export default function DivisionFraction() {
     setHasPassed(allCorrect);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
-      setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
-    }
-  };
-
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
       <Link
-        href="/menu/apprendre/fraction"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau3"
+        href="/mobile/primair_mobile/niveaux_mobile/niveau3_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
       <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
-{/* Questions de la page actuelle */}
+
+      {/* Questions de la page actuelle */}
       {!isValidated && (
-        <>
-          <div className="grid grid-cols-2 grid-rows-3 gap-6">
-         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-           <div key={index} className="flex flex-row items-center gap-4">
-             <button
-              className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
-               disabled
-             >
-                   {fraction1} × {fraction2}
-                </button>
-               <input
-            type="text"
-          className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-         onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-              </div>
-             ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
+        <div className="flex flex-col items-center gap-4">
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+            <div key={index} className="flex flex-row items-center gap-4 mb-4">
+              <div className="w-48 text-center">{fraction1} × {fraction2}</div>
+              <input
+                type="text"
+                className="border border-gray-400 p-3 rounded w-32 text-center text-black"
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              />
+            </div>
+          ))}
+          <button
+            onClick={handleValidation}
+            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
+          >
+            Valider les réponses
+          </button>
+        </div>
       )}
 
       {isValidated && (
-        <>
+        <div>
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+              <button
+                className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                onClick={() => alert("Vous avez complété toutes les questions !")}
+              >
+                Terminer
+              </button>
             </div>
           ) : (
             <div>
@@ -225,7 +142,7 @@ export default function DivisionFraction() {
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

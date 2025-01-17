@@ -6,46 +6,36 @@ import Link from "next/link";
 export default function EquationsEquivalentes() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const levels = 3; // Nombre de niveaux
+  const levels = 3;
 
   const [questions, setQuestions] = useState<
     { equationLeft: string; equationRight: string }[]
   >([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(
-    Array(totalQuestions).fill("") // État pour suivre les boutons cliqués
+    Array(totalQuestions).fill("")
   );
   const [currentPage, setCurrentPage] = useState(0);
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false); // Utilisation de hasPassed
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const generateEquation = (level: number) => {
-    const operations = ["+", "-",];
+    const operations = ["+", "-"];
     const op = operations[Math.floor(Math.random() * operations.length)];
-
     let left, right;
 
     if (op === "+") {
-      left = Math.floor(Math.random() * (20 * level)) + 1;  // Difficulté augmentée selon le niveau
+      left = Math.floor(Math.random() * (20 * level)) + 1;
       right = Math.floor(Math.random() * (20 * level)) + 1;
     } else if (op === "-") {
-      left = Math.floor(Math.random() * (20 * level)) + 10; // Difficulté augmentée selon le niveau
+      left = Math.floor(Math.random() * (20 * level)) + 10;
       right = Math.floor(Math.random() * (10 * level)) + 1;
-    } else if (op === "*") {
-      left = Math.floor(Math.random() * (10 * level)) + 1;  // Difficulté augmentée selon le niveau
-      right = Math.floor(Math.random() * (10 * level)) + 1;
-    } else if (op === "/") {
-      right = Math.floor(Math.random() * (9 * level)) + 1;  // Difficulté augmentée selon le niveau
-      left = right * (Math.floor(Math.random() * (10 * level)) + 1);
     }
 
     const result = eval(`${left} ${op} ${right}`);
     return { equation: `${left} ${op} ${right}`, result };
   };
 
-  const formatEquation = (equation: string) => {
-    return equation.replace(/\*/g, "x");
-  };
+  const formatEquation = (equation: string) => equation.replace(/\*/g, "x");
 
   useEffect(() => {
     const generateQuestions = () => {
@@ -98,20 +88,17 @@ export default function EquationsEquivalentes() {
     });
 
     if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      setHasPassed(true); // Mise à jour de hasPassed sur la page actuelle
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
-        setFeedbackMessage(""); // Réinitialiser le feedback
+        setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       } else {
         setFeedbackMessage("Félicitations ! Vous avez terminé toutes les séries.");
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-      setHasPassed(false); // Mise à jour de hasPassed si certaines réponses sont incorrectes
     }
 
-    setIsValidated(true); // Marquer comme validé
+    setIsValidated(true);
   };
 
   return (
@@ -133,11 +120,10 @@ export default function EquationsEquivalentes() {
         Questions sur les équations équivalentes
       </h1>
 
-      {/* Feedback */}
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+            feedbackMessage.includes("incorrectes")
               ? "text-red-500"
               : "text-green-500"
           } text-center`}
