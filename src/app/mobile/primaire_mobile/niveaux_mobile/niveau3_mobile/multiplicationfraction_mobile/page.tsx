@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function MultiplicationFraction() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 6 questions par page
+  const questionsPerPage = 3; 
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
   const [isValidated, setIsValidated] = useState(false);

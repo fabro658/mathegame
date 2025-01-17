@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function AdditionFractions() {
   const totalQuestions = 36;
-
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
@@ -75,7 +75,8 @@ export default function AdditionFractions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 text-black relative pt-16">
+      {/* Bouton "Apprendre" en haut à gauche */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
         className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -89,7 +90,7 @@ export default function AdditionFractions() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-8 z-10">Addition de Fractions</h1>
 
       <div className="grid grid-cols-1 gap-4 w-full max-w-3xl">
         {questions.map(({ fraction1, fraction2 }, index) => (
