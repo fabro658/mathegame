@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -15,7 +15,6 @@ export default function EquationsEquivalentes() {
     Array(totalQuestions).fill("")
   );
   const [currentPage, setCurrentPage] = useState(0);
-  const [isValidated, setIsValidated] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const generateEquation = (level: number) => {
@@ -80,12 +79,23 @@ export default function EquationsEquivalentes() {
       return;
     }
 
-    const allCorrect = questions.slice(startIndex, endIndex).every((question, i) => {
+    let allCorrect = true;
+    const newSelectedButtons = [...selectedButtons];
+
+    // Vérifier les réponses et effacer les réponses incorrectes
+    questions.slice(startIndex, endIndex).forEach((question, i) => {
       const leftResult = eval(question.equationLeft);
       const rightResult = eval(question.equationRight);
       const correctAnswer = leftResult === rightResult ? "true" : "false";
-      return selectedButtons[startIndex + i] === correctAnswer;
+
+      if (selectedButtons[startIndex + i] !== correctAnswer) {
+        allCorrect = false;
+        // Effacer la réponse incorrecte
+        newSelectedButtons[startIndex + i] = "";
+      }
     });
+
+    setSelectedButtons(newSelectedButtons);
 
     if (allCorrect) {
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
@@ -97,8 +107,6 @@ export default function EquationsEquivalentes() {
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
     }
-
-    setIsValidated(true);
   };
 
   return (
