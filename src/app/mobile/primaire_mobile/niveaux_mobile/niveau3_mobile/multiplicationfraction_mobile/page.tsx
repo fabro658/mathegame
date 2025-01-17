@@ -128,7 +128,7 @@ export default function MultiplicationFraction() {
 
       {/* Questions et réponses en colonnes */}
       {!isValidated && (
-        <div className="w-full max-w-3xl flex flex-row justify-between gap-4">
+        <div className="w-full max-w-3xl flex flex-col gap-4">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
             <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
               {/* Question à gauche */}

@@ -5,7 +5,7 @@ export default function Page() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-white text-gray-900 relative">
      {/* Bouton de retour */}
      <Link
-        href="/mobile/primiare_mobile"
+        href="/mobile/primaire_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
       >
         Retour

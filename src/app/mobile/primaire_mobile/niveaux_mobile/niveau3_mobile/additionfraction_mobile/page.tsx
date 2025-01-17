@@ -56,7 +56,7 @@ export default function AdditionFractions() {
 
     // Vérifier si toutes les réponses sont remplies
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
-      setMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setMessage("use client"); // Message pour indiquer qu'il manque des réponses
       return;
     }
 
@@ -109,7 +109,13 @@ export default function AdditionFractions() {
 
       {/* Message de validation */}
       {message && (
-        <p className={`text-xl font-bold mb-6 text-center ${message.includes("incorrectes") ? "text-red-600" : "text-green-600"}`}>
+        <p
+          className={`text-xl font-bold mb-6 text-center ${
+            message === "use client" || message.includes("incorrectes")
+              ? "text-red-600"
+              : "text-green-600"
+          }`}
+        >
           {message}
         </p>
       )}

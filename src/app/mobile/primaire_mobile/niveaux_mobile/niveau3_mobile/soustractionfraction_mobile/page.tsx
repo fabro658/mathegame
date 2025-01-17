@@ -10,6 +10,7 @@ export default function SoustractionFractions() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageColor, setMessageColor] = useState(""); // Nouvelle variable pour la couleur du message
   const [currentPage, setCurrentPage] = useState(0);
 
   // Fonction pour simplifier les fractions
@@ -62,6 +63,7 @@ export default function SoustractionFractions() {
     // Vérifier si toutes les réponses sont remplies
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       setMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setMessageColor("text-red-600"); // Définir la couleur du message en rouge
       return;
     }
 
@@ -81,8 +83,10 @@ export default function SoustractionFractions() {
 
     if (allCorrect) {
       setMessage("Bravo ! Toutes vos réponses sont correctes.");
+      setMessageColor("text-green-600"); // Définir la couleur du message en vert
     } else {
       setMessage("Certaines réponses sont incorrectes. Corrigez-les.");
+      setMessageColor("text-yellow-600"); // Définir la couleur du message en jaune
     }
   };
 
@@ -92,6 +96,7 @@ export default function SoustractionFractions() {
       setCurrentPage(currentPage + 1);
       setIsValidated(false); // Réinitialiser la validation pour la page suivante
       setMessage(""); // Réinitialiser le message
+      setMessageColor(""); // Réinitialiser la couleur du message
     }
   };
 
@@ -115,7 +120,7 @@ export default function SoustractionFractions() {
 
       {/* Message de validation */}
       {message && (
-        <p className={`text-xl font-bold mb-6 text-center ${message.includes("incorrectes") ? "text-red-600" : "text-green-600"}`}>
+        <p className={`text-xl font-bold mb-6 text-center ${messageColor}`}>
           {message}
         </p>
       )}
