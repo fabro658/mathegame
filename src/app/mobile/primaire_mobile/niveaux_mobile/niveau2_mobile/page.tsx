@@ -29,12 +29,6 @@ export default function Page() {
           Comparaison de fraction
         </Link>
         <Link
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparaison_mobile"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg text-lg shadow-md text-center"
-        >
-          Comparaison de nombre décimaux
-        </Link>
-        <Link
           href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/expression_equivalente_mobile"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-lg shadow-md text-center"
         >

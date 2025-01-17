@@ -102,7 +102,7 @@ export default function DivisionFraction() {
           Apprendre
         </Link>
         <Link 
-          href="/mobile/primair_mobile/niveaux_mobile/niveau3_mobile" 
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile" 
           className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
