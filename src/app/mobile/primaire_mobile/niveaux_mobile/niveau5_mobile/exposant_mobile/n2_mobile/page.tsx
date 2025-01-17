@@ -131,7 +131,18 @@ export default function ExponentsPractice() {
       {/* Message de validation */}
       {message && <div className={`mt-6 text-xl font-bold ${messageColor}`}>{message}</div>}
 
-      {/* Boutons "Précédent" et "Suivant" supprimés */}
+      {/* Afficher le nombre de réponses complètes */}
+      <div className="mt-4 text-lg">
+        {completedAnswers} réponses complètes
+      </div>
+
+      {/* Ajouter un bouton de validation */}
+      <button
+        onClick={handleValidation}
+        className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold hover:bg-blue-600"
+      >
+        Valider les réponses
+      </button>
     </div>
   );
 }

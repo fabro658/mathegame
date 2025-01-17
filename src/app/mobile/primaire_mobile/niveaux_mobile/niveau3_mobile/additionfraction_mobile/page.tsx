@@ -1,11 +1,10 @@
-"use client";
+"use client"; // Marking this as a client-side component
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function AdditionFractions() {
   const totalQuestions = 36;
-  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
