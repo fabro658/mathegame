@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function MultiplicationFraction() {
   const totalQuestions = 36;
-  const questionsPerPage = 3; 
+  const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
   const [isValidated, setIsValidated] = useState(false);
@@ -49,6 +49,11 @@ export default function MultiplicationFraction() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+
+    // Effacer le message d'erreur si la réponse est modifiée
+    if (newAnswers.includes(null)) {
+      setFeedbackMessage("");
+    }
   };
 
   const handleValidation = () => {
@@ -94,19 +99,19 @@ export default function MultiplicationFraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-    {/* Boutons de navigation */}
-    <Link
-      href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
-      className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-    >
-      Apprendre
-    </Link>
-    <Link
-      href="/mobile/primair_mobile/niveaux_mobile/niveau3_mobile"
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-    >
-      Retour
-    </Link>
+      {/* Boutons de navigation */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/primair_mobile/niveaux_mobile/niveau3_mobile"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
       <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
@@ -123,9 +128,9 @@ export default function MultiplicationFraction() {
 
       {/* Questions et réponses */}
       {!isValidated && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="w-full flex flex-col gap-4">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-            <div key={index} className="flex items-center gap-4 mb-4">
+            <div key={index} className="flex flex-col items-center gap-4 mb-4">
               {/* Question */}
               <button
                 className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"

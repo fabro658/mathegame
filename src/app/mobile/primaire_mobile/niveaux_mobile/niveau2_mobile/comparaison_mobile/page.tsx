@@ -11,6 +11,7 @@ export default function ComparerEntiers() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<{ type: string; numbers: number[]; correctAnswer: string }[]>([]);
 
+  // Générer les questions au chargement initial
   useEffect(() => {
     const generatedQuestions = Array.from({ length: totalQuestions }, () => {
       const number1 = Math.floor(Math.random() * 100) + 1;
@@ -32,22 +33,23 @@ export default function ComparerEntiers() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérifier si toutes les réponses ont été remplies
     if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
     let hasErrors = false;
-    let allCorrect = true;
-    const newAnswers = [...answers];
 
+    // Vérification des réponses pour la page actuelle
+    const newAnswers = [...answers];
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const question = questions[globalIndex];
+
       if (answer !== question.correctAnswer) {
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser la réponse incorrecte
         hasErrors = true;
-        allCorrect = false;
       }
     });
 
@@ -55,12 +57,20 @@ export default function ComparerEntiers() {
 
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-    } else if (allCorrect) {
+    } else {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
+
+      // Réinitialiser les réponses pour la page actuelle
+      for (let i = startIndex; i < endIndex; i++) {
+        newAnswers[i] = null;
+      }
+      setAnswers(newAnswers);
+
+      // Passer à la page suivante ou afficher un message de fin
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
-        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+        setFeedbackMessage("Félicitations ! Vous avez terminé toutes les questions.");
       }
     }
   };
@@ -75,8 +85,8 @@ export default function ComparerEntiers() {
           Apprendre
         </Link>
         <Link 
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
-        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>
@@ -96,14 +106,15 @@ export default function ComparerEntiers() {
       {/* Questions et réponses */}
       <div className="flex flex-col gap-6 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, globalIndex) => {
+          const relativeIndex = currentPage * questionsPerPage + globalIndex; // Index global pour le tableau des réponses
           return (
-            <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center">
+            <div key={relativeIndex} className="bg-white p-4 rounded shadow-md text-center">
               <p className="text-lg font-bold mb-4">
                 {`${question.numbers[0]} ? ${question.numbers[1]}`}
               </p>
               <select
-                value={answers[globalIndex] || ""}
-                onChange={(e) => handleChange(globalIndex, e.target.value)}
+                value={answers[relativeIndex] || ""}
+                onChange={(e) => handleChange(relativeIndex, e.target.value)}
                 className="py-2 px-4 rounded border-gray-300"
               >
                 <option value="" disabled>
