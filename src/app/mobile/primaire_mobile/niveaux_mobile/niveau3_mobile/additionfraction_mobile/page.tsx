@@ -10,7 +10,8 @@ export default function AdditionFractions() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [message, setMessage] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [messageColor, setMessageColor] = useState("");
+    const [currentPage, setCurrentPage] = useState(0);
 
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
@@ -109,13 +110,7 @@ export default function AdditionFractions() {
 
       {/* Message de validation */}
       {message && (
-        <p
-          className={`text-xl font-bold mb-6 text-center ${
-            message === "use client" || message.includes("incorrectes")
-              ? "text-red-600"
-              : "text-green-600"
-          }`}
-        >
+        <p className={`text-xl font-bold mb-6 text-center ${messageColor}`}>
           {message}
         </p>
       )}
