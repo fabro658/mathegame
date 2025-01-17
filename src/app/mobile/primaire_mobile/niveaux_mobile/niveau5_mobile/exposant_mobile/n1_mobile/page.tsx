@@ -10,6 +10,8 @@ export default function ExponentsPractice() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
+  const [validationMessage, setValidationMessage] = useState<string>("");
+  const [messageColor, setMessageColor] = useState<string>("");
 
   // Génération des questions
   useEffect(() => {
@@ -52,7 +54,8 @@ export default function ExponentsPractice() {
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
     if (pageAnswers.some((answer) => !answer)) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+      setValidationMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setMessageColor("text-red-500");
       return;
     }
 
@@ -65,65 +68,34 @@ export default function ExponentsPractice() {
         }
       });
       setAnswers(updatedAnswers);
-    }
-
-    // Passe automatiquement à la page suivante si tout est correct
-    if (allCorrect && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-      }, 1500);
-    }
-  };
-
-  const handleNextPage = (): void => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
+      setValidationMessage("Certaines réponses sont incorrectes.");
+      setMessageColor("text-red-500");
+    } else {
+      setValidationMessage("Toutes les réponses sont correctes !");
+      setMessageColor("text-green-500");
+      // Passe automatiquement à la page suivante si tout est correct
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+        }, 1500);
+      }
     }
   };
-
-  const handlePreviousPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
-        href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile"
+        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      {/* Barre de progression circulaire (visible uniquement sur grands écrans) */}
-      <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
+      {/* Titre */}
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
-      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
+      {/* Grille de questions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
@@ -141,37 +113,29 @@ export default function ExponentsPractice() {
           ))}
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
+      {/* Message de validation */}
+      {validationMessage && (
+        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      )}
+
+      {/* Bouton "Apprendre" */}
+      <div className="absolute top-4 left-4">
+        <Link
+          href="/mobile/menu_mobile/apprendre_mobile/exposant_mobile"
+          className="bg-black text-white py-3 px-8 rounded font-bold"
         >
-          Précédent
-        </button>
+          Apprendre
+        </Link>
+      </div>
+
+      {/* Validation des réponses */}
+      <div className="mt-6 w-full sm:w-auto">
         <button
           onClick={handleValidation}
           className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
         >
           Valider les réponses
         </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-      </div>
-
-      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
-      <div className="mt-6 w-full sm:hidden">
-        <Link
-          href="/menu/apprendre/exposant"
-          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
       </div>
     </div>
   );

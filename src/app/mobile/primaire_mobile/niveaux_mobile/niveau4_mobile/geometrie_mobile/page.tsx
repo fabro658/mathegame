@@ -20,19 +20,11 @@ const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
-  const [progress, setProgress] = useState(0);
+  const [message, setMessage] = useState<string | null>(null);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
     const targetIndex = currentShapes + index;
-
-    // Vérifie si la réponse est correcte dès le drop
-    if (shapes[targetIndex].name === droppedName) {
-      setProgress((prev) => prev + (100 / shapes.length)); // Augmenter la progression
-    } else if (updatedAnswers[targetIndex] && shapes[targetIndex].name === updatedAnswers[targetIndex]) {
-      // Si la réponse est changée d'une bonne réponse à une mauvaise, réduire la progression
-      setProgress((prev) => prev - (100 / shapes.length));
-    }
 
     updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
@@ -50,17 +42,14 @@ const ShapesPracticePage = () => {
     }
 
     if (errors.length === 0) {
-      // Tout est correct, passer à la série suivante
       setErrorIndices([]);
-      handleNext();
+      setMessage("Toutes les réponses sont correctes ! Passons à la série suivante.");
+      setTimeout(() => handleNext(), 2000); // Avance après 2 secondes
     } else {
-      // Réinitialiser uniquement les erreurs
       setErrorIndices(errors);
+      setMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
       const updatedAnswers = [...answers];
       errors.forEach((idx) => {
-        if (updatedAnswers[idx] === shapes[idx].name) {
-          setProgress((prev) => prev - (100 / shapes.length)); // Réduire la progression pour les erreurs
-        }
         updatedAnswers[idx] = null;
       });
       setAnswers(updatedAnswers);
@@ -69,10 +58,7 @@ const ShapesPracticePage = () => {
 
   const handleNext = () => {
     setCurrentShapes((prev) => (prev + 3) % shapes.length);
-  };
-
-  const handlePrevious = () => {
-    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
+    setMessage(null); // Réinitialiser le message
   };
 
   const drawShape = (sides: number) => {
@@ -103,65 +89,36 @@ const ShapesPracticePage = () => {
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        href="/mobile/menu_mobile/apprendre_mobile"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau4"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * progress) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{Math.round(progress)}%</span>
-        </div>
-      </div>
-
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
+
+      {message && (
+        <div className={`text-lg font-bold ${message.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
+          {message}
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
-        <div className="flex gap-8 justify-center mb-12">
+        <div className="flex flex-col items-start mb-12">
           {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
             <div
               key={idx}
-              className={`w-32 h-32 border-2 ${
-                errorIndices.includes(currentShapes + idx)
-                  ? "border-red-500"
-                  : "border-gray-500"
-              } flex flex-col items-center justify-center`}
+              className={`w-32 h-32 border-2 ${errorIndices.includes(currentShapes + idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
               onDrop={(e) => {
                 e.preventDefault();
                 handleDrop(idx, e.dataTransfer.getData("name"));
@@ -194,23 +151,10 @@ const ShapesPracticePage = () => {
         {/* Zone des boutons */}
         <div className="flex gap-4 mt-8">
           <button
-            onClick={handlePrevious}
-            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
-          >
-            Précédent
-          </button>
-          <button
             onClick={handleValidation}
             className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
           >
             Valider les réponses
-          </button>
-          <button
-            onClick={handleNext}
-            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
-            disabled={errorIndices.length > 0}
-          >
-            Suivant
           </button>
         </div>
       </div>
