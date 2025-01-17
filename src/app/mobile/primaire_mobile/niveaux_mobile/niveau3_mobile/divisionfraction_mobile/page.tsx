@@ -1,5 +1,3 @@
-'use client'; 
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -10,7 +8,6 @@ export default function DivisionFraction() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -52,9 +49,7 @@ export default function DivisionFraction() {
   };
 
   const handleValidation = () => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageAnswers = answers.slice(0, questionsPerPage);
     
     // Vérification si toutes les réponses sont remplies
     if (pageAnswers.includes(null)) {
@@ -67,10 +62,9 @@ export default function DivisionFraction() {
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      if (answer !== correctAnswers[index]) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[index] = null; // Réinitialiser uniquement les mauvaises réponses
       }
     });
 
@@ -100,13 +94,13 @@ export default function DivisionFraction() {
       {/* Questions de la page actuelle */}
       {!isValidated && (
         <div className="flex flex-col items-center gap-4">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+          {questions.slice(0, questionsPerPage).map(({ fraction1, fraction2 }, index) => (
             <div key={index} className="flex flex-row items-center gap-4 mb-4">
               <div className="w-48 text-center">{fraction1} × {fraction2}</div>
               <input
                 type="text"
                 className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                onChange={(e) => handleChange(index, e.target.value)}
               />
             </div>
           ))}
