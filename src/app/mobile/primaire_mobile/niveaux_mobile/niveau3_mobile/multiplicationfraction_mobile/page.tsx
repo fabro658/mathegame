@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -126,26 +126,30 @@ export default function MultiplicationFraction() {
         </p>
       )}
 
-      {/* Questions et réponses */}
+      {/* Questions et réponses en colonnes */}
       {!isValidated && (
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full max-w-3xl flex flex-row justify-between gap-4">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-            <div key={index} className="flex flex-col items-center gap-4 mb-4">
-              {/* Question */}
-              <button
-                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
-                disabled
-              >
-                {fraction1} × {fraction2}
-              </button>
+            <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
+              {/* Question à gauche */}
+              <div className="flex flex-col items-start w-1/2">
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full text-center"
+                  disabled
+                >
+                  {fraction1} × {fraction2}
+                </button>
+              </div>
 
-              {/* Réponse */}
-              <input
-                type="text"
-                className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                value={answers[currentPage * questionsPerPage + index] || ""}
-              />
+              {/* Réponse à droite */}
+              <div className="flex flex-col items-start w-1/2">
+                <input
+                  type="text"
+                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                />
+              </div>
             </div>
           ))}
         </div>

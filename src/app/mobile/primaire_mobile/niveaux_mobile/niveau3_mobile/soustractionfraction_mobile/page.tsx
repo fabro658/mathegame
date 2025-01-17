@@ -12,12 +12,14 @@ export default function SoustractionFractions() {
   const [message, setMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
     const divisor = gcd(numerator, denominator);
     return [numerator / divisor, denominator / divisor];
   };
 
+  // Générer les questions
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
@@ -44,12 +46,14 @@ export default function SoustractionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
+  // Gestion des changements de réponse
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
+  // Validation des réponses
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -82,6 +86,7 @@ export default function SoustractionFractions() {
     }
   };
 
+  // Passer à la page suivante
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
