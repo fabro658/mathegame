@@ -10,15 +10,17 @@ export default function AdditionFractions() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
-    const [currentPage, setCurrentPage] = useState(0);
+  const [messageColor, setMessageColor] = useState(""); // Nouvelle variable pour la couleur du message
+  const [currentPage, setCurrentPage] = useState(0);
 
+  // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
     const divisor = gcd(numerator, denominator);
     return [numerator / divisor, denominator / divisor];
   };
 
+  // Générer les questions
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
@@ -31,6 +33,7 @@ export default function AdditionFractions() {
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
 
+        // Addition des fractions
         const numeratorResult = numerator1 + numerator2;
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
@@ -44,12 +47,14 @@ export default function AdditionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
+  // Gestion des changements de réponse
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
   };
 
+  // Validation des réponses
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -57,7 +62,8 @@ export default function AdditionFractions() {
 
     // Vérifier si toutes les réponses sont remplies
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
-      setMessage("use client"); // Message pour indiquer qu'il manque des réponses
+      setMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setMessageColor("text-red-600"); // Définir la couleur du message en rouge
       return;
     }
 
@@ -77,16 +83,20 @@ export default function AdditionFractions() {
 
     if (allCorrect) {
       setMessage("Bravo ! Toutes vos réponses sont correctes.");
+      setMessageColor("text-green-600"); // Définir la couleur du message en vert
     } else {
       setMessage("Certaines réponses sont incorrectes. Corrigez-les.");
+      setMessageColor("text-yellow-600"); // Définir la couleur du message en jaune
     }
   };
 
+  // Passer à la page suivante
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false); // Réinitialiser la validation pour la page suivante
       setMessage(""); // Réinitialiser le message
+      setMessageColor(""); // Réinitialiser la couleur du message
     }
   };
 
