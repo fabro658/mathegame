@@ -152,6 +152,12 @@ export default function EquationsEquivalentes() {
                   selectedButtons[currentPage * questionsPerPage + index] === "true"
                     ? "bg-orange-500 text-white"
                     : "bg-blue-500 text-white"
+                } ${
+                  selectedButtons[currentPage * questionsPerPage + index] === "true" && feedbackMessage.includes("correctes")
+                    ? "bg-green-500"
+                    : selectedButtons[currentPage * questionsPerPage + index] === "true" && feedbackMessage.includes("incorrectes")
+                    ? "bg-red-500"
+                    : ""
                 }`}
               >
                 Vrai
@@ -162,6 +168,12 @@ export default function EquationsEquivalentes() {
                   selectedButtons[currentPage * questionsPerPage + index] === "false"
                     ? "bg-orange-500 text-white"
                     : "bg-blue-500 text-white"
+                } ${
+                  selectedButtons[currentPage * questionsPerPage + index] === "false" && feedbackMessage.includes("correctes")
+                    ? "bg-green-500"
+                    : selectedButtons[currentPage * questionsPerPage + index] === "false" && feedbackMessage.includes("incorrectes")
+                    ? "bg-red-500"
+                    : ""
                 }`}
               >
                 Faux
