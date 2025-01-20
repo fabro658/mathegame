@@ -45,6 +45,7 @@ export default function Division() {
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Reset feedback message on change
   };
 
   const handleValidation = () => {

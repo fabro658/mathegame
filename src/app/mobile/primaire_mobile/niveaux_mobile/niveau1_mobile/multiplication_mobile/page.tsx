@@ -50,7 +50,7 @@ export default function Multiplication() {
       const globalIndex = startIndex + index;
       if (answer !== correctAnswers[globalIndex]) {
         allCorrect = false;
-        newAnswers[globalIndex] = 0; // Effacer la réponse incorrecte (affiche 0)
+        newAnswers[globalIndex] = null; // Annuler les mauvaises réponses
       }
     });
 

@@ -109,9 +109,9 @@ export default function ComparerFractions() {
             );
           })}
           <div className="flex flex-col items-center mt-4">
-          <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Valider
-        </button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+              Valider
+            </button>
           </div>
         </div>
       )}

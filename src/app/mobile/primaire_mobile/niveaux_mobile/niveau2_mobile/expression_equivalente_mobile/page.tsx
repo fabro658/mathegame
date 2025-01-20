@@ -67,6 +67,7 @@ export default function EquationsEquivalentes() {
     const newSelectedButtons = [...selectedButtons];
     newSelectedButtons[currentPage * questionsPerPage + index] = isTrue ? "true" : "false";
     setSelectedButtons(newSelectedButtons);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = (): void => {

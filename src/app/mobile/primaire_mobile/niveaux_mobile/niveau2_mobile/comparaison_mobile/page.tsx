@@ -26,6 +26,7 @@ export default function ComparerEntiers() {
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {

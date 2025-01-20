@@ -19,9 +19,10 @@ export default function Soustraction() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
+    const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Reset feedback message on change
   };
 
   const handleValidation = () => {

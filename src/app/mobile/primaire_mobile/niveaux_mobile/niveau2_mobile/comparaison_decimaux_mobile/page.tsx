@@ -38,10 +38,11 @@ export default function ComparerDecimaux() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, value: string) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = value;
-    setAnswers(updatedAnswers);
+  const handleChange = (index: number, value: string) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = value;
+    setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
@@ -76,12 +77,12 @@ export default function ComparerDecimaux() {
         <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile">
           <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">
             Apprendre
-            </div>
+          </div>
         </Link>
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile">
           <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">
             Retour
-            </div>
+          </div>
         </Link>
       </div>
 
@@ -110,7 +111,7 @@ export default function ComparerDecimaux() {
             </div>
             <select
               value={answers[index] || ""}
-              onChange={(e) => handleAnswer(index, e.target.value)}
+              onChange={(e) => handleChange(index, e.target.value)}
               className="border border-gray-400 py-2 px-3 rounded text-center text-black text-lg w-24"
             >
               <option value="" disabled>
