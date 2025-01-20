@@ -92,11 +92,11 @@ export default function Multiplication() {
       <div className="flex flex-col items-center gap-4 w-full">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
           <div key={index} className="flex items-center justify-between gap-6 w-full max-w-md">
-            {/* Conteneur de la question */}
+     {/* Conteneur de la question */}
             <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
               {factor1} × {factor2}
             </div>
-            {/* Input pour la réponse */}
+      {/* Input pour la réponse */}
             <input
               type="text"
               inputMode="numeric"
