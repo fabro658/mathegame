@@ -16,11 +16,11 @@ export default function MobileHome() {
       <header className="absolute top-4 left-4">
         <div className="menu flex flex-col gap-4">
           <span className="menu-title font-bold text-md mb-2 text-white">Menu</span>
-          <Link href="/menu/apprendre" className="flex items-center gap-2 text-white hover:underline">
+          <Link href="/mobile/menu_mobile/apprendre_mobile" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/file.svg" alt="Apprendre Icon" width={16} height={16} />
             <span className="text-sm">Apprendre</span>
           </Link>
-          <Link href="/menu/options" className="flex items-center gap-2 text-white hover:underline">
+          <Link href="/mobile/menu_mobile/options_mobile" className="flex items-center gap-2 text-white hover:underline">
             <Image src="/globe.svg" alt="Option Icon" width={16} height={16} />
             <span className="text-sm">À propos</span>
           </Link>

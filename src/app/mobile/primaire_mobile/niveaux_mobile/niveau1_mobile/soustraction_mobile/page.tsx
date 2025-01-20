@@ -90,24 +90,23 @@ export default function Soustraction() {
 {/* Boutons Questions */}
 <div className="flex flex-col gap-6 w-full items-center">
   {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-    <div key={index} className="flex flex-col items-center gap-3">
-      <div className="flex items-center gap-3">
-        {/* Conteneur de la question */}
-        <div className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold text-3xl text-center">
-          {a} - {b} =
-        </div>
-        {/* Input pour la réponse */}
-        <input
-          type="text"
-          inputMode="numeric"
-          className="w-20 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg"
-          value={answers[currentPage * questionsPerPage + index] ?? ""}
-          onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-        />
+    <div key={index} className="flex justify-center items-center gap-6">
+      {/* Conteneur de la question */}
+      <div className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold text-3xl text-center flex-shrink-0">
+        {a} - {b} =
       </div>
+      {/* Input pour la réponse */}
+      <input
+        type="text"
+        inputMode="numeric"
+        className="w-24 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg flex-shrink-0"
+        value={answers[currentPage * questionsPerPage + index] ?? ""}
+        onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+      />
     </div>
   ))}
 </div>
+
 
       {/* Bouton de validation */}
       <div className="mt-6 flex justify-center w-full">
