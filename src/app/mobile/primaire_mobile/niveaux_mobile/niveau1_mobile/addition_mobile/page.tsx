@@ -90,7 +90,11 @@ export default function Addition() {
 {/* Boutons Questions */}
 <div className="flex flex-col gap-4 w-full">
   {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-    <div key={index} className="flex items-center justify-between gap-6 w-full max-w-md">
+    <div 
+      key={index} 
+      className="flex items-center justify-between gap-4 w-full max-w-md"
+      style={{ whiteSpace: "nowrap" }} // Empêche le retour à la ligne
+    >
       {/* Conteneur de la question */}
       <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
         {a} + {b} =
@@ -99,7 +103,7 @@ export default function Addition() {
       <input
         type="text"
         inputMode="numeric"
-        className="flex-1 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg"
+        className="w-16 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg" // Réduit la largeur de l'input
         value={answers[currentPage * questionsPerPage + index] ?? ""}
         onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
       />
