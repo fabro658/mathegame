@@ -1,4 +1,4 @@
-'use client'; // Marquer comme un composant côté client
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -10,7 +10,8 @@ export default function AdditionFractions() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState(""); // Nouvelle variable pour la couleur du message
+  const [messageColor, setMessageColor] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // Message de réussite
   const [currentPage, setCurrentPage] = useState(0);
 
   // Fonction pour simplifier les fractions
@@ -33,7 +34,6 @@ export default function AdditionFractions() {
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
 
-        // Addition des fractions
         const numeratorResult = numerator1 + numerator2;
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
 
@@ -60,10 +60,9 @@ export default function AdditionFractions() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérifier si toutes les réponses sont remplies
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       setMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setMessageColor("text-red-600"); // Définir la couleur du message en rouge
+      setMessageColor("text-red-600");
       return;
     }
 
@@ -74,7 +73,7 @@ export default function AdditionFractions() {
       const globalIndex = startIndex + index;
       if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -83,10 +82,12 @@ export default function AdditionFractions() {
 
     if (allCorrect) {
       setMessage("Bravo ! Toutes vos réponses sont correctes.");
-      setMessageColor("text-green-600"); // Définir la couleur du message en vert
+      setMessageColor("text-green-600");
+      setSuccessMessage("Félicitations, vous avez réussi cette série !");
     } else {
       setMessage("Certaines réponses sont incorrectes. Corrigez-les.");
-      setMessageColor("text-yellow-600"); // Définir la couleur du message en jaune
+      setMessageColor("text-yellow-600");
+      setSuccessMessage(""); // Réinitialiser le message de réussite en cas d'erreur
     }
   };
 
@@ -94,15 +95,15 @@ export default function AdditionFractions() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setMessage(""); // Réinitialiser le message
-      setMessageColor(""); // Réinitialiser la couleur du message
+      setIsValidated(false);
+      setMessage("");
+      setMessageColor("");
+      setSuccessMessage(""); // Réinitialiser le message de réussite pour la série suivante
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 text-black pt-16">
-      {/* Bouton "Apprendre" en haut à gauche */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
         className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -116,16 +117,19 @@ export default function AdditionFractions() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-4">Addition de Fractions</h1>
+      {successMessage && (
+        <p className="text-2xl font-bold mb-6 text-center text-green-600">
+          {successMessage}
+        </p>
+      )}
 
-      {/* Message de validation */}
       {message && (
         <p className={`text-xl font-bold mb-6 text-center ${messageColor}`}>
           {message}
         </p>
       )}
 
-      {/* Questions et réponses */}
       <div className="flex flex-col gap-4 w-full max-w-3xl">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center justify-center gap-4 mb-4">
@@ -145,9 +149,8 @@ export default function AdditionFractions() {
         ))}
       </div>
 
-      {/* Validation des réponses */}
       {!isValidated && (
-        <div className="mt-6 flex gap-4 justify-center">
+        <div className="mt-6">
           <button
             onClick={handleValidation}
             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
@@ -157,9 +160,8 @@ export default function AdditionFractions() {
         </div>
       )}
 
-      {/* Bouton pour passer à la page suivante */}
       {isValidated && (
-        <div className="mt-6 flex gap-4 justify-center">
+        <div className="mt-6">
           <button
             onClick={handleNextPage}
             className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
