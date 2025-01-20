@@ -92,20 +92,23 @@ export default function Soustraction() {
   {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
     <div key={index} className="flex items-center justify-between gap-6 w-full">
       {/* Conteneur de la question */}
-      <div className="flex-2 bg-blue-500 text-white py-4 px-12 rounded-lg font-bold text-3xl text-center">
+      <div 
+        className="flex-2 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold text-3xl text-center max-w-xs"
+      >
         {a} - {b} =
       </div>
       {/* Input pour la réponse */}
       <input
         type="text"
         inputMode="numeric"
-        className="flex-1 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg"
+        className="w-16 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg"
         value={answers[currentPage * questionsPerPage + index] ?? ""}
         onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
       />
     </div>
   ))}
 </div>
+
 
 
       {/* Bouton de validation */}
