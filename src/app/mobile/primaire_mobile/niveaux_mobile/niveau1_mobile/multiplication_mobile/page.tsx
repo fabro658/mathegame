@@ -29,6 +29,7 @@ export default function Multiplication() {
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Reset feedback message on change
   };
 
   const handleValidation = () => {
@@ -58,7 +59,7 @@ export default function Multiplication() {
     if (allCorrect) {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
       setFeedbackClass("text-green-500");
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
         setCurrentPage(currentPage + 1);
       } else {
         setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
@@ -89,24 +90,23 @@ export default function Multiplication() {
 
       {/* Questions et réponses */}
       <div className="flex flex-col items-center gap-4 w-full">
-  {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-    <div key={index} className="flex items-center justify-between gap-6 w-full max-w-md">
-      {/* Conteneur de la question */}
-      <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
-        {factor1} × {factor2}
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
+          <div key={index} className="flex items-center justify-between gap-6 w-full max-w-md">
+            {/* Conteneur de la question */}
+            <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
+              {factor1} × {factor2}
+            </div>
+            {/* Input pour la réponse */}
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
       </div>
-      {/* Input pour la réponse */}
-      <input
-        type="text"
-        inputMode="numeric"
-        className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
-        value={answers[currentPage * questionsPerPage + index] ?? ""}
-        onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-      />
-    </div>
-  ))}
-</div>
-
 
       {/* Bouton de validation */}
       <div className="mt-6 flex justify-center w-full">
