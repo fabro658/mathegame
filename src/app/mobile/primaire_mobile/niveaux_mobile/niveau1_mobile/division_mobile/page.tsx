@@ -90,7 +90,8 @@ export default function Division() {
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
     {/* Conteneur pour les boutons */}
     <div className="flex justify-between w-full mb-6">
-      <Link href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+      <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
+      className="bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
       <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" 

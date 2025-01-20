@@ -70,8 +70,8 @@ export default function Soustraction() {
       {/* Conteneur pour les boutons */}
       <div className="flex justify-between w-full mb-6">
       <Link 
-  href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" 
-  className="bg-black text-white py-3 px-8 rounded font-bold">
+       href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
+      className="bg-black text-white py-3 px-8 rounded font-bold">
   Apprendre
 </Link>
 <Link 
