@@ -87,15 +87,15 @@ export default function Addition() {
         </p>
       )}
 
-      {/* Boutons Questions */}
+{/* Boutons Questions */}
 <div className="flex flex-col gap-6 w-full max-w-lg">
   {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
     <div key={index} className="flex items-center justify-between gap-6 w-full">
-     {/* Conteneur de la question */}
-      <div className="flex-1 bg-blue-500 text-white py-4 px-8 rounded-lg font-bold text-3xl text-center">
+      {/* Conteneur de la question */}
+      <div className="flex-2 bg-blue-500 text-white py-4 px-12 rounded-lg font-bold text-3xl text-center">
         {a} + {b} =
       </div>
-     {/* Input pour la réponse */}
+      {/* Input pour la réponse */}
       <input
         type="text"
         inputMode="numeric"

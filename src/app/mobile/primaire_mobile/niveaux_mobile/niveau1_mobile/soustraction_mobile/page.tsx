@@ -87,13 +87,15 @@ export default function Soustraction() {
       {/* Feedback */}
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>{feedbackMessage}</p>}
 
-      {/* Questions et réponses */}
+{/* Boutons Questions */}
 <div className="flex flex-col gap-6 w-full max-w-lg">
   {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
     <div key={index} className="flex items-center justify-between gap-6 w-full">
-      <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
+      {/* Conteneur de la question */}
+      <div className="flex-2 bg-blue-500 text-white py-4 px-12 rounded-lg font-bold text-3xl text-center">
         {a} - {b} =
       </div>
+      {/* Input pour la réponse */}
       <input
         type="text"
         inputMode="numeric"
