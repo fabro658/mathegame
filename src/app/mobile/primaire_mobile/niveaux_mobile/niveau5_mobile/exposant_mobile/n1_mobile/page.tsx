@@ -100,6 +100,11 @@ export default function ExponentsPractice() {
       {/* Titre */}
       <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 1</h1>
 
+      {/* Message de validation */}
+      {validationMessage && (
+        <div className={`mb-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      )}
+
       {/* Grille de questions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
@@ -118,12 +123,7 @@ export default function ExponentsPractice() {
           ))}
       </div>
 
-      {/* Message de validation */}
-      {validationMessage && (
-        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
-      )}
-
-<div className="mt-6 flex justify-center w-full">
+      <div className="mt-6 flex justify-center w-full">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
         </button>

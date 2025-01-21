@@ -92,8 +92,6 @@ export default function ExponentsPractice() {
     }
   };
 
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
@@ -111,6 +109,11 @@ export default function ExponentsPractice() {
       {/* Titre */}
       <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 2</h1>
 
+      {/* Message de validation */}
+      {validationMessage && (
+        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      )}
+
       {/* Grille de questions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
@@ -127,16 +130,6 @@ export default function ExponentsPractice() {
               />
             </div>
           ))}
-      </div>
-
-      {/* Message de validation */}
-      {validationMessage && (
-        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
-      )}
-
-      {/* Afficher le nombre de réponses complètes */}
-      <div className="mt-4 text-lg">
-        {completedAnswers} réponses complètes
       </div>
 
       <div className="mt-6 flex justify-center w-full">
