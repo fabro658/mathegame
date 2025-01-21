@@ -123,7 +123,7 @@ export default function EquationsEquivalentes() {
       </div>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold mb-6 text-center">Questions sur les équations équivalentes</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Les équations équivalentes</h1>
 
       {/* Feedback */}
       {feedbackMessage && (

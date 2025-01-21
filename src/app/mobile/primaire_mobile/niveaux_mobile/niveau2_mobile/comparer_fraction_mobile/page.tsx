@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Mark the file as a client component
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -11,12 +11,13 @@ type Question = {
 
 export default function ComparerFractions() {
   const totalQuestions = 30;
-  const questionsPerPage = 3;
+  const questionsPerPage = 6; // Display 6 questions per page
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions
   const generateQuestions = (): Question[] => {
@@ -48,7 +49,7 @@ export default function ComparerFractions() {
   };
 
   const handleValidation = () => {
-    const pageAnswers = answers.slice(0, questionsPerPage);
+    const pageAnswers = answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
 
     if (pageAnswers.includes(null)) {
       alert("Veuillez répondre à toutes les questions avant de valider.");
@@ -56,7 +57,7 @@ export default function ComparerFractions() {
     }
 
     const isCorrect = pageAnswers.every((answer, index) => {
-      const questionIndex = index;
+      const questionIndex = currentPage * questionsPerPage + index;
       return questions[questionIndex] && answer === questions[questionIndex].correctAnswer;
     });
 
@@ -64,7 +65,7 @@ export default function ComparerFractions() {
     setHasPassed(isCorrect);
   };
 
-  const currentQuestions = questions.slice(0, questionsPerPage);
+  const currentQuestions = questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -86,16 +87,16 @@ export default function ComparerFractions() {
       {!isValidated && (
         <div className="flex flex-col items-center justify-center">
           {currentQuestions.map((question, localIndex) => {
-            const globalIndex = localIndex;
+            const globalIndex = currentPage * questionsPerPage + localIndex;
             return (
-              <div key={globalIndex} className="bg-white p-4 rounded shadow-md text-center mb-4">
-                <p className="text-lg font-bold mb-4">
+              <div key={globalIndex} className="bg-white p-6 rounded shadow-md text-center mb-6">
+                <p className="text-xl font-bold mb-4">
                   {`${question.fractions[0]} ? ${question.fractions[1]}`}
                 </p>
                 <select
                   value={answers[globalIndex] || ""}
                   onChange={(e) => handleAnswer(globalIndex, e.target.value)}
-                  className="py-2 px-4 rounded border-gray-300"
+                  className="py-3 px-6 rounded border-gray-300 text-lg"
                 >
                   <option value="" disabled>Choisissez</option>
                   <option value="<">&lt;</option>
@@ -103,7 +104,7 @@ export default function ComparerFractions() {
                   <option value="=">=</option>
                 </select>
                 {answers[globalIndex] === null && (
-                  <p className="text-red-500 text-sm">Réponse manquante</p>
+                  <p className="text-red-500 text-sm mt-2">Réponse manquante</p>
                 )}
               </div>
             );
