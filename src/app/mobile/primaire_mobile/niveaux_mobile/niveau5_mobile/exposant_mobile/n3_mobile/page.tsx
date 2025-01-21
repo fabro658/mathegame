@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -95,7 +93,6 @@ export default function ExponentsLevel3() {
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">

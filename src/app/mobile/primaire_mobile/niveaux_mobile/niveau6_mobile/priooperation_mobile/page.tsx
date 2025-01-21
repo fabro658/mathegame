@@ -8,8 +8,6 @@ export default function PrioOperation() {
   const questionsPerPage = 6;
 
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<string[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState("");
@@ -97,22 +95,16 @@ export default function PrioOperation() {
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    setFeedbackMessage(allCorrect ? "Bravo ! Toutes les réponses sont correctes !" : "Certaines réponses sont incorrectes. Réessayez !");
 
     if (allCorrect) {
-      setFeedbackMessage("Bravo ! Toutes les réponses sont correctes !");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
-          setIsValidated(false);
-          setHasPassed(false);
         }, 1500);
       } else {
         setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
       }
-    } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Réessayez !");
     }
   };
 
