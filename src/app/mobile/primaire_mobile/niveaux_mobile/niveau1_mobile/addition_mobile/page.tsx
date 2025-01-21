@@ -107,9 +107,6 @@ export default function Addition() {
   ))}
 </div>
 
-
-
-
       {/* Validate Button */}
       <div className="mt-6 flex justify-center w-full">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">

@@ -8,11 +8,8 @@ export default function SoustractionFractions() {
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
-  const [isValidated, setIsValidated] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState(""); // Nouvelle variable pour la couleur du message
-  const [successMessage, setSuccessMessage] = useState(""); // Message de réussite
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
@@ -49,6 +46,7 @@ export default function SoustractionFractions() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
@@ -57,8 +55,7 @@ export default function SoustractionFractions() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
-      setMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setMessageColor("text-red-600");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -74,26 +71,16 @@ export default function SoustractionFractions() {
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
 
     if (allCorrect) {
-      setMessage("Bravo ! Toutes vos réponses sont correctes.");
-      setMessageColor("text-green-600");
-      setSuccessMessage("Félicitations pour cette série réussie !");
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+      }
     } else {
-      setMessage("Certaines réponses sont incorrectes. Corrigez-les.");
-      setMessageColor("text-yellow-600");
-      setSuccessMessage("");
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setMessage("");
-      setMessageColor("");
-      setSuccessMessage(""); // Réinitialiser le message de réussite
+      setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
     }
   };
 
@@ -114,15 +101,9 @@ export default function SoustractionFractions() {
 
       <h1 className="text-4xl font-bold mb-2 text-center">Soustraction de Fractions</h1>
 
-      {/* Message de réussite */}
-      {successMessage && (
-        <p className="text-lg font-bold text-green-600 mb-6 text-center">{successMessage}</p>
-      )}
-
-      {/* Message de validation */}
-      {message && (
-        <p className={`text-xl font-bold mb-6 text-center ${messageColor}`}>
-          {message}
+      {feedbackMessage && (
+        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
+          {feedbackMessage}
         </p>
       )}
 
@@ -145,27 +126,12 @@ export default function SoustractionFractions() {
         ))}
       </div>
 
-      {!isValidated && (
-        <div className="mt-6">
-          <button
-            onClick={handleValidation}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Valider les réponses
-          </button>
-        </div>
-      )}
-
-      {isValidated && (
-        <div className="mt-6">
-          <button
-            onClick={handleNextPage}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Passer à la série suivante
-          </button>
-        </div>
-      )}
+      {/* Validate Button */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

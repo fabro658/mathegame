@@ -8,9 +8,8 @@ export default function MultiplicationFraction() {
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
-  const [isValidated, setIsValidated] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de retour
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de retour
 
   // Fonction pour simplifier une fraction
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -43,17 +42,11 @@ export default function MultiplicationFraction() {
     setQuestions(generateQuestions());
   }, []); // Générer les questions une seule fois au montage initial
 
-  const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
-
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-
-    // Effacer le message d'erreur si la réponse est modifiée
-    if (newAnswers.includes(null)) {
-      setFeedbackMessage("");
-    }
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
@@ -62,7 +55,7 @@ export default function MultiplicationFraction() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     // Vérification si toutes les réponses sont remplies
-    if (pageAnswers.includes(null)) {
+    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
@@ -73,27 +66,23 @@ export default function MultiplicationFraction() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
 
     if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses sont correctes. Passez à la série suivante !");
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+      }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false); // Réinitialiser la validation pour la page suivante
-      setFeedbackMessage(""); // Réinitialiser le message
     }
   };
 
@@ -119,7 +108,7 @@ export default function MultiplicationFraction() {
       {feedbackMessage && (
         <p
           className={`text-xl font-bold text-center mb-6 ${
-            feedbackMessage.includes("incorrectes") ? "text-red-600" : "text-green-600"
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"
           }`}
         >
           {feedbackMessage}
@@ -127,57 +116,38 @@ export default function MultiplicationFraction() {
       )}
 
       {/* Questions et réponses en colonnes */}
-      {!isValidated && (
-        <div className="w-full max-w-3xl flex flex-col gap-4">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-            <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
-              {/* Question à gauche */}
-              <div className="flex flex-col items-start w-1/2">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full text-center"
-                  disabled
-                >
-                  {fraction1} × {fraction2}
-                </button>
-              </div>
-
-              {/* Réponse à droite */}
-              <div className="flex flex-col items-start w-1/2">
-                <input
-                  type="text"
-                  className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                />
-              </div>
+      <div className="w-full max-w-3xl flex flex-col gap-4">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+          <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
+            {/* Question à gauche */}
+            <div className="flex flex-col items-start w-1/2">
+              <button
+                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full text-center"
+                disabled
+              >
+                {fraction1} × {fraction2}
+              </button>
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* Validation des réponses */}
-      {isValidated && (
-        <div className="mt-6">
-          <button
-            onClick={handleNextPage}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Passer à la série suivante
-          </button>
-        </div>
-      )}
+            {/* Réponse à droite */}
+            <div className="flex flex-col items-start w-1/2">
+              <input
+                type="text"
+                className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                value={answers[currentPage * questionsPerPage + index] || ""}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
 
-      {/* Boutons de validation */}
-      {!isValidated && (
-        <div className="mt-6 flex gap-4">
-          <button
-            onClick={handleValidation}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Valider les réponses
-          </button>
-        </div>
-      )}
+      {/* Validate Button */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -8,11 +8,8 @@ export default function AdditionFractions() {
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
-  const [isValidated, setIsValidated] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // Message de réussite
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -52,6 +49,7 @@ export default function AdditionFractions() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   // Validation des réponses
@@ -61,8 +59,7 @@ export default function AdditionFractions() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
-      setMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setMessageColor("text-red-600");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -78,27 +75,16 @@ export default function AdditionFractions() {
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
 
     if (allCorrect) {
-      setMessage("Bravo ! Toutes vos réponses sont correctes.");
-      setMessageColor("text-green-600");
-      setSuccessMessage("Félicitations, vous avez réussi cette série !");
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+      }
     } else {
-      setMessage("Certaines réponses sont incorrectes. Corrigez-les.");
-      setMessageColor("text-yellow-600");
-      setSuccessMessage(""); // Réinitialiser le message de réussite en cas d'erreur
-    }
-  };
-
-  // Passer à la page suivante
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setMessage("");
-      setMessageColor("");
-      setSuccessMessage(""); // Réinitialiser le message de réussite pour la série suivante
+      setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
     }
   };
 
@@ -118,15 +104,10 @@ export default function AdditionFractions() {
       </Link>
 
       <h1 className="text-4xl font-bold mb-4">Addition de Fractions</h1>
-      {successMessage && (
-        <p className="text-2xl font-bold mb-6 text-center text-green-600">
-          {successMessage}
-        </p>
-      )}
 
-      {message && (
-        <p className={`text-xl font-bold mb-6 text-center ${messageColor}`}>
-          {message}
+      {feedbackMessage && (
+        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
+          {feedbackMessage}
         </p>
       )}
 
@@ -149,27 +130,11 @@ export default function AdditionFractions() {
         ))}
       </div>
 
-      {!isValidated && (
-        <div className="mt-6">
-          <button
-            onClick={handleValidation}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Valider les réponses
-          </button>
-        </div>
-      )}
-
-      {isValidated && (
-        <div className="mt-6">
-          <button
-            onClick={handleNextPage}
-            className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          >
-            Passer à la série suivante
-          </button>
-        </div>
-      )}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }
