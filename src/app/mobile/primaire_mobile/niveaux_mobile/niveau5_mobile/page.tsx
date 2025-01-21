@@ -29,7 +29,7 @@ export default function Page() {
           Deuxième niveau
         </a>
         <a
-          href="/mobile/primaire_mobile/niveau_mobilex/niveau5_mobile/exposant_mobile/n3_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n3_mobile"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-4/5"
         >
           Troisième niveau

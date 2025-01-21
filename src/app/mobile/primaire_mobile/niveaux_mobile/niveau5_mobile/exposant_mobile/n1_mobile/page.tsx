@@ -44,6 +44,7 @@ export default function ExponentsPractice() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   // Validation des réponses
@@ -84,16 +85,20 @@ export default function ExponentsPractice() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran */}
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+      {/* Boutons de navigation */}
+      <div className="absolute top-4 left-4">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/exposant_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 1</h1>
 
       {/* Grille de questions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -118,22 +123,8 @@ export default function ExponentsPractice() {
         <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
       )}
 
-      {/* Bouton "Apprendre" */}
-      <div className="absolute top-4 left-4">
-        <Link
-          href="/mobile/menu_mobile/apprendre_mobile/exposant_mobile"
-          className="bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
-      </div>
-
-      {/* Validation des réponses */}
-      <div className="mt-6 w-full sm:w-auto">
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
+<div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
         </button>
       </div>

@@ -17,7 +17,7 @@ export default function Page() {
       <div className="flex flex-col items-center justify-center gap-8">
         {/* Le bouton centré */}
         <a
-          href="/mobile/primaire_mobile/niveau_mobile/niveau6_mobile/priooperation_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile/priooperation_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] max-w-[500px]"
         >
           Priorité d&#39;opération

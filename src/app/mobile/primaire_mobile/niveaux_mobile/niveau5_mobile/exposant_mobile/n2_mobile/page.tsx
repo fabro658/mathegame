@@ -5,13 +5,13 @@ import Link from "next/link";
 
 export default function ExponentsPractice() {
   const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 6; // Questions affichées par vague
+  const questionsPerPage = 6; // Questions affichées par page
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [message, setMessage] = useState<string | null>(null);
-  const [messageColor, setMessageColor] = useState<string>('text-black');
+  const [validationMessage, setValidationMessage] = useState<string>("");
+  const [messageColor, setMessageColor] = useState<string>("");
 
   // Génération des questions
   useEffect(() => {
@@ -53,6 +53,7 @@ export default function ExponentsPractice() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   // Validation des réponses
@@ -62,56 +63,56 @@ export default function ExponentsPractice() {
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      setMessage("Veuillez remplir toutes les réponses avant de valider.");
+    if (pageAnswers.some((answer) => !answer)) {
+      setValidationMessage("Veuillez remplir toutes les réponses avant de valider.");
       setMessageColor("text-red-500");
       return;
     }
 
-    let allCorrect = true;
-    const updatedAnswers = [...answers];
-
-    pageAnswers.forEach((answer, index) => {
-      if (answer !== pageCorrectAnswers[index]) {
-        updatedAnswers[startIndex + index] = null;
-        allCorrect = false;
-      }
-    });
-
-    setAnswers(updatedAnswers);
-
-    if (allCorrect) {
-      setMessage("Toutes les réponses sont correctes !");
+    const allCorrect = pageAnswers.every((answer, idx) => answer === pageCorrectAnswers[idx]);
+    if (!allCorrect) {
+      const updatedAnswers = [...answers];
+      pageAnswers.forEach((answer, idx) => {
+        if (answer !== pageCorrectAnswers[idx]) {
+          updatedAnswers[startIndex + idx] = null; // Réinitialise les réponses incorrectes
+        }
+      });
+      setAnswers(updatedAnswers);
+      setValidationMessage("Certaines réponses sont incorrectes.");
+      setMessageColor("text-red-500");
+    } else {
+      setValidationMessage("Toutes les réponses sont correctes !");
       setMessageColor("text-green-500");
-      if (currentPage < totalQuestions / questionsPerPage - 1) {
+      // Passe automatiquement à la page suivante si tout est correct
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
         }, 1500);
       }
-    } else {
-      setMessage("Certaines réponses sont incorrectes.");
-      setMessageColor("text-red-500");
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
 
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Apprendre" en haut à gauche */}
-      <Link
-        href="/menu/apprendre/exposant"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
+      <div className="absolute top-4 left-4">
+        <Link href="/menu/apprendre/exposant" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
+      {/* Titre */}
+      <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 2</h1>
 
-      {/* Questions en colonne */}
-      <div className="flex flex-col gap-6 w-full">
+      {/* Grille de questions */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => (
@@ -129,20 +130,20 @@ export default function ExponentsPractice() {
       </div>
 
       {/* Message de validation */}
-      {message && <div className={`mt-6 text-xl font-bold ${messageColor}`}>{message}</div>}
+      {validationMessage && (
+        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      )}
 
       {/* Afficher le nombre de réponses complètes */}
       <div className="mt-4 text-lg">
         {completedAnswers} réponses complètes
       </div>
 
-      {/* Ajouter un bouton de validation */}
-      <button
-        onClick={handleValidation}
-        className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold hover:bg-blue-600"
-      >
-        Valider les réponses
-      </button>
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

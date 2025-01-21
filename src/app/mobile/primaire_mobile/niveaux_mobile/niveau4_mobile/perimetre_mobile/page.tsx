@@ -8,9 +8,8 @@ export default function Perimetre() {
   const questionsPerPage = 3;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   useEffect(() => {
     const generateQuestions = () => {
@@ -61,6 +60,7 @@ export default function Perimetre() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = (): void => {
@@ -72,7 +72,7 @@ export default function Perimetre() {
     const allAnswersFilled = pageAnswers.every(answer => answer && answer.trim() !== "");
 
     if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -91,14 +91,23 @@ export default function Perimetre() {
     });
 
     setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+
+    if (allCorrect) {
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/mobile/menu_mobile/apprendre_mobile"
+        href="/mobile/menu_mobile/apprendre_mobile/perimetre_mobile"
         className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
@@ -112,50 +121,33 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {/* Affichage des questions */}
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-4">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                   type="text"
-                   inputMode="numeric"
-                   className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-                   value={answers[currentPage * questionsPerPage + index] || ""}
-                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
-            </button>
-          </div>
-        </>
+      {feedbackMessage && (
+        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
+          {feedbackMessage}
+        </p>
       )}
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold" onClick={() => setCurrentPage(currentPage + 1)}>
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      {/* Affichage des questions */}
+      <div className="flex flex-col gap-4">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+          <div key={index} className="flex flex-col items-start gap-2">
+            <div className="font-bold text-black">{questionText}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex gap-4">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

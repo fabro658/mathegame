@@ -10,6 +10,8 @@ export default function ExponentsLevel3() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
+  const [validationMessage, setValidationMessage] = useState<string>("");
+  const [messageColor, setMessageColor] = useState<string>("");
 
   // Génération des questions pour le niveau 3
   useEffect(() => {
@@ -49,6 +51,7 @@ export default function ExponentsLevel3() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = (): void => {
@@ -60,7 +63,8 @@ export default function ExponentsLevel3() {
     const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
 
     if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+      setValidationMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setMessageColor("text-red-500");
       return;
     }
 
@@ -76,22 +80,17 @@ export default function ExponentsLevel3() {
 
     setAnswers(updatedAnswers);
 
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-      }, 1500);
-    }
-  };
-
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePreviousPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+    if (allCorrect) {
+      setValidationMessage("Toutes les réponses sont correctes !");
+      setMessageColor("text-green-500");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+        }, 1500);
+      }
+    } else {
+      setValidationMessage("Certaines réponses sont incorrectes.");
+      setMessageColor("text-red-500");
     }
   };
 
@@ -100,36 +99,22 @@ export default function ExponentsLevel3() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran et à droite */}
-      <Link
-        href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
-      >
-        Retour
-      </Link>
-
-      <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+      {/* Boutons de navigation */}
+      <div className="absolute top-4 left-4">
+        <Link href="/menu/apprendre/exposant" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link href="/primaire/niveaux/niveau5" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 3</h1>
+      {/* Titre */}
+      <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 3</h1>
 
+      {/* Grille de questions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
@@ -147,36 +132,20 @@ export default function ExponentsLevel3() {
           ))}
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
+      {/* Message de validation */}
+      {validationMessage && (
+        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      )}
+
+      {/* Afficher le nombre de réponses complètes */}
+      <div className="mt-4 text-lg">
+        {completedAnswers} réponses complètes
       </div>
 
-      <div className="mt-6 w-full sm:hidden">
-        <Link
-          href="/menu/apprendre/exposant"
-          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
       </div>
     </div>
   );

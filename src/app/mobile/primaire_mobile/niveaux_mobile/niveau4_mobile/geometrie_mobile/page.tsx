@@ -20,7 +20,7 @@ const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
-  const [message, setMessage] = useState<string | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -28,6 +28,7 @@ const ShapesPracticePage = () => {
 
     updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
@@ -43,11 +44,11 @@ const ShapesPracticePage = () => {
 
     if (errors.length === 0) {
       setErrorIndices([]);
-      setMessage("Toutes les réponses sont correctes ! Passons à la série suivante.");
+      setFeedbackMessage("Toutes les réponses sont correctes ! Passons à la série suivante.");
       setTimeout(() => handleNext(), 2000); // Avance après 2 secondes
     } else {
       setErrorIndices(errors);
-      setMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
+      setFeedbackMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
       const updatedAnswers = [...answers];
       errors.forEach((idx) => {
         updatedAnswers[idx] = null;
@@ -58,7 +59,7 @@ const ShapesPracticePage = () => {
 
   const handleNext = () => {
     setCurrentShapes((prev) => (prev + 3) % shapes.length);
-    setMessage(null); // Réinitialiser le message
+    setFeedbackMessage(null); // Réinitialiser le message
   };
 
   const drawShape = (sides: number) => {
@@ -91,30 +92,28 @@ const ShapesPracticePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+      <div className="absolute top-4 left-4">
+        <Link href="/mobile/menu_mobile/apprendre_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
-      <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-16">Associer les Noms aux Formes</h1>
 
-      {message && (
-        <div className={`text-lg font-bold ${message.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
-          {message}
+      {feedbackMessage && (
+        <div className={`text-lg font-bold ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
+          {feedbackMessage}
         </div>
       )}
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
-        <div className="flex flex-col items-start mb-12">
+        <div className="flex flex-row items-center justify-center mb-12 gap-4">
           {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
             <div
               key={idx}
