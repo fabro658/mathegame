@@ -83,12 +83,13 @@ export default function ExponentsPractice() {
     } else {
       setValidationMessage("Toutes les réponses sont correctes !");
       setMessageColor("text-green-500");
-      // Passe automatiquement à la page suivante si tout est correct
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setTimeout(() => {
+      // Réinitialise les réponses et passe automatiquement à la page suivante si tout est correct
+      setTimeout(() => {
+        setAnswers(Array(totalQuestions).fill(null));
+        if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
           setCurrentPage(currentPage + 1);
-        }, 1500);
-      }
+        }
+      }, 1500);
     }
   };
 
