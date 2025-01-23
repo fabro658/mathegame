@@ -10,8 +10,7 @@ export default function ExponentsPractice() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [validationMessage, setValidationMessage] = useState<string>("");
-  const [messageColor, setMessageColor] = useState<string>("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
   // Génération des questions
   useEffect(() => {
@@ -53,7 +52,7 @@ export default function ExponentsPractice() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   // Validation des réponses
@@ -63,33 +62,31 @@ export default function ExponentsPractice() {
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.some((answer) => !answer)) {
-      setValidationMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setMessageColor("text-red-500");
+    if (pageAnswers.includes(null)) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const allCorrect = pageAnswers.every((answer, idx) => answer === pageCorrectAnswers[idx]);
-    if (!allCorrect) {
-      const updatedAnswers = [...answers];
-      pageAnswers.forEach((answer, idx) => {
-        if (answer !== pageCorrectAnswers[idx]) {
-          updatedAnswers[startIndex + idx] = null; // Réinitialise les réponses incorrectes
-        }
-      });
-      setAnswers(updatedAnswers);
-      setValidationMessage("Certaines réponses sont incorrectes.");
-      setMessageColor("text-red-500");
+    let hasErrors = false;
+    const newAnswers = [...answers];
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== pageCorrectAnswers[index]) {
+        newAnswers[globalIndex] = null;
+        hasErrors = true;
+      }
+    });
+
+    setAnswers(newAnswers);
+
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
     } else {
-      setValidationMessage("Toutes les réponses sont correctes !");
-      setMessageColor("text-green-500");
-      // Réinitialise les réponses et passe automatiquement à la page suivante si tout est correct
-      setTimeout(() => {
-        setAnswers(Array(totalQuestions).fill(null));
-        if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-          setCurrentPage(currentPage + 1);
-        }
-      }, 1500);
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
@@ -111,8 +108,10 @@ export default function ExponentsPractice() {
       <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 2</h1>
 
       {/* Message de validation */}
-      {validationMessage && (
-        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      {feedbackMessage && (
+        <div className={`mt-4 ${feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-lg font-bold`}>
+          {feedbackMessage}
+        </div>
       )}
 
       {/* Grille de questions */}
