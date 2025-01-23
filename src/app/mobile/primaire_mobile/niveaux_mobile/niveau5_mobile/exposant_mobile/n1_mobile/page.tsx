@@ -42,7 +42,8 @@ export default function ExponentsPractice() {
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    const parsedValue = parseFloat(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue.toString();
     setAnswers(newAnswers);
     setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
