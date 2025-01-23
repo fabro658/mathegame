@@ -10,8 +10,8 @@ export default function ExponentsLevel3() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [validationMessage, setValidationMessage] = useState<string>("");
-  const [messageColor, setMessageColor] = useState<string>("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
+  const [messageColor, setMessageColor] = useState<string>(""); // Ajout de setMessageColor
 
   // Génération des questions pour le niveau 3
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function ExponentsLevel3() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setValidationMessage(""); // Réinitialiser le message de feedback lors d'un changement
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = (): void => {
@@ -63,7 +63,7 @@ export default function ExponentsLevel3() {
     const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
 
     if (!allAnswersFilled) {
-      setValidationMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       setMessageColor("text-red-500");
       return;
     }
@@ -81,7 +81,7 @@ export default function ExponentsLevel3() {
     setAnswers(updatedAnswers);
 
     if (allCorrect) {
-      setValidationMessage("Toutes les réponses sont correctes !");
+      setFeedbackMessage("Toutes les réponses sont correctes !");
       setMessageColor("text-green-500");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setTimeout(() => {
@@ -89,7 +89,7 @@ export default function ExponentsLevel3() {
         }, 1500);
       }
     } else {
-      setValidationMessage("Certaines réponses sont incorrectes.");
+      setFeedbackMessage("Certaines réponses sont incorrectes.");
       setMessageColor("text-red-500");
     }
   };
@@ -112,8 +112,8 @@ export default function ExponentsLevel3() {
       <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 3</h1>
 
       {/* Message de validation */}
-      {validationMessage && (
-        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{validationMessage}</div>
+      {feedbackMessage && (
+        <div className={`mt-4 ${messageColor} text-lg font-bold`}>{feedbackMessage}</div>
       )}
 
       {/* Grille de questions */}
