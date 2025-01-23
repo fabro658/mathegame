@@ -17,19 +17,21 @@ export default function Division() {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       let numerator: number, denominator: number;
 
-      // Les premières questions avec des multiples simples
+      // Génération des questions avec des résultats entiers
       if (index < 10) {
-        denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
-        numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
-      } else if (index < 20) {
-        numerator = Math.floor(Math.random() * 100) + 1;
+        // Dénominateur entre 1 et 10
         denominator = Math.floor(Math.random() * 10) + 1;
+        // Numérateur est un multiple exact du dénominateur
+        numerator = denominator * (Math.floor(Math.random() * 10) + 1);
+      } else if (index < 20) {
+        denominator = Math.floor(Math.random() * 20) + 1; // Dénominateur entre 1 et 20
+        numerator = denominator * (Math.floor(Math.random() * 10) + 1);
       } else if (index < 30) {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 20) + 1;
+        denominator = Math.floor(Math.random() * 50) + 1; // Dénominateur entre 1 et 50
+        numerator = denominator * (Math.floor(Math.random() * 5) + 1);
       } else {
-        numerator = Math.floor(Math.random() * 100) + 1;
-        denominator = Math.floor(Math.random() * 50) + 1;
+        denominator = Math.floor(Math.random() * 100) + 1; // Dénominateur entre 1 et 100
+        numerator = denominator * (Math.floor(Math.random() * 3) + 1);
       }
 
       return [numerator, denominator];
@@ -88,49 +90,48 @@ export default function Division() {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-    {/* Conteneur pour les boutons */}
-    <div className="flex justify-between w-full mb-6">
-      <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
-      className="bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" 
-      className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-        Retour
-      </Link>
-    </div>
-  
-    {/* Titre */}
-    <h1 className="text-4xl font-bold mb-6">Division</h1>
-  
-    {/* Feedback */}
-    {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
-  
-    {/* Questions et réponses */}
-    <div className="flex flex-col items-center gap-4 w-full">
-      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
-        <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
-          <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
-            {numerator} ÷ {denominator}
+      {/* Conteneur pour les boutons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
+          className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile" 
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
+
+      {/* Titre */}
+      <h1 className="text-4xl font-bold mb-6">Division</h1>
+
+      {/* Feedback */}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
+
+      {/* Questions et réponses */}
+      <div className="flex flex-col items-center gap-4 w-full">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
+          <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
+              {numerator} ÷ {denominator}
+            </div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
           </div>
-          <input
-            type="text"
-            inputMode="numeric"
-            className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
-            value={answers[currentPage * questionsPerPage + index] ?? ""}
-            onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-          />
-        </div>
-      ))}
-    </div>
-  
-    {/* Validation */}
-    <div className="mt-6 flex justify-center w-full">
+        ))}
+      </div>
+
+      {/* Validation */}
+      <div className="mt-6 flex justify-center w-full">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
           Valider les réponses
         </button>
       </div>
-  </div>
-  
+    </div>
   );
 }
