@@ -6,103 +6,108 @@ import Link from "next/link";
 export default function MultiplicationFraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const totalPages = Math.ceil(totalQuestions / questionsPerPage);
-
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null)); // État des réponses
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]); // État des questions
+  const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de retour
 
   // Fonction pour simplifier une fraction
-  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
+  const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
+    const divisor = gcd(numerator, denominator);
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Génération des questions
-  const generateQuestions = () =>
-    Array.from({ length: totalQuestions }, () => {
-      const [a1, b1, a2, b2] = Array(4).fill(null).map(() => Math.floor(Math.random() * 9) + 1);
-
-      const numerator = a1 * a2;
-      const denominator = b1 * b2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numerator, denominator);
-
-      return {
-        fraction1: `${a1}/${b1}`,
-        fraction2: `${a2}/${b2}`,
-        correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
-      };
-    });
-
+  // Génération des questions et des réponses correctes, seulement une fois
   useEffect(() => {
-    setQuestions(generateQuestions());
-  }, []);
+    const generateQuestions = () =>
+      Array.from({ length: totalQuestions }, () => {
+        const a1 = Math.floor(Math.random() * 5) + 1; // Limiter à 1-5
+        const b1 = Math.floor(Math.random() * 5) + 1; // Limiter à 1-5
+        const a2 = Math.floor(Math.random() * 5) + 1; // Limiter à 1-5
+        const b2 = Math.floor(Math.random() * 5) + 1; // Limiter à 1-5
 
-  // Gère les changements de réponse
+        const numeratorResult = a1 * a2;
+        const denominatorResult = b1 * b2;
+
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+
+        return {
+          fraction1: `${a1}/${b1}`,
+          fraction2: `${a2}/${b2}`,
+          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+        };
+      });
+
+    setQuestions(generateQuestions());
+  }, []); // Générer les questions une seule fois au montage initial
+
   const handleChange = (index: number, value: string) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = value.trim();
-    setAnswers(updatedAnswers);
-    setFeedbackMessage("");
+    const newAnswers = [...answers];
+    newAnswers[index] = value.trim();
+    setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
-  // Valide les réponses
-  const validateAnswers = () => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
-    const currentAnswers = answers.slice(startIndex, endIndex);
-    const currentQuestions = questions.slice(startIndex, endIndex);
+    const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (currentAnswers.some((answer) => !answer)) {
+    // Vérification si toutes les réponses sont remplies
+    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const updatedAnswers = [...answers];
+    // Validation des réponses
+    const newAnswers = [...answers];
     let allCorrect = true;
 
-    currentAnswers.forEach((answer, index) => {
-      const isCorrect = answer === currentQuestions[index].correctAnswer;
-      if (!isCorrect) {
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== questions[globalIndex]?.correctAnswer) {
         allCorrect = false;
-        updatedAnswers[startIndex + index] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
     });
 
-    setAnswers(updatedAnswers);
-    setFeedbackMessage(
-      allCorrect
-        ? currentPage < totalPages - 1
-          ? "Bravo ! Vous passez à la page suivante."
-          : "Félicitations, vous avez terminé toutes les questions !"
-        : "Certaines réponses sont incorrectes. Essayez à nouveau."
-    );
+    setAnswers(newAnswers);
 
-    if (allCorrect && currentPage < totalPages - 1) {
-      setTimeout(() => setCurrentPage(currentPage + 1), 1500);
+    if (allCorrect) {
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Navigation */}
-      <div className="flex justify-between w-full max-w-4xl mb-6">
-        <Link href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
-          Apprendre
-        </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-          Retour
-        </Link>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
-      <h1 className="text-3xl font-bold mb-6 text-center">Multiplication de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
 
-      {/* Message de feedback */}
+      {/* Message de validation */}
       {feedbackMessage && (
         <p
-          className={`text-xl font-bold mb-6 text-center ${
+          className={`text-xl font-bold text-center mb-6 ${
             feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"
           }`}
         >
@@ -110,26 +115,39 @@ export default function MultiplicationFraction() {
         </p>
       )}
 
-      {/* Questions et réponses */}
-      <div className="grid grid-cols-1 gap-4 w-full max-w-lg">
+      {/* Questions et réponses en colonnes */}
+      <div className="w-full max-w-3xl flex flex-col gap-4">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-          <div key={index} className="flex items-center justify-between gap-4">
-            <span className="bg-blue-500 text-white py-2 px-4 rounded text-lg">{fraction1} × {fraction2}</span>
-            <input
-              type="text"
-              className="border border-gray-400 rounded px-3 py-2 w-28 text-center"
-              placeholder="Réponse"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
+          <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
+            {/* Question à gauche */}
+            <div className="flex flex-col items-start w-1/2">
+              <button
+                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full text-center"
+                disabled
+              >
+                {fraction1} × {fraction2}
+              </button>
+            </div>
+
+            {/* Réponse à droite */}
+            <div className="flex flex-col items-start w-1/2">
+              <input
+                type="text"
+                className="border border-gray-400 p-3 rounded w-full text-center text-black"
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                value={answers[currentPage * questionsPerPage + index] || ""}
+              />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Bouton de validation */}
-      <button onClick={validateAnswers} className="bg-blue-500 text-white py-3 px-6 rounded font-bold mt-6">
-        Valider les réponses
-      </button>
+      {/* Validate Button */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

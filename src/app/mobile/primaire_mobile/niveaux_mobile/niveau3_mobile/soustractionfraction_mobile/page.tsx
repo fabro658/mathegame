@@ -20,12 +20,13 @@ export default function SoustractionFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
-        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
-        const a2 = Math.floor(Math.random() * 4) + 1; // Numérateur fraction 2 (1 à 4)
-        const b2 = Math.floor(Math.random() * 4) + 1; // Dénominateur fraction 2 (1 à 4)
+        // Limiter les numérateurs et dénominateurs entre 1 et 3
+        const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
+        const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
+        const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
+        const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
-        const commonDenominator = b1 * b2;
+        const commonDenominator = b1 * b2;  // On choisit un dénominateur commun simple
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
 
