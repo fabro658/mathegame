@@ -11,22 +11,35 @@ export default function SoustractionFractions() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
+  // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number) => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
     const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
     return [numerator / divisor, denominator / divisor];
   };
 
+  // Fonction de normalisation des réponses
+  const normalizeAnswer = (answer: string) => {
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
+    
+    // Si la réponse est de la forme "x/x", la convertir en "1"
+    const match = normalized.match(/^(\d+)\/\1$/);
+    if (match) {
+      return "1";  // Normalisation des réponses comme "2/2" ou "3/3" en "1"
+    }
+
+    return normalized;
+  };
+
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        // Limiter les numérateurs et dénominateurs entre 1 et 3
         const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
         const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
         const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
         const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
-        const commonDenominator = b1 * b2;  // On choisit un dénominateur commun simple
+        const commonDenominator = b1 * b2; // Dénominateur commun
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
 
@@ -66,7 +79,10 @@ export default function SoustractionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const questionIndex = startIndex + index;
-      if (answer !== pageQuestions[index].correctAnswer) {
+      const normalizedAnswer = normalizeAnswer(answer);  // Normalisation de la réponse de l'utilisateur
+      const normalizedCorrectAnswer = normalizeAnswer(pageQuestions[index].correctAnswer);  // Normalisation de la réponse correcte
+
+      if (normalizedAnswer !== normalizedCorrectAnswer) {
         allCorrect = false;
         updatedAnswers[questionIndex] = null; // Réinitialise les réponses incorrectes
       }

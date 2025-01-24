@@ -18,6 +18,11 @@ export default function MultiplicationFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
+  // Fonction pour normaliser les réponses (en enlevant les espaces et en convertissant en format fraction)
+  const normalizeAnswer = (answer: string) => {
+    return answer.replace(/\s+/g, "").toLowerCase();
+  };
+
   // Génération des questions et des réponses correctes, seulement une fois
   useEffect(() => {
     const generateQuestions = () =>
@@ -66,7 +71,12 @@ export default function MultiplicationFraction() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
+
+      // Normalisation de la réponse de l'utilisateur
+      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
+      const normalizedCorrectAnswer = normalizeAnswer(questions[globalIndex]?.correctAnswer); // Normaliser la réponse correcte
+
+      if (normalizedAnswer !== normalizedCorrectAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }

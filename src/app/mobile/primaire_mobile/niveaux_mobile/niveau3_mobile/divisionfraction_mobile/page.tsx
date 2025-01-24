@@ -18,6 +18,11 @@ export default function DivisionFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
+  // Fonction pour normaliser les réponses (en enlevant les espaces et en convertissant en format fraction)
+  const normalizeAnswer = (answer: string) => {
+    return answer.replace(/\s+/g, "").toLowerCase();
+  };
+
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () =>
@@ -66,7 +71,12 @@ export default function DivisionFraction() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== questions[globalIndex]?.correctAnswer) {
+
+      // Vérifier si la réponse n'est pas vide ou nulle avant de la normaliser
+      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
+      const normalizedCorrectAnswer = normalizeAnswer(questions[globalIndex]?.correctAnswer); // Normaliser la réponse correcte
+
+      if (normalizedAnswer !== normalizedCorrectAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
       }

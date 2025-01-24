@@ -39,7 +39,7 @@ export default function MobileHome() {
         {/* Bouton Primaire */}
         <Link href="/mobile/primaire_mobile">
           <div
-            className="bg-yellow-500 text-black text-xl h-24 w-24 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-lg"
+            className="bg-yellow-500 text-black text-lg h-24 w-32 flex items-center justify-center font-bold hover:bg-yellow-400 rounded-lg"
           >
             Primaire
           </div>
@@ -48,7 +48,7 @@ export default function MobileHome() {
         {/* Bouton À venir */}
         <Link href="/avenir">
           <div
-            className="bg-orange-500 text-black text-xl h-24 w-24 flex items-center justify-center font-bold hover:bg-orange-400 rounded-lg"
+            className="bg-orange-500 text-black text-lg h-24 w-32 flex items-center justify-center font-bold hover:bg-orange-400 rounded-lg"
           >
             À venir
           </div>
@@ -57,7 +57,7 @@ export default function MobileHome() {
         {/* Bouton Secondaire */}
         <Link href="/mobile/secondaire_mobile">
           <div
-            className="bg-green-500 text-black text-xl h-24 w-24 flex items-center justify-center font-bold hover:bg-green-400 rounded-lg"
+            className="bg-green-500 text-black text-lg h-24 w-32 flex items-center justify-center font-bold hover:bg-green-400 rounded-lg"
           >
             Secondaire
           </div>
