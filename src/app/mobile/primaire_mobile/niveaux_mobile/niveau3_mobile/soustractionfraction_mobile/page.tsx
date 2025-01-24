@@ -45,9 +45,30 @@ export default function SoustractionFractions() {
         const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
         const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
+        // Calcul du numérateur et dénominateur avant de procéder à la soustraction
         const commonDenominator = b1 * b2; // Dénominateur commun
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
+
+        // S'assurer que la première fraction est plus grande ou égale à la seconde
+        if (numerator1 < numerator2) {
+          // Inverser les fractions si la première est plus petite
+          // Inverser les numérateurs et dénominateurs
+          const tempNum = numerator1;
+          const tempDen = b1;
+          numerator1 = numerator2;
+          b1 = b2;
+          numerator2 = tempNum;
+          b2 = tempDen;
+
+          // Inverser aussi les valeurs des numérateurs et dénominateurs pour fraction1 et fraction2
+          const tempA = a1;
+          const tempB = b1;
+          a1 = a2;
+          b1 = b2;
+          a2 = tempA;
+          b2 = tempB;
+        }
 
         const numeratorResult = numerator1 - numerator2; // Résultat de la soustraction
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);

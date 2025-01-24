@@ -20,7 +20,21 @@ export default function AdditionFractions() {
 
   // Fonction pour normaliser les réponses (en enlevant les espaces et en convertissant en format fraction)
   const normalizeAnswer = (answer: string) => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
+    
+    // Si la réponse est de la forme "x/x", la convertir en "1"
+    const match = normalized.match(/^(\d+)\/\1$/);
+    if (match) {
+      return "1";  // Normalisation des réponses comme "2/2" ou "3/3" en "1"
+    }
+
+    // Ajouter un cas de simplification pour "0/1"
+    const zeroMatch = normalized.match(/^0\/\d+$/);
+    if (zeroMatch) {
+      return "0"; // Si la réponse est 0/n (n quelconque), on la normalise en "0"
+    }
+
+    return normalized;
   };
 
   // Fonction pour valider une fraction
