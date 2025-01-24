@@ -40,15 +40,15 @@ export default function SoustractionFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
-        const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
-        const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
-        const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
+        let a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
+        let b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
+        let a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
+        let b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
         // Calcul du numérateur et dénominateur avant de procéder à la soustraction
-        const commonDenominator = b1 * b2; // Dénominateur commun
-        const numerator1 = a1 * b2;
-        const numerator2 = a2 * b1;
+        let commonDenominator = b1 * b2; // Dénominateur commun
+        let numerator1 = a1 * b2;
+        let numerator2 = a2 * b1;
 
         // S'assurer que la première fraction est plus grande ou égale à la seconde
         if (numerator1 < numerator2) {
