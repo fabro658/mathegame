@@ -12,23 +12,21 @@ export default function SoustractionFractions() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
+  // Simplification des fractions (résultats comme 2/2 = 1)
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
+    if (numerator === denominator) {
+      return [1, 1]; // Si numérateur = dénominateur, simplifie en 1
+    }
+    return [numerator, denominator];
   };
 
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
+        const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
+        const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
+        const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
+        const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
         const commonDenominator = b1 * b2;
         const numerator1 = a1 * b2;
@@ -47,9 +45,6 @@ export default function SoustractionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -57,14 +52,19 @@ export default function SoustractionFractions() {
   };
 
   const handleValidation = (): void => {
-    if (!areAllAnswersFilled()) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
-      return;
-    }
-
-    const allCorrect = answers.every((answer, index) => answer === questions[index]?.correctAnswer);
+    const allCorrect = answers.every((answer, index) => {
+      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
+      const normalizedCorrectAnswer = normalizeAnswer(questions[index]?.correctAnswer || "");
+      return normalizedAnswer === normalizedCorrectAnswer;
+    });
     setIsValidated(true);
     setHasPassed(allCorrect);
+  };
+
+  const normalizeAnswer = (answer: string): string => {
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
+    if (normalized === "2/2") return "1"; // S'assure que 2/2 est considéré comme 1
+    return normalized;
   };
 
   const handleNextPage = (): void => {
@@ -81,43 +81,19 @@ export default function SoustractionFractions() {
     }
   };
 
-  // Fonction pour vérifier si toutes les réponses sont remplies
+  // Vérifie si toutes les réponses sont remplies sur la page actuelle
   const areAllAnswersFilled = (): boolean => {
     return answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).every((answer) => answer !== null && answer.trim() !== "");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Navigation */}
-      <Link href="/menu/apprendre/fraction" 
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
+      <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau3" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/primaire/niveaux/niveau3" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
-
-      {/* Progress bar */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
 
       <h1 className="text-4xl font-bold mb-8">Soustraction de Fractions</h1>
 
@@ -140,24 +116,13 @@ export default function SoustractionFractions() {
             ))}
           </div>
           <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              disabled={currentPage === 0}
-            >
+            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
               Précédent
             </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-            >
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
               Valider les réponses
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1 || !areAllAnswersFilled()}
-            >
+            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1 || !areAllAnswersFilled()}>
               Suivant
             </button>
           </div>

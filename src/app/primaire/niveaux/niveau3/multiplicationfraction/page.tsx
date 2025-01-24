@@ -12,31 +12,29 @@ export default function MultiplicationFraction() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
-  // Fonction pour simplifier une fraction
-  const simplifyFraction = (numerator: number, denominator: number) => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
-  };
-
-  // Génération des questions et des réponses correctes, seulement une fois
+  // Fonction pour générer des questions simples de multiplication de fractions
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 9) + 1;
-        const b1 = Math.floor(Math.random() * 9) + 1;
-        const a2 = Math.floor(Math.random() * 9) + 1;
-        const b2 = Math.floor(Math.random() * 9) + 1;
+        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
+        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
+        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
+        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
+        // Calcul de la multiplication
         const numeratorResult = a1 * a2;
         const denominatorResult = b1 * b2;
 
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        // Simplification, mais nous ferons juste une vérification si 2/2
+        let correctAnswer = `${numeratorResult}/${denominatorResult}`;
+        if (numeratorResult === denominatorResult) {
+          correctAnswer = "1"; // 2/2 devient 1, etc.
+        }
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+          correctAnswer,
         };
       });
 
@@ -99,10 +97,6 @@ export default function MultiplicationFraction() {
     }
   };
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
@@ -119,27 +113,26 @@ export default function MultiplicationFraction() {
         Retour
       </Link>
 
-
       {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
             cx="50%"
             cy="50%"
-            r={radius}
+            r={50}
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
+            strokeWidth={10}
           />
           <circle
             cx="50%"
             cy="50%"
-            r={radius}
+            r={50}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
@@ -154,21 +147,21 @@ export default function MultiplicationFraction() {
       {!isValidated && (
         <>
           <div className="grid grid-cols-2 grid-rows-3 gap-6">
-         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-           <div key={index} className="flex flex-row items-center gap-4">
-             <button
-              className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
-               disabled
-             >
-        {fraction1} × {fraction2}
-             </button>
-           <input
-            type="text"
-            className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-            onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex flex-row items-center gap-4">
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
+                  disabled
+                >
+                  {fraction1} × {fraction2}
+                </button>
+                <input
+                  type="text"
+                  className="border border-gray-400 p-3 rounded w-32 text-center text-black"
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
               </div>
-             ))}
+            ))}
           </div>
           <div className="mt-6 flex gap-4">
             <button

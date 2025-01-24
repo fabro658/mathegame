@@ -12,11 +12,10 @@ export default function DivisionFraction() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
 
-  // Fonction pour simplifier une fraction
+  // Fonction pour simplifier les fractions et appliquer la règle "2/2 = 1"
   const simplifyFraction = (numerator: number, denominator: number) => {
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(numerator, denominator);
-    return [numerator / divisor, denominator / divisor];
+    if (numerator === denominator) return "1"; // Si les numérateurs et dénominateurs sont égaux, c'est 1
+    return `${numerator}/${denominator}`;
   };
 
   // Génération des questions et des réponses correctes, seulement une fois
@@ -31,12 +30,12 @@ export default function DivisionFraction() {
         const numeratorResult = a1 * b2;
         const denominatorResult = b1 * a2;
 
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        const correctAnswer = simplifyFraction(numeratorResult, denominatorResult);
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+          correctAnswer: correctAnswer,
         };
       });
 
@@ -44,10 +43,6 @@ export default function DivisionFraction() {
   }, []); // Générer les questions une seule fois au montage initial
 
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
-
-  // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -99,10 +94,6 @@ export default function DivisionFraction() {
     }
   };
 
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
@@ -119,54 +110,27 @@ export default function DivisionFraction() {
         Retour
       </Link>
 
-      {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
       <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
-{/* Questions de la page actuelle */}
+
+      {/* Questions de la page actuelle */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-2 grid-rows-3 gap-6">
-         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-           <div key={index} className="flex flex-row items-center gap-4">
-             <button
-              className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
-               disabled
-             >
-                   {fraction1} × {fraction2}
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+              <div key={index} className="flex flex-row items-center gap-4">
+                <button
+                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-48 text-center"
+                  disabled
+                >
+                  {fraction1} ÷ {fraction2}
                 </button>
-               <input
-            type="text"
-          className="border border-gray-400 p-3 rounded w-32 text-center text-black"
-         onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
+                <input
+                  type="text"
+                  className="border border-gray-400 p-3 rounded w-32 text-center text-black"
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
               </div>
-             ))}
+            ))}
           </div>
           <div className="mt-6 flex gap-4">
             <button

@@ -79,7 +79,9 @@ export default function SoustractionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const questionIndex = startIndex + index;
-      const normalizedAnswer = normalizeAnswer(answer);  // Normalisation de la réponse de l'utilisateur
+      
+      // Vérifiez si la réponse est null avant de la normaliser
+      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";  // Si answer est null, le traiter comme une chaîne vide
       const normalizedCorrectAnswer = normalizeAnswer(pageQuestions[index].correctAnswer);  // Normalisation de la réponse correcte
 
       if (normalizedAnswer !== normalizedCorrectAnswer) {
