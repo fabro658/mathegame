@@ -112,7 +112,8 @@ export default function MultiplicationFraction() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
+      {/* Titre avec un espacement suffisant */}
+      <h1 className="text-3xl font-bold mb-8 mt-20">Multiplication de fractions</h1>
 
       {/* Message de validation */}
       {feedbackMessage && (

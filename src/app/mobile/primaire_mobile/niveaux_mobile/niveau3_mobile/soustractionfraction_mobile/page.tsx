@@ -28,6 +28,12 @@ export default function SoustractionFractions() {
       return "1";  // Normalisation des réponses comme "2/2" ou "3/3" en "1"
     }
 
+    // Ajouter un cas de simplification pour "0/1"
+    const zeroMatch = normalized.match(/^0\/\d+$/);
+    if (zeroMatch) {
+      return "0"; // Si la réponse est 0/n (n quelconque), on la normalise en "0"
+    }
+
     return normalized;
   };
 

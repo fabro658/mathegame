@@ -23,6 +23,14 @@ export default function AdditionFractions() {
     return answer.replace(/\s+/g, "").toLowerCase();
   };
 
+  // Fonction pour valider une fraction
+  const isCorrectAnswer = (userAnswer: string, correctAnswer: string): boolean => {
+    const normalizedUserAnswer = normalizeAnswer(userAnswer);
+    const normalizedCorrectAnswer = normalizeAnswer(correctAnswer);
+
+    return normalizedUserAnswer === normalizedCorrectAnswer;
+  };
+
   // Générer les questions
   useEffect(() => {
     const generateQuestions = () =>
@@ -75,13 +83,11 @@ export default function AdditionFractions() {
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
 
-      // Normalisation de la réponse de l'utilisateur
-      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
-      const normalizedCorrectAnswer = normalizeAnswer(questions[globalIndex]?.correctAnswer); // Normaliser la réponse correcte
-
-      if (normalizedAnswer !== normalizedCorrectAnswer) {
+      // Vérifier si la réponse est correcte
+      const correctAnswer = questions[globalIndex]?.correctAnswer;
+      if (answer && !isCorrectAnswer(answer, correctAnswer)) {
         allCorrect = false;
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser uniquement les mauvaises réponses
       }
     });
 
