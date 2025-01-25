@@ -10,33 +10,12 @@ export default function Soustraction() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Fonction pour mélanger un tableau
-  const shuffleArray = (array: number[][]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  };
-
-  const easyQuestions = Array.from({ length: 10 }, (_, index) => [index + 1, index + 1]);
-  const mediumQuestions = Array.from({ length: 10 }, (_, index) => [10 + index - 9, 5 + index - 9]);
-  const hardQuestions = Array.from({ length: 10 }, () => {
-    const a = Math.max(10, Math.floor(Math.random() * 41));
-    const b = Math.floor(Math.random() * 41);
-    return a >= b ? [a, b] : [b, a];
+  const questions = Array.from({ length: totalQuestions }, (_, index) => {
+    if (index < 10) return [index + 1, index + 1];
+    if (index < 20) return [10 + index - 9, 5 + index - 9];
+    if (index < 30) return [Math.max(10, Math.floor(Math.random() * 41)), Math.floor(Math.random() * 41)];
+    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
   });
-  const veryHardQuestions = Array.from({ length: 6 }, () => {
-    const a = 50 + Math.floor(Math.random() * 51);
-    const b = 50 + Math.floor(Math.random() * 51);
-    return a >= b ? [a, b] : [b, a];
-  });
-
-  shuffleArray(easyQuestions);
-  shuffleArray(mediumQuestions);
-  shuffleArray(hardQuestions);
-  shuffleArray(veryHardQuestions);
-
-  const questions = [...easyQuestions, ...mediumQuestions, ...hardQuestions, ...veryHardQuestions];
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -85,7 +64,6 @@ export default function Soustraction() {
       setFeedbackMessage("");
     }
   };
-
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
       {/* Conteneur pour les boutons */}
