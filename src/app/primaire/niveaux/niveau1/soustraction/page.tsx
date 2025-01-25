@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 export default function Soustraction() {
   const totalQuestions = 36;
@@ -10,8 +9,6 @@ export default function Soustraction() {
   const [questions, setQuestions] = useState<number[][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
 
   // Seed aléatoire unique, stocké dans l'état local
   const [seed, setSeed] = useState<number | null>(null);
@@ -71,7 +68,7 @@ export default function Soustraction() {
       shuffleArrayWithSeed(allQuestions, seed);
       setQuestions(allQuestions);
     }
-  }, [seed]);
+  }, [seed, shuffleArrayWithSeed]);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -91,35 +88,26 @@ export default function Soustraction() {
     }
 
     const newAnswers = [...answers];
-    let allCorrect = true;
-
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a - b) {
-        allCorrect = false;
         newAnswers[globalIndex] = null;
       }
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
