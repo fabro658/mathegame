@@ -4,158 +4,108 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface FunctionConcept {
+interface Shape {
   name: string;
   description: string;
   formula: string;
   example: string;
-  imageUrls: string[]; // Tableau pour plusieurs images
+  imageUrl: string;
 }
 
-export default function FonctionLearning() {
-  const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
+export default function AireLearning() {
+  const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
 
-  const functionConcepts: FunctionConcept[] = [
+  const shapes: Shape[] = [
     {
-      name: "Relation",
-      description: "Une relation est une règle qui associe chaque élément d'un ensemble à un ou plusieurs éléments d'un autre ensemble.",
-      formula: "Relation : A ↔ B",
-      example: "Par exemple, la relation x ↔ y telle que y = 2x.",
-      imageUrls: ["/relation.png"],
+      name: "Carré",
+      description:
+        "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
+      formula: "Aire = côté × côté",
+      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
+      imageUrl: "/airecarre.jpeg",
     },
     {
-      name: "Fonction",
-      description: "Une fonction est une relation particulière où chaque élément de l'ensemble de départ (variable indépendante) est associé à un seul élément de l'ensemble d'arrivée (variable dépendante).",
-      formula: "Fonction : f(x) = y",
-      example: "Si f(x) = 2x + 3, pour x = 5, f(5) = 13.",
-      imageUrls: ["/fonction.png"],
+      name: "Rectangle",
+      description:
+        "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
+      formula: "Aire = base × hauteur",
+      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
+      imageUrl: "/airerectangle.jpeg",
     },
     {
-      name: "Fonction linéaire",
-      description: "Une fonction linéaire est une fonction de la forme f(x) = ax + b où a et b sont des constantes.",
-      formula: "f(x) = ax + b",
-      example: "Si f(x) = 2x + 3, alors pour x = 4, f(4) = 2(4) + 3 = 11.",
-      imageUrls: ["/fonction_lineaire_0.jpeg", "/fonction_lineaire_1.jpeg"], // Plusieurs images
+      name: "Triangle",
+      description:
+        "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
+      formula: "Aire = (base × hauteur) ÷ 2",
+      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
+      imageUrl: "/airetriangle.jpeg",
     },
     {
-      name: "Fonction quadratique",
-      description: "Une fonction quadratique est une fonction polynomiale de degré 2, généralement de la forme f(x) = ax² + bx + c.",
-      formula: "f(x) = ax² + bx + c",
-      example: "Si f(x) = x² + 2x + 1, alors pour x = 3, f(3) = 3² + 2(3) + 1 = 16.",
-      imageUrls: ["/fonction_quadratique.jpeg"],
-    },
-    {
-      name: "Fonction valeur absolue",
-      description: "La fonction valeur absolue donne la distance entre un nombre et zéro, sans tenir compte du signe.",
-      formula: "f(x) = |x|",
-      example: "Si f(x) = |x|, alors f(-5) = 5.",
-      imageUrls: ["/fonction_valeurabs.jpeg"],
-    },
-    {
-      name: "Fonction exponentielle",
-      description: "La fonction exponentielle est une fonction de la forme f(x) = a^x, où a est une constante positive.",
-      formula: "f(x) = a^x",
-      example: "Si f(x) = 2^x, alors f(3) = 2³ = 8.",
-      imageUrls: ["/fonction_expo.jpeg"],
-    },
-    {
-      name: "Fonction en escalier",
-      description: "La fonction en escalier (ou fonction partie entière) associe à chaque nombre réel son entier inférieur.",
-      formula: "f(x) = ⌊x⌋",
-      example: "Si f(x) = ⌊x⌋, alors f(3.7) = 3.",
-      imageUrls: ["/fonction_escalier.jpeg"],
-    },
-    {
-      name: "Fonction logarithmique",
-      description: "La fonction logarithmique est l'inverse de la fonction exponentielle. Elle est de la forme f(x) = log_a(x), où a est une constante positive.",
-      formula: "f(x) = log_a(x)",
-      example: "Si f(x) = log₂(x), alors f(8) = 3 car 2³ = 8.",
-      imageUrls: ["/fonction_log.jpeg"],
-    },
-    {
-      name: "Fonction trigonométrique",
-      description: "Les fonctions trigonométriques comme sin(x), cos(x) et tan(x) sont basées sur les relations entre les angles d'un triangle rectangle et ses côtés.",
-      formula: "f(x) = sin(x) ou cos(x) ou tan(x)",
-      example: "Si f(x) = sin(x), alors f(π/2) = 1.",
-      imageUrls: ["/fonction_trigo.jpeg"],
-    },
-    {
-      name: "Fonction rationnelle",
-      description: "Une fonction rationnelle est une fonction qui est le quotient de deux polynômes.",
-      formula: "f(x) = P(x) / Q(x)",
-      example: "Si f(x) = (x + 1) / (x - 1), alors f(2) = (2 + 1) / (2 - 1) = 3.",
-      imageUrls: ["/fonction_rationnelle.jpeg"],
-    },
-    {
-      name: "Fonction racine carrée",
-      description: "La fonction racine carrée est la fonction inverse de la fonction carrée. Elle est définie comme f(x) = √x.",
-      formula: "f(x) = √x",
-      example: "Si f(x) = √x, alors f(9) = 3.",
-      imageUrls: ["/fonction_racinecarree.jpeg"],
+      name: "Trapèze",
+      description:
+        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
+      example:
+        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      imageUrl: "/airetrapeze.jpeg",
     },
   ];
 
-  const handleSelectConcept = (concept: FunctionConcept): void => {
-    setSelectedConcept(concept);
+  const handleSelectShape = (shape: Shape): void => {
+    setSelectedShape(shape);
   };
 
   return (
-    <main className="flex min-h-screen bg-gray-100 text-black">
-      {/* Barre latérale */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/mobile/menu_mobile/apprendre_mobile"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
+    <main className="min-h-screen bg-gray-100 text-black p-6 relative">
+      {/* Bouton retour */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+      >
+        Retour
+      </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Les Fonctions</h1>
-
-        <p className="text-lg mb-6">
-          Sélectionne un concept pour apprendre à mieux comprendre les fonctions en mathématiques :
+      {/* Titre et sous-titre */}
+      <div className="text-center mt-16">
+        <h1 className="text-4xl font-bold mb-4">Calculer l&apos;aire</h1>
+        <p className="text-lg text-gray-700">
+          Sélectionne une opération pour apprendre à calculer l&apos;aire
         </p>
-
-        <div className="flex flex-col gap-4">
-          {functionConcepts.map((concept, index) => (
-            <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              onClick={() => handleSelectConcept(concept)}
-            >
-              {concept.name}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Section centrale agrandie */}
-      <div className="w-3/4 p-10 flex flex-col items-center">
-        {selectedConcept && (
-          <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
-            <h2 className="text-3xl font-bold mb-6">{selectedConcept.name}</h2>
-            <p className="text-lg mb-6">{selectedConcept.description}</p>
-            <p className="text-2xl font-bold mb-4">Formule :</p>
-            <p className="text-lg mb-6">{selectedConcept.formula}</p>
-            <p className="text-2xl font-bold mb-4">Exemple :</p>
-            <p className="text-lg mb-6">{selectedConcept.example}</p>
+      {/* Boutons horizontaux */}
+      <div className="flex justify-center gap-4 mt-8 flex-wrap">
+        {shapes.map((shape, index) => (
+          <button
+            key={index}
+            className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-700 shadow-md"
+            onClick={() => handleSelectShape(shape)}
+          >
+            {shape.name}
+          </button>
+        ))}
+      </div>
 
-            {/* Affichage des images côte à côte */}
-            <div className="mt-8 flex gap-6 justify-center">
-              {selectedConcept.imageUrls.map((imageUrl, index) => (
-                <Image
-                  key={index}
-                  src={imageUrl}
-                  alt={selectedConcept.name}
-                  width={250} // Ajuster la taille des images
-                  height={250}
-                  className="object-contain"
-                />
-              ))}
-            </div>
+      {/* Section des détails de la forme sélectionnée */}
+      {selectedShape && (
+        <div className="mt-12 bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-6 text-center">{selectedShape.name}</h2>
+          <p className="text-lg mb-4">{selectedShape.description}</p>
+          <p className="text-xl font-semibold mb-2">Formule :</p>
+          <p className="text-lg mb-4">{selectedShape.formula}</p>
+          <p className="text-xl font-semibold mb-2">Exemple :</p>
+          <p className="text-lg mb-6">{selectedShape.example}</p>
+          <div className="flex justify-center mt-6">
+            <Image
+              src={selectedShape.imageUrl}
+              alt={selectedShape.name}
+              width={400}
+              height={400}
+              className="object-contain"
+            />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </main>
   );
 }

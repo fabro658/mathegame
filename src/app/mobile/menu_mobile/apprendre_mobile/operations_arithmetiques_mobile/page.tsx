@@ -50,7 +50,7 @@ export default function OperationsLearning() {
       {/* Bouton Retour */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile"
-        className="absolute top-4 left-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
       >
         Retour
       </Link>

@@ -49,13 +49,6 @@ export default function AireLearning() {
         "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
       imageUrl: "/airetrapeze.jpeg",
     },
-    {
-      name: "Cercle",
-      description: "L'aire d'un cercle est calculée en utilisant le rayon.",
-      formula: "Aire = π × rayon²",
-      example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
-      imageUrl: "/airecercle.jpeg",
-    },
   ];
 
   const handleSelectShape = (shape: Shape): void => {
@@ -63,53 +56,52 @@ export default function AireLearning() {
   };
 
   return (
-    <main className="flex min-h-screen bg-gray-100 text-black">
-      {/* Barre latérale */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/mobile/menu_mobile/apprendre_mobile"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
+    <main className="min-h-screen bg-gray-100 text-black p-6">
+      {/* Bouton retour */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+      >
+        Retour
+      </Link>
 
-        <h1 className="text-3xl font-bold mb-6">Calculer l&apos;aire</h1>
-
-        <p className="text-lg mb-6">
-          Sélectionne une forme pour apprendre comment calculer son aire :
+      {/* Titre et sous-titre */}
+      <div className="text-center mt-16">
+        <h1 className="text-4xl font-bold mb-4">Calculer l&apos;aire</h1>
+        <p className="text-lg text-gray-700">
+          Sélectionne une opération pour apprendre à calculer l&apos;aire
         </p>
-
-        <div className="flex flex-col gap-4">
-          {shapes.map((shape, index) => (
-            <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              onClick={() => handleSelectShape(shape)}
-            >
-              {shape.name}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Section centrale agrandie */}
-      <div className="w-3/4 p-10 flex flex-col items-center">
-        {selectedShape && (
-          <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
-            <h2 className="text-3xl font-bold mb-6">{selectedShape.name}</h2>
-            <p className="text-lg mb-6">{selectedShape.description}</p>
-            <p className="text-2xl font-bold mb-4">Formule :</p>
-            <p className="text-lg mb-6">{selectedShape.formula}</p>
-            <p className="text-2xl font-bold mb-4">Exemple :</p>
-            <p className="text-lg mb-6">{selectedShape.example}</p>
+      {/* Boutons horizontaux */}
+      <div className="flex justify-center gap-4 mt-8">
+        {shapes.map((shape, index) => (
+          <button
+            key={index}
+            className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-700"
+            onClick={() => handleSelectShape(shape)}
+          >
+            {shape.name}
+          </button>
+        ))}
+      </div>
 
-            {/* Image beaucoup plus grande */}
-            <div className="mt-8 flex justify-center">
+      {/* Section des détails de la forme sélectionnée */}
+      <div className="mt-12 flex justify-center">
+        {selectedShape && (
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+            <h2 className="text-3xl font-bold mb-6 text-center">{selectedShape.name}</h2>
+            <p className="text-lg mb-4">{selectedShape.description}</p>
+            <p className="text-xl font-semibold mb-2">Formule :</p>
+            <p className="text-lg mb-4">{selectedShape.formula}</p>
+            <p className="text-xl font-semibold mb-2">Exemple :</p>
+            <p className="text-lg mb-6">{selectedShape.example}</p>
+            <div className="flex justify-center mt-6">
               <Image
                 src={selectedShape.imageUrl}
                 alt={selectedShape.name}
-                width={500} // Taille encore augmentée
-                height={500}
+                width={400}
+                height={400}
                 className="object-contain"
               />
             </div>
