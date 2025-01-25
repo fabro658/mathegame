@@ -1,4 +1,4 @@
-"use client"; // Mark the file as a client component
+"use client"; 
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -67,20 +67,22 @@ export default function ComparerFractions() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation avec z-index pour être toujours au-dessus */}
       <Link
         href="/menu/apprendre"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
       >
         Apprendre
       </Link>
       <Link
         href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Comparaison de Fractions</h1>
+      {/* Titre avec espacement supplémentaire */}
+      <h1 className="text-3xl font-bold mb-6 mt-16">Comparaison de Fractions</h1>
 
       {!isValidated && (
         <div className="flex flex-col items-center justify-center">

@@ -46,7 +46,7 @@ export default function SoustractionFractions() {
         let b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
 
         // Calcul du numérateur et dénominateur avant de procéder à la soustraction
-        let commonDenominator = b1 * b2; // Dénominateur commun
+        const commonDenominator = b1 * b2; // Dénominateur commun
         let numerator1 = a1 * b2;
         let numerator2 = a2 * b1;
 
