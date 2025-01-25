@@ -17,14 +17,40 @@ export default function Soustraction() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Fonction pour mélanger un tableau
+  const shuffleArray = (array: any[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
+
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
-  });
+  const easyQuestions = Array.from({ length: 10 }, (_, index) => [index + 1, index + 1]); // Niveau 1 : Soustractions simples
+  const mediumQuestions = Array.from({ length: 10 }, (_, index) => [10 + index - 9, 5 + index - 9]); // Niveau 2
+  const hardQuestions = Array.from({ length: 10 }, () => {
+    const a = Math.max(10, Math.floor(Math.random() * 41));
+    const b = Math.floor(Math.random() * 41);
+    return a >= b ? [a, b] : [b, a];
+  }); // Niveau 3
+  const veryHardQuestions = Array.from({ length: 6 }, () => {
+    const a = 20 + Math.floor(Math.random() * 81);
+    const b = 20 + Math.floor(Math.random() * 81);
+    return a >= b ? [a, b] : [b, a];
+  }); // Niveau 4
+  const expertQuestions = Array.from({ length: 6 }, () => {
+    const a = 50 + Math.floor(Math.random() * 51);
+    const b = 50 + Math.floor(Math.random() * 51);
+    return a >= b ? [a, b] : [b, a];
+  }); // Niveau 5
+
+  shuffleArray(easyQuestions);
+  shuffleArray(mediumQuestions);
+  shuffleArray(hardQuestions);
+  shuffleArray(veryHardQuestions);
+  shuffleArray(expertQuestions);
+
+  const questions = [...easyQuestions, ...mediumQuestions, ...hardQuestions, ...veryHardQuestions, ...expertQuestions];
 
   // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -84,18 +110,18 @@ export default function Soustraction() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-    {/* Boutons de navigation */}
-    <Link
-      href="/menu/apprendre/opérations arithmétiques"
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-    >
-      Apprendre
-    </Link>
-    <Link
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre/opérations arithmétiques"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
         href="/primaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
-       Retour
+        Retour
       </Link>
 
       {/* Cercle de progression */}

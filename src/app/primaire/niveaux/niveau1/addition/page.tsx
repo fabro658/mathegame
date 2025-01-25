@@ -16,20 +16,47 @@ export default function Addition() {
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // Fonction pour mélanger un tableau
+  const shuffleArray = (array: any[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
+
   // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Additions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
-  });
+  const easyQuestions = Array.from({ length: 10 }, (_, index) => [index + 1, index + 1]); // Niveau 1 : Additions simples
+  const mediumQuestions = Array.from({ length: 10 }, (_, index) => [10 + index - 9, 5 + index - 9]); // Niveau 2
+  const hardQuestions = Array.from({ length: 10 }, () => {
+    const a = Math.max(10, Math.floor(Math.random() * 41));
+    const b = Math.floor(Math.random() * 41);
+    return [a, b];
+  }); // Niveau 3
+  const veryHardQuestions = Array.from({ length: 6 }, () => {
+    const a = 20 + Math.floor(Math.random() * 81);
+    const b = 20 + Math.floor(Math.random() * 81);
+    return [a, b];
+  }); // Niveau 4
+  const expertQuestions = Array.from({ length: 6 }, () => {
+    const a = 50 + Math.floor(Math.random() * 51);
+    const b = 50 + Math.floor(Math.random() * 51);
+    return [a, b];
+  }); // Niveau 5
+
+  shuffleArray(easyQuestions);
+  shuffleArray(mediumQuestions);
+  shuffleArray(hardQuestions);
+  shuffleArray(veryHardQuestions);
+  shuffleArray(expertQuestions);
+
+  const questions = [...easyQuestions, ...mediumQuestions, ...hardQuestions, ...veryHardQuestions, ...expertQuestions];
 
   // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-   // Gestion des réponses
-   const handleChange = (index: number, value: string) => {
+
+  // Gestion des réponses
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
@@ -154,24 +181,24 @@ export default function Addition() {
             </button>
           </div>
         </>
-          )}
+      )}
 
-          {/* Résultats après validation */}
-          {isValidated && (
-            <>
-              <p className={`text-xl font-bold ${answers.every((answer, index) => answer === questions[index][0] + questions[index][1]) ? 'text-green-600' : 'text-red-600'}`}>
-                {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-                  ? 'Bravo ! Toutes vos réponses sont correctes.'
-                  : 'Certaines réponses sont incorrectes. Corrigez-les.'}
-              </p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </>
-          )}
-        </div>
-      );
-    }
+      {/* Résultats après validation */}
+      {isValidated && (
+        <>
+          <p className={`text-xl font-bold ${answers.every((answer, index) => answer === questions[index][0] + questions[index][1]) ? 'text-green-600' : 'text-red-600'}`}>
+            {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
+              ? 'Bravo ! Toutes vos réponses sont correctes.'
+              : 'Certaines réponses sont incorrectes. Corrigez-les.'}
+          </p>
+          <button
+            className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
+            onClick={handleNextPage}
+          >
+            Suivant
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
