@@ -13,10 +13,16 @@ export default function Soustraction() {
   const questions = Array.from({ length: totalQuestions }, (_, index) => {
     if (index < 10) return [index + 1, index + 1];
     if (index < 20) return [10 + index - 9, 5 + index - 9];
-    if (index < 30) return [Math.max(10, Math.floor(Math.random() * 41)), Math.floor(Math.random() * 41)];
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
+    if (index < 30) {
+      const a = Math.max(10, Math.floor(Math.random() * 41));
+      const b = Math.floor(Math.random() * 41);
+      return a >= b ? [a, b] : [b, a];
+    }
+    const a = 50 + Math.floor(Math.random() * 51);
+    const b = 50 + Math.floor(Math.random() * 51);
+    return a >= b ? [a, b] : [b, a];
   });
-
+  
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
