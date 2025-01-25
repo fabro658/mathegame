@@ -63,7 +63,7 @@ export default function ExponentsLearning() {
       {/* Options des concepts à gauche */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
-          href="/menu/apprendre"
+          href="/mobile/menu_mobile/apprendre_mobile"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
         >
           Retour

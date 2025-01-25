@@ -38,7 +38,7 @@ export default function OperationsLearning() {
       description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
       formula: "A ÷ B",
       example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
-    }
+    },
   ];
 
   const handleSelectOperation = (operation: Operation): void => {
@@ -46,41 +46,42 @@ export default function OperationsLearning() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Options des opérations à gauche */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/menu/apprendre"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
+    <div className="min-h-screen bg-gray-100 text-black p-6">
+      {/* Bouton Retour */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile"
+        className="absolute top-4 left-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+      >
+        Retour
+      </Link>
 
-        <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
-        <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
-
-        
-        <div className="flex flex-col gap-4">
-          {operations.map((operation, index) => (
-            <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-              onClick={() => handleSelectOperation(operation)}
-            >
-              {operation.name}
-            </button>
-          ))}
-        </div>
+      {/* Titre et Sous-titre */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold mb-2">Opérations arithmétiques</h1>
+        <p className="text-lg">Sélectionne une opération pour apprendre à la réaliser :</p>
       </div>
 
-      {/* Formules et explications au centre */}
-      <div className="w-full sm:w-3/4 p-8">
+      {/* Boutons des opérations en ligne */}
+      <div className="flex justify-center gap-4 mb-8 flex-wrap">
+        {operations.map((operation, index) => (
+          <button
+            key={index}
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
+            onClick={() => handleSelectOperation(operation)}
+          >
+            {operation.name}
+          </button>
+        ))}
+      </div>
+
+      {/* Section d'affichage de l'opération sélectionnée */}
+      <div className="w-full max-w-4xl mx-auto">
         {selectedOperation && (
-          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">{selectedOperation.name}</h2>
             <p className="text-md mb-6">{selectedOperation.description}</p>
 
-            <div className="mt-8">
+            <div>
               <p className="text-lg font-bold mb-2">Formule :</p>
               <p className="text-lg mb-4">{selectedOperation.formula}</p>
               <p className="text-lg font-bold mb-2">Exemple :</p>
