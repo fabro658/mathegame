@@ -10,7 +10,8 @@ export default function Soustraction() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  const shuffleArray = (array: any[]) => {
+  // Fonction pour mélanger un tableau
+  const shuffleArray = (array: number[][]) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
