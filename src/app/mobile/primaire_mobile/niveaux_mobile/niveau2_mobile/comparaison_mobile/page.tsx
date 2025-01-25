@@ -10,6 +10,7 @@ export default function ComparerEntiers() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<{ type: string; numbers: number[]; correctAnswer: string }[]>([]);
+  const [isValidated, setIsValidated] = useState(false);
 
   // Générer les questions au chargement initial
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function ComparerEntiers() {
     });
 
     setAnswers(newAnswers);
+    setIsValidated(true);
 
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
@@ -70,75 +72,73 @@ export default function ComparerEntiers() {
       // Passer à la page suivante ou afficher un message de fin
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
+        setIsValidated(false); // Réinitialiser l'état de validation pour la nouvelle page
       } else {
         setFeedbackMessage("Félicitations ! Vous avez terminé toutes les questions.");
       }
     }
   };
 
+  const currentQuestions = questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
+
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Conteneur pour les boutons */}
-      <div className="flex justify-between w-full mb-6">
-        <Link 
-          href="/mobile/menu_mobile/apprendre_mobile/opérations arithmétiques_mobile" 
-          className="bg-black text-white py-3 px-8 rounded font-bold">
-          Apprendre
-        </Link>
-        <Link 
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-          Retour
-        </Link>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation avec z-index pour être toujours au-dessus */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+      >
+        Retour
+      </Link>
 
-      {/* Titre */}
-      <h1 className="text-4xl font-bold mb-6">Comparaison</h1>
+      {/* Titre avec espacement supplémentaire */}
+      <h1 className="text-3xl font-bold mb-6 mt-16">Comparaison de Nombres Entiers</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p 
-          className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
-
-      {/* Questions et réponses */}
-      <div className="flex flex-col gap-6 w-full max-w-lg">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, globalIndex) => {
-          const relativeIndex = currentPage * questionsPerPage + globalIndex; // Index global pour le tableau des réponses
-          return (
-            <div key={relativeIndex} className="bg-white p-4 rounded shadow-md text-center">
-              <p className="text-lg font-bold mb-4">
+      {!isValidated && (
+        <div className="flex flex-col items-center justify-center">
+          {currentQuestions.map((question, index) => (
+            <div key={index} className="bg-white p-6 rounded shadow-md text-center mb-6">
+              <p className="text-xl font-bold mb-4">
                 {`${question.numbers[0]} ? ${question.numbers[1]}`}
               </p>
               <select
-                value={answers[relativeIndex] || ""}
-                onChange={(e) => handleChange(relativeIndex, e.target.value)}
-                className="py-2 px-4 rounded border-gray-300"
+                value={answers[currentPage * questionsPerPage + index] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                className="py-3 px-6 rounded border-gray-300 text-lg"
               >
-                <option value="" disabled>
-                  Choisissez
-                </option>
+                <option value="" disabled>Choisissez</option>
                 <option value="<">&lt;</option>
                 <option value=">">&gt;</option>
                 <option value="=">=</option>
               </select>
+              {answers[currentPage * questionsPerPage + index] === null && (
+                <p className="text-red-500 text-sm mt-2">Réponse manquante</p>
+              )}
             </div>
-          );
-        })}
-      </div>
+          ))}
+          <div className="flex flex-col items-center mt-4">
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+              Valider
+            </button>
+          </div>
+        </div>
+      )}
 
-      {/* Bouton de validation */}
-      <div className="mt-6 flex justify-center w-full">
-        <button 
-          onClick={handleValidation} 
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs"
-        >
-          Valider les réponses
-        </button>
-      </div>
+      {isValidated && (
+        <div className="text-center mt-4">
+          {feedbackMessage.includes("correctes") ? (
+            <p className="text-green-500 font-bold text-lg">{feedbackMessage}</p>
+          ) : (
+            <p className="text-red-500 font-bold text-lg">{feedbackMessage}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
