@@ -57,15 +57,17 @@ export default function FractionOperationsLearning() {
       </Link>
 
       {/* Titre et sous-titre */}
+      <div className="text-center mb-8">
       <h1 className="text-3xl font-bold text-center mt-8 mb-4">Opérations sur les fractions</h1>
       <p className="text-lg text-center mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
+      </div>
 
-      {/* Boutons alignés horizontalement */}
+      {/* Boutons des opérations en ligne */}
       <div className="flex justify-center gap-4 mb-8 flex-wrap">
         {operations.map((operation, index) => (
           <button
             key={index}
-            className="bg-blue-500 text-white py-2 px-4 rounded font-bold transition-all duration-300 hover:bg-blue-700"
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
             onClick={() => setSelectedOperation(operation)}
           >
             {operation.name}
