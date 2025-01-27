@@ -74,7 +74,7 @@ export default function OperationsLearning() {
         ))}
       </div>
 
-      {/* Section d'affichage de l'opération sélectionnée */}
+      {/* Détails sur l'opération sélectionnée */}
       <div className="w-full max-w-4xl mx-auto">
         {selectedOperation && (
           <div className="bg-white p-6 rounded-lg shadow-lg">

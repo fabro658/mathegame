@@ -57,13 +57,13 @@ export default function FractionOperationsLearning() {
       </Link>
 
       {/* Titre et sous-titre */}
-      <div className="text-center mb-8">
-      <h1 className="text-3xl font-bold text-center mt-8 mb-4">Opérations sur les fractions</h1>
-      <p className="text-lg text-center mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
+      <div className="text-center mb-8 mt-16">
+        <h1 className="text-3xl font-bold text-center mt-8 mb-4">Opérations sur les fractions</h1>
+        <p className="text-lg text-center mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
       </div>
 
-      {/* Boutons des opérations en ligne */}
-      <div className="flex justify-center gap-4 mb-8 flex-wrap">
+      {/* Boutons des opérations en 2 colonnes de 2 lignes */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
         {operations.map((operation, index) => (
           <button
             key={index}
@@ -76,31 +76,27 @@ export default function FractionOperationsLearning() {
       </div>
 
       {/* Détails sur l'opération sélectionnée */}
-      <div className="bg-white p-6 rounded-lg shadow-lg mx-auto max-w-4xl">
-        {selectedOperation ? (
-          <>
-            <h2 className="text-2xl font-bold mb-4">{selectedOperation.name}</h2>
-            <p className="text-md mb-4">{selectedOperation.description}</p>
-            <p className="text-lg font-bold mb-2">Formule :</p>
-            <p className="text-lg mb-4">{selectedOperation.formula}</p>
-            <p className="text-lg font-bold mb-2">Exemple :</p>
-            <p className="text-lg">{selectedOperation.example}</p>
-            {selectedOperation.imageUrl && (
-              <div className="mt-6 flex justify-center">
-                <Image
-                  src={selectedOperation.imageUrl}
-                  alt={selectedOperation.name}
-                  width={192}
-                  height={192}
-                  className="object-contain"
-                />
-              </div>
-            )}
-          </>
-        ) : (
-          <p className="text-center text-gray-500">Sélectionnez une opération pour voir les détails.</p>
-        )}
-      </div>
+      {selectedOperation && (
+        <div className="bg-white p-6 rounded-lg shadow-lg mx-auto max-w-4xl">
+          <h2 className="text-2xl font-bold mb-4">{selectedOperation.name}</h2>
+          <p className="text-md mb-4">{selectedOperation.description}</p>
+          <p className="text-lg font-bold mb-2">Formule :</p>
+          <p className="text-lg mb-4">{selectedOperation.formula}</p>
+          <p className="text-lg font-bold mb-2">Exemple :</p>
+          <p className="text-lg">{selectedOperation.example}</p>
+          {selectedOperation.imageUrl && (
+            <div className="mt-6 flex justify-center">
+              <Image
+                src={selectedOperation.imageUrl}
+                alt={selectedOperation.name}
+                width={192}
+                height={192}
+                className="object-contain"
+              />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
