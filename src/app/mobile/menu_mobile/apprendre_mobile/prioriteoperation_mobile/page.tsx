@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState } from "react";
 import Link from "next/link";
 
@@ -69,7 +71,7 @@ export default function PrioriteOperation() {
           <button
             key={index}
             className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
-            onClick={() => setSelectedOperation(operation)}
+            onClick={() => handleSelectOperation(operation)}
           >
             {operation.name}
           </button>
