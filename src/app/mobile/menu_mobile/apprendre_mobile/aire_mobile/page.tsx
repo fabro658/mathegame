@@ -56,11 +56,11 @@ export default function AireLearning() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 text-black p-6">
-      {/* Bouton retour */}
+    <div className="min-h-screen bg-gray-100 text-black p-4">
+      {/* Bouton Retour */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700"
       >
         Retour
       </Link>
@@ -108,6 +108,6 @@ export default function AireLearning() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
