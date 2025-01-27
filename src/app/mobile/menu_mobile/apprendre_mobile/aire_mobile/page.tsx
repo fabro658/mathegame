@@ -64,21 +64,19 @@ export default function AireLearning() {
       >
         Retour
       </Link>
-
       {/* Titre et sous-titre */}
-      <div className="text-center mt-16">
-        <h1 className="text-4xl font-bold mb-4">Calculer l&apos;aire</h1>
-        <p className="text-lg text-gray-700">
-          Sélectionne une opération pour apprendre à calculer l&apos;aire
+      <div className="text-center mb-8 mt-16">
+        <h1 className="text-3xl font-bold text-center mt-8 mb-4">Calculer l&apos;aire</h1>
+        <p className="text-lg text-center mb-6">Sélectionne une opération pour apprendre à calculer l&apos;aire
         </p>
       </div>
 
-      {/* Boutons horizontaux */}
-      <div className="flex justify-center gap-4 mt-8">
-        {shapes.map((shape, index) => (
+            {/* Boutons des opérations en 2 colonnes de 2 lignes */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+            {shapes.map((shape, index) => (
           <button
             key={index}
-            className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-700"
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
             onClick={() => handleSelectShape(shape)}
           >
             {shape.name}

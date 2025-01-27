@@ -50,31 +50,28 @@ export default function PerimetreLearning() {
   const handleSelectShape = (shape: Shape): void => {
     setSelectedShape(shape);
   };
-
   return (
-    <div className="min-h-screen bg-gray-100 text-black p-6">
+    <div className="min-h-screen bg-gray-100 text-black p-4">
       {/* Bouton Retour */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow-md hover:bg-orange-700"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700"
       >
         Retour
       </Link>
 
-      {/* Titre principal */}
-      <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold mb-2">Formes géométriques</h1>
-        <p className="text-lg">
-          Sélectionne une forme pour apprendre comment calculer son périmètre :
-        </p>
+      {/* Titre et sous-titre */}
+      <div className="text-center mb-8 mt-16">
+        <h1 className="text-3xl font-bold text-center mt-8 mb-4">Calculer le périmètre</h1>
+        <p className="text-lg text-center mb-6">Sélectionne une forme</p>
       </div>
 
-      {/* Ligne de boutons */}
-      <div className="flex justify-center gap-4 mb-8">
-        {shapes.map((shape, index) => (
+       {/* Boutons des opérations en 2 colonnes de 2 lignes */}
+       <div className="grid grid-cols-2 gap-4 mb-8">
+            {shapes.map((shape, index) => (
           <button
             key={index}
-            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow hover:bg-blue-700"
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
             onClick={() => handleSelectShape(shape)}
           >
             {shape.name}
