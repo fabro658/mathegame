@@ -80,7 +80,7 @@ export default function PrioriteOperation() {
 
       {/* Section de contenu */}
       <div>
-        {selectedOperation ? (
+        {selectedOperation && (
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4">{selectedOperation.name}</h2>
             <p className="text-md mb-6">{selectedOperation.description}</p>
@@ -91,10 +91,6 @@ export default function PrioriteOperation() {
               <p className="text-lg">{selectedOperation.example}</p>
             </div>
           </div>
-        ) : (
-          <p className="text-center text-gray-700">
-            Veuillez sélectionner une opération pour voir les détails.
-          </p>
         )}
       </div>
     </div>

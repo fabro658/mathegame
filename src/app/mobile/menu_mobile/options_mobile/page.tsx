@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 
@@ -19,7 +20,7 @@ export default function Option() {
     }));
   };
 
-  // Fonction pour envoyer un email via mailto
+  // Fonction pour envoyer un email via mailto et réinitialiser le formulaire
   const handleMailto = () => {
     const subject = `${formData.nom} - ${formData.objet}`;
     const body = `${formData.message}`;
@@ -27,10 +28,18 @@ export default function Option() {
       subject
     )}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
+
+    // Réinitialiser le formulaire après l'envoi
+    setFormData({
+      nom: "",
+      email: "",
+      objet: "",
+      message: "",
+    });
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4 relative">
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900 p-4 relative pt-20">
       <Link
         href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -45,7 +54,7 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
           <p className="text-lg">
-            Bienvenue sur <strong>MatheGame</strong> ! Notre mission est de rendre les mathématiques 
+            Bienvenue sur <strong>MathGame</strong> ! Notre mission est de rendre les mathématiques 
             plus accessibles et captivantes pour tous. Nous croyons que les mathématiques sont 
             un outil puissant pour comprendre le monde et résoudre des problèmes.
           </p>
