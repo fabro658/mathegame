@@ -46,7 +46,7 @@ export default function OperationsLearning() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black p-4">
+    <div className="min-h-screen bg-gray-100 text-black p-4 pt-20">
       {/* Bouton Retour */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile"

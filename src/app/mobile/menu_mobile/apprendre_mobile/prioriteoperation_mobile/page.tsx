@@ -63,13 +63,13 @@ export default function PrioriteOperation() {
         </p>
       </div>
 
-      {/* Boutons en ligne */}
-      <div className="flex justify-center gap-4 mb-8">
+      {/* Boutons des opérations en 2 colonnes de 2 lignes */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
         {operations.map((operation, index) => (
           <button
             key={index}
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 hover:bg-blue-700"
-            onClick={() => handleSelectOperation(operation)}
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
+            onClick={() => setSelectedOperation(operation)}
           >
             {operation.name}
           </button>

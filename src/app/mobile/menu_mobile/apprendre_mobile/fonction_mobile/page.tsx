@@ -73,12 +73,12 @@ export default function AireLearning() {
         </p>
       </div>
 
-      {/* Boutons horizontaux */}
-      <div className="flex justify-center gap-4 mt-8 flex-wrap">
-        {shapes.map((shape, index) => (
+            {/* Boutons des opérations en 2 colonnes de 2 lignes */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+            {shapes.map((shape, index) => (
           <button
             key={index}
-            className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-700 shadow-md"
+            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
             onClick={() => handleSelectShape(shape)}
           >
             {shape.name}
