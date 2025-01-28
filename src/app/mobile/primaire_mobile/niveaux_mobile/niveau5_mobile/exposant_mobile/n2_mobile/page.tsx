@@ -83,7 +83,7 @@ export default function ExponentsPractice() {
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setFeedbackMessage("Toutes les réponses sont correctes!");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
@@ -109,7 +109,7 @@ export default function ExponentsPractice() {
 
       {/* Message de validation */}
       {feedbackMessage && (
-        <div className={`mt-4 ${feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-lg font-bold`}>
+        <div className={`mb-4 text-center  ${feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-lg font-bold`}>
           {feedbackMessage}
         </div>
       )}

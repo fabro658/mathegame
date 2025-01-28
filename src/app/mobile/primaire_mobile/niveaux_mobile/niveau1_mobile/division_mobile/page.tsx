@@ -77,7 +77,7 @@ export default function Division() {
     if (allCorrect) {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
       setFeedbackClass("text-green-500");
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
         setCurrentPage(currentPage + 1);
       } else {
         setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
