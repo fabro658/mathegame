@@ -153,72 +153,55 @@ export default function Multiplication() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+                  />
+                </div>
+              ))}
           </div>
-
           <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
 
-      {/* Validation results */}
       {isValidated && (
-        <div>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </div>
+        <>
+          <p
+            className={`text-xl font-bold ${
+              answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
+              ? "Bravo ! Toutes vos réponses sont correctes."
+              : "Certaines réponses sont incorrectes. Corrigez-les."}
+          </p>
+          <button
+            className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
+            onClick={handleNextPage}
+          >
+            Passer à la série suivante
+          </button>
+        </>
       )}
     </div>
   );
