@@ -44,7 +44,6 @@ export default function Addition() {
     setQuestions(generateQuestions());
   }, []);
   
-
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
