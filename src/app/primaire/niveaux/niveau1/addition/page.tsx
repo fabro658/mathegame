@@ -15,6 +15,7 @@ export default function Addition() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const generateQuestions = (): [number, number][] => {
@@ -55,28 +56,37 @@ export default function Addition() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setErrorMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
     const newAnswers = [...answers];
+    let hasError = false;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a + b) {
-        newAnswers[globalIndex] = null;
+        newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
+        hasError = true;
       }
     });
 
     setAnswers(newAnswers);
     setIsValidated(true);
+
+    if (hasError) {
+      setErrorMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else {
+      setErrorMessage(null);
+    }
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setErrorMessage(null);
     }
   };
 
@@ -84,6 +94,7 @@ export default function Addition() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setErrorMessage(null);
     }
   };
 
@@ -126,6 +137,8 @@ export default function Addition() {
       </div>
 
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
+
+      {errorMessage && <p className="text-red-600 mb-4">{errorMessage}</p>}
 
       {!isValidated && (
         <>
