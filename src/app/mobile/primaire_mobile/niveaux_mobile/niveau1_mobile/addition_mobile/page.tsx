@@ -11,18 +11,38 @@ export default function Addition() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
+  // Génération des questions avec une gradation
   useEffect(() => {
     const generateQuestions = () => {
-      const questionsArray: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-        if (index < 10) return [index + 1, index + 1];
-        if (index < 20) return [10 + index + 9, 5 + index + 9];
-        if (index < 30) return [Math.max(10, Math.floor(Math.random() * 41)), Math.floor(Math.random() * 41)];
-        return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)];
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let a: number, b: number;
+
+        if (index < 10) {
+          // Première vague : nombres petits et faciles
+          a = Math.floor(Math.random() * 10) + 1; // [1, 10]
+          b = Math.floor(Math.random() * 10) + 1; // [1, 10]
+        } else if (index < 20) {
+          // Deuxième vague : nombres plus grands et aléatoires
+          const range = 20; // Étendre la plage
+          a = Math.floor(Math.random() * range) + 10; // [10, 30]
+          b = Math.floor(Math.random() * range) + 5; // [5, 25]
+        } else if (index < 30) {
+          // Troisième vague : plus difficile, nombres aléatoires non égaux
+          do {
+            a = Math.floor(Math.random() * 50) + 10; // [10, 60]
+            b = Math.floor(Math.random() * 50) + 10; // [10, 60]
+          } while (a === b); // Éviter les répétitions exactes
+        } else {
+          // Dernière vague : grands nombres
+          a = Math.floor(Math.random() * 100) + 50; // [50, 150]
+          b = Math.floor(Math.random() * 100) + 50; // [50, 150]
+        }
+
+        return [a, b];
       });
-      setQuestions(questionsArray);
     };
 
-    generateQuestions();
+    setQuestions(generateQuestions());
   }, []);
 
   const handleChange = (index: number, value: string) => {
@@ -94,15 +114,13 @@ export default function Addition() {
         </p>
       )}
 
-      {/* Boutons Questions */}
+      {/* Questions */}
       <div className="flex flex-col gap-6 w-full items-center">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
           <div key={index} className="flex justify-center items-center gap-6">
-            {/* Conteneur de la question */}
             <div className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold text-3xl text-center flex-shrink-0">
               {a} + {b} =
             </div>
-            {/* Input pour la réponse */}
             <input
               type="text"
               inputMode="numeric"
