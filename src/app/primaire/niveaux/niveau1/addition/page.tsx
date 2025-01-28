@@ -62,7 +62,7 @@ export default function Addition() {
 
     let hasError = false;
     const newAnswers = [...answers];
-    const incorrect = [];
+    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
