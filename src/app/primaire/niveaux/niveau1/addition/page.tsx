@@ -13,7 +13,7 @@ export default function Addition() {
   const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); // Pour garder une trace des questions incorrectes
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Addition() {
     const parsedValue = parseInt(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setErrorMessage(null); // Réinitialiser les messages d'erreur
+    setFeedbackMessage(null); // Réinitialiser les messages de feedback
   };
 
   const handleValidation = () => {
@@ -56,7 +56,7 @@ export default function Addition() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      setErrorMessage("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -78,23 +78,26 @@ export default function Addition() {
     setIncorrectAnswers(incorrect); // Garder trace des réponses incorrectes
 
     if (hasError) {
-      setErrorMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
     } else {
-      setErrorMessage(null);
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setErrorMessage(null); // Reset error message on page change
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setErrorMessage(null); // Reset error message on page change
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -138,7 +141,17 @@ export default function Addition() {
 
       <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
-      {errorMessage && <p className="text-red-600 mb-4">{errorMessage}</p>}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
       <div className="grid grid-cols-3 gap-6">
         {questions
