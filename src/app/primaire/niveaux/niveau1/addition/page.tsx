@@ -179,7 +179,7 @@ export default function Addition() {
               className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
               disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
             >
-              Suivant
+              Passer à la série suivante
             </button>
           </div>
         </>

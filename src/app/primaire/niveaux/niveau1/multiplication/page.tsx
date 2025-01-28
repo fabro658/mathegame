@@ -5,30 +5,26 @@ import Link from "next/link";
 
 export default function Multiplication() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6; // 3 columns x 2 rows
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions une seule fois lors du montage du composant
+  // Generate questions only once when the component mounts
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       let factor1: number, factor2: number;
 
-      // Niveaux de difficulté progressifs
       if (index < 10) {
-        // Multiplications simples
-        factor1 = Math.floor(Math.random() * 5) + 1; // Entre 1 et 5
+        factor1 = Math.floor(Math.random() * 5) + 1;
         factor2 = Math.floor(Math.random() * 5) + 1;
       } else if (index < 20) {
-        // Multiplications moyennes
-        factor1 = Math.floor(Math.random() * 10) + 1; // Entre 1 et 10
+        factor1 = Math.floor(Math.random() * 10) + 1;
         factor2 = Math.floor(Math.random() * 10) + 1;
       } else {
-        // Multiplications complexes
-        factor1 = Math.floor(Math.random() * 20) + 1; // Entre 1 et 20
+        factor1 = Math.floor(Math.random() * 20) + 1;
         factor2 = Math.floor(Math.random() * 20) + 1;
       }
 
@@ -39,7 +35,6 @@ export default function Multiplication() {
   }, []);
 
   const correctAnswers = questions.map(([factor1, factor2]) => factor1 * factor2);
-
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
 
@@ -92,14 +87,12 @@ export default function Multiplication() {
     }
   };
 
-  // Calcul pour dessiner le cercle de progression
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -113,7 +106,6 @@ export default function Multiplication() {
         Retour
       </Link>
 
-      {/* Barre circulaire */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle
@@ -143,7 +135,7 @@ export default function Multiplication() {
 
       <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
 
-      {/* Questions pour la page actuelle */}
+      {/* Current page questions */}
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 grid-rows-2 gap-6">
@@ -166,7 +158,6 @@ export default function Multiplication() {
             ))}
           </div>
 
-          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
             {currentPage > 0 && (
               <button
@@ -194,9 +185,9 @@ export default function Multiplication() {
         </>
       )}
 
-      {/* Résultats après validation */}
+      {/* Validation results */}
       {isValidated && (
-        <>
+        <div>
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
@@ -227,7 +218,7 @@ export default function Multiplication() {
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );
