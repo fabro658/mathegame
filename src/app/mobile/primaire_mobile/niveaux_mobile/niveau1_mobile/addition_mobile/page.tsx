@@ -11,12 +11,11 @@ export default function Addition() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Génération des questions avec une gradation
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, (_, index): [number, number] => {
         let a: number, b: number;
-
+  
         if (index < 10) {
           // Première vague : nombres petits et faciles
           a = Math.floor(Math.random() * 10) + 1; // [1, 10]
@@ -37,13 +36,14 @@ export default function Addition() {
           a = Math.floor(Math.random() * 100) + 50; // [50, 150]
           b = Math.floor(Math.random() * 100) + 50; // [50, 150]
         }
-
+  
         return [a, b];
       });
     };
-
+  
     setQuestions(generateQuestions());
   }, []);
+  
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
