@@ -13,7 +13,7 @@ export default function Division() {
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
-    const generateQuestions = () => {
+    const generateQuestions = (): [number, number][] => {
       return Array.from({ length: totalQuestions }, (_, index) => {
         let numerator: number, denominator: number;
 
