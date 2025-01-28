@@ -7,37 +7,49 @@ export default function Soustraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
 
-  const [questions, setQuestions] = useState<number[][]>([]);
+  const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Générer les questions une seule fois lors du montage
+  // Générer les questions avec une difficulté progressive
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        if (index < 10) return [index + 1, index + 1];
-        if (index < 20) return [10 + index - 9, 5 + index - 9];
-        if (index < 30) {
-          const a = Math.max(10, Math.floor(Math.random() * 41));
-          const b = Math.floor(Math.random() * 41);
-          return a >= b ? [a, b] : [b, a]; // S'assurer que le résultat est positif
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, (_, index): [number, number] => {
+        let a, b;
+
+        if (index < 10) {
+          // Nombres simples pour les premières questions
+          a = Math.floor(Math.random() * 10) + 1;
+          b = Math.floor(Math.random() * 10) + 1;
+        } else if (index < 20) {
+          // Nombres un peu plus grands
+          a = Math.floor(Math.random() * 20) + 10;
+          b = Math.floor(Math.random() * 15) + 5;
+        } else if (index < 30) {
+          // Nombres intermédiaires
+          a = Math.floor(Math.random() * 50) + 20;
+          b = Math.floor(Math.random() * 40) + 10;
+        } else {
+          // Nombres plus grands
+          a = Math.floor(Math.random() * 100) + 50;
+          b = Math.floor(Math.random() * 80) + 30;
         }
-        const a = 50 + Math.floor(Math.random() * 51);
-        const b = 50 + Math.floor(Math.random() * 51);
-        return a >= b ? [a, b] : [b, a]; // Même logique ici
+
+        // S'assurer que a >= b
+        return a >= b ? [a, b] : [b, a];
       });
     };
 
     setQuestions(generateQuestions());
-  }, []); // [] garantit que cela s'exécute uniquement au montage
+  }, []);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
+    const parsedValue = parseInt(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(""); // Reset feedback message on change
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
   const handleValidation = () => {
@@ -51,7 +63,6 @@ export default function Soustraction() {
     }
 
     let hasErrors = false;
-    let allCorrect = true;
     const newAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
@@ -60,7 +71,6 @@ export default function Soustraction() {
       if (answer !== a - b) {
         newAnswers[globalIndex] = null;
         hasErrors = true;
-        allCorrect = false;
       }
     });
 
@@ -68,15 +78,13 @@ export default function Soustraction() {
 
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-    } else if (allCorrect) {
+    } else {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
-        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+        setFeedbackMessage("Félicitations ! Vous avez terminé toutes les questions.");
       }
-    } else {
-      setFeedbackMessage("");
     }
   };
 
@@ -102,7 +110,9 @@ export default function Soustraction() {
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
-            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+              ? "text-red-500"
+              : "text-green-500"
           }`}
         >
           {feedbackMessage}

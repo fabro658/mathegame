@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Soustraction() {
@@ -16,15 +16,39 @@ export default function Soustraction() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Génération des questions
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-    if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-    if (index < 30) return [10 + Math.floor(Math.random() * 41), Math.floor(Math.random() * 41)]; // Niveau 3
-    if (index < 40) return [20 + Math.floor(Math.random() * 81), 20 + Math.floor(Math.random() * 81)]; // Niveau 4
-    return [50 + Math.floor(Math.random() * 51), 50 + Math.floor(Math.random() * 51)]; // Niveau 5
-  });
+  // Générer les questions avec une difficulté progressive
+  useEffect(() => {
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let a, b;
+
+        if (index < 10) {
+          // Nombres simples pour les premières questions
+          a = Math.floor(Math.random() * 10) + 1;
+          b = Math.floor(Math.random() * 10) + 1;
+        } else if (index < 20) {
+          // Nombres un peu plus grands
+          a = Math.floor(Math.random() * 20) + 10;
+          b = Math.floor(Math.random() * 15) + 5;
+        } else if (index < 30) {
+          // Nombres intermédiaires
+          a = Math.floor(Math.random() * 50) + 20;
+          b = Math.floor(Math.random() * 40) + 10;
+        } else {
+          // Nombres plus grands
+          a = Math.floor(Math.random() * 100) + 50;
+          b = Math.floor(Math.random() * 80) + 30;
+        }
+
+        // S'assurer que a >= b
+        return a >= b ? [a, b] : [b, a];
+      });
+    };
+
+    setQuestions(generateQuestions());
+  }, []);
 
   // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== null).length;
