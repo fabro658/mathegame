@@ -7,7 +7,6 @@ const shapes = [
   { name: "Triangle", sides: 3 },
   { name: "Carré", sides: 4 },
   { name: "Cercle", sides: 0 },
-  { name: "Rectangle", sides: 4 },
   { name: "Pentagone", sides: 5 },
   { name: "Hexagone", sides: 6 },
   { name: "Heptagone", sides: 7 },
@@ -134,7 +133,7 @@ const ShapesPracticePage = () => {
         </div>
 
         {/* Zone des noms des formes */}
-        <div className="grid grid-cols-5 gap-4 mb-12">
+        <div className="grid grid-cols-3 gap-4 mb-12">
           {shapes.map((shape, idx) => (
             <div
               key={idx}

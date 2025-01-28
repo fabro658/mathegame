@@ -112,7 +112,7 @@ export default function PrioOperation() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons en haut */}
       <Link
-        href="/menu/apprendre"
+        href="/mobile/menu_mobile/apprendre_mobile"
         className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
@@ -143,13 +143,12 @@ export default function PrioOperation() {
                 {question}
               </div>
               <input
-                type="text"
-                inputMode="numeric"
-                className="w-24 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg"
-                value={answers[currentPage * questionsPerPage + index] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-              />
-            </div>
+              type="text"
+              className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
           ))}
       </div>
 
