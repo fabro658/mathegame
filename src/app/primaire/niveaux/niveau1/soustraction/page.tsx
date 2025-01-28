@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -85,6 +83,13 @@ export default function Soustraction() {
 
     setAnswers(newAnswers);
     setIsValidated(true);
+
+    // Utilisation de allCorrect pour afficher le message de feedback
+    if (allCorrect) {
+      alert("Bravo ! Toutes les réponses sont correctes.");
+    } else {
+      alert("Certaines réponses sont incorrectes.");
+    }
   };
 
   // Navigation
@@ -154,7 +159,7 @@ export default function Soustraction() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+                />
               </div>
             ))}
           </div>
