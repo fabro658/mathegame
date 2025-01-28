@@ -10,16 +10,15 @@ export default function Addition() {
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  // États
   const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); // Pour garder une trace des questions incorrectes
 
   useEffect(() => {
     const generateQuestions = (): [number, number][] => {
-      return Array.from({ length: totalQuestions }, (_, index): [number, number] => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
         let a, b;
         if (index < 10) {
           a = Math.floor(Math.random() * 10) + 1;
@@ -48,6 +47,7 @@ export default function Addition() {
     const parsedValue = parseInt(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+    setErrorMessage(null); // Réinitialiser les messages d'erreur
   };
 
   const handleValidation = () => {
@@ -60,20 +60,22 @@ export default function Addition() {
       return;
     }
 
-    const newAnswers = [...answers];
     let hasError = false;
+    const newAnswers = [...answers];
+    const incorrect = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
       if (answer !== a + b) {
         newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
+        incorrect.push(globalIndex);
         hasError = true;
       }
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
+    setIncorrectAnswers(incorrect); // Garder trace des réponses incorrectes
 
     if (hasError) {
       setErrorMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
@@ -85,16 +87,14 @@ export default function Addition() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setErrorMessage(null);
+      setErrorMessage(null); // Reset error message on page change
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setErrorMessage(null);
+      setErrorMessage(null); // Reset error message on page change
     }
   };
 
@@ -140,72 +140,52 @@ export default function Addition() {
 
       {errorMessage && <p className="text-red-600 mb-4">{errorMessage}</p>}
 
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions
-              .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(([a, b], index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                    {a} + {b}
-                  </div>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+      <div className="grid grid-cols-3 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(([a, b], index) => {
+            const questionIndex = currentPage * questionsPerPage + index;
+            return (
+              <div key={questionIndex} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                  {a} + {b}
                 </div>
-              ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
+      </div>
 
-      {isValidated && (
-        <>
-          <p
-            className={`text-xl font-bold ${
-              answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-                ? "text-green-600"
-                : "text-red-600"
-            }`}
-          >
-            {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-              ? "Bravo ! Toutes vos réponses sont correctes."
-              : "Certaines réponses sont incorrectes. Corrigez-les."}
-          </p>
-          <button
-            className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
-            onClick={handleNextPage}
-          >
-            Passer à la série suivante
-          </button>
-        </>
-      )}
+      <div className="mt-6 flex gap-4">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }
