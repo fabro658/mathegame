@@ -40,14 +40,6 @@ export default function Page() {
         >
           Deuxième niveau
         </a>
-        <div className="col-span-1 sm:col-span-2 flex justify-center">
-          <a
-            href="/primaire/niveaux/niveau5/exposant/n3"
-            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-          >
-            Troisième niveau
-          </a>
-        </div>
       </div>
     </div>
   );

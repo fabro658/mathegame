@@ -4,11 +4,14 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="bg-white min-h-screen flex flex-col items-center justify-center">
-      {/* Emoji palmier 🌴 */}
-      <div className="absolute top-4 left-4 text-3xl">
-        🌴
-      </div>
+    <div className="relative min-h-screen bg-gray-100">
+      {/* Vague arrondie en bas */}
+      <div
+        className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0"
+        style={{
+          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
+        }}
+      ></div>
 
       {/* Bouton de retour */}
       <Link
@@ -24,7 +27,7 @@ export default function Page() {
       </h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8 justify-center items-center">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8 justify-center items-center mx-auto">
         <a
           href="/primaire/niveaux/niveau3/comparaison"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
@@ -41,7 +44,7 @@ export default function Page() {
           href="/primaire/niveaux/niveau3/comparer_fraction"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
-         COmparaison de fraction
+          Comparaison de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau3/expression_equivalente"

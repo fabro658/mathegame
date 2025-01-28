@@ -13,29 +13,29 @@ export default function Page() {
         Retour
       </Link>
 
-     {/* Conteneur des rectangles sur toute la largeur en bas */}
-<div className="absolute bottom-0 left-0 w-full h-40">
-  {/* Rectangle bleu clair */}
-  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-700"></div>
+      {/* Conteneur des rectangles sur toute la largeur en bas */}
+      <div className="absolute bottom-0 left-0 w-full h-20">
+        {/* Rectangle bleu clair */}
+        <div className="absolute bottom-0 left-0 w-full h-1/4 bg-blue-700"></div>
 
-  {/* Rectangle bleu */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-500"
-    style={{ bottom: "20px" }}
-  ></div>
+        {/* Rectangle bleu */}
+        <div
+          className="absolute bottom-0 left-0 w-full h-1/4 bg-blue-500"
+          style={{ bottom: "10px" }}
+        ></div>
 
-  {/* Rectangle bleu foncé */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-300"
-    style={{ bottom: "40px" }}
-  ></div>
+        {/* Rectangle bleu foncé */}
+        <div
+          className="absolute bottom-0 left-0 w-full h-1/4 bg-blue-300"
+          style={{ bottom: "20px" }}
+        ></div>
 
-  {/* Rectangle bleu très foncé */}
-  <div
-    className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-100"
-    style={{ bottom: "60px" }}
-  ></div>
-</div>
+        {/* Rectangle bleu très foncé */}
+        <div
+          className="absolute bottom-0 left-0 w-full h-1/4 bg-blue-100"
+          style={{ bottom: "30px" }}
+        ></div>
+      </div>
 
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
