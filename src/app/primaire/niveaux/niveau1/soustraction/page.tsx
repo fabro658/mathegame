@@ -12,7 +12,7 @@ export default function Soustraction() {
   const circumference = 2 * Math.PI * radius;
 
   // États
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
@@ -50,14 +50,13 @@ export default function Soustraction() {
   }, []);
 
   // Calcul du pourcentage de progression
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = value;
     setAnswers(newAnswers);
     setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
@@ -67,7 +66,7 @@ export default function Soustraction() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null)) {
+    if (pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
@@ -78,8 +77,8 @@ export default function Soustraction() {
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
-      if (answer !== a - b) {
-        newAnswers[globalIndex] = null;
+      if (parseInt(answer) !== a - b) {
+        newAnswers[globalIndex] = "";
         hasErrors = true;
       }
     });
@@ -170,7 +169,7 @@ export default function Soustraction() {
               type="text"
               inputMode="numeric"
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-              value={answers[currentPage * questionsPerPage + index] || ""}
+              value={answers[currentPage * questionsPerPage + index]}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
           </div>
