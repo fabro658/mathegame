@@ -12,32 +12,31 @@ export default function Division() {
   const [feedbackClass, setFeedbackClass] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
-    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-      let numerator: number, denominator: number;
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let numerator: number, denominator: number;
 
-      // Génération des questions avec des résultats entiers
-      if (index < 10) {
-        // Dénominateur entre 1 et 10
-        denominator = Math.floor(Math.random() * 10) + 1;
-        // Numérateur est un multiple exact du dénominateur
-        numerator = denominator * (Math.floor(Math.random() * 10) + 1);
-      } else if (index < 20) {
-        denominator = Math.floor(Math.random() * 20) + 1; // Dénominateur entre 1 et 20
-        numerator = denominator * (Math.floor(Math.random() * 10) + 1);
-      } else if (index < 30) {
-        denominator = Math.floor(Math.random() * 50) + 1; // Dénominateur entre 1 et 50
-        numerator = denominator * (Math.floor(Math.random() * 5) + 1);
-      } else {
-        denominator = Math.floor(Math.random() * 100) + 1; // Dénominateur entre 1 et 100
-        numerator = denominator * (Math.floor(Math.random() * 3) + 1);
-      }
+        if (index < 10) {
+          // Facile : Dénominateurs entre 1 et 10
+          denominator = Math.floor(Math.random() * 10) + 1;
+          numerator = denominator * (Math.floor(Math.random() * 5) + 1); // Multiples entre 1 et 5
+        } else if (index < 20) {
+          // Intermédiaire : Dénominateurs entre 10 et 20
+          denominator = Math.floor(Math.random() * 10) + 10;
+          numerator = denominator * (Math.floor(Math.random() * 4) + 1); // Multiples entre 1 et 4
+        } else {
+          // Avancé : Dénominateurs entre 20 et 50
+          denominator = Math.floor(Math.random() * 30) + 20;
+          numerator = denominator * (Math.floor(Math.random() * 3) + 1); // Multiples entre 1 et 3
+        }
 
-      return [numerator, denominator];
-    });
+        return [numerator, denominator];
+      });
+    };
 
-    setQuestions(generatedQuestions);
+    const newQuestions = generateQuestions();
+    setQuestions(newQuestions);
   }, []);
 
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
@@ -47,7 +46,7 @@ export default function Division() {
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(""); // Reset feedback message on change
+    setFeedbackMessage("");
   };
 
   const handleValidation = () => {
@@ -77,7 +76,7 @@ export default function Division() {
     if (allCorrect) {
       setFeedbackMessage("Bravo ! Toutes les réponses sont correctes.");
       setFeedbackClass("text-green-500");
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setCurrentPage(currentPage + 1);
       } else {
         setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
@@ -90,7 +89,7 @@ export default function Division() {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Conteneur pour les boutons */}
+      {/* Navigation */}
       <div className="flex justify-between w-full mb-6">
         <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
           className="bg-black text-white py-3 px-8 rounded font-bold">
@@ -108,7 +107,7 @@ export default function Division() {
       {/* Feedback */}
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}
 
-      {/* Questions et réponses */}
+      {/* Questions */}
       <div className="flex flex-col items-center gap-4 w-full">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
           <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
