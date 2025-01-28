@@ -153,9 +153,9 @@ export default function Multiplication() {
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
-                </div>
-              ))}
+                />
+              </div>
+            ))}
           </div>
           <div className="mt-6 flex gap-4">
             <button
@@ -186,12 +186,10 @@ export default function Multiplication() {
         <>
           <p
             className={`text-xl font-bold ${
-              answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-                ? "text-green-600"
-                : "text-red-600"
+              hasPassed ? "text-green-600" : "text-red-600"
             }`}
           >
-            {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
+            {hasPassed
               ? "Bravo ! Toutes vos réponses sont correctes."
               : "Certaines réponses sont incorrectes. Corrigez-les."}
           </p>

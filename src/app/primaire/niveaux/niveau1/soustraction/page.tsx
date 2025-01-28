@@ -14,7 +14,6 @@ export default function Soustraction() {
   // États
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
@@ -86,7 +85,6 @@ export default function Soustraction() {
 
     setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
   };
 
   // Navigation
@@ -94,7 +92,6 @@ export default function Soustraction() {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -102,7 +99,6 @@ export default function Soustraction() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -159,55 +155,55 @@ export default function Soustraction() {
                   value={answers[currentPage * questionsPerPage + index] || ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
                   />
-                  </div>
-                ))}
-            </div>
-            <div className="mt-6 flex gap-4">
-              <button
-                onClick={handlePreviousPage}
-                className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-                disabled={currentPage === 0}
-              >
-                Précédent
-              </button>
-              <button
-                onClick={handleValidation}
-                className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-              >
-                Valider les réponses
-              </button>
-              <button
-                onClick={handleNextPage}
-                className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-                disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-              >
-                Suivant
-              </button>
-            </div>
-          </>
-        )}
-  
-        {isValidated && (
-          <>
-            <p
-              className={`text-xl font-bold ${
-                answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-                  ? "text-green-600"
-                  : "text-red-600"
-              }`}
-            >
-              {answers.every((answer, index) => answer === questions[index][0] + questions[index][1])
-                ? "Bravo ! Toutes vos réponses sont correctes."
-                : "Certaines réponses sont incorrectes. Corrigez-les."}
-            </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 flex gap-4">
             <button
-              className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
-              onClick={handleNextPage}
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === 0}
             >
-              Passer à la série suivante
+              Précédent
             </button>
-          </>
-        )}
-      </div>
-    );
-  }
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+            >
+              Valider les réponses
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
+          </div>
+        </>
+      )}
+
+      {isValidated && (
+        <>
+          <p
+            className={`text-xl font-bold ${
+              answers.every((answer, index) => answer === questions[index][0] - questions[index][1])
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            {answers.every((answer, index) => answer === questions[index][0] - questions[index][1])
+              ? "Bravo ! Toutes vos réponses sont correctes."
+              : "Certaines réponses sont incorrectes. Corrigez-les."}
+          </p>
+          <button
+            className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold"
+            onClick={handleNextPage}
+          >
+            Passer à la série suivante
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
