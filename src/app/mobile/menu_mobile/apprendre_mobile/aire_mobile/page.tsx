@@ -49,6 +49,24 @@ export default function AireLearning() {
         "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
       imageUrl: "/airetrapeze.jpeg",
     },
+    {
+      name: "Cercle",
+      description:
+        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
+      example:
+        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      imageUrl: "/cercle.jpeg",
+    },
+    {
+      name: "Polygone",
+      description:
+        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
+      example:
+        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      imageUrl: "/polygone.jpeg",
+    },
   ];
 
   const handleSelectShape = (shape: Shape): void => {
@@ -67,7 +85,7 @@ export default function AireLearning() {
       {/* Titre et sous-titre */}
       <div className="text-center mb-8 mt-16">
         <h1 className="text-3xl font-bold text-center mt-8 mb-4">Calculer l&apos;aire</h1>
-        <p className="text-lg text-center mb-6">Sélectionne une opération pour apprendre à calculer l&apos;aire
+        <p className="text-lg text-center mb-6">Sélectionne une forme pour apprendre à calculer l&apos;aire
         </p>
       </div>
 

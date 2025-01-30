@@ -25,20 +25,6 @@ export default function ExponentsLearning() {
       imageUrl: "/images/multiplication.png",
     },
     {
-      name: "Division d'exposants",
-      description: "Lorsque les bases sont identiques, on soustrait les exposants.",
-      formula: "aⁿ ÷ aᵐ = aⁿ⁻ᵐ",
-      example: "Exemple : 2⁵ ÷ 2² = 2⁵⁻² = 2³ = 8",
-      imageUrl: "/images/division.png",
-    },
-    {
-      name: "Puissance d'une puissance",
-      description: "On multiplie les exposants lorsqu'une puissance est élevée à une autre.",
-      formula: "(aⁿ)ᵐ = aⁿ×ᵐ",
-      example: "Exemple : (2³)² = 2³×² = 2⁶ = 64",
-      imageUrl: "/images/puissance.png",
-    },
-    {
       name: "Exposant zéro",
       description: "Tout nombre élevé à la puissance zéro est égal à 1, sauf 0⁰ qui est indéfini.",
       formula: "a⁰ = 1 (pour a ≠ 0)",
@@ -46,11 +32,25 @@ export default function ExponentsLearning() {
       imageUrl: "/images/exposant-zero.png",
     },
     {
+      name: "Division d'exposants",
+      description: "Lorsque les bases sont identiques, on soustrait les exposants.",
+      formula: "aⁿ ÷ aᵐ = aⁿ⁻ᵐ",
+      example: "Exemple : 2⁵ ÷ 2² = 2⁵⁻² = 2³ = 8",
+      imageUrl: "/images/division.png",
+    },
+    {
       name: "Exposant négatif",
       description: "Un exposant négatif correspond à l'inverse du nombre élevé à l'exposant positif.",
       formula: "a⁻ⁿ = 1 / aⁿ",
       example: "Exemple : 2⁻³ = 1 / 2³ = 1 / 8",
       imageUrl: "/images/exposant-negatif.png",
+    },
+    {
+      name: "Puissance d'une puissance",
+      description: "On multiplie les exposants lorsqu'une puissance est élevée à une autre.",
+      formula: "(aⁿ)ᵐ = aⁿ×ᵐ",
+      example: "Exemple : (2³)² = 2³×² = 2⁶ = 64",
+      imageUrl: "/images/puissance.png",
     },
   ];
 

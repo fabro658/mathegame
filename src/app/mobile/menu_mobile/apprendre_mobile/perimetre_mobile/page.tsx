@@ -45,6 +45,20 @@ export default function PerimetreLearning() {
       example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
       imageUrl: "/images/cercle.png", // Image du cercle
     },
+    {
+      name: "Trapeze",
+      description: "Le périmètre (ou circonférence) d'un cercle est calculé en multipliant le rayon par 2π.",
+      formula: "Périmètre = 2 × π × rayon",
+      example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
+      imageUrl: "/images/trapeze.png", // Image du trapeze
+    },
+    {
+      name: "Polygone",
+      description: "Le périmètre (ou circonférence) d'un cercle est calculé en multipliant le rayon par 2π.",
+      formula: "Périmètre = 2 × π × rayon",
+      example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
+      imageUrl: "/images/polygone.png", // Image du polygone
+    },
   ];
 
   const handleSelectShape = (shape: Shape): void => {
@@ -63,7 +77,7 @@ export default function PerimetreLearning() {
       {/* Titre et sous-titre */}
       <div className="text-center mb-8 mt-16">
         <h1 className="text-3xl font-bold text-center mt-8 mb-4">Calculer le périmètre</h1>
-        <p className="text-lg text-center mb-6">Sélectionne une forme</p>
+        <p className="text-lg text-center mb-6">Sélectionne une forme pour apprendre a calculer le périmetre</p>
       </div>
 
        {/* Boutons des opérations en 2 colonnes de 2 lignes */}
