@@ -45,34 +45,6 @@ export default function Niveau1() {
             Comparer
           </div>
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/approx_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Approximer
-          </div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expo_sqrt_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Les exposants et les racines
-          </div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobilepriooperation_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Priorité d&apos;opération
-          </div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/egalite_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Relation d&apos;égalité
-          </div>
-        </Link>
-      </div>
-      {/* Vague arrondie en bas */}
-      <div
-        className="absolute bottom-0 w-screen h-[100px] bg-yellow-500 z-0"
-        style={{
-          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
-        }}
-      >
       </div>
     </div>
   );
