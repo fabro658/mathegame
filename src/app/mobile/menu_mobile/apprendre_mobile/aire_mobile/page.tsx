@@ -51,22 +51,18 @@ export default function AireLearning() {
     },
     {
       name: "Cercle",
-      description:
-        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
-      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example:
-        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/cercle.jpeg",
+      description: "L'aire d'un cercle est calculée en utilisant la formule π multiplié par le carré du rayon.",
+      formula: "Aire = π × rayon²",
+      example: "Si le rayon est de 5 cm, l'aire est : π × 5² = 25π cm² ≈ 78.54 cm²",
+      imageUrl: "/cercle.jpeg"
     },
     {
       name: "Polygone",
-      description:
-        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
-      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example:
-        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/polygone.jpeg",
-    },
+      description: "L'aire d'un polygone régulier est calculée en utilisant la formule : (périmètre × apothème) ÷ 2.",
+      formula: "Aire = (périmètre × apothème) ÷ 2",
+      example: "Si le périmètre est de 24 cm et l'apothème est de 5 cm, l'aire est : (24 × 5) ÷ 2 = 60 cm²",
+      imageUrl: "/polygone.jpeg"
+    }
   ];
 
   const handleSelectShape = (shape: Shape): void => {

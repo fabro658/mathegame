@@ -47,18 +47,18 @@ export default function PerimetreLearning() {
     },
     {
       name: "Trapeze",
-      description: "Le périmètre (ou circonférence) d'un cercle est calculé en multipliant le rayon par 2π.",
-      formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
-      imageUrl: "/images/trapeze.png", // Image du trapeze
+      description: "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
+      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
+      example: "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
+      imageUrl: "/images/trapeze.png"
     },
     {
       name: "Polygone",
-      description: "Le périmètre (ou circonférence) d'un cercle est calculé en multipliant le rayon par 2π.",
-      formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
-      imageUrl: "/images/polygone.png", // Image du polygone
-    },
+      description: "Le périmètre d'un polygone régulier est calculé en multipliant le nombre de côtés par la longueur d'un côté.",
+      formula: "Périmètre = nombre_de_côtés × longueur_d'un_côté",
+      example: "Si un polygone a 6 côtés et chaque côté mesure 4 cm, le périmètre est : 6 × 4 = 24 cm",
+      imageUrl: "/images/polygone.png"
+    }
   ];
 
   const handleSelectShape = (shape: Shape): void => {

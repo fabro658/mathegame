@@ -20,47 +20,47 @@ export default function Niveau1() {
       
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
-        <Link href="/secondaire/niveaux/niveau1/sommes">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/sommes_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Sommes
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/difference">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/difference_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Différence
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/produit">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/produit_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Produit
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/quotient">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/quotient_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Quotient
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/comparaison">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/comparaison_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Comparer
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/approx">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/approx_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Approximer
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/expo_sqrt">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expo_sqrt_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Les exposants et les racines
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/priooperation">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobilepriooperation_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Priorité d&apos;opération
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/egalite">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/egalite_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Relation d&apos;égalité
           </div>
