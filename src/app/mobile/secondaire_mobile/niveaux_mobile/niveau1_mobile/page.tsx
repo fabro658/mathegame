@@ -19,7 +19,7 @@ export default function Niveau1() {
       </div>
       
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+      <div className="flex flex-col gap-4">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/sommes_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
             Sommes
