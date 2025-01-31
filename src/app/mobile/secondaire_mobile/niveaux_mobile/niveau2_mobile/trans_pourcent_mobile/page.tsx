@@ -106,13 +106,6 @@ export default function ConversionDecimale() {
   };
 
   const completedAnswers = answers.filter((answer) => answer.trim() !== "").length;
-  const completionPercentage = Math.round(
-    (completedAnswers / totalQuestions) * 100
-  );
-
-  const radius = 50; // Rayon pour la barre circulaire
-  const strokeWidth = 10; // Largeur de la barre
-  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -128,8 +121,6 @@ export default function ConversionDecimale() {
       >
         Retour
       </Link>
-
-
 
       <h1 className="text-3xl font-bold mb-6">
         Questions sur les conversions en décimale
@@ -163,7 +154,7 @@ export default function ConversionDecimale() {
               ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex flex-col gap-4 items-center w-full max-w-md">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"

@@ -52,7 +52,7 @@ export default function FractionsReduites() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
     const correctAnswers = questions
-    .slice(startIndex, endIndex)
+      .slice(startIndex, endIndex)
       .map((q) => q.correctAnswer);
 
     const allAnswersFilled = pageAnswers.every((answer) => answer.trim() !== "");
@@ -92,16 +92,13 @@ export default function FractionsReduites() {
   };
 
   const completedAnswers = answers.filter((answer) => answer.trim() !== "").length;
-  const completionPercentage = Math.round(
-    (completedAnswers / totalQuestions) * 100
-  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
         href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-        >
+      >
         Apprendre
       </Link>
       <Link
@@ -143,7 +140,7 @@ export default function FractionsReduites() {
               ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex flex-col gap-4 items-center w-full max-w-md">
             <button
               onClick={handlePreviousPage}
               className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
@@ -168,7 +165,7 @@ export default function FractionsReduites() {
         </>
       )}
 
-{isValidated && (
+      {isValidated && (
         <>
           {hasPassed ? (
             <div>
