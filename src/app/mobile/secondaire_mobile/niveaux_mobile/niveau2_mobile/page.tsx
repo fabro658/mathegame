@@ -21,33 +21,33 @@ export default function Niveau2() {
       {/* Boutons centrés */}
       <div className="flex flex-col gap-6 items-center w-full max-w-md">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/additionfraction_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Addition de fraction
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Addition de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/soustractionfraction_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Soustraction de fraction
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Soustraction de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/multiplicationfraction_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Multiplication de fraction
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Multiplication de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/divisionfraction_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Division de fraction
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Division de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/trans_pourcent_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Transformation
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Transformation
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/approx_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-md w-full text-center">
-            Approximation
+        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        Approximation
           </div>
         </Link>
       </div>

@@ -5,40 +5,36 @@ import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions une seule fois lors du montage du composant
-  useEffect(() => {
-    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-      if (index < 12) {
-        // 12 premières questions : 2 chiffres (10-99)
-        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
-      } else if (index < 24) {
-        // 12 suivantes : 3 chiffres (100-999)
-        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
-      } else {
-        // Dernières : 4 chiffres (1000-9999)
-        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
-      }
-    });
-    setQuestions(generatedQuestions);
-  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
-
-  const correctAnswers = questions.map(([num1, num2]) => num1 + num2);
-
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.floor((completedAnswers / totalQuestions) * 100);
-
+    // Générer les questions une seule fois lors du montage du composant
+    useEffect(() => {
+      const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+        if (index < 12) {
+          // 12 premières questions : 2 chiffres (10-99)
+          return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
+        } else if (index < 24) {
+          // 12 suivantes : 3 chiffres (100-999)
+          return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+        } else {
+          // Dernières : 4 chiffres (1000-9999)
+          return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+        }
+      });
+      setQuestions(generatedQuestions);
+    }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
+  
+  
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Reset feedback message on change
   };
 
   const handleValidation = () => {
@@ -47,179 +43,86 @@ export default function Addition() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
+    let hasErrors = false;
     const newAnswers = [...answers];
-    let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
-        allCorrect = false;
+      const [a, b] = questions[globalIndex];
+      if (answer !== a + b) {
         newAnswers[globalIndex] = null;
+        hasErrors = true;
       }
     });
 
     setAnswers(newAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
-  };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
-    }
-  };
-
-  // Calcul pour dessiner le cercle de progression
-  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
-  const strokeWidth = 10; // Définir la largeur du cercle
-  const circumference = 2 * Math.PI * radius;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
-      <Link
-        href="/menu/apprendre/operation arythmetique"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/secondaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
+      {/* Navigation Buttons */}
+      <div className="flex justify-between w-full mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile">
+          <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
+        </Link>
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile">
+          <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">Retour</div>
+        </Link>
+      </div>
+      {/* Title */}
+      <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
-      {/* Barre circulaire */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
+
+      {/* Questions */}
+      <div className="flex flex-col gap-6 w-full items-center">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+          <div key={index} className="flex justify-center items-center gap-6">
+            <div className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold text-3xl text-center flex-shrink-0">
+              {a} + {b} =
+            </div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="w-24 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg flex-shrink-0"
+              value={answers[currentPage * questionsPerPage + index] ?? ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Sommes</h1>
-
-      {/* Questions pour la page actuelle */}
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 grid-rows-2 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([num1, num2], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {num1} + {num2}
-                </button>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Boutons de validation et navigation */}
-          <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-            >
-              Valider les réponses
-            </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
-          </div>
-        </>
-      )}
-
-      {/* Résultats après validation */}
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      {/* Validate Button */}
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }
+
