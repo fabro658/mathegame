@@ -12,32 +12,31 @@ export default function Division() {
   const [feedbackClass, setFeedbackClass] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
- // Générer les questions une seule fois lors du montage du composant
- useEffect(() => {
-  const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-    let numerator: number, denominator: number;
+  // Générer les questions une seule fois lors du montage du composant
+  useEffect(() => {
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+      let numerator: number, denominator: number;
 
-    // Les premières questions avec des dénominateurs simples
-    if (index < 10) {
-      denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
-      numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
-    } else if (index < 20) {
-      numerator = Math.floor(Math.random() * 100) + 1;
-      denominator = Math.floor(Math.random() * 10) + 1;
-    } else if (index < 30) {
-      numerator = Math.floor(Math.random() * 1000) + 1; // Numérateur entre 1 et 1000
-      denominator = Math.floor(Math.random() * 50) + 1; // Dénominateur entre 1 et 50
-    } else {
-      numerator = Math.floor(Math.random() * 10000) + 1; // Numérateur entre 1 et 10000
-      denominator = Math.floor(Math.random() * 100) + 1; // Dénominateur entre 1 et 100
-    }
+      // Les premières questions avec des dénominateurs simples
+      if (index < 10) {
+        denominator = Math.floor(Math.random() * 10) + 1; // un dénominateur entre 1 et 10
+        numerator = denominator * (Math.floor(Math.random() * 10) + 1); // le numérateur est un multiple du dénominateur
+      } else if (index < 20) {
+        numerator = Math.floor(Math.random() * 100) + 1;
+        denominator = Math.floor(Math.random() * 10) + 1;
+      } else if (index < 30) {
+        numerator = Math.floor(Math.random() * 1000) + 1; // Numérateur entre 1 et 1000
+        denominator = Math.floor(Math.random() * 50) + 1; // Dénominateur entre 1 et 50
+      } else {
+        numerator = Math.floor(Math.random() * 10000) + 1; // Numérateur entre 1 et 10000
+        denominator = Math.floor(Math.random() * 100) + 1; // Dénominateur entre 1 et 100
+      }
 
-    return [numerator, denominator]; // Ici, le type est bien [number, number]
-  });
+      return [numerator, denominator]; // Ici, le type est bien [number, number]
+    });
 
-  setQuestions(generatedQuestions); // Stocker les questions générées dans le state
-}, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
-
+    setQuestions(generatedQuestions); // Stocker les questions générées dans le state
+  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
 
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
@@ -90,13 +89,13 @@ export default function Division() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
       {/* Navigation */}
-      <div className="flex justify-between w-full mb-6">
+      <div className="flex flex-col gap-4 items-center w-full max-w-md mb-6">
         <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
           className="bg-black text-white py-3 px-8 rounded font-bold">
           Apprendre
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile">
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>

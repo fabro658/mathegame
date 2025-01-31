@@ -73,13 +73,13 @@ export default function Multiplication() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
       {/* Conteneur pour les boutons */}
-      <div className="flex justify-between w-full mb-6">
-      <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
-        className="bg-black text-white py-3 px-8 rounded font-bold">
+      <div className="flex flex-col gap-4 items-center w-full max-w-md mb-6">
+        <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
+          className="bg-black text-white py-3 px-8 rounded font-bold">
           Apprendre
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile">
-        className="bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>
@@ -94,11 +94,11 @@ export default function Multiplication() {
       <div className="flex flex-col items-center gap-4 w-full">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
           <div key={index} className="flex items-center justify-between gap-6 w-full max-w-md">
-     {/* Conteneur de la question */}
+            {/* Conteneur de la question */}
             <div className="flex-1 bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center">
               {factor1} × {factor2}
             </div>
-      {/* Input pour la réponse */}
+            {/* Input pour la réponse */}
             <input
               type="text"
               inputMode="numeric"
