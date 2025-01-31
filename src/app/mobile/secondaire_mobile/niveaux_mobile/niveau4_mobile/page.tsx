@@ -20,26 +20,26 @@ export default function Niveau4() {
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
-          className="bg-red-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        
           Périmètre
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
+         className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        
           Aire
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/volume_mobile"
-          className="bg-yellow-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
+        className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        
           Volume
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
-          className="bg-blue-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
-        >
+         className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+        
           Géométrie
         </Link>
       </div>

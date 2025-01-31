@@ -83,7 +83,7 @@ export default function Addition() {
         </Link>
       </div>
       {/* Title */}
-      <h1 className="text-4xl font-bold mb-6">Addition</h1>
+      <h1 className="text-4xl font-bold mb-6">Somme</h1>
 
       {/* Feedback */}
       {feedbackMessage && (

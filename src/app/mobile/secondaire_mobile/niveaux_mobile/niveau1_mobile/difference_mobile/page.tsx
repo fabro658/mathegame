@@ -100,7 +100,7 @@ export default function Soustraction() {
         </Link>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
+      <h1 className="text-4xl font-bold mb-6">Différence</h1>
 
       {feedbackMessage && (
         <p

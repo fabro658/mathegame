@@ -128,7 +128,7 @@ export default function AdditionFractions() {
         Apprendre
       </Link>
       <Link
-        href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+        href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

@@ -88,20 +88,23 @@ export default function Division() {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Navigation */}
-      <div className="flex flex-col gap-4 items-center w-full max-w-md mb-6">
-        <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile" 
-          className="bg-black text-white py-3 px-8 rounded font-bold">
+      <div className="flex justify-between w-full mb-6">
+        <Link
+          href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"
+          className="bg-black text-white py-3 px-8 rounded font-bold"
+        >
           Apprendre
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+        <Link
+         href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        >
           Retour
         </Link>
       </div>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-6">Division</h1>
+      <h1 className="text-4xl font-bold mb-6">Quotient</h1>
 
       {/* Feedback */}
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackClass}`}>{feedbackMessage}</p>}

@@ -96,10 +96,6 @@ export default function FractionsReduites() {
     (completedAnswers / totalQuestions) * 100
   );
 
-  const radius = 50; // Rayon pour la barre circulaire
-  const strokeWidth = 10; // Largeur de la barre
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
@@ -109,42 +105,11 @@ export default function FractionsReduites() {
         Apprendre
       </Link>
       <Link
-        href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+        href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
-
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={
-              circumference - (circumference * completionPercentage) / 100
-            }
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">
-            {completionPercentage}%
-          </span>
-        </div>
-      </div>
 
       <h1 className="text-3xl font-bold mb-6">
         Questions sur les fractions réduites
