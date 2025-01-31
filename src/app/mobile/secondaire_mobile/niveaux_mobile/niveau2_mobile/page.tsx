@@ -5,7 +5,7 @@ export default function Niveau2() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Bouton Retour */}
       <Link
-        href="/secondaire/"
+        href="/mobile/secondaire_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
@@ -21,33 +21,33 @@ export default function Niveau2() {
       {/* Boutons centrés */}
       <div className="flex flex-col gap-6 items-center w-full max-w-md">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/additionfraction_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Addition de fraction
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Addition de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/soustractionfraction_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Soustraction de fraction
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Soustraction de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/multiplicationfraction_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Multiplication de fraction
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Multiplication de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/divisionfraction_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Division de fraction
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Division de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/trans_pourcent_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Transformation
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Transformation
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/approx_mobile">
-        <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-        Approximation
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+            Approximation
           </div>
         </Link>
       </div>

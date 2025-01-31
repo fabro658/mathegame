@@ -5,7 +5,7 @@ export default function Niveau1() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Bouton Retour */}
       <Link
-        href="/secondaire/"
+        href="/mobile/secondaire_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
