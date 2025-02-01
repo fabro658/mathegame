@@ -17,23 +17,20 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
-  const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const handleChange = (index: number, value: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[currentShapes + index] = value.trim();
+    updatedAnswers[index] = value.trim();
     setAnswers(updatedAnswers);
     setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
-    const startIdx = currentShapes;
-    const endIdx = currentShapes + 3;
     const errors: number[] = [];
 
-    for (let i = startIdx; i < endIdx; i++) {
+    for (let i = 0; i < shapes.length; i++) {
       if (answers[i]?.toLowerCase() !== shapes[i].name.toLowerCase()) {
         errors.push(i);
       }
@@ -41,8 +38,7 @@ const ShapesPracticePage = () => {
 
     if (errors.length === 0) {
       setErrorIndices([]);
-      setFeedbackMessage("Toutes les réponses sont correctes ! Passons à la série suivante.");
-      setTimeout(() => handleNext(), 2000); // Avance après 2 secondes
+      setFeedbackMessage("Toutes les réponses sont correctes !");
     } else {
       setErrorIndices(errors);
       setFeedbackMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
@@ -52,15 +48,6 @@ const ShapesPracticePage = () => {
       });
       setAnswers(updatedAnswers);
     }
-  };
-
-  const handleNext = () => {
-    setCurrentShapes((prev) => (prev + 3) % shapes.length);
-    setFeedbackMessage(null); // Réinitialiser le message
-  };
-
-  const handlePrevious = () => {
-    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
   const drawShape = (sides: number) => {
@@ -112,48 +99,31 @@ const ShapesPracticePage = () => {
         </div>
       )}
 
-      <div className="flex flex-col items-center gap-8">
-        {/* Zone des formes */}
-        <div className="flex flex-row items-center justify-center mb-12 gap-4">
-          {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
-            <div
-              key={idx}
-              className={`w-32 h-32 border-2 ${errorIndices.includes(currentShapes + idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
-            >
-              {drawShape(shape.sides)}
-              <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-              <input
-                type="text"
-                className="mt-2 text-sm font-bold text-blue-500 text-center"
-                value={answers[currentShapes + idx] || ""}
-                onChange={(e) => handleChange(idx, e.target.value)}
-              />
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {shapes.map((shape, idx) => (
+          <div
+            key={idx}
+            className={`w-32 h-32 border-2 ${errorIndices.includes(idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
+          >
+            {drawShape(shape.sides)}
+            <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
+            <input
+              type="text"
+              className="mt-2 text-sm font-bold text-blue-500 text-center"
+              value={answers[idx] || ""}
+              onChange={(e) => handleChange(idx, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
 
-        {/* Zone des boutons */}
-        <div className="flex gap-4 mt-8">
-          <button
-            onClick={handlePrevious}
-            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
-          >
-            Précédent
-          </button>
-          <button
-            onClick={handleValidation}
-            className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-          >
-            Valider les réponses
-          </button>
-          <button
-            onClick={handleNext}
-            className="bg-gray-400 text-white py-2 px-6 rounded font-bold"
-            disabled={errorIndices.length > 0}
-          >
-            Suivant
-          </button>
-        </div>
+      <div className="flex gap-4 mt-8">
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
       </div>
     </div>
   );
