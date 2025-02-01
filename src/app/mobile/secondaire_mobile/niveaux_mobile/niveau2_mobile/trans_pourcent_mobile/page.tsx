@@ -14,6 +14,7 @@ export default function ConversionDecimale() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   useEffect(() => {
     const generateQuestions = () => {
@@ -72,7 +73,7 @@ export default function ConversionDecimale() {
     const allAnswersFilled = pageAnswers.every((answer) => answer.trim() !== "");
 
     if (!allAnswersFilled) {
-      alert("Veuillez répondre à toutes les questions avant de valider.");
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
@@ -83,11 +84,17 @@ export default function ConversionDecimale() {
     setIsValidated(true);
     setHasPassed(allCorrect);
 
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500);
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses sont correctes !");
+      if (currentPage < totalQuestions / questionsPerPage - 1) {
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+          setIsValidated(false);
+          setFeedbackMessage("");
+        }, 1500);
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
     }
   };
 
@@ -95,6 +102,7 @@ export default function ConversionDecimale() {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setFeedbackMessage("");
     }
   };
 
@@ -102,14 +110,21 @@ export default function ConversionDecimale() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setFeedbackMessage("");
     }
   };
 
+  const handleChange = (index: number, value: string): void => {
+    const newAnswers = [...answers];
+    newAnswers[index] = value;
+    setAnswers(newAnswers);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 text-black pt-16">
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
@@ -120,92 +135,38 @@ export default function ConversionDecimale() {
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-6">
-        Questions sur les conversions en décimale
-      </h1>
+      <h1 className="text-4xl font-bold mb-4">Addition de Fractions</h1>
 
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-6">
-            {questions
-              .slice(
-                currentPage * questionsPerPage,
-                (currentPage + 1) * questionsPerPage
-              )
-              .map(({ question }, index) => (
-                <div key={index} className="flex flex-col items-start gap-2">
-                  <div className="font-bold text-black">{question}</div>
-                  <input
-                    type="text"
-                    value={
-                      answers[currentPage * questionsPerPage + index] || ""
-                    }
-                    onChange={(e) =>
-                      handleAnswer(
-                        currentPage * questionsPerPage + index,
-                        e.target.value
-                      )
-                    }
-                    className="border border-gray-300 p-2 rounded"
-                  />
-                </div>
-              ))}
-          </div>
-
-          <div className="mt-6 flex flex-col gap-4 items-center w-full max-w-md">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
+      {feedbackMessage && (
+        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
+          {feedbackMessage}
+        </p>
       )}
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">
-                Bravo ! Toutes vos réponses sont correctes.
-              </p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">
-                Certaines réponses sont incorrectes. Corrigez-les.
-              </p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      <div className="flex flex-col gap-4 w-full max-w-3xl">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ question }, index) => (
+          <div key={index} className="flex items-center justify-center gap-4 mb-4">
+            <button
+              className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl"
+              disabled
+            >
+              {question}
+            </button>
+            <input
+              type="text"
+              className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex justify-center w-full">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+          Valider les réponses
+        </button>
+      </div>
     </div>
   );
 }

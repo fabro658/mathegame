@@ -21,27 +21,27 @@ export default function Niveau3() {
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 items-center w-full max-w-md">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expo_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
             Exposant
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/racine_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
             Racine
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expression_equivalente_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
             Expression équivalente
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/priooperation_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
             Priorité d&apos;opération
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/comparaison_mobile">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
+          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
             Comparer
           </div>
         </Link>
