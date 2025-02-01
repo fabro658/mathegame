@@ -120,21 +120,21 @@ export default function AdditionFractions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 text-black pt-16">
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative py-6 px-4">
+      <div className="flex justify-between w-full mb-6">
+        <Link 
+          href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile" 
+          className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link 
         href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+      </div>
 
-      <h1 className="text-4xl font-bold mb-4">Addition de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Addition de fractions</h1>
 
       {feedbackMessage && (
         <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
