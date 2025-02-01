@@ -126,29 +126,18 @@ export default function MultiplicationFraction() {
         </p>
       )}
 
-      {/* Questions et réponses en colonnes */}
-      <div className="w-full max-w-3xl flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-          <div key={index} className="flex flex-row items-center gap-4 mb-4 w-full">
-            {/* Question à gauche */}
-            <div className="flex flex-col items-start w-1/2">
-              <button
-                className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full text-center"
-                disabled
-              >
-                {fraction1} × {fraction2}
-              </button>
-            </div>
-
-            {/* Réponse à droite */}
-            <div className="flex flex-col items-start w-1/2">
+          <div key={index} className="flex items-center justify-center gap-4 mb-4">
+            <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl">
+              {fraction1} × {fraction2}
+               </div>
               <input
-                type="text"
-                className="border border-gray-400 p-3 rounded w-full text-center text-black"
-                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                value={answers[currentPage * questionsPerPage + index] || ""}
-              />
-            </div>
+              type="text"
+              className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              value={answers[currentPage * questionsPerPage + index] || ""}
+            />
           </div>
         ))}
       </div>

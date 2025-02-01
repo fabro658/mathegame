@@ -122,12 +122,12 @@ export default function DivisionFraction() {
       <div className="grid grid-cols-1 gap-4 w-full max-w-lg">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center justify-center gap-4 mb-4">
-            <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl w-48 text-center">
-              {fraction1} ÷ {fraction2}
+            <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl">
+            {fraction1} ÷ {fraction2}
             </div>
             <input
               type="text"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-2xl"
+              className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
               value={answers[currentPage * questionsPerPage + index] || ""}
             />
