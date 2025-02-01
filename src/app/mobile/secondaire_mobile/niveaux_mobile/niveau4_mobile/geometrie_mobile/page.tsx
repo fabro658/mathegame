@@ -7,7 +7,6 @@ const shapes = [
   { name: "Triangle", sides: 3 },
   { name: "Carré", sides: 4 },
   { name: "Cercle", sides: 0 },
-  { name: "Rectangle", sides: 4 },
   { name: "Pentagone", sides: 5 },
   { name: "Hexagone", sides: 6 },
   { name: "Heptagone", sides: 7 },
@@ -20,22 +19,13 @@ const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
-  const [progress, setProgress] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  const handleDrop = (index: number, droppedName: string) => {
+  const handleChange = (index: number, value: string) => {
     const updatedAnswers = [...answers];
-    const targetIndex = currentShapes + index;
-
-    // Vérifie si la réponse est correcte dès le drop
-    if (shapes[targetIndex].name === droppedName) {
-      setProgress((prev) => prev + (100 / shapes.length)); // Augmenter la progression
-    } else if (updatedAnswers[targetIndex] && shapes[targetIndex].name === updatedAnswers[targetIndex]) {
-      // Si la réponse est changée d'une bonne réponse à une mauvaise, réduire la progression
-      setProgress((prev) => prev - (100 / shapes.length));
-    }
-
-    updatedAnswers[targetIndex] = droppedName;
+    updatedAnswers[currentShapes + index] = value.trim();
     setAnswers(updatedAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
@@ -44,23 +34,20 @@ const ShapesPracticePage = () => {
     const errors: number[] = [];
 
     for (let i = startIdx; i < endIdx; i++) {
-      if (answers[i] !== shapes[i].name) {
+      if (answers[i]?.toLowerCase() !== shapes[i].name.toLowerCase()) {
         errors.push(i);
       }
     }
 
     if (errors.length === 0) {
-      // Tout est correct, passer à la série suivante
       setErrorIndices([]);
-      handleNext();
+      setFeedbackMessage("Toutes les réponses sont correctes ! Passons à la série suivante.");
+      setTimeout(() => handleNext(), 2000); // Avance après 2 secondes
     } else {
-      // Réinitialiser uniquement les erreurs
       setErrorIndices(errors);
+      setFeedbackMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
       const updatedAnswers = [...answers];
       errors.forEach((idx) => {
-        if (updatedAnswers[idx] === shapes[idx].name) {
-          setProgress((prev) => prev - (100 / shapes.length)); // Réduire la progression pour les erreurs
-        }
         updatedAnswers[idx] = null;
       });
       setAnswers(updatedAnswers);
@@ -69,6 +56,7 @@ const ShapesPracticePage = () => {
 
   const handleNext = () => {
     setCurrentShapes((prev) => (prev + 3) % shapes.length);
+    setFeedbackMessage(null); // Réinitialiser le message
   };
 
   const handlePrevious = () => {
@@ -103,90 +91,43 @@ const ShapesPracticePage = () => {
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau4"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
-
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * progress) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{Math.round(progress)}%</span>
-        </div>
+      <div className="absolute top-4 left-4">
+        <Link href="/mobile/menu_mobile/apprendre_mobile" className="bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-16">Associer les Noms aux Formes</h1>
+
+      {feedbackMessage && (
+        <div className={`text-lg font-bold ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
+          {feedbackMessage}
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
-        <div className="flex gap-8 justify-center mb-12">
+        <div className="flex flex-row items-center justify-center mb-12 gap-4">
           {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
             <div
               key={idx}
-              className={`w-32 h-32 border-2 ${
-                errorIndices.includes(currentShapes + idx)
-                  ? "border-red-500"
-                  : "border-gray-500"
-              } flex flex-col items-center justify-center`}
-              onDrop={(e) => {
-                e.preventDefault();
-                handleDrop(idx, e.dataTransfer.getData("name"));
-              }}
-              onDragOver={(e) => e.preventDefault()}
+              className={`w-32 h-32 border-2 ${errorIndices.includes(currentShapes + idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
             >
               {drawShape(shape.sides)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-              {answers[currentShapes + idx] && (
-                <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Zone des noms des formes */}
-        <div className="grid grid-cols-5 gap-4 mb-12">
-          {shapes.map((shape, idx) => (
-            <div
-              key={idx}
-              className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
-              draggable
-              onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
-            >
-              {shape.name}
+              <input
+                type="text"
+                className="mt-2 text-sm font-bold text-blue-500 text-center"
+                value={answers[currentShapes + idx] || ""}
+                onChange={(e) => handleChange(idx, e.target.value)}
+              />
             </div>
           ))}
         </div>

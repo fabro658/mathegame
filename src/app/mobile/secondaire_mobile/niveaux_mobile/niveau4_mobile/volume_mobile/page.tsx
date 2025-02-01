@@ -21,22 +21,23 @@ export default function Volume() {
 
         if (shapeType === 0) {
           const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un carré de côté ${side} cm ?`;
-          correctAnswer = side * side;
+          questionText = `Quel est le volume d'un cube de côté ${side} cm ?`;
+          correctAnswer = Math.pow(side, 3); // Volume d'un cube
         } else if (shapeType === 1) {
-          const length = Math.floor(Math.random() * 10) + 1;
-          const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-          correctAnswer = length * width;
+          const radius = Math.floor(Math.random() * 10) + 1;
+          const height = Math.floor(Math.random() * 10) + 1;
+          questionText = `Quel est le volume d'un cylindre de rayon ${radius} cm et de hauteur ${height} cm ? (π = 3.14)`;
+          correctAnswer = Math.PI * Math.pow(radius, 2) * height; // Volume d'un cylindre
         } else if (shapeType === 2) {
           const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
-          correctAnswer = Math.PI * radius * radius;
+          questionText = `Quel est le volume d'une sphère de rayon ${radius} cm ? (π = 3.14)`;
+          correctAnswer = (4 / 3) * Math.PI * Math.pow(radius, 3); // Volume d'une sphère
         } else {
-          const base = Math.floor(Math.random() * 10) + 1;
+          const length = Math.floor(Math.random() * 10) + 1;
+          const width = Math.floor(Math.random() * 10) + 1;
           const height = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quelle est l'aire d'un triangle de base ${base} cm et de hauteur ${height} cm ?`;
-          correctAnswer = 0.5 * base * height;
+          questionText = `Quel est le volume d'un prisme rectangulaire de longueur ${length} cm, largeur ${width} cm et hauteur ${height} cm ?`;
+          correctAnswer = length * width * height; // Volume d'un prisme rectangulaire
         }
 
         return {
