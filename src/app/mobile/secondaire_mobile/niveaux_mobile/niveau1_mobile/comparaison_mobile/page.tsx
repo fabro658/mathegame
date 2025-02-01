@@ -98,7 +98,7 @@ export default function ComparerEntiers() {
       </Link>
 
       {/* Titre avec espacement supplémentaire */}
-      <h1 className="text-3xl font-bold mb-6 mt-16">Comparaison de Nombres Entiers</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-16 text-center">Comparaison de Nombres Entiers</h1>
 
       {!isValidated && (
         <div className="flex flex-col items-center justify-center">

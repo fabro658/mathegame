@@ -11,24 +11,23 @@ export default function Addition() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-    // Générer les questions une seule fois lors du montage du composant
-    useEffect(() => {
-      const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-        if (index < 12) {
-          // 12 premières questions : 2 chiffres (10-99)
-          return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
-        } else if (index < 24) {
-          // 12 suivantes : 3 chiffres (100-999)
-          return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
-        } else {
-          // Dernières : 4 chiffres (1000-9999)
-          return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
-        }
-      });
-      setQuestions(generatedQuestions);
-    }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
-  
-  
+  // Générer les questions une seule fois lors du montage du composant
+  useEffect(() => {
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+      if (index < 12) {
+        // 12 premières questions : 2 chiffres (10-99)
+        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
+      } else if (index < 24) {
+        // 12 suivantes : 3 chiffres (100-999)
+        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+      } else {
+        // Dernières : 4 chiffres (1000-9999)
+        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+      }
+    });
+    setQuestions(generatedQuestions);
+  }, []); // Le tableau vide [] signifie que ce code s'exécutera une seule fois au montage
+
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
@@ -76,14 +75,14 @@ export default function Addition() {
       {/* Navigation Buttons */}
       <div className="flex justify-between w-full mb-6">
         <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile">
-          <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
+          <div className="bg-black text-white py-4 px-10 rounded font-bold w-48 text-center">Apprendre</div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile">
-          <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">Retour</div>
+          <div className="bg-orange-500 text-white py-4 px-10 rounded font-bold w-48 text-center">Retour</div>
         </Link>
       </div>
       {/* Title */}
-      <h1 className="text-4xl font-bold mb-6">Somme</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Somme</h1>
 
       {/* Feedback */}
       {feedbackMessage && (
@@ -108,7 +107,7 @@ export default function Addition() {
             <input
               type="text"
               inputMode="numeric"
-              className="w-24 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg flex-shrink-0"
+              className="w-24 border border-gray-400 py-3 px-4 rounded text-center text-black text-2xl flex-shrink-0"
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
@@ -118,11 +117,10 @@ export default function Addition() {
 
       {/* Validate Button */}
       <div className="mt-6 flex justify-center w-full">
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-4 px-10 rounded font-bold w-48">
           Valider les réponses
         </button>
       </div>
     </div>
   );
 }
-
