@@ -19,36 +19,35 @@ export default function Niveau2() {
       </div>
       
       {/* Boutons centrés */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 w-full max-w-lg">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/additionfraction_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Addition de fraction
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Addition de fraction
           </div>
         </Link>
-        
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/soustractionfraction_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Soustraction de fraction
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Soustraction de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/multiplicationfraction_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Multiplication de fraction
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Multiplication de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/divisionfraction_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Division de fraction
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Division de fraction
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/trans_pourcent_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Transformation
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Transformation
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile/approx_mobile">
-        <div className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-        Approximation
+          <div className="w-full h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
+            Approximation
           </div>
         </Link>
       </div>

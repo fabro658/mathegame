@@ -20,27 +20,27 @@ export default function Niveau3() {
       
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 items-center w-full max-w-md">
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expo_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/expo_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
             Exposant
           </div>
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/racine_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/racine_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
             Racine
           </div>
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/expression_equivalente_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/expression_equivalente_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
             Expression équivalente
           </div>
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/priooperation_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/priooperation_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
             Priorité d&apos;opération
           </div>
         </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile/comparaison_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/comparaison_mobile">
           <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
             Comparer
           </div>

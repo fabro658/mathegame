@@ -17,25 +17,25 @@ export default function Niveau4() {
         Retour
       </Link>
 
-      <div className="flex flex-col gap-8 items-center w-full max-w-md">
+      <div className="flex flex-col gap-6">
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
+          className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
           Périmètre
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
+          className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
           Aire
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/volume_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
+          className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
           Volume
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
+          className="w-48 sm:w-64 md:w-72 h-12 sm:h-16 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
           Géométrie
         </Link>
       </div>
