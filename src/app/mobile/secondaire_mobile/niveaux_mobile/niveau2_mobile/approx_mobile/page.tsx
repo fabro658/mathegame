@@ -5,9 +5,8 @@ import Link from "next/link";
 
 export default function Arrondissement() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6;
 
-  // Fonction pour générer des questions avec contrôle des parenthèses
   const generateQuestions = (type: string) => {
     return Array.from({ length: totalQuestions }, () => {
       const number = Math.random() * 100;
@@ -25,22 +24,19 @@ export default function Arrondissement() {
   const [questions, setQuestions] = useState(generateQuestions("unité"));
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Utilisation du useEffect pour actualiser les questions lors du changement de page
   useEffect(() => {
     const newQuestions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
     setQuestions(newQuestions);
   }, [answers, currentPage]);
 
-  // Gestion des changements de réponse
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
+    setFeedbackMessage("");
   };
 
-  // Validation des réponses sur la page actuelle
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -52,7 +48,7 @@ export default function Arrondissement() {
     }
 
     let allCorrect = true;
-    const newAnswers = [...answers]; // Copie des réponses existantes
+    const newAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
@@ -60,7 +56,7 @@ export default function Arrondissement() {
 
       if (answer !== question.correctAnswer) {
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser la mauvaise réponse
+        newAnswers[globalIndex] = null;
       }
     });
 
@@ -77,16 +73,10 @@ export default function Arrondissement() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative py-6 px-4">
       <div className="flex justify-between w-full mb-6">
-        <Link 
-          href="/menu/apprendre"
-          className="bg-black text-white py-3 px-8 rounded font-bold"
-        >
+        <Link href="/menu/apprendre" className="bg-black text-white py-3 px-8 rounded font-bold">
           Apprendre
         </Link>
-        <Link 
-          href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile"
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>
@@ -121,6 +111,12 @@ export default function Arrondissement() {
           Valider les réponses
         </button>
       </div>
+
+      {isValidated && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
+        <button onClick={() => setCurrentPage(currentPage + 1)} className="bg-green-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs mt-6">
+          Aller à la page suivante
+        </button>
+      )}
     </div>
   );
 }
