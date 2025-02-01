@@ -42,17 +42,7 @@ export default function Secondaire_mobile() {
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau5_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Géométrie
-          </div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau6_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Géométrie analytique
-          </div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau7_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Algebre
+            Algèbre
           </div>
         </Link>
         </div>

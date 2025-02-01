@@ -116,7 +116,7 @@ export default function Volume() {
         Retour
       </Link>
       
-      <h1 className="text-3xl font-bold mb-6">Questions sur l&#39;aire</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur le volume</h1>
 
       {feedbackMessage && (
         <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
