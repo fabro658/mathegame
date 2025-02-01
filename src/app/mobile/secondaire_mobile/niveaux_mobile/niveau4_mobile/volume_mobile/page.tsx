@@ -126,14 +126,14 @@ export default function Volume() {
       )}
 
       {/* Affichage des questions */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-            <div className="font-bold text-black">{questionText}</div>
+          <div key={index} className="flex flex-col items-center gap-2">
+            <div className="font-bold text-black text-center">{questionText}</div>
             <input
               type="text"
               inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-64 h-12 text-center text-black text-lg mx-auto"
+              className="border border-gray-400 p-4 rounded w-64 h-12 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
