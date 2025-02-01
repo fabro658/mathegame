@@ -17,20 +17,25 @@ const shapes = [
 
 const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
+  const [currentPage, setCurrentPage] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
+  const questionsPerPage = 3;
+
   const handleChange = (index: number, value: string) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[index] = value.trim();
+    updatedAnswers[currentPage * questionsPerPage + index] = value.trim();
     setAnswers(updatedAnswers);
     setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
   };
 
   const handleValidation = () => {
+    const startIdx = currentPage * questionsPerPage;
+    const endIdx = startIdx + questionsPerPage;
     const errors: number[] = [];
 
-    for (let i = 0; i < shapes.length; i++) {
+    for (let i = startIdx; i < endIdx; i++) {
       if (answers[i]?.toLowerCase() !== shapes[i].name.toLowerCase()) {
         errors.push(i);
       }
@@ -39,6 +44,9 @@ const ShapesPracticePage = () => {
     if (errors.length === 0) {
       setErrorIndices([]);
       setFeedbackMessage("Toutes les réponses sont correctes !");
+      if (currentPage < Math.floor(shapes.length / questionsPerPage)) {
+        setTimeout(() => setCurrentPage(currentPage + 1), 2000); // Avance après 2 secondes
+      }
     } else {
       setErrorIndices(errors);
       setFeedbackMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
@@ -100,17 +108,17 @@ const ShapesPracticePage = () => {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        {shapes.map((shape, idx) => (
+        {shapes.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((shape, idx) => (
           <div
             key={idx}
-            className={`w-32 h-32 border-2 ${errorIndices.includes(idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
+            className={`w-32 h-32 border-2 ${errorIndices.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}
           >
             {drawShape(shape.sides)}
             <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
             <input
               type="text"
               className="mt-2 text-sm font-bold text-blue-500 text-center"
-              value={answers[idx] || ""}
+              value={answers[currentPage * questionsPerPage + idx] || ""}
               onChange={(e) => handleChange(idx, e.target.value)}
             />
           </div>
