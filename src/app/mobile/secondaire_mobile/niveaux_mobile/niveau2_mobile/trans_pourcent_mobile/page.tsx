@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ConversionDecimale() {
   const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Nombre de questions par vague
+  const questionsPerPage = 6; // Nombre de questions par vague
 
   const [questions, setQuestions] = useState<
     { question: string; correctAnswer: string }[]
@@ -107,7 +107,7 @@ export default function ConversionDecimale() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-4">Addition de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-4">Transformer en nombre décimale</h1>
 
       {feedbackMessage && (
         <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>

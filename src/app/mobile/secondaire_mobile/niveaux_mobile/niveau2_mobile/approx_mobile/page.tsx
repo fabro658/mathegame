@@ -7,6 +7,7 @@ export default function Arrondissement() {
   const totalQuestions = 36;
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
 
+  // Fonction pour générer des questions avec contrôle des parenthèses
   const generateQuestions = (type: string) => {
     return Array.from({ length: totalQuestions }, () => {
       const number = Math.random() * 100;
@@ -24,12 +25,13 @@ export default function Arrondissement() {
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState(generateQuestions("unité"));
 
-  // UseEffect pour régénérer les questions chaque fois que la page ou la réponse change
+  // Utilisation du useEffect pour actualiser les questions lors du changement de page
   useEffect(() => {
     const newQuestions = generateQuestions(currentPage % 2 === 0 ? "unité" : "dixième");
     setQuestions(newQuestions);
   }, [answers, currentPage]);
 
+  // Gestion des changements de réponse
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
@@ -37,6 +39,7 @@ export default function Arrondissement() {
     setAnswers(newAnswers);
   };
 
+  // Validation des réponses sur la page actuelle
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -103,34 +106,6 @@ export default function Arrondissement() {
         Retour
       </Link>
 
-      {/* Barre circulaire */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
       <h1 className="text-4xl font-bold mb-6">Arrondissement</h1>
 
       {!isValidated && (
@@ -152,54 +127,11 @@ export default function Arrondissement() {
             ))}
           </div>
 
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-            >
+          <div className="mt-6 flex justify-center w-full">
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
               Valider les réponses
             </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
           </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
         </>
       )}
     </div>
