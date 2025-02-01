@@ -142,18 +142,18 @@ export default function AdditionFractions() {
         </p>
       )}
 
-      <div className="flex flex-col gap-4 w-full max-w-3xl">
+      <div className="flex flex-col items-center gap-4 w-full">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-          <div key={index} className="flex items-center justify-center gap-4 mb-4">
+          <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
             <button
-              className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl"
+             className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center"
               disabled
             >
               {fraction1} + {fraction2}
             </button>
             <input
               type="text"
-              className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
+              className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
