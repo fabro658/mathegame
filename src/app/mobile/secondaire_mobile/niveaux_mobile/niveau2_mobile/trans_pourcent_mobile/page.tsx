@@ -11,8 +11,6 @@ export default function ConversionDecimale() {
     { question: string; correctAnswer: string }[]
   >([]);
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
@@ -56,12 +54,6 @@ export default function ConversionDecimale() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, answer: string): void => {
-    const newAnswers = [...answers];
-    newAnswers[index] = answer;
-    setAnswers(newAnswers);
-  };
-
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -81,36 +73,16 @@ export default function ConversionDecimale() {
       (answer, idx) => answer.trim() === correctAnswers[idx]
     );
 
-    setIsValidated(true);
-    setHasPassed(allCorrect);
-
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses sont correctes !");
       if (currentPage < totalQuestions / questionsPerPage - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
-          setIsValidated(false);
           setFeedbackMessage("");
         }, 1500);
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-    }
-  };
-
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setFeedbackMessage("");
-    }
-  };
-
-  const handlePreviousPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setFeedbackMessage("");
     }
   };
 
