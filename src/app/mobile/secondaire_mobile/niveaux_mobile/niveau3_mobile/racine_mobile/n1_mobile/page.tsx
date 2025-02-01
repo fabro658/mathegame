@@ -16,9 +16,9 @@ export default function SquareRootsPractice() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        // Générer un nombre carré parfait entre 1 et 10 pour garantir que la racine soit un entier
+        // Générer un nombre carré parfait entre 1 et 100 pour garantir que la racine soit un entier
         const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
-        const correctAnswer = Math.sqrt(base ** 2).toString(); // Racine carrée de base^2
+        const correctAnswer = base.toString(); // La racine carrée de base^2 est base
 
         const questionText = `Quelle est la racine carrée de ${base ** 2} ?`;
         return { questionText, correctAnswer };
