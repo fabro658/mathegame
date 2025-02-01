@@ -20,6 +20,7 @@ const ShapesPracticePage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [showTitle, setShowTitle] = useState(true);
 
   const questionsPerPage = 3;
 
@@ -28,6 +29,7 @@ const ShapesPracticePage = () => {
     updatedAnswers[currentPage * questionsPerPage + index] = value.trim();
     setAnswers(updatedAnswers);
     setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
+    setShowTitle(false); // Masquer le titre lors de la saisie d'une nouvelle réponse
   };
 
   const handleValidation = () => {
@@ -44,9 +46,16 @@ const ShapesPracticePage = () => {
     if (errors.length === 0) {
       setErrorIndices([]);
       setFeedbackMessage("Toutes les réponses sont correctes !");
-      if (currentPage < Math.floor(shapes.length / questionsPerPage)) {
-        setTimeout(() => setCurrentPage(currentPage + 1), 2000); // Avance après 2 secondes
-      }
+      setTimeout(() => {
+        const updatedAnswers = [...answers];
+        for (let i = startIdx; i < endIdx; i++) {
+          updatedAnswers[i] = null; // Effacer les réponses
+        }
+        setAnswers(updatedAnswers);
+        if (currentPage < Math.floor(shapes.length / questionsPerPage)) {
+          setCurrentPage(currentPage + 1); // Passer à la série suivante
+        }
+      }, 2000); // Effacer les réponses après 2 secondes
     } else {
       setErrorIndices(errors);
       setFeedbackMessage("Certaines réponses sont incorrectes ou manquantes. Veuillez réessayer.");
@@ -99,7 +108,7 @@ const ShapesPracticePage = () => {
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6 mt-16">Associer les Noms aux Formes</h1>
+      {showTitle && <h1 className="text-3xl font-bold mb-6 mt-16 text-center">Associer les Noms aux Formes</h1>}
 
       {feedbackMessage && (
         <div className={`text-lg font-bold ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
