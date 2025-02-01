@@ -107,7 +107,7 @@ export default function ConversionDecimale() {
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-4">Transformer en nombre décimale</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Transformer en nombre décimale</h1>
 
       {feedbackMessage && (
         <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>

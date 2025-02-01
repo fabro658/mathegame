@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function ExponentsPractice() {
+export default function SquareRootsPractice() {
   const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 6; // Questions affichées par page (2 colonnes x 3 lignes)
+  const questionsPerPage = 6; // Questions affichées par page
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
@@ -15,22 +15,12 @@ export default function ExponentsPractice() {
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      const superscriptMap: Record<string, string> = {
-        0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵",
-        6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹",
-      };
-
       return Array.from({ length: totalQuestions }, () => {
+        // Générer un nombre carré parfait entre 1 et 10 pour garantir que la racine soit un entier
         const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
-        const exponent = 2; // Exposant fixé à 2
-        const correctAnswer = Math.sqrt(base ** exponent).toString();
+        const correctAnswer = Math.sqrt(base ** 2).toString(); // Racine carrée de base^2
 
-        const exponentUnicode = String(exponent)
-          .split("")
-          .map((digit) => superscriptMap[digit])
-          .join("");
-
-        const questionText = `Que vaut x si x${exponentUnicode} = ${base ** exponent} ?`;
+        const questionText = `Quelle est la racine carrée de ${base ** 2} ?`;
         return { questionText, correctAnswer };
       });
     };
@@ -97,7 +87,7 @@ export default function ExponentsPractice() {
       </div>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 1</h1>
+      <h1 className="text-3xl font-bold mb-6 mt-16">Niveau 1 - Racines carrées</h1>
 
       {/* Message de validation */}
       {feedbackMessage && (
