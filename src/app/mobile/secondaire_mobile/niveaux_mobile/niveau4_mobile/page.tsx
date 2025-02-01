@@ -12,7 +12,7 @@ export default function Niveau4() {
       
       <Link
         href="/mobile/secondaire_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-4 px-10 rounded font-bold text-lg sm:text-xl"
       >
         Retour
       </Link>
@@ -20,22 +20,22 @@ export default function Niveau4() {
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
           Périmètre
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
           Aire
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/volume_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
           Volume
         </Link>
         <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-6 sm:px-8">
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 w-full font-semibold">
           Géométrie
         </Link>
       </div>
