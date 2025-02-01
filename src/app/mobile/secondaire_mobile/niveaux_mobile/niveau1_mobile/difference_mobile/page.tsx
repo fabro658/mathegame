@@ -114,16 +114,17 @@ export default function Soustraction() {
         </p>
       )}
 
+      {/* Questions */}
       <div className="flex flex-col gap-6 w-full items-center">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={index} className="flex justify-center items-center gap-6">
-            <div className="bg-blue-500 text-white py-3 px-6 rounded-lg font-bold text-3xl text-center flex-shrink-0">
+          <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
               {a} - {b} =
             </div>
             <input
               type="text"
               inputMode="numeric"
-              className="w-24 border border-gray-400 py-2 px-3 rounded text-center text-black text-lg flex-shrink-0"
+              className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
               id={`input-${currentPage * questionsPerPage + index}`}
               value={answers[currentPage * questionsPerPage + index] ?? ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
