@@ -18,11 +18,11 @@ export default function VariableIsolationPractice() {
       return Array.from({ length: totalQuestions }, () => {
         const variable = Math.random() > 0.5 ? "x" : "y";
         const coefficient = Math.floor(Math.random() * 10) + 1; // Coefficient entre 1 et 10
-        const result = Math.floor(Math.random() * 10) + 1; // Résultat entre 1 et 10
-        const correctAnswer = (result / coefficient).toString();
+        const correctAnswer = Math.floor(Math.random() * 10) + 1; // Réponse entre 1 et 10
+        const result = coefficient * correctAnswer; // Résultat pour garantir que la réponse soit un entier positif
 
         const questionText = `Que vaut ${variable} si ${coefficient}${variable} = ${result} ?`;
-        return { questionText, correctAnswer };
+        return { questionText, correctAnswer: correctAnswer.toString() };
       });
     };
 
