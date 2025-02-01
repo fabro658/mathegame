@@ -13,13 +13,13 @@ export default function Page() {
       </Link>
       <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau5_mobile/fonction_mobile"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+           className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
           >
           Fonction
           </Link>
           <Link
           href="/mobile/secondaire_mobile/niveaux_mobile/niveau5_mobile/operationalgebre_mobile"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+           className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
         >
           Oprération algébrique
           </Link>
