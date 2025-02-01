@@ -21,17 +21,17 @@ export default function Niveau2() {
       {/* Boutons centrés */}
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/expo_mobile/n1_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
+          <div className="rounded-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
             Niveau 1
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/expo_mobile/n2_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
+          <div className="rounded-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
             Niveau 2
           </div>
         </Link>
         <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile/expo_mobile/n3_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
+          <div className="rounded-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-lg sm:text-xl h-16 w-full sm:w-72 px-6 sm:px-8 md:w-96">
             Niveau 3
           </div>
         </Link>
