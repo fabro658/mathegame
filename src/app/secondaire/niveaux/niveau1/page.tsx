@@ -45,26 +45,6 @@ export default function Niveau1() {
             Comparer
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/approx">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Approximer
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau1/expo_sqrt">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Les exposants et les racines
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau1/priooperation">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Priorité d&apos;opération
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau1/egalite">
-          <div className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Relation d&apos;égalité
-          </div>
-        </Link>
       </div>
       {/* Vague arrondie en bas */}
       <div

@@ -1,6 +1,6 @@
 import Link from 'next/link'; 
 
-export default function Page() {
+export default function Niveau4() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
       <h1 className="text-4xl font-bold mb-12">Niveau 4 - Choisissez une opération</h1>
@@ -12,16 +12,28 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau4/exposant"
+          href="/niveaux/niveau4/perimetre"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
           >
-          Exposant
+          Périmètre
           </Link>
           <Link
-          href="/niveaux/niveau4/priooperation"
+          href="/niveaux/niveau4/aire"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          >
+          Aire
+          </Link>
+          <Link
+          href="/niveaux/niveau4/volume"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
+          >
+          Volume
+          </Link>
+          <Link
+          href="/niveaux/niveau4/geometrie"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
-          Priorité d&#39;opération
+          Géométrie
           </Link>
         </div>
       </div>
