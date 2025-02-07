@@ -18,8 +18,8 @@ export default function Niveau1() {
         <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">Choisi un sujet!</h2>
       </div>
       
-      {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 absolute right-8 top-1/2 transform -translate-y-1/2 z-0">
+      {/* Grille des boutons */}
+      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
         <Link href="/secondaire/niveaux/niveau1/sommes">
         <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
             Sommes
