@@ -7,8 +7,8 @@ type Question =
   | { type: "compare", numbers: [string, string], correctAnswer: string };
 
 export default function Comparer() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);

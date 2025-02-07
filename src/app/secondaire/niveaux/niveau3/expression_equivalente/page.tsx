@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function EquationsEquivalentes() {
-  const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Nombre de questions par vague
+  const totalQuestions = 36; // Nombre total de questions
+  const questionsPerPage = 6; // Nombre de questions par vague
   const levels = 3; // Nombre de niveaux
 
   const [questions, setQuestions] = useState<
@@ -148,7 +148,7 @@ export default function EquationsEquivalentes() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau1"
+        href="/secondaire/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

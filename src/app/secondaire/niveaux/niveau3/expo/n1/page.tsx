@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsPractice() {
-  const totalQuestions = 30; // Nombre total de questions
+  const totalQuestions = 36; // Nombre total de questions
   const questionsPerPage = 6; // Questions affichées par page (2 colonnes x 3 lignes)
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
@@ -98,13 +98,13 @@ export default function ExponentsPractice() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/exposant"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau1/expo_sqrt"
+        href="/secondaire/niveaux/niveau1/expo"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

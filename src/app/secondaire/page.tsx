@@ -27,7 +27,7 @@ export default function Secondaire() {
         </Link>
         <Link href="/secondaire/niveaux/niveau2">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Algèbre
+            Fraction
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau3">

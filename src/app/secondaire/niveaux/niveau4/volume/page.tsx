@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Volume() {
-  const totalQuestions = 30; // 30 questions au total
+  const totalQuestions = 36; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]); // Typage explicite
@@ -127,13 +127,13 @@ export default function Volume() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/volume"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau3"
+        href="/secondaire/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
