@@ -17,43 +17,43 @@ export default function Niveau1() {
         <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
         <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">Choisi un sujet!</h2>
       </div>
-      
+
       {/* Grille des boutons */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
-        <Link href="/secondaire/niveaux/niveau1/sommes">
-        <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
+        <Link href="/secondaire/niveaux/niveau1/sommes" className="flex items-center justify-center">
+          <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Sommes
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/difference">
-        <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
+        <Link href="/secondaire/niveaux/niveau1/difference" className="flex items-center justify-center">
+          <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Différence
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/produit">
-        <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
+        <Link href="/secondaire/niveaux/niveau1/produit" className="flex items-center justify-center">
+          <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Produit
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/quotient">
-        <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
+        <Link href="/secondaire/niveaux/niveau1/quotient" className="flex items-center justify-center">
+          <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Quotient
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau1/comparaison">
-        <div className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold">
+        <Link href="/secondaire/niveaux/niveau1/comparaison" className="col-span-2 flex items-center justify-center">
+          <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Comparer
           </div>
         </Link>
       </div>
+
       {/* Vague arrondie en bas */}
       <div
         className="absolute bottom-0 w-screen h-[100px] bg-yellow-500 z-0"
         style={{
           clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
         }}
-      >
-      </div>
+      ></div>
     </div>
   );
 }

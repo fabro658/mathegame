@@ -25,25 +25,25 @@ export default function Niveau3() {
           Exposant
         </Link>
         <Link
-          href="/niveaux/niveau3/racine"
+          href="/secondaire/niveaux/niveau3/racine"
           className="bg-white hover:bg-gray-200 text-black font-semibold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
           Racine
         </Link>
         <Link
-          href="/niveaux/niveau3/expression_equivalente"
+          href="/secondaire/niveaux/niveau3/expression_equivalente"
           className="bg-white hover:bg-gray-200 text-black font-semibold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
           Expression équivalente
         </Link>
         <Link
-          href="/niveaux/niveau3/priooperation"
+          href="/secondaire/niveaux/niveau3/priooperation"
           className="bg-white hover:bg-gray-200 text-black font-semibold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
         >
           Priorité d&apos;opération
         </Link>
         <Link
-          href="/niveaux/niveau3/approx"
+          href="/secondaire/niveaux/niveau3/approx"
           className="bg-white hover:bg-gray-200 text-black font-semibold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center col-span-2"
         >
           Approximation

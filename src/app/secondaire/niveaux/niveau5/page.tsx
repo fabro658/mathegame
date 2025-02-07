@@ -12,13 +12,13 @@ export default function Page() {
         Retour
       </Link>
       <Link
-          href="/niveaux/niveau5/fonction"
+          href="/secondaire/niveaux/niveau5/fonction"
           className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
           >
           Fonction
           </Link>
           <Link
-          href="/niveaux/niveau5/isolervariable"
+          href="/secondaire/niveaux/niveau5/isolervariable"
           className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
         >
           Isoler une variable
