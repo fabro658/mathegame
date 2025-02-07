@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Niveau2() {
+export default function Niveau1() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
       {/* Bouton Retour */}
@@ -10,56 +10,53 @@ export default function Niveau2() {
       >
         Retour
       </Link>
-      
-      {/* Titre */}
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
-        Choisissez une opération
-      </h1>
 
-      {/* Affichage des boutons */}
-      <DesktopButtons />
+      {/* Section Titre */}
+      <div className="flex flex-col items-center text-center mb-8">
+        <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Arithmétique</h1>
+        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
+        <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">Choisis un sujet!</h2>
+      </div>
+
+      {/* Grille des boutons */}
+      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
+        <Link
+          href="/niveaux/niveau1/multiplicationfraction"
+         className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Multiplication de fraction
+        </Link>
+        <Link
+          href="/niveaux/niveau1/divisionfraction"
+          className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Division de fraction
+        </Link>
+        <Link
+          href="/niveaux/niveau1/additionfraction"
+          className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Addition de fraction
+        </Link>
+        <Link
+          href="/niveaux/niveau1/soustractionfraction"
+          className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Soustraction de fraction
+        </Link>
+        <Link
+          href="/niveaux/niveau1/trans_pourcent"
+          className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Transformation de nombres
+        </Link>
+        <Link
+          href="/niveaux/niveau1/fractionreduite"
+          className="w-80 sm:w-96 rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl h-14 sm:h-16 px-8 sm:px-10 font-semibold"
+        >
+          Fraction réduite
+        </Link>
+      </div>
     </div>
   );
 }
-
-// Composant pour les boutons
-const DesktopButtons = () => (
-  <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
-    <a
-      href="/niveaux/niveau2/multiplicationfraction"
-      className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Multiplication de fraction
-    </a>
-    <a
-      href="/niveaux/niveau2/divisionfraction"
-      className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Division de fraction
-    </a>
-    <a
-      href="/niveaux/niveau2/additionfraction"
-      className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Addition de fraction
-    </a>
-    <a
-      href="/niveaux/niveau2/soustractionfraction"
-      className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Soustraction de fraction
-    </a>
-    <a
-      href="/niveaux/niveau2/trans_pourcent"
-      className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Transformation de nombres
-    </a>
-    <a
-      href="/niveaux/niveau2/fractionreduite"
-      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-    >
-      Fraction réduite
-    </a>
-  </div>
-);
