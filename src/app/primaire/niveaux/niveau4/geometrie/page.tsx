@@ -161,6 +161,8 @@ const ShapesPracticePage = () => {
 
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
+
+      {/* Feedback */}
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
