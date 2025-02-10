@@ -13,19 +13,24 @@ export default function SoustractionFractions() {
 
   // Simplification des fractions (résultats comme 2/2 = 1)
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    if (numerator === denominator) {
-      return [1, 1]; // Si numérateur = dénominateur, simplifie en 1
+    if (denominator === 0) {
+      return [numerator, denominator]; // Évite la division par zéro
     }
-    return [numerator, denominator];
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
+    return [numerator / divisor, denominator / divisor];
   };
 
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
-        const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
-        const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
-        const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
+        const a1 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 1 (-3 à 3)
+        const b1 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 1 (-3 à 3)
+        const a2 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 2 (-3 à 3)
+        const b2 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 2 (-3 à 3)
+
+        if (b1 === 0) b1 = 1; // Évite la division par zéro
+        if (b2 === 0) b2 = 1; // Évite la division par zéro
 
         const commonDenominator = b1 * b2;
         const numerator1 = a1 * b2;
