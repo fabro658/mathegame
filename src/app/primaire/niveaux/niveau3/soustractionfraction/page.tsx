@@ -6,11 +6,10 @@ import Link from "next/link";
 export default function SoustractionFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
 
   // Simplification des fractions (résultats comme 2/2 = 1)
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
@@ -49,16 +48,49 @@ export default function SoustractionFractions() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
   const handleValidation = (): void => {
-    const allCorrect = answers.every((answer, index) => {
-      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
-      const normalizedCorrectAnswer = normalizeAnswer(questions[index]?.correctAnswer || "");
-      return normalizedAnswer === normalizedCorrectAnswer;
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      return;
+    }
+
+    let hasErrors = false;
+    const newAnswers = [...answers];
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
+      const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
+      const commonDenominator = b1 * b2;
+      const numerator1 = a1 * b2;
+      const numerator2 = a2 * b1;
+      const numeratorResult = numerator1 - numerator2;
+      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+      const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+
+      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+        newAnswers[globalIndex] = "";
+        hasErrors = true;
+      }
     });
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+
+    setAnswers(newAnswers);
+
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+    }
   };
 
   const normalizeAnswer = (answer: string): string => {
@@ -68,86 +100,86 @@ export default function SoustractionFractions() {
   };
 
   const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
-  // Vérifie si toutes les réponses sont remplies sur la page actuelle
-  const areAllAnswersFilled = (): boolean => {
-    return answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).every((answer) => answer !== null && answer.trim() !== "");
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
-      <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre/fraction"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau3" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/primaire/niveaux/niveau3"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Retour
       </Link>
 
-      <h1 className="text-4xl font-bold mb-8">Soustraction de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-6">
-                <button className="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg w-full" disabled>
-                  {fraction1} - {fraction2}
-                </button>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1 || !areAllAnswersFilled()}>
-              Suivant
-            </button>
-          </div>
-        </>
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
       )}
-      
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-2xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-8 bg-blue-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => alert("Vous avez complété toutes les questions !")}>
-                Terminer
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-2xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-8 bg-gray-500 text-white py-3 px-8 rounded-lg font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+
+      {/* Questions et réponses */}
+      <div className="grid grid-cols-2 gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+          <div key={index} className="flex items-center gap-4">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} - {fraction2}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              value={answers[currentPage * questionsPerPage + index]}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex gap-4">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }

@@ -21,6 +21,7 @@ const ShapesPracticePage = () => {
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -36,6 +37,7 @@ const ShapesPracticePage = () => {
 
     updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
   const handleValidation = () => {
@@ -52,6 +54,7 @@ const ShapesPracticePage = () => {
     if (errors.length === 0) {
       // Tout est correct, passer à la série suivante
       setErrorIndices([]);
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
       handleNext();
     } else {
       // Réinitialiser uniquement les erreurs
@@ -64,6 +67,7 @@ const ShapesPracticePage = () => {
         updatedAnswers[idx] = null;
       });
       setAnswers(updatedAnswers);
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
   };
 
@@ -150,6 +154,19 @@ const ShapesPracticePage = () => {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
+
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
