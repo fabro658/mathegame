@@ -45,10 +45,16 @@ const ShapesPracticePage = () => {
     const endIdx = currentShapes + 3;
     const errors: number[] = [];
 
+    // Vérification des réponses
     for (let i = startIdx; i < endIdx; i++) {
       if (answers[i] !== shapes[i].name) {
         errors.push(i);
       }
+    }
+
+    if (answers.slice(startIdx, endIdx).includes(null)) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      return;
     }
 
     if (errors.length === 0) {
