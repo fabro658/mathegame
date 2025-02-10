@@ -25,9 +25,9 @@ export default function SoustractionFractions() {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
         const a1 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 1 (-3 à 3)
-        const b1 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 1 (-3 à 3)
+        let b1 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 1 (-3 à 3)
         const a2 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 2 (-3 à 3)
-        const b2 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 2 (-3 à 3)
+        let b2 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 2 (-3 à 3)
 
         if (b1 === 0) b1 = 1; // Évite la division par zéro
         if (b2 === 0) b2 = 1; // Évite la division par zéro
