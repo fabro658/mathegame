@@ -11,6 +11,7 @@ export default function MultiplicationFraction() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
 
   // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
@@ -58,7 +59,7 @@ export default function MultiplicationFraction() {
   const correctAnswers = questions.map((q) => q.correctAnswer); // Réponses correctes
 
   // Calculer le pourcentage de réponses complétées
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completedAnswers = answers.filter((answer) => answer !== null && answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   const handleChange = (index: number, value: string) => {
@@ -67,14 +68,13 @@ export default function MultiplicationFraction() {
     setAnswers(newAnswers);
   };
 
-  const handleValidation = () => {
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérification si toutes les réponses sont remplies
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -93,6 +93,12 @@ export default function MultiplicationFraction() {
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
+
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses sont correctes !");
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Essayez encore !");
+    }
   };
 
   const handleNextPage = () => {
@@ -110,6 +116,9 @@ export default function MultiplicationFraction() {
       setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
     }
   };
+
+  // Vérifier si toutes les réponses de la page actuelle sont complètes
+  const isCurrentPageComplete = !answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).includes(null);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -168,10 +177,17 @@ export default function MultiplicationFraction() {
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              aria-label={`Réponse pour ${fraction1} × ${fraction2}`}
             />
           </div>
         ))}
       </div>
+
+      {feedbackMessage && (
+        <div className="mt-4 text-center text-lg font-semibold text-red-500">
+          {feedbackMessage}
+        </div>
+      )}
 
       <div className="mt-6 flex gap-4">
         <button
@@ -190,7 +206,7 @@ export default function MultiplicationFraction() {
         <button
           onClick={handleNextPage}
           className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+          disabled={!isCurrentPageComplete}
         >
           Suivant
         </button>

@@ -11,6 +11,7 @@ export default function DivisionFraction() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Page actuelle
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
 
   // Fonction pour simplifier les fractions et appliquer la règle "2/2 = 1"
   const simplifyFraction = (numerator: number, denominator: number) => {
@@ -50,14 +51,13 @@ export default function DivisionFraction() {
     setAnswers(newAnswers);
   };
 
-  const handleValidation = () => {
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    
-    // Vérification si toutes les réponses sont remplies
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -76,6 +76,12 @@ export default function DivisionFraction() {
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
+
+    if (allCorrect) {
+      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
+    }
   };
 
   const handleNextPage = () => {
@@ -83,6 +89,7 @@ export default function DivisionFraction() {
       setCurrentPage(currentPage + 1);
       setIsValidated(false); // Réinitialiser la validation pour la page suivante
       setHasPassed(false); // Réinitialiser l'état de réussite pour la page suivante
+      setFeedbackMessage(""); // Réinitialiser le message de feedback
     }
   };
 
@@ -91,6 +98,7 @@ export default function DivisionFraction() {
       setCurrentPage(currentPage - 1);
       setIsValidated(false); // Réinitialiser la validation pour revenir à la page précédente
       setHasPassed(false); // Réinitialiser l'état de réussite pour la page précédente
+      setFeedbackMessage(""); // Réinitialiser le message de feedback
     }
   };
 
@@ -157,6 +165,16 @@ export default function DivisionFraction() {
         </>
       )}
 
+      {/* Affichage du message de feedback */}
+      {feedbackMessage && (
+        <div className="mt-6 text-center text-xl font-semibold">
+          <p className={hasPassed ? "text-green-600" : "text-red-600"}>
+            {feedbackMessage}
+          </p>
+        </div>
+      )}
+
+      {/* Affichage des résultats après validation */}
       {isValidated && (
         <>
           {hasPassed ? (
