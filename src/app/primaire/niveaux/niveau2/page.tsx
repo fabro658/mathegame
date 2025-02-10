@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="relative min-h-screen bg-gray-100">
+    <div className="relative min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       {/* Vague arrondie en bas */}
       <div
         className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0"
@@ -27,33 +27,31 @@ export default function Page() {
       </h1>
 
       {/* Boutons */}
-      <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
-        <div className="grid grid-cols-2 gap-4 w-full px-4 sm:px-8">
-          <a
-            href="/primaire/niveaux/niveau2/comparaison"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-          >
-            Comparaison
-          </a>
-          <a
-            href="/primaire/niveaux/niveau2/comparaison_decimaux"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-          >
-            Comparaison de nombre décimaux
-          </a>
-          <a
-            href="/primaire/niveaux/niveau2/comparer_fraction"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-          >
-            Comparaison de fraction
-          </a>
-          <a
-            href="/primaire/niveaux/niveau2/expression_equivalente"
-            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
-          >
-            Expression équivalente
-          </a>
-        </div>
+      <div className="grid grid-cols-2 gap-4 w-full px-4 sm:px-8">
+        <a
+          href="/primaire/niveaux/niveau2/comparaison"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+        >
+          Comparaison
+        </a>
+        <a
+          href="/primaire/niveaux/niveau2/comparaison_decimaux"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+        >
+          Comparaison de nombre décimaux
+        </a>
+        <a
+          href="/primaire/niveaux/niveau2/comparer_fraction"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+        >
+          Comparaison de fraction
+        </a>
+        <a
+          href="/primaire/niveaux/niveau2/expression_equivalente"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+        >
+          Expression équivalente
+        </a>
       </div>
     </div>
   );

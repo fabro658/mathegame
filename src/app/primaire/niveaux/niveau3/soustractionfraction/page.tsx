@@ -35,7 +35,6 @@ export default function SoustractionFractions() {
           if (b1 === 0) b1 = 1; // Évite la division par zéro
           if (b2 === 0) b2 = 1; // Évite la division par zéro
 
-          const commonDenominator = b1 * b2;
           numerator1 = a1 * b2;
           numerator2 = a2 * b1;
 
@@ -78,11 +77,10 @@ export default function SoustractionFractions() {
       const globalIndex = startIndex + index;
       const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
       const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
-      const commonDenominator = b1 * b2;
       const numerator1 = a1 * b2;
       const numerator2 = a2 * b1;
       const numeratorResult = numerator1 - numerator2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, b1 * b2);
       const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
 
       if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
