@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function MultiplicationFraction() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
@@ -50,15 +50,11 @@ export default function MultiplicationFraction() {
     setQuestions(generateQuestions());
   }, []);
 
-  const correctAnswers = questions.map((q) => q.correctAnswer);
-
-  const completedAnswers = answers.filter((answer) => answer !== null && answer !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
   const handleValidation = (): void => {
@@ -71,71 +67,86 @@ export default function MultiplicationFraction() {
       return;
     }
 
+    let hasErrors = false;
     const newAnswers = [...answers];
-    let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
-        allCorrect = false;
-        newAnswers[globalIndex] = null;
+      const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
+      const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
+      const numeratorResult = a1 * a2;
+      const denominatorResult = b1 * b2;
+      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+      const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+
+      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+        newAnswers[globalIndex] = "";
+        hasErrors = true;
       }
     });
 
     setAnswers(newAnswers);
 
-    if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses sont correctes !");
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Essayez encore !");
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
-  const handleNextPage = () => {
+  const normalizeAnswer = (answer: string): string => {
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
+    if (normalized === "2/2") return "1"; // S'assure que 2/2 est considéré comme 1
+    return normalized;
+  };
+
+  const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  const isCurrentPageComplete = !answers.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).includes(null);
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre/fraction"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau3" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/primaire/niveaux/niveau3"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={50}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
+      <h1 className="text-4xl font-bold mb-6">Multiplication de Fractions</h1>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication de fractions</h1>
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
+      {/* Questions et réponses */}
       <div className="grid grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
@@ -146,26 +157,30 @@ export default function MultiplicationFraction() {
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-              aria-label={`Réponse pour ${fraction1} × ${fraction2}`}
             />
           </div>
         ))}
       </div>
 
-      {feedbackMessage && (
-        <div className="mt-4 text-center text-lg font-semibold text-red-500">
-          {feedbackMessage}
-        </div>
-      )}
-
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
+        >
           Précédent
         </button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        >
           Valider les réponses
         </button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={!isCurrentPageComplete}>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
           Suivant
         </button>
       </div>
