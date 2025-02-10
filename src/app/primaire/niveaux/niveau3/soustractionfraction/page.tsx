@@ -28,17 +28,17 @@ export default function SoustractionFractions() {
         let b1 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 1 (-3 à 3)
         const a2 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 2 (-3 à 3)
         let b2 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 2 (-3 à 3)
-
+    
         if (b1 === 0) b1 = 1; // Évite la division par zéro
         if (b2 === 0) b2 = 1; // Évite la division par zéro
-
+    
         const commonDenominator = b1 * b2;
         const numerator1 = a1 * b2;
         const numerator2 = a2 * b1;
-
+    
         const numeratorResult = numerator1 - numerator2;
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
-
+    
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
