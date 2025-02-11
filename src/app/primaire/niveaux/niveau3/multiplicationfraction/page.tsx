@@ -23,13 +23,10 @@ export default function MultiplicationFraction() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 7) - 3;
-        let b1 = Math.floor(Math.random() * 7) - 3;
-        const a2 = Math.floor(Math.random() * 7) - 3;
-        let b2 = Math.floor(Math.random() * 7) - 3;
-
-        if (b1 === 0) b1 = 1;
-        if (b2 === 0) b2 = 1;
+        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
+        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
+        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
+        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
         const numeratorResult = a1 * a2;
         const denominatorResult = b1 * b2;
