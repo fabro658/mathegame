@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -10,6 +10,7 @@ export default function ExponentsPractice() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout du message de feedback
 
   // Génération des questions
   useEffect(() => {
@@ -79,9 +80,16 @@ export default function ExponentsPractice() {
 
     setAnswers(updatedAnswers);
 
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses sont correctes !");
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
+    }
+
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
+        setFeedbackMessage(""); // Réinitialise le message de feedback
       }, 1500);
     }
   };
@@ -179,6 +187,13 @@ export default function ExponentsPractice() {
           Suivant
         </button>
       </div>
+
+      {/* Message de feedback */}
+      {feedbackMessage && (
+        <div className="mt-4 text-lg font-bold text-red-500">
+          {feedbackMessage}
+        </div>
+      )}
 
       {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
       <div className="mt-6 w-full sm:hidden">
