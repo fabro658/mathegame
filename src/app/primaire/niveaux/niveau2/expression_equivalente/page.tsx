@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 export default function EquationsEquivalentes() {
   const totalQuestions = 30;
@@ -11,11 +10,6 @@ export default function EquationsEquivalentes() {
   const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string }[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-
-  const completionPercentage = Math.floor(
-    (selectedButtons.filter((button) => button !== "").length / totalQuestions) * 100
-  );
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-"];
