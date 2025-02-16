@@ -22,12 +22,10 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12 text-gray-900">
-        Choisissez une opération
-      </h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-2 gap-4 w-full px-4 sm:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <a
           href="/primaire/niveaux/niveau2/comparaison"
           className="w-64 bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
