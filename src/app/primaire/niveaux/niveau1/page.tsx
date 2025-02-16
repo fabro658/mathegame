@@ -13,7 +13,7 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center text-black"> Choisissez une opération</h1>
 
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
