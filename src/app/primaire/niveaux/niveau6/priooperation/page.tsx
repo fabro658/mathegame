@@ -14,7 +14,7 @@ export default function PrioOperation() {
 
   useEffect(() => {
     const generateQuestions = () => {
-      const operations = ["+", "-", "*", "/"];
+      const operations = ["+", "-", "*"];
       const questionsArray: string[] = [];
 
       for (let i = 0; i < totalQuestions; i++) {
