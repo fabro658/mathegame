@@ -21,17 +21,21 @@ export default function Division() {
         let numerator: number, denominator: number;
 
         if (index < 10) {
+          // Division facile (numérateur jusqu'à 50)
           denominator = Math.floor(Math.random() * 10) + 1;
-          numerator = denominator * (Math.floor(Math.random() * 10) + 1);
+          numerator = denominator * (Math.floor(Math.random() * 5) + 1);
         } else if (index < 20) {
+          // Divisions avec des nombres plus grands (numérateur jusqu'à 100)
           numerator = Math.floor(Math.random() * 100) + 1;
           denominator = Math.floor(Math.random() * 10) + 1;
         } else if (index < 30) {
-          numerator = Math.floor(Math.random() * 100) + 1;
-          denominator = Math.floor(Math.random() * 20) + 1;
+          // Divisions avec des numérateurs entre 50 et 150
+          numerator = Math.floor(Math.random() * 100) + 50;
+          denominator = Math.floor(Math.random() * 10) + 2; // Plus grand dénominateur
         } else {
-          numerator = Math.floor(Math.random() * 100) + 1;
-          denominator = Math.floor(Math.random() * 50) + 1;
+          // Divisions avec des numérateurs entre 100 et 200, résultats non entiers
+          numerator = Math.floor(Math.random() * 100) + 100;
+          denominator = Math.floor(Math.random() * 20) + 2; // Plus grand dénominateur
         }
 
         return [numerator, denominator];

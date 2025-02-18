@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -9,6 +9,7 @@ export default function Multiplication() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const [questions, setQuestions] = useState<[number, number][]>([]); // État pour stocker les questions
 
@@ -68,6 +69,10 @@ export default function Multiplication() {
 
     setAnswers(newAnswers);
     setIsValidated(true);
+
+    if (allCorrect && currentPage === Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setIsCompleted(true);
+    }
   };
 
   const handleNextPage = () => {
@@ -132,40 +137,53 @@ export default function Multiplication() {
 
       <h1 className="text-3xl font-bold mb-6">Produit</h1>
 
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} × {b}</div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <div className="mt-4 text-xl text-green-500">
-          Toutes les réponses sont correctes!
+      {isCompleted ? (
+        <div className="text-center">
+          <p className="text-2xl font-bold text-green-500 mb-4">Félicitations ! Vous avez complété le niveau.</p>
+          <Link href="/secondaire/niveaux/niveau1" className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+            Retourner à la page précédente
+          </Link>
         </div>
+      ) : (
+        <>
+          {/* Questions et réponses */}
+          {!isValidated && (
+            <>
+              <div className="grid grid-cols-3 gap-6">
+                {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} × {b}</div>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                      value={answers[currentPage * questionsPerPage + index] || ""}
+                      onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex gap-4">
+                <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
+                  Précédent
+                </button>
+                <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+                  Valider les réponses
+                </button>
+                <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
+                  Suivant
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* Résultats après validation */}
+          {isValidated && (
+            <div className="mt-4 text-xl text-green-500">
+              Toutes les réponses sont correctes!
+            </div>
+          )}
+        </>
       )}
     </div>
   );
