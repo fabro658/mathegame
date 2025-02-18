@@ -25,8 +25,8 @@ export default function Page() {
       <h1 className="text-4xl font-bold mb-12 text-center text-black"> Choisissez une opération</h1>
 
       {/* Boutons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
-        <a
+      <div className="grid grid-cols-2 gap-4 max-w-4xl mx-auto">
+      <a
           href="/primaire/niveaux/niveau2/comparaison"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
