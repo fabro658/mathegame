@@ -85,7 +85,7 @@ const ShapesPracticePage = () => {
     setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
-  const drawShape = (sides: number) => {
+  const drawShape = (sides: number, shapeName: string) => {
     const points = [];
     const centerX = 50;
     const centerY = 50;
@@ -97,20 +97,24 @@ const ShapesPracticePage = () => {
           <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
         </svg>
       );
-    } else if (sides === 4) {
-      if (shapes[currentShapes].name === "Rectangle") {
-        return (
-          <svg width="100" height="100" viewBox="0 0 100 100">
-            <rect x="20" y="30" width="60" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
-          </svg>
-        );
-      } else {
-        return (
-          <svg width="100" height="100" viewBox="0 0 100 100">
-            <rect x="30" y="30" width="40" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
-          </svg>
-        );
-      }
+    } else if (shapeName === "Rectangle") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="20" y="30" width="60" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else if (shapeName === "Carré") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="30" y="30" width="40" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else if (shapeName === "Trapèze") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <polygon points="20,80 80,80 60,20 40,20" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
     } else {
       for (let i = 0; i < sides; i++) {
         const angle = (i * 2 * Math.PI) / sides;
@@ -205,7 +209,7 @@ const ShapesPracticePage = () => {
               }}
               onDragOver={(e) => e.preventDefault()}
             >
-              {drawShape(shape.sides)}
+              {drawShape(shape.sides, shape.name)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
               {answers[currentShapes + idx] && (
                 <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
