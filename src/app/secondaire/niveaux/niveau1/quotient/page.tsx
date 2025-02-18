@@ -23,19 +23,19 @@ export default function Division() {
         if (index < 10) {
           // Division facile (numérateur jusqu'à 50)
           denominator = Math.floor(Math.random() * 10) + 1;
-          numerator = denominator * (Math.floor(Math.random() * 5) + 1);
+          numerator = denominator * (Math.floor(Math.random() * 5) + 1); // Assurer que le numérateur est un multiple du dénominateur
         } else if (index < 20) {
           // Divisions avec des nombres plus grands (numérateur jusqu'à 100)
-          numerator = Math.floor(Math.random() * 100) + 1;
           denominator = Math.floor(Math.random() * 10) + 1;
+          numerator = denominator * (Math.floor(Math.random() * 10) + 1); // Assurer que le numérateur est un multiple du dénominateur
         } else if (index < 30) {
           // Divisions avec des numérateurs entre 50 et 150
-          numerator = Math.floor(Math.random() * 100) + 50;
           denominator = Math.floor(Math.random() * 10) + 2; // Plus grand dénominateur
+          numerator = denominator * (Math.floor(Math.random() * 10) + 1); // Assurer que le numérateur est un multiple du dénominateur
         } else {
           // Divisions avec des numérateurs entre 100 et 200, résultats non entiers
-          numerator = Math.floor(Math.random() * 100) + 100;
           denominator = Math.floor(Math.random() * 20) + 2; // Plus grand dénominateur
+          numerator = denominator * (Math.floor(Math.random() * 10) + 1); // Assurer que le numérateur est un multiple du dénominateur
         }
 
         return [numerator, denominator];
@@ -140,7 +140,7 @@ export default function Division() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Quotient</h1>
 
       {/* Feedback */}
       {feedbackMessage && (
