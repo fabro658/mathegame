@@ -10,7 +10,7 @@ export default function ExponentsPractice() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState(""); // Ajout du message de feedback
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Ajout du message de feedback
 
   // Génération des questions
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function ExponentsPractice() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
   // Validation des réponses
@@ -64,7 +65,7 @@ export default function ExponentsPractice() {
     const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
 
     if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -89,7 +90,7 @@ export default function ExponentsPractice() {
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-        setFeedbackMessage(""); // Réinitialise le message de feedback
+        setFeedbackMessage(null); // Réinitialise le message de feedback
       }, 1500);
     }
   };
@@ -147,6 +148,13 @@ export default function ExponentsPractice() {
 
       <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
 
+      {/* Message de feedback */}
+      {feedbackMessage && (
+        <div className={`mt-4 text-lg font-bold ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>
+          {feedbackMessage}
+        </div>
+      )}
+
       {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
@@ -187,13 +195,6 @@ export default function ExponentsPractice() {
           Suivant
         </button>
       </div>
-
-      {/* Message de feedback */}
-      {feedbackMessage && (
-        <div className="mt-4 text-lg font-bold text-red-500">
-          {feedbackMessage}
-        </div>
-      )}
 
       {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
       <div className="mt-6 w-full sm:hidden">
