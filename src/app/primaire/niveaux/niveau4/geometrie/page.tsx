@@ -20,24 +20,8 @@ const ShapesPracticePage = () => {
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(shapes.length).fill(null));
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
-  const [progress, setProgress] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
-
-  const handleDrop = (index: number, droppedName: string) => {
-    const updatedAnswers = [...answers];
-    const targetIndex = currentShapes + index;
-    
-    if (shapes[targetIndex].name === droppedName) {
-      setProgress((prev) => prev + (100 / shapes.length));
-    } else if (updatedAnswers[targetIndex] && shapes[targetIndex].name === updatedAnswers[targetIndex]) {
-      setProgress((prev) => prev - (100 / shapes.length));
-    }
-
-    updatedAnswers[targetIndex] = droppedName;
-    setAnswers(updatedAnswers);
-    setFeedbackMessage(null);
-  };
 
   const handleValidation = () => {
     const startIdx = currentShapes;
@@ -62,7 +46,9 @@ const ShapesPracticePage = () => {
     } else {
       setErrorIndices(errors);
       const updatedAnswers = [...answers];
-      errors.forEach((idx) => updatedAnswers[idx] = null);
+      errors.forEach((idx) => {
+        updatedAnswers[idx] = null;
+      });
       setAnswers(updatedAnswers);
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
@@ -72,12 +58,12 @@ const ShapesPracticePage = () => {
     if (currentShapes + 3 >= shapes.length) {
       setIsCompleted(true);
     } else {
-      setCurrentShapes((prev) => prev + 3);
+      setCurrentShapes((prev) => (prev + 3) % shapes.length);
     }
   };
 
   const handlePrevious = () => {
-    setCurrentShapes((prev) => Math.max(prev - 3, 0));
+    setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
   return (
@@ -109,10 +95,7 @@ const ShapesPracticePage = () => {
           <div className="flex gap-8 justify-center mb-12">
             {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
               <div key={idx} className={`w-32 h-32 border-2 ${errorIndices.includes(currentShapes + idx) ? "border-red-500" : "border-gray-500"} flex flex-col items-center justify-center`}>
-                <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-                {answers[currentShapes + idx] && (
-                  <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
-                )}
+                <div>{shape.name}</div>
               </div>
             ))}
           </div>
@@ -126,9 +109,15 @@ const ShapesPracticePage = () => {
           </div>
 
           <div className="flex gap-4 mt-8">
-            <button onClick={handlePrevious} className="bg-gray-400 text-white py-2 px-6 rounded font-bold">Précédent</button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">Valider les réponses</button>
-            <button onClick={handleNext} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={errorIndices.length > 0}>Suivant</button>
+            <button onClick={handlePrevious} className="bg-gray-400 text-white py-2 px-6 rounded font-bold">
+              Précédent
+            </button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">
+              Valider les réponses
+            </button>
+            <button onClick={handleNext} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={errorIndices.length > 0}>
+              Suivant
+            </button>
           </div>
         </div>
       )}
