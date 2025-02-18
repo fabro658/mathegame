@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const ShapesPracticePage = () => {
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -37,7 +37,7 @@ const ShapesPracticePage = () => {
 
     updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
   const handleValidation = () => {
@@ -97,6 +97,20 @@ const ShapesPracticePage = () => {
           <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
         </svg>
       );
+    } else if (sides === 4) {
+      if (shapes[currentShapes].name === "Rectangle") {
+        return (
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <rect x="20" y="30" width="60" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+          </svg>
+        );
+      } else {
+        return (
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <rect x="30" y="30" width="40" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+          </svg>
+        );
+      }
     } else {
       for (let i = 0; i < sides; i++) {
         const angle = (i * 2 * Math.PI) / sides;
@@ -160,7 +174,6 @@ const ShapesPracticePage = () => {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
-
 
       {/* Feedback */}
       {feedbackMessage && (
