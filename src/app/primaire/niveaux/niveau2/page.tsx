@@ -28,25 +28,25 @@ export default function Page() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <a
           href="/primaire/niveaux/niveau2/comparaison"
-          className="w-64 bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Comparaison
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
-          className="w-64 bg-green-500 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Comparaison de nombre décimaux
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="w-64 bg-yellow-500 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Comparaison de fraction
         </a>
         <a
           href="/primaire/niveaux/niveau2/expression_equivalente"
-          className="w-64 bg-red-500 hover:bg-purple-700 text-white font-bold py-4 rounded-lg text-2xl shadow-md text-center flex items-center justify-center"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
           >
           Expression équivalente
         </a>
