@@ -22,6 +22,7 @@ const ShapesPracticePage = () => {
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -78,7 +79,11 @@ const ShapesPracticePage = () => {
   };
 
   const handleNext = () => {
-    setCurrentShapes((prev) => (prev + 3) % shapes.length);
+    if (currentShapes + 3 >= shapes.length) {
+      setIsCompleted(true);
+    } else {
+      setCurrentShapes((prev) => (prev + 3) % shapes.length);
+    }
   };
 
   const handlePrevious = () => {
@@ -192,23 +197,35 @@ const ShapesPracticePage = () => {
         </p>
       )}
 
-      <div className="flex flex-col items-center gap-8">
-        {/* Zone des formes */}
-        <div className="flex gap-8 justify-center mb-12">
-          {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
-            <div
-              key={idx}
-              className={`w-32 h-32 border-2 ${
-                errorIndices.includes(currentShapes + idx)
-                  ? "border-red-500"
-                  : "border-gray-500"
-              } flex flex-col items-center justify-center`}
-              onDrop={(e) => {
+      {isCompleted ? (
+        <div className="text-center">
+          <p className="text-2xl font-bold text-green-500 mb-4">Félicitations ! Vous avez complété le niveau.</p>
+          <Link href="/primaire/niveaux/niveau4" className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+            Retourner à la page précédente
+          </Link>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-8">
+          {/* Zone des formes */}
+          <div className="flex gap-8 justify-center mb-12">
+            {shapes.slice(currentShapes, currentShapes + 3).map((shape, idx) => (
+              <div
+                key={idx}
+                className={`w-32 h-32 border-2 ${
+                  errorIndices.includes(currentShapes + idx)
+                    ? "border-red-500"
+                    : "border-gray-500"
+                } flex flex-col items-center justify-center`}
+                onDrop={(e) => {
                 e.preventDefault();
                 handleDrop(idx, e.dataTransfer.getData("name"));
               }}
-              onDragOver={(e) => e.preventDefault()}
-            >
+              onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDrop(idx, e.dataTransfer.getData("name"));
+              }}
+               >
               {drawShape(shape.sides, shape.name)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
               {answers[currentShapes + idx] && (
