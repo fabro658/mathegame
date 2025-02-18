@@ -8,7 +8,6 @@ export default function Multiplication() {
   const questionsPerPage = 6; // 3 colonnes x 2 lignes
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const [questions, setQuestions] = useState<[number, number][]>([]); // État pour stocker les questions
@@ -16,8 +15,16 @@ export default function Multiplication() {
   useEffect(() => {
     // Génération des questions uniquement au premier rendu
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, () => {
-      const factor1 = Math.floor(Math.random() * 900) + 100; // Nombre à 3 chiffres
-      const factor2 = Math.floor(Math.random() * 90) + 10;  // Nombre à 2 chiffres
+      const factor1Type = Math.random(); // Déterminer si on prend un nombre à 2 chiffres ou un multiple
+      const factor1 = factor1Type < 0.7
+        ? Math.floor(Math.random() * 90) + 10  // Nombre à 2 chiffres
+        : Math.floor(Math.random() * 9) + 1 * Math.pow(10, Math.floor(Math.random() * 3)); // Multiple de 10, 100, 1000
+
+      const factor2Type = Math.random();
+      const factor2 = factor2Type < 0.7
+        ? Math.floor(Math.random() * 90) + 10  // Nombre à 2 chiffres
+        : Math.floor(Math.random() * 9) + 1 * Math.pow(10, Math.floor(Math.random() * 3)); // Multiple de 10, 100, 1000
+
       return [factor1, factor2];
     });
     setQuestions(generatedQuestions);
@@ -61,14 +68,12 @@ export default function Multiplication() {
 
     setAnswers(newAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect);
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -76,7 +81,6 @@ export default function Multiplication() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setHasPassed(false);
     }
   };
 
@@ -156,6 +160,12 @@ export default function Multiplication() {
             </button>
           </div>
         </>
+      )}
+
+      {isValidated && (
+        <div className="mt-4 text-xl text-green-500">
+          Toutes les réponses sont correctes!
+        </div>
       )}
     </div>
   );
