@@ -134,18 +134,13 @@ export default function Addition() {
 
       <h1 className="text-3xl font-bold mb-6">Sommes</h1>
 
-      {/* Questions pour la page actuelle */}
-      {!isValidated && (
+          {/* Questions et réponses */}
+          {!isValidated && (
         <>
-          <div className="grid grid-cols-3 grid-rows-2 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([num1, num2], index) => (
+          <div className="grid grid-cols-3 gap-6">
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
               <div key={index} className="flex items-center gap-4">
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full"
-                  disabled
-                >
-                  {num1} + {num2}
-                </button>
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} + {b}</div>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -156,31 +151,27 @@ export default function Addition() {
               </div>
             ))}
           </div>
-
-          {/* Boutons de validation et navigation */}
           <div className="mt-6 flex gap-4">
-            {currentPage > 0 && (
-              <button
-                className="bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handlePreviousPage}
-              >
-                Précédent
-              </button>
-            )}
+            <button
+              onClick={handlePreviousPage}
+              className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
             <button
               onClick={handleValidation}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
             >
               Valider les réponses
             </button>
-            {isValidated && hasPassed && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 && (
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            )}
+            <button
+              onClick={handleNextPage}
+              className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
@@ -191,29 +182,14 @@ export default function Addition() {
           {hasPassed ? (
             <div>
               <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              {currentPage < Math.floor(totalQuestions / questionsPerPage) - 1 ? (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={handleNextPage}
-                >
-                  Passer à la série suivante
-                </button>
-              ) : (
-                <button
-                  className="mt-6 bg-blue-500 text-white py-2 px-6 rounded font-bold w-full"
-                  onClick={() => alert("Vous avez complété toutes les questions !")}
-                >
-                  Terminer
-                </button>
-              )}
+              <button className="mt-6 bg-blue-500 text-white py-3 px-6 rounded font-bold" onClick={handleNextPage}>
+                Suivant
+              </button>
             </div>
           ) : (
             <div>
               <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-2 px-6 rounded font-bold w-full"
-                onClick={() => setIsValidated(false)}
-              >
+              <button className="mt-6 bg-gray-500 text-white py-3 px-6 rounded font-bold" onClick={() => setIsValidated(false)}>
                 Revenir pour corriger
               </button>
             </div>
