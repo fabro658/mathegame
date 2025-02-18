@@ -20,27 +20,27 @@ export default function Niveau1() {
 
       {/* Grille des boutons */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-4xl px-4 sm:px-8">
-        <Link href="/niveaux/niveau3/expo">
+        <Link href="/niveaux/niveau3/expo" className="flex items-center justify-center">
           <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Exposant
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau3/racine">
+        <Link href="/secondaire/niveaux/niveau3/racine" className="flex items-center justify-center">
           <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Racine
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau3/expression_equivalente">
+        <Link href="/secondaire/niveaux/niveau3/expression_equivalente" className="flex items-center justify-center">
           <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Expression équivalente
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau3/priooperation">
+        <Link href="/secondaire/niveaux/niveau3/priooperation" className="flex items-center justify-center">
           <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Priorité d&apos;opération
           </div>
         </Link>
-        <Link href="/secondaire/niveaux/niveau3/approx">
+        <Link href="/secondaire/niveaux/niveau3/approx" className="col-span-2 flex items-center justify-center">
           <div className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
             Approximation
           </div>
@@ -49,7 +49,7 @@ export default function Niveau1() {
 
       {/* Vague arrondie en bas */}
       <div
-        className="absolute bottom-0 w-screen h-[100px] bg-yellow-500 z-0"
+        className="absolute bottom-0 w-screen h-[100px] bg-green-500 z-0"
         style={{
           clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
         }}
