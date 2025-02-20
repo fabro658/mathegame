@@ -32,7 +32,7 @@
   margin: 10px 0; /* Augmente l'espacement entre les cercles */
   background-color: #1956db;
   border-radius: 50%;
-  animation: moveUp 2s linear infinite; /* Ralentit l'animation */
+  animation: moveUp 4s linear infinite; /* Ralentit l'animation */
 }
 
 .loader .cir1 {
@@ -40,19 +40,19 @@
 }
 
 .loader .cir2 {
-  animation-delay: 0.4s; /* Ajuste le délai pour correspondre à la nouvelle durée */
-}
-
-.loader .cir3 {
   animation-delay: 0.8s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
+.loader .cir3 {
+  animation-delay: 1.6s; /* Ajuste le délai pour correspondre à la nouvelle durée */
+}
+
 .loader .cir4 {
-  animation-delay: 1.2s; /* Ajuste le délai pour correspondre à la nouvelle durée */
+  animation-delay: 2.4s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 .loader .cir5 {
-  animation-delay: 1.6s; /* Ajuste le délai pour correspondre à la nouvelle durée */
+  animation-delay: 3.2s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 @keyframes moveUp {
@@ -69,7 +69,6 @@
     opacity: 0;
   }
 }
-
 
 /* Styles page avenir */
 body {
