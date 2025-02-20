@@ -46,15 +46,6 @@ export default function Niveau1() {
           </div>
         </Link>
       </div>
-
-      {/* Balls Loader */}
-      <div className="loader">
-        <div className="cir1"></div>
-        <div className="cir2"></div>
-        <div className="cir3"></div>
-        <div className="cir4"></div>
-        <div className="cir5"></div>
-      </div>
     </div>
   );
 }
