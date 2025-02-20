@@ -14,6 +14,7 @@
   }
 }
 
+/* Styles page secondaire */
 body {
   color: var(--foreground);
   background: var(--background);
@@ -38,4 +39,171 @@ body {
 @keyframes bounce {
   0%, 100% { transform: scale(0); }
   50% { transform: scale(1); }
+}
+
+
+/* Styles page avenir */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Styles pour les animations */
+.first-motion .circle {
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+.first-motion .ball {
+  width: 20px;
+  height: 20px;
+  background-color: #ff6347;
+  border-radius: 50%;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+.second-motion .base {
+  width: 100px;
+  height: 100px;
+  background-color: #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.second-motion .ball {
+  width: 20px;
+  height: 20px;
+  background-color: #ff6347;
+  border-radius: 50%;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  animation: orbit 2s linear infinite;
+}
+
+.second-motion .base-cir {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.second-motion .first-circle {
+  top: 10px;
+  left: 45px;
+}
+
+.second-motion .second-circle {
+  top: 45px;
+  left: 10px;
+}
+
+.second-motion .third-circle {
+  top: 80px;
+  left: 45px;
+}
+
+.second-motion .fourth-circle {
+  top: 45px;
+  left: 80px;
+}
+
+.third-motion .cube {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(45deg) rotateY(45deg);
+  animation: rotate 3s linear infinite;
+}
+
+.third-motion .face {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border: 1px solid #fff;
+}
+
+.third-motion .front { transform: translateZ(25px); }
+.third-motion .back { transform: rotateY(180deg) translateZ(25px); }
+.third-motion .left { transform: rotateY(-90deg) translateZ(25px); }
+.third-motion .right { transform: rotateY(90deg) translateZ(25px); }
+.third-motion .top { transform: rotateX(90deg) translateZ(25px); }
+
+.fourth-motion .ball-container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.fourth-motion .ray {
+  width: 2px;
+  height: 50px;
+  background-color: #ff6347;
+  position: absolute;
+  top: 25px;
+  left: 49px;
+  animation: ray-spin 2s linear infinite;
+}
+
+.fourth-motion .first-line { transform: rotate(0deg); }
+.fourth-motion .second-line { transform: rotate(72deg); }
+.fourth-motion .third-line { transform: rotate(144deg); }
+.fourth-motion .fourth-line { transform: rotate(216deg); }
+.fourth-motion .fifth-line { transform: rotate(288deg); }
+
+.fourth-motion .ball {
+  width: 20px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.logo {
+  animation: fadeIn 2s ease-in-out;
+}
+
+.insta {
+  animation: bounce 2s infinite;
+}
+
+/* Keyframes pour les animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(40px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+}
+
+@keyframes rotate {
+  0% { transform: rotateX(45deg) rotateY(45deg); }
+  100% { transform: rotateX(45deg) rotateY(405deg); }
+}
+
+@keyframes ray-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
