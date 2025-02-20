@@ -18,18 +18,21 @@
 .loader {
   display: flex;
   flex-direction: column;
-  align-items: left;
-  height: 100px;
-  position: relative;
+  align-items: flex-start; /* Aligne les éléments à gauche */
+  height: 100vh; /* Prend toute la hauteur de la page */
+  position: absolute; /* Position absolue pour le placer à gauche */
+  left: 0; /* Place le loader complètement à gauche */
+  top: 0; /* Commence en haut de la page */
+  padding: 10px; /* Ajoute un peu de padding pour l'espacement */
 }
 
 .loader div {
-  width: 20px;
-  height: 20px;
-  margin: 5px 0;
+  width: 40px; /* Augmente la largeur des cercles */
+  height: 40px; /* Augmente la hauteur des cercles */
+  margin: 10px 0; /* Augmente l'espacement entre les cercles */
   background-color: #1956db;
   border-radius: 50%;
-  animation: moveUp 1s linear infinite;
+  animation: moveUp 2s linear infinite; /* Ralentit l'animation */
 }
 
 .loader .cir1 {
@@ -37,19 +40,19 @@
 }
 
 .loader .cir2 {
-  animation-delay: 0.2s;
+  animation-delay: 0.4s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 .loader .cir3 {
-  animation-delay: 0.4s;
+  animation-delay: 0.8s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 .loader .cir4 {
-  animation-delay: 0.6s;
+  animation-delay: 1.2s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 .loader .cir5 {
-  animation-delay: 0.8s;
+  animation-delay: 1.6s; /* Ajuste le délai pour correspondre à la nouvelle durée */
 }
 
 @keyframes moveUp {
