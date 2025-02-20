@@ -46,6 +46,7 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
+      
       {/* Balls Loader */}
       <div className="loader">
         <div className="cir1"></div>
