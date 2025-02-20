@@ -47,13 +47,14 @@ export default function Niveau1() {
         </Link>
       </div>
 
-      {/* Vague arrondie en bas */}
-      <div
-        className="absolute bottom-0 w-screen h-[100px] bg-yellow-500 z-0"
-        style={{
-          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
-        }}
-      ></div>
+      {/* Balls Loader */}
+      <div className="loader">
+        <div className="cir1"></div>
+        <div className="cir2"></div>
+        <div className="cir3"></div>
+        <div className="cir4"></div>
+        <div className="cir5"></div>
+      </div>
     </div>
   );
 }
