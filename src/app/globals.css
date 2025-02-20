@@ -57,27 +57,15 @@
 
 @keyframes moveUp {
   0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  20% {
-    transform: translateY(-20%);
-    opacity: 1;
-  }
-  40% {
-    transform: translateY(-40%);
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(-60%);
+    transform: translateY(100vh); /* Commence en bas de la page */
     opacity: 1;
   }
   80% {
-    transform: translateY(-80%);
+    transform: translateY(0); /* Monte vers le haut */
     opacity: 1;
   }
   100% {
-    transform: translateY(-100%);
+    transform: translateY(-100vh); /* Disparaît en haut de la page */
     opacity: 0;
   }
 }
