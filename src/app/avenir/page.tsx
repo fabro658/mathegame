@@ -18,44 +18,16 @@ export default function Primaire() {
         </h1>
       </div>
 
-      <div className="block">
-        {/* Première Animation */}
-        <div className="first-motion">
-          <div className="circle"></div>
-          <div className="ball"></div>
-        </div>
-
-        {/* Deuxième Animation */}
-        <div className="flex items-center justify-center second-motion overflow-hidden">
-          <div className="base"></div>
-          <div className="ball"></div>
-          <div className="first-circle base-cir"></div>
-          <div className="second-circle base-cir"></div>
-          <div className="third-circle base-cir"></div>
-          <div className="fourth-circle base-cir"></div>
-        </div>
-
-        {/* Troisième Animation */}
-        <div className="h-full w-full flex items-center justify-center third-motion overflow-hidden">
-          <div className="cube shrink">
-            <div className="face front"></div>
-            <div className="face back"></div>
-            <div className="face left"></div>
-            <div className="face right"></div>
-            <div className="face top"></div>
-          </div>
-          <div className="ball"></div>
-        </div>
-
-        {/* Quatrième Animation */}
-        <div className="h-full w-full flex items-center justify-center fourth-motion overflow-hidden">
-          <div className="ball-container relative">
-            <div className="first-line ray"></div>
-            <div className="second-line ray"></div>
-            <div className="third-line ray"></div>
-            <div className="fourth-line ray"></div>
-            <div className="fifth-line ray"></div>
-            <div className="ball"></div>
+      {/* Animation */}
+      <div className="frame">
+        <div className="center">
+          <div className="circle">
+            <div className="sky"></div>
+            <div className="sun"></div>
+            <div className="side-left"></div>
+            <div className="side-right"></div>
+            <div className="shadow"></div>
+            <div className="ground"></div>
           </div>
         </div>
       </div>
