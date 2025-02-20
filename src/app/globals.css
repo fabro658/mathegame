@@ -18,7 +18,7 @@
 .loader {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   height: 100px;
   position: relative;
 }
@@ -27,7 +27,7 @@
   width: 20px;
   height: 20px;
   margin: 5px 0;
-  background-color: #333;
+  background-color: #1956db;
   border-radius: 50%;
   animation: moveUp 1s linear infinite;
 }
