@@ -14,31 +14,57 @@
   }
 }
 
-/* Styles page secondaire */
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* Loader page Primaire */
 .loader {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100px;
+  position: relative;
 }
 
-.cir1, .cir2, .cir3, .cir4, .cir5 {
+.loader div {
   width: 20px;
   height: 20px;
-  margin: 5px;
+  margin: 5px 0;
   background-color: #333;
   border-radius: 50%;
-  animation: bounce 1.2s infinite ease-in-out;
+  animation: moveUp 1s linear infinite;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: scale(0); }
-  50% { transform: scale(1); }
+.loader .cir1 {
+  animation-delay: 0s;
+}
+
+.loader .cir2 {
+  animation-delay: 0.2s;
+}
+
+.loader .cir3 {
+  animation-delay: 0.4s;
+}
+
+.loader .cir4 {
+  animation-delay: 0.6s;
+}
+
+.loader .cir5 {
+  animation-delay: 0.8s;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-100px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }
 
 

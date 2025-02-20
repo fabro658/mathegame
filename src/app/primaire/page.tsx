@@ -57,17 +57,13 @@ export default function Primaire() {
       </div>
 
       {/* Cercles bleu foncé sur le côté gauche de l'écran */}
-      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 space-y-6 pl-4">
-        {[...Array(8)].map((_, index) => (
-          <div
-            key={index}
-            className="w-16 h-16 bg-blue-800 rounded-full"
-            style={{
-              marginBottom: index === 5 ? "0" : "1.5rem", // Espacement entre les cercles
-            }}
-          >
-          </div>
-        ))}
+      {/* Balls Loader */}
+      <div className="loader">
+        <div className="cir1"></div>
+        <div className="cir2"></div>
+        <div className="cir3"></div>
+        <div className="cir4"></div>
+        <div className="cir5"></div>
       </div>
     </div>
   );
