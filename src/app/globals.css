@@ -218,6 +218,6 @@ body {
   }
 }
 .animation-container {
-  transform: scale(2); /* Applique le zoom uniquement à l'animation */
+  transform: scale(4); /* Applique le zoom uniquement à l'animation */
   transform-origin: center; /* Centre le zoom */
 }
