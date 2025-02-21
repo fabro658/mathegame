@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Primaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-black-100 text-black relative">
       {/* Bouton Retour */}
       <Link
         href="/"
