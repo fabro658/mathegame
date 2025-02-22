@@ -55,21 +55,6 @@ export default function Primaire() {
           </div>
         </Link>
       </div>
-
-      {/* Jumping Square Animation */}
-      <div className="center">
-        <div className="down">
-          <div className="up">
-            <div className="squeeze">
-              <div className="rotate-in">
-                <div className="rotate-out">
-                  <div className="square"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

@@ -42,9 +42,9 @@ body {
 .frame .circle {
   position: relative;
   overflow: hidden;
-  clip-path: circle(90px at 90px 90px);
-  width: 180px;
-  height: 180px;
+  clip-path: circle(120px at 120px 120px); 
+  width: 240px; 
+  height: 240px; 
   border-radius: 50%;
 }
 
@@ -59,13 +59,13 @@ body {
   animation: sky-turns-black 4s var(--cubic-bezier) infinite;
 }
 
-.sun {
+.Soleil {
   position: absolute;
   z-index: 2;
   top: 7px;
   left: 73px;
-  width: 34px;
-  height: 34px;
+  width: 50px; /* Augmenter la taille du soleil */
+  height: 50px; /* Augmenter la taille du soleil */
   border-radius: 50%;
   background: #ffef00;
   transform-origin: 50% 400%;
