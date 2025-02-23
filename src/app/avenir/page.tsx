@@ -20,20 +20,13 @@ export default function Primaire() {
 
 
       {/* Conteneur de l'animation */}
-      <div className="animation-container">
-        <div className="frame">
-          <div className="center">
-            <div className="circle">
-              <div className="sky"></div>
-              <div className="sun"></div>
-              <div className="side-left"></div>
-              <div className="side-right"></div>
-              <div className="shadow"></div>
-              <div className="ground"></div>
-            </div>
-          </div>
-        </div>
+      <div className="loader">
+        <div className="cir1"></div>
+        <div className="cir2"></div>
+        <div className="cir3"></div>
+        <div className="cir4"></div>
+        <div className="cir5"></div>
       </div>
-    </div>
+     </div>
   );
 }
