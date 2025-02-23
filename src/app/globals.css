@@ -82,6 +82,13 @@ body {
     opacity: 0.2;
   }
 }
+
+.bottom-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 /* animation secondaire */
 
 
