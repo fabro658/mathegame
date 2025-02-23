@@ -52,10 +52,7 @@ export default function Secondaire() {
       </div>
 
       {/* Loader */}
-      <div className="loader">
-        <div className="loader-outter"></div>
-        <div className="loader-inner"></div>
+      <div className="growing"></div>
       </div>
-    </div>
-  );
+    );
 }
