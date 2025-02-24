@@ -121,7 +121,6 @@ body {
   background-size: 65% 100%;
 }
 
-
 .snowfall::before {
   inset: -4rem 0 0;
   opacity: 0.7;
@@ -306,3 +305,6 @@ body {
 .flower:nth-child(4) .petal {
   background: purple;
 }
+
+
+

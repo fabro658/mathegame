@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -68,26 +68,6 @@ export default function Secondaire() {
 
       {/* Animation de neige */}
       <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
-
-      <style jsx>{`
-        .snowfall li {
-          position: absolute;
-          top: 0;
-          border-radius: 50%;
-          background-color: white;
-          opacity: 0.8;
-          animation: snow-fall linear infinite;
-        }
-
-        @keyframes snow-fall {
-          from {
-            transform: translateY(0);
-          }
-          to {
-            transform: translateY(100vh);
-          }
-        }
-      `}</style>
     </div>
   );
 }
