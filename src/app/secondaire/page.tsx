@@ -12,7 +12,7 @@ export default function Secondaire() {
       for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("li");
         snowflake.style.left = `${Math.random() * 100}%`;
-        snowflake.style.top = `${Math.random() * 100}vh`; // Random initial top position
+        snowflake.style.top = `-10px`; // Start above the viewport
         const size = Math.random() * 10 + 5;
         snowflake.style.width = `${size}px`;
         snowflake.style.height = `${size}px`;
