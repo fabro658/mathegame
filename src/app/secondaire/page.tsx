@@ -1,5 +1,4 @@
 import Link from "next/link";
-import "../styles/globals.css"; // Import du fichier d'animations
 
 export default function Secondaire() {
   return (
