@@ -91,42 +91,47 @@ body {
 
 
 /* animation page secondaire */
-body {
-  margin: 0;
+html, body {
   padding: 0;
+  margin: 0;
   width: 100vw;
   height: 100vh;
+  position: relative;
   overflow: hidden;
-  background: linear-gradient(to bottom, #123, #111);
+  background: linear-gradient(#123, #111);
 }
 
-/* Flocons de neige */
 .snowflake {
-  --random: calc(0.3 + 0.7 * random()); /* Aléatoire entre 0.3 et 1 */
-  --size: calc(0.5vw + 1vw * var(--random));
-  --left: calc(-10vw + 120vw * var(--random));
-  position: absolute;
-  top: -5vh;
+  --size: 1vw;
   width: var(--size);
   height: var(--size);
   background: white;
   border-radius: 50%;
-  left: var(--left);
-  animation: snowfall calc(5s + 5s * var(--random)) linear infinite;
-  animation-delay: calc(-5s * var(--random));
+  position: absolute;
+  top: -5vh;
 }
 
-/* Animation de la chute */
 @keyframes snowfall {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(var(--left-ini), 0, 0);
   }
   100% {
-    transform: translate3d(0, 120vh, 0);
+    transform: translate3d(var(--left-end), 110vh, 0);
   }
 }
 
-/* Effet de flou aléatoire */
+@for $i from 1 through 50 {
+  .snowflake:nth-child(#{$i}) {
+    --size: #{random(5) * 0.2}vw;
+    --left-ini: #{random(20) - 10}vw;
+    --left-end: #{random(20) - 10}vw;
+    left: #{random(100)}vw;
+    animation: snowfall #{5 + random(10)}s linear infinite;
+    animation-delay: -#{random(10)}s;
+  }
+}
+
+/* added small blur every 6 snowflakes*/
 .snowflake:nth-child(6n) {
   filter: blur(1px);
 }
