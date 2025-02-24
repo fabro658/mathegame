@@ -1,10 +1,9 @@
 import Link from "next/link";
-import '../styles/globals.css';
 
 export default function Secondaire() {
   return (
-<div className="min-h-screen flex flex-col justify-center items-center bg-indigo-900 text-black relative">
-{/* Bouton Retour */}
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-800 text-black relative snowfall">
+      {/* Bouton Retour */}
       <Link
         href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
@@ -51,11 +50,6 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
-
-      {/* Flocons de neige */}
-      {Array.from({ length: 50 }).map((_, i) => (
-        <div key={i} className={`snowflake snowflake-${i + 1}`}></div>
-      ))}
     </div>
   );
 }
