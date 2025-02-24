@@ -1,8 +1,9 @@
 import Link from "next/link";
+import "../styles/animations.css"; // Import du fichier d'animations
 
 export default function Secondaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden">
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -23,37 +24,27 @@ export default function Secondaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-0">
-        <Link href="/secondaire/niveaux/niveau1">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Arithmétique
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau2">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Fractions
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau3">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Probabilités
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau4">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Géométrie
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau5">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Algèbre
-          </div>
-        </Link>
+      <div className="flex flex-col gap-4 w-full px-4 sm:items-center md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 z-10">
+        {[
+          { href: "/secondaire/niveaux/niveau1", color: "bg-yellow-500", label: "Arithmétique" },
+          { href: "/secondaire/niveaux/niveau2", color: "bg-orange-500", label: "Fractions" },
+          { href: "/secondaire/niveaux/niveau3", color: "bg-red-500", label: "Probabilités" },
+          { href: "/secondaire/niveaux/niveau4", color: "bg-blue-800", label: "Géométrie" },
+          { href: "/secondaire/niveaux/niveau5", color: "bg-yellow-500", label: "Algèbre" },
+        ].map((item, i) => (
+          <Link key={i} href={item.href}>
+            <div
+              className={`${item.color} rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center text-white hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 md:w-72`}
+            >
+              {item.label}
+            </div>
+          </Link>
+        ))}
       </div>
 
-      {/* Loader */}
+      {/* Flocons de neige */}
       {Array.from({ length: 50 }).map((_, i) => (
-        <div key={i} className="snowflake"></div>
+        <div key={i} className="snowflake" />
       ))}
     </div>
   );
