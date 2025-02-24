@@ -16,7 +16,7 @@ export default function Secondaire() {
         snowflake.style.width = `${size}px`;
         snowflake.style.height = `${size}px`;
         snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Increased delay range for more progressive start
         snowContainer.appendChild(snowflake);
         console.log("Snowflake added:", snowflake);
       }
