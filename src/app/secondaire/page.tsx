@@ -52,7 +52,7 @@ export default function Secondaire() {
 
         {/* Animation */}
       <div className="container">
-        <div className="snowfall"></div>
+        <h1>CSS snowfall</h1>
       </div>
       </div>
     </div>
