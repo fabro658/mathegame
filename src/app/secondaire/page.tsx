@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Secondaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-b from-[#0a1c32] to-black text-white">
-      {/* Animation de neige */}
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+      {/* Animation de la neige */}
       <div className="snowfall"></div>
 
       {/* Bouton Retour */}
@@ -26,22 +26,17 @@ export default function Secondaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-10">
-        {[
-          { href: "/secondaire/niveaux/niveau1", color: "bg-yellow-500", text: "Arithmétique" },
-          { href: "/secondaire/niveaux/niveau2", color: "bg-orange-500", text: "Fractions" },
-          { href: "/secondaire/niveaux/niveau3", color: "bg-red-500", text: "Probabilités" },
-          { href: "/secondaire/niveaux/niveau4", color: "bg-green-800", text: "Géométrie" },
-          { href: "/secondaire/niveaux/niveau5", color: "bg-yellow-500", text: "Algèbre" },
-        ].map((item, index) => (
-          <Link key={index} href={item.href}>
-            <div
-              className={`${item.color} rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72`}
-            >
-              {item.text}
-            </div>
-          </Link>
-        ))}
+      <div className="flex flex-col gap-4 w-full sm:items-center sm:w-full sm:text-center z-10">
+        <Link href="/secondaire/niveaux/niveau1">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white hover:bg-blue-600 h-10 sm:h-12 w-full sm:w-64 px-4">
+            Arithmétique
+          </div>
+        </Link>
+        <Link href="/secondaire/niveaux/niveau2">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 h-10 sm:h-12 w-full sm:w-64 px-4">
+            Fractions
+          </div>
+        </Link>
       </div>
     </div>
   );
