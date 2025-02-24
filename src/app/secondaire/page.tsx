@@ -52,25 +52,34 @@ export default function Secondaire() {
 
       {/* Liens vers les niveaux */}
       <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-0">
-        {[
-          { href: "/secondaire/niveaux/niveau1", label: "Arithmétique", bg: "bg-yellow-500" },
-          { href: "/secondaire/niveaux/niveau2", label: "Fractions", bg: "bg-orange-500" },
-          { href: "/secondaire/niveaux/niveau3", label: "Probabilités", bg: "bg-red-500" },
-          { href: "/secondaire/niveaux/niveau4", label: "Géométrie", bg: "bg-blue-800" },
-          { href: "/secondaire/niveaux/niveau5", label: "Algèbre", bg: "bg-yellow-500" },
-        ].map(({ href, label, bg }) => (
-          <Link key={href} href={href}>
-            <div
-              className={`${bg} rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72`}
-            >
-              {label}
-            </div>
+      <Link href="/primaire/niveaux/niveau1">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
+          Arithmétique
+          </div>
           </Link>
-        ))}
-      </div>
-
-      {/* Animation de neige */}
-      <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
+        <Link href="/primaire/niveaux/niveau2">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
+          Fractions
+          </div>
+          </Link>
+        <Link href="/primaire/niveaux/niveau3">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
+          Probabilités
+          </div>
+          </Link>
+        <Link href="/primaire/niveaux/niveau4">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
+            Géométrie
+          </div>
+        </Link>
+        <Link href="/primaire/niveaux/niveau5">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
+          Algèbre
+          </div>
+        </Link>          
+        </div>
+            {/* Animation de neige */}
+            <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
     </div>
   );
 }
