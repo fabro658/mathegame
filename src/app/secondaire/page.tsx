@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import '../styles/global.css';
+import '../global.css';
 
 export default function Secondaire() {
   useEffect(() => {
