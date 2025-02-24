@@ -2,9 +2,15 @@ import Link from "next/link";
 
 export default function Secondaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+    <div
+      className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #142852, #0e022e)",
+      }}
+    >
       {/* Animation de la neige */}
       <div className="snowfall"></div>
+      <h1 className="text-white text-4xl font-bold">Secondaire</h1>
 
       {/* Bouton Retour */}
       <Link

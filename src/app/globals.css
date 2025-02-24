@@ -108,16 +108,21 @@ body {
   content: "";
   overflow: hidden;
   pointer-events: none;
-  z-index: 5; /* Assure-toi qu'il est au-dessus du fond */
+  z-index: 5; 
   background-image:
     radial-gradient(circle at 5% calc(var(--y) * 1), #fff 3px, transparent 6px),
     radial-gradient(circle at 65% calc(var(--y) * 1.3), #fff 2px, transparent 4px);
 }
 
 .snowfall {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* Permet de ne pas interagir avec la neige */
+  z-index: 10; /* Assure que l'animation est au-dessus du fond */
   animation: snowfall 20s linear infinite;
   background-size: 65% 100%;
 }
+
 
 .snowfall::before {
   inset: -4rem 0 0;
