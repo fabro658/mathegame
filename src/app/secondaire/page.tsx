@@ -8,13 +8,6 @@ export default function Secondaire() {
         background: "linear-gradient(180deg, #142852, #0e022e)",
       }}
     >
-      {/* Animation de la neige */}
-      <div className="snowfall">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div key={i} className="snowfall"></div>
-        ))}
-      </div>
-
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -61,6 +54,11 @@ export default function Secondaire() {
             Algèbre
           </div>
         </Link>
+      </div>
+      {/* Animation */}
+      <div className="snowfall">
+        <div className="snowfall::before"></div>
+        <div className="snowfall::after"></div>
       </div>
     </div>
   );
