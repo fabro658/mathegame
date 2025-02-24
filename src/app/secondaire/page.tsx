@@ -7,7 +7,8 @@ import '../styles/global.css';
 export default function Secondaire() {
   useEffect(() => {
     const snowContainer = document.querySelector(".snowfall");
-
+    console.log("Snow container:", snowContainer);
+  
     if (snowContainer) {
       for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("li");
@@ -18,6 +19,7 @@ export default function Secondaire() {
         snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
         snowflake.style.animationDelay = `${Math.random() * 5}s`;
         snowContainer.appendChild(snowflake);
+        console.log("Snowflake added:", snowflake);
       }
     }
   }, []);
