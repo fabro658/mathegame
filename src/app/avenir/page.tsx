@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "../src/globals.css/flower.css";
+import "../../globals.css";
 
 export default function Primaire() {
   return (
