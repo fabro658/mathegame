@@ -30,9 +30,12 @@ body {
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
+  align-items: flex-end; /* Place en bas */
+  justify-content: flex-start; /* Place à gauche */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px; /* Ajuste l'espacement si nécessaire */
 }
 
 .ball {
@@ -83,11 +86,6 @@ body {
   }
 }
 
-.bottom-left {
-  position: absolute;
-  bottom: 5;
-  left: 5;
-}
 
 /* animation page secondaire */
 /* Arrière-plan dégradé */
@@ -230,4 +228,81 @@ body {
     left: 100px;
     top: 0;
   }
+}
+
+/* animation printemps*/
+body {
+  background: #000;
+  margin: 0;
+  overflow: hidden;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end; /* Place en bas */
+  justify-content: space-around; /* Répartit les fleurs */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px; /* Ajuste l'espacement si nécessaire */
+}
+
+.flower {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.petal {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: pink;
+  border-radius: 50%;
+}
+
+.petal:nth-child(1) {
+  top: -15px;
+  left: 10px;
+}
+.petal:nth-child(2) {
+  top: 10px;
+  left: -15px;
+}
+.petal:nth-child(3) {
+  top: 10px;
+  left: 35px;
+}
+.petal:nth-child(4) {
+  top: 35px;
+  left: 10px;
+}
+
+.center {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: yellow;
+  border-radius: 50%;
+  top: 15px;
+  left: 15px;
+}
+
+.flower:nth-child(2) .petal {
+  background: red;
+}
+
+.flower:nth-child(3) .petal {
+  background: blue;
+}
+
+.flower:nth-child(4) .petal {
+  background: purple;
 }
