@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Secondaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-b from-[#0a1c32] to-black text-white">
       {/* Animation de neige */}
       <div className="snowfall"></div>
 
