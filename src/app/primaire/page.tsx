@@ -55,11 +55,6 @@ export default function Primaire() {
           </div>
         </Link> 
       </div>
-      {/* Animation */}
-      <div className="container">
-        <div className="ball bottom-left"></div>
-        <div className="shadow bottom-left"></div>
-      </div>
     </div>
   );
 }
