@@ -272,3 +272,218 @@ body {
 
 
 
+/* Paramètre : Type de fleur (1, 2 ou 3) */
+:root {
+  --flower-type: 3;
+}
+
+/* Réinitialisation des styles */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Fleur */
+.container.flower {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 300px auto 0px;
+}
+
+.container.flower[data-type="2"] {
+  transform-origin: 50% 50%;
+  transform: rotate(-35deg);
+}
+
+/* Pétales de la fleur */
+.container.flower div {
+  box-sizing: border-box;
+  position: absolute;
+  border-top-right-radius: 300px;
+  border-bottom-left-radius: 300px;
+  transform-origin: 0% 0%;
+}
+
+/* Génération manuelle des 12 pétales */
+.container.flower div:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(0deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(2) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(30deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+.container.flower div:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(60deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(4) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(90deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+.container.flower div:nth-child(5) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(120deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(6) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(150deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+.container.flower div:nth-child(7) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(180deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(8) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(210deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+.container.flower div:nth-child(9) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(240deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(10) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(270deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+.container.flower div:nth-child(11) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(300deg);
+  background: rgba(212, 102, 130, 0.9);
+}
+
+.container.flower div:nth-child(12) {
+  width: 100px;
+  height: 100px;
+  transform: rotate(330deg);
+  background: rgba(212, 102, 130, 0);
+}
+
+/* Feuille */
+.container.leaf {
+  position: relative;
+  z-index: -1;
+  width: 10px;
+  height: 10px;
+  left: 30px;
+  top: 160px;
+  margin: 0 auto;
+  transform: rotate(-110deg);
+}
+
+.container.leaf div {
+  box-sizing: border-box;
+  position: absolute;
+  border-top-right-radius: 300px;
+  border-bottom-left-radius: 300px;
+}
+
+/* 9 feuilles en spirale */
+.container.leaf div:nth-child(1) {
+  width: 2px;
+  height: 2px;
+  background: rgba(1, 7, 5, 1);
+  transform: rotate(0deg);
+}
+
+.container.leaf div:nth-child(2) {
+  width: 4px;
+  height: 4px;
+  background: rgba(2, 14, 10, 1);
+  transform: rotate(3deg);
+}
+
+.container.leaf div:nth-child(3) {
+  width: 6px;
+  height: 6px;
+  background: rgba(3, 21, 15, 1);
+  transform: rotate(6deg);
+}
+
+.container.leaf div:nth-child(4) {
+  width: 10px;
+  height: 10px;
+  background: rgba(4, 28, 20, 1);
+  transform: rotate(9deg);
+}
+
+.container.leaf div:nth-child(5) {
+  width: 16px;
+  height: 16px;
+  background: rgba(5, 35, 25, 1);
+  transform: rotate(12deg);
+}
+
+.container.leaf div:nth-child(6) {
+  width: 26px;
+  height: 26px;
+  background: rgba(6, 42, 30, 1);
+  transform: rotate(15deg);
+}
+
+.container.leaf div:nth-child(7) {
+  width: 42px;
+  height: 42px;
+  background: rgba(7, 49, 35, 1);
+  transform: rotate(18deg);
+}
+
+.container.leaf div:nth-child(8) {
+  width: 68px;
+  height: 68px;
+  background: rgba(8, 56, 40, 1);
+  transform: rotate(21deg);
+}
+
+.container.leaf div:nth-child(9) {
+  width: 110px;
+  height: 110px;
+  background: rgba(9, 63, 45, 1);
+  transform: rotate(24deg);
+}
+
+/* Tige */
+.container.stem {
+  position: relative;
+  z-index: -1;
+  margin: 0 auto;
+  width: 5px;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 360px solid rgba(48, 32, 19, 0.9);
+  border-radius: 2px;
+  transform-origin: 0% 0%;
+  transform: rotate(-10deg);
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import "../src/globals.css/flower.css";
 
 export default function Primaire() {
   return (
@@ -11,12 +12,24 @@ export default function Primaire() {
         Retour
       </Link>
 
-{/* Section Titre */}
-<div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-center">
-  <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-    À Venir
-  </h1>
+      {/* Section Titre */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-center">
+        <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+          À Venir
+        </h1>
+      </div>
+
+      <div className="container flower" data-type="3">
+  <div></div><div></div><div></div><div></div><div></div><div></div>
+  <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
+
+<div className="container leaf">
+  <div></div><div></div><div></div><div></div><div></div>
+  <div></div><div></div><div></div><div></div>
+</div>
+
+<div className="container stem"></div>
 
 
       {/* Conteneur de l'animation */}
@@ -27,6 +40,6 @@ export default function Primaire() {
         <div className="cir4"></div>
         <div className="cir5"></div>
       </div>
-     </div>
+    </div>
   );
 }
