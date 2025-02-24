@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Secondaire() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-800 text-black relative snowfall">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-600 text-black relative snowfall">
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -49,6 +49,11 @@ export default function Secondaire() {
             Algèbre
           </div>
         </Link>
+
+        {/* Animation */}
+      <div className="container">
+        <div className="snowfall"></div>
+      </div>
       </div>
     </div>
   );
