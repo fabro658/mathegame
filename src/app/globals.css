@@ -89,58 +89,65 @@ body {
   left: 0;
 }
 
-/* animation page a venir */
-html, body {
-  padding: 0;
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+/* animation page secondaire */
+
+.snowfall,
+.snowfall::before,
+.snowfall::after {
+  position: absolute;
+  inset: 0;
+  content: "";
   overflow: hidden;
-  background: linear-gradient(#123, #111);
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      circle at 5% calc(var(--y) * 1),
+      #fff 3px, transparent 6px
+    ),
+    radial-gradient(
+      circle at 65% calc(var(--y) * 1.3),
+      #fff 2px, transparent 4px
+    );
 }
 
-.snowflake {
-  width: 1vw;
-  height: 1vw;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: -5vh;
+.snowfall {
+  animation: snowfall 20s linear infinite;
+  background-size: 65% 100%;
+}
+
+.snowfall::before { 
+  inset: -4rem 0 0;
+  opacity: 0.7;
+  animation: 
+    snowfall 20s linear infinite,
+    wind 27s ease-in-out infinite;
+  background-size: 45% 100%;
+}
+
+.snowfall::after {
+  inset: -8rem 0 0;
+  opacity: 0.8;
+  animation: 
+    snowfall 20s linear infinite,
+    wind 47s ease-in-out infinite;
+  background-size: 32% 100%;
 }
 
 @keyframes snowfall {
   0% {
-    transform: translate3d(var(--left-ini), 0, 0);
+    --y: -1%;
   }
   100% {
-    transform: translate3d(var(--left-end), 110vh, 0);
+    --y: 101%;
   }
 }
 
-.snowflake:nth-child(1) {
-  --size: 1vw;
-  --left-ini: -10vw;
-  --left-end: -10vw;
-  left: 10vw;
-  animation: snowfall 6s linear infinite;
-  animation-delay: -2s;
+@keyframes wind {
+  50% {
+    transform: translateX(200px);
+  }
 }
-
-.snowflake:nth-child(2) {
-  --size: 0.8vw;
-  --left-ini: -8vw;
-  --left-end: -8vw;
-  left: 20vw;
-  animation: snowfall 7s linear infinite;
-  animation-delay: -3s;
-}
-
-/* Ajoutez plus de classes pour chaque flocon de neige */
-
-.snowflake:nth-child(6n) {
-  filter: blur(1px);
-}
+  
 
 /* animation page a venir */
 body {
