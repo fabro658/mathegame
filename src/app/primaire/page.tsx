@@ -31,7 +31,7 @@ export default function Primaire() {
           background: "linear-gradient(180deg, #142852, #0e022e)",
         }}
       >
-        
+
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -41,13 +41,13 @@ export default function Primaire() {
       </Link>
 
       {/* Section Titre */}
-      <div className="flex flex-col items-center text-center mb-8">
-        <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+      <div className="flex flex-col items-center text-center mb-8 z-10">
+        <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
           Primaire
         </h1>
-        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
-        <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">
-          Choisi un sujet!
+        <div className="w-48 md:w-64 lg:w-96 h-1 bg-white mb-4"></div>
+        <h2 className="text-white text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">
+          Choisis un sujet!
         </h2>
       </div>
 
