@@ -18,7 +18,7 @@ export default function Secondaire() {
         </h1>
         <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
         <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">
-          Choisi un sujet!
+          Choisis un sujet!
         </h2>
       </div>
 
@@ -31,7 +31,7 @@ export default function Secondaire() {
         </Link>
         <Link href="/secondaire/niveaux/niveau2">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Fraction
+            Fractions
           </div>
         </Link>
         <Link href="/secondaire/niveaux/niveau3">
@@ -52,7 +52,9 @@ export default function Secondaire() {
       </div>
 
       {/* Loader */}
-      <div className="growing"></div>
-      </div>
-    );
+      {Array.from({ length: 50 }).map((_, i) => (
+        <div key={i} className="snowflake"></div>
+      ))}
+    </div>
+  );
 }
