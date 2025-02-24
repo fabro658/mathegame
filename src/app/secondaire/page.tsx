@@ -5,15 +5,17 @@ export default function Secondaire() {
   useEffect(() => {
     const snowContainer = document.querySelector(".snowfall");
 
-    for (let i = 0; i < 100; i++) {
-      const snowflake = document.createElement("li");
-      snowflake.style.left = `${Math.random() * 100}%`;
-      const size = Math.random() * 10 + 5;
-      snowflake.style.width = `${size}px`;
-      snowflake.style.height = `${size}px`;
-      snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-      snowflake.style.animationDelay = `${Math.random() * 5}s`;
-      snowContainer.appendChild(snowflake);
+    if (snowContainer) {
+      for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement("li");
+        snowflake.style.left = `${Math.random() * 100}%`;
+        const size = Math.random() * 10 + 5;
+        snowflake.style.width = `${size}px`;
+        snowflake.style.height = `${size}px`;
+        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowContainer.appendChild(snowflake);
+      }
     }
   }, []);
 
