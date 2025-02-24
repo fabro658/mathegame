@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import '../global.css';
 
 export default function Secondaire() {
   useEffect(() => {
     const snowContainer = document.querySelector(".snowfall");
     console.log("Snow container:", snowContainer);
-  
+
     if (snowContainer) {
       for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("li");
