@@ -21,46 +21,45 @@ export default function Primaire() {
 
       {/* Fleur */}
       <div id="container">
-  <div className="flower">
-      <div className="petal">
+        <div className="flower">
+          <div className="petal">
             <div className="circle"></div>
             <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+          <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
+          </div>
+        </div>
       </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-      <div className="petal">
-          <div className="circle"></div>
-          <div className="triangle"></div>
-      </div>
-  </div>
-</div>
-
 
       {/* Conteneur de l'animation */}
       <div className="loader">
