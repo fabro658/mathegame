@@ -27,26 +27,10 @@ export default function Primaire() {
       </div>
 
       {/* Fleurs */}
-      <div id="container">
-        {colors.map((color, index) => (
-          <div key={index} className="flower" style={{ '--flower-color': color } as CustomCSSProperties}>
-            {[...Array(9)].map((_, petalIndex) => (
-              <div key={petalIndex} className="petal">
-                <div className="circle"></div>
-                <div className="triangle"></div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Conteneur de l'animation */}
-      <div className="loader">
-        <div className="cir1"></div>
-        <div className="cir2"></div>
-        <div className="cir3"></div>
-        <div className="cir4"></div>
-        <div className="cir5"></div>
+      <div className="background">
+        <div className="canvas-container">
+          <canvas id="fieldCanvas" style={{ width: '100%', height: '100%' }}> </canvas>
+        </div>
       </div>
     </div>
   );

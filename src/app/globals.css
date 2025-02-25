@@ -117,76 +117,34 @@ body {
   
 
 /* animation page a venir */
-body {
-  background-color: #DF6229;
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+main {
   width: 100%;
   height: 100%;
 }
 
-#container {
-  margin: 20px;
-  display: flex;
-  justify-content: space-around; /* Répartir les fleurs horizontalement */
-  align-items: flex-end; /* Placer les fleurs en bas de l'écran */
-  height: 100%; /* S'assurer que le conteneur prend toute la hauteur */
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(to top, transparent, lightblue);
 }
 
-.circle {
-  background: var(--flower-color);
-  border-radius: 50%;
-  width: 20px; /* Réduire la taille de la fleur */
-  height: 20px;
-}
-
-.triangle {
-  margin-top: -10px;
-  width: 0;
-  height: 0;
-  border-top: 30px solid var(--flower-color); /* Réduire la taille de la fleur */
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;   
-}
-
-.petal {
+.background .canvas-container {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: center 60px; /* Ajuster l'origine de transformation */
-}
-
-.petal:nth-child(1) {
-  transform: rotate(45deg);
-}
-
-.petal:nth-child(2) {
-  transform: rotate(65deg);
-}
-
-.petal:nth-child(3) {
-  transform: rotate(90deg);
-}
-
-.petal:nth-child(4) {
-  transform: rotate(135deg);
-}
-
-.petal:nth-child(5) {
-  transform: rotate(180deg);
-}
-
-.petal:nth-child(6) {
-  transform: rotate(225deg);
-}
-
-.petal:nth-child(7) {
-  transform: rotate(270deg);
-}
-
-.petal:nth-child(8) {
-  transform: rotate(315deg);
-}
-
-.petal:nth-child(9) {
-  transform: rotate(360deg);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
 }
