@@ -1,5 +1,10 @@
 import Link from "next/link";
 import "../globals.css"; 
+import React from "react";
+
+interface CustomCSSProperties extends React.CSSProperties {
+  '--flower-color'?: string;
+}
 
 export default function Primaire() {
   const colors = ["#EDC442", "#FF6347", "#8A2BE2", "#3CB371", "#FF69B4", "#1E90FF"];
@@ -24,7 +29,7 @@ export default function Primaire() {
       {/* Fleurs */}
       <div id="container">
         {colors.map((color, index) => (
-          <div key={index} className="flower" style={{ '--flower-color': color }}>
+          <div key={index} className="flower" style={{ '--flower-color': color } as CustomCSSProperties}>
             {[...Array(9)].map((_, petalIndex) => (
               <div key={petalIndex} className="petal">
                 <div className="circle"></div>
