@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "../../globals.css";
+import "../globals.css"; 
 
 export default function Primaire() {
   return (
@@ -20,17 +20,16 @@ export default function Primaire() {
       </div>
 
       <div className="container flower" data-type="3">
-  <div></div><div></div><div></div><div></div><div></div><div></div>
-  <div></div><div></div><div></div><div></div><div></div><div></div>
-</div>
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
 
-<div className="container leaf">
-  <div></div><div></div><div></div><div></div><div></div>
-  <div></div><div></div><div></div><div></div>
-</div>
+      <div className="container leaf">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
 
-<div className="container stem"></div>
-
+      <div className="container stem"></div>
 
       {/* Conteneur de l'animation */}
       <div className="loader">
