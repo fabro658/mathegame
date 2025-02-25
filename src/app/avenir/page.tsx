@@ -19,16 +19,17 @@ export default function Primaire() {
         </h1>
       </div>
 
-      <div className="container flower" data-type="3">
-        <div></div><div></div><div></div><div></div><div></div><div></div>
+      {/* Fleur Simplifiée */}
+      <div className="container flower">
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
+      {/* Feuille Simplifiée */}
       <div className="container leaf">
         <div></div><div></div><div></div><div></div><div></div>
-        <div></div><div></div><div></div><div></div>
       </div>
 
+      {/* Tige Simplifiée */}
       <div className="container stem"></div>
 
       {/* Conteneur de l'animation */}
