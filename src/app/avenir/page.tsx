@@ -1,14 +1,10 @@
-import Link from "next/link";
+"use client";
+
+ import Link from "next/link";
 import "../globals.css"; 
 import React from "react";
 
-interface CustomCSSProperties extends React.CSSProperties {
-  '--flower-color'?: string;
-}
-
 export default function Primaire() {
-  const colors = ["#EDC442", "#FF6347", "#8A2BE2", "#3CB371", "#FF69B4", "#1E90FF"];
-
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
       {/* Bouton Retour */}
