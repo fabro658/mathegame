@@ -117,60 +117,73 @@ body {
   
 
 /* animation page a venir */
-html, body {
-  margin: 0;
-  padding: 0;
+body{
+  background-color: #DF6229;
+  width: 100%;
+  height: 100%;
 }
 
-.container.flower {
-  position: relative;
-  width: 5px;
-  height: 5px;
-  margin: 150px auto 0;
+#container{
+  margin: 20px;
+  border: 5px solid #EDC442;
+  padding: 20px;
+  height: 760px;
+  display: flex;
 }
-
-.container.flower div {
-  box-sizing: border-box;
-  position: absolute;
-  width: 30px;
-  height: 30px;
+.circle {
+  background: #EDC442;
   border-radius: 50%;
-  background: rgba(212, 102, 130, 0.8);
+  width: 60px;
+  height: 60px;
 }
-
-@for $i from 1 through 6 {
-  .container.flower div:nth-child(#{$i}) {
-    transform: rotate(($i - 1) * 60deg) translate(20px);
-  }
+.triangle {
+  margin-top: -20px;
+  width: 0;
+  height: 0;
+  border-top: 80px solid #EDC442;
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;   
 }
-
-.container.leaf {
-  position: relative;
-  z-index: -1;
-  width: 10px;
-  height: 10px;
-  left: 20px;
-  top: 80px;
-  margin: 0 auto;
-  transform: rotate(-100deg);
-}
-
-.container.leaf div {
-  box-sizing: border-box;
+.petal{
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(34, 139, 34, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: center 120px;
+}
+.petal:nth-child(1) {
+  transform: rotate(45deg);
 }
 
-.container.stem {
-  position: relative;
-  z-index: -1;
-  margin: 0 auto;
-  width: 4px;
-  height: 150px;
-  background: rgba(48, 32, 19, 0.9);
-  border-radius: 2px;
-  transform: rotate(-5deg);
+.petal:nth-child(2) {
+  transform: rotate(65deg);
+}
+
+.petal:nth-child(2) {
+  transform: rotate(90deg);
+}
+
+.petal:nth-child(3) {
+  transform: rotate(135deg);
+}
+
+.petal:nth-child(5) {
+  transform: rotate(180deg);
+}
+
+.petal:nth-child(6) {
+  transform: rotate(225deg);
+}
+
+.petal:nth-child(7) {
+  transform: rotate(270deg);
+}
+
+.petal:nth-child(8) {
+  transform: rotate(315deg);
+}
+
+
+.petal:nth-child(9) {
+  transform: rotate(360deg);
 }

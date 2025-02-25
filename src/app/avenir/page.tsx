@@ -19,18 +19,48 @@ export default function Primaire() {
         </h1>
       </div>
 
-      {/* Fleur Simplifiée */}
-      <div className="container flower">
-        <div></div><div></div><div></div><div></div><div></div><div></div>
+      {/* Fleur */}
+      <div id="container">
+  <div className="flower">
+      <div className="petal">
+            <div className="circle"></div>
+            <div className="triangle"></div>
       </div>
-
-      {/* Feuille Simplifiée */}
-      <div className="container leaf">
-        <div></div><div></div><div></div><div></div><div></div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
       </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+      <div className="petal">
+          <div className="circle"></div>
+          <div className="triangle"></div>
+      </div>
+  </div>
+</div>
 
-      {/* Tige Simplifiée */}
-      <div className="container stem"></div>
 
       {/* Conteneur de l'animation */}
       <div className="loader">
