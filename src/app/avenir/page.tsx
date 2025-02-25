@@ -2,6 +2,8 @@ import Link from "next/link";
 import "../globals.css"; 
 
 export default function Primaire() {
+  const colors = ["#EDC442", "#FF6347", "#8A2BE2", "#3CB371", "#FF69B4", "#1E90FF"];
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
       {/* Bouton Retour */}
@@ -19,46 +21,18 @@ export default function Primaire() {
         </h1>
       </div>
 
-      {/* Fleur */}
+      {/* Fleurs */}
       <div id="container">
-        <div className="flower">
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
+        {colors.map((color, index) => (
+          <div key={index} className="flower" style={{ '--flower-color': color }}>
+            {[...Array(9)].map((_, petalIndex) => (
+              <div key={petalIndex} className="petal">
+                <div className="circle"></div>
+                <div className="triangle"></div>
+              </div>
+            ))}
           </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-          <div className="petal">
-            <div className="circle"></div>
-            <div className="triangle"></div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Conteneur de l'animation */}

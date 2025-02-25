@@ -126,13 +126,13 @@ body {
 #container {
   margin: 20px;
   display: flex;
-  justify-content: center; /* Centrer la fleur horizontalement */
-  align-items: flex-end; /* Placer la fleur en bas de l'écran */
+  justify-content: space-around; /* Répartir les fleurs horizontalement */
+  align-items: flex-end; /* Placer les fleurs en bas de l'écran */
   height: 100%; /* S'assurer que le conteneur prend toute la hauteur */
 }
 
 .circle {
-  background: #EDC442;
+  background: var(--flower-color);
   border-radius: 50%;
   width: 20px; /* Réduire la taille de la fleur */
   height: 20px;
@@ -142,7 +142,7 @@ body {
   margin-top: -10px;
   width: 0;
   height: 0;
-  border-top: 30px solid #EDC442; /* Réduire la taille de la fleur */
+  border-top: 30px solid var(--flower-color); /* Réduire la taille de la fleur */
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;   
 }
@@ -163,11 +163,11 @@ body {
   transform: rotate(65deg);
 }
 
-.petal:nth-child(2) {
+.petal:nth-child(3) {
   transform: rotate(90deg);
 }
 
-.petal:nth-child(3) {
+.petal:nth-child(4) {
   transform: rotate(135deg);
 }
 
