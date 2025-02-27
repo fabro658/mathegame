@@ -116,6 +116,7 @@ body {
 }
   
 /* page a venir */
+/* page a venir */
 body {
   overflow: hidden;
   height: 100vh;
@@ -192,11 +193,16 @@ body {
   margin-top: -100px;
 }
 
-/* Tronc de l'arbre (allongé) */
+/* Tronc de l'arbre (allongé pour certains arbres) */
 .tree__4 {
   width: 10px;
   height: 100px; /* Troncs allongés */
   background: var(--brown);
+}
+
+/* Troncs allongés pour les arbres plus grands */
+.tree.large-tree .tree__4 {
+  height: 150px; /* Troncs plus grands */
 }
 
 /* Herbe au sol */

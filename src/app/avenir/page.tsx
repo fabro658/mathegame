@@ -9,16 +9,17 @@ const generateTrees = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
-    bottom: `0px`, // Position au bas de l'écran
-    isLarge: Math.random() < 0.3, // 30% des arbres seront plus grands (en hauteur)
+    bottom: `${Math.random() * 50 + 10}px`, // Hauteur aléatoire (distance du bas)
   }));
 };
 
 export default function Primaire() {
-  const trees = useMemo(() => generateTrees(10), []); // Générer 10 arbres
+  // Générer les arbres une seule fois avec useMemo pour éviter la régénération
+  const trees = useMemo(() => generateTrees(10), []); // Modifier ici pour générer 10 arbres
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
+      {/* Bouton Retour */}
       <Link
         href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
@@ -26,6 +27,7 @@ export default function Primaire() {
         Retour
       </Link>
 
+      {/* Section Titre */}
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-center">
         <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
           À Venir
@@ -36,10 +38,10 @@ export default function Primaire() {
       {trees.map((tree) => (
         <div
           key={tree.id}
-          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree
+          className="tree"
           style={{
             left: tree.left,
-            bottom: tree.bottom,
+            bottom: `0px`, // Positionner tous les arbres au bas de l'écran
           }}
         >
           <div className="tree__5"></div>
@@ -50,6 +52,7 @@ export default function Primaire() {
         </div>
       ))}
 
+      {/* Herbe */}
       <div id="grass"></div>
     </div>
   );
