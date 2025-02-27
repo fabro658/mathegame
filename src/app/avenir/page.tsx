@@ -5,7 +5,7 @@ import "../globals.css";
 import React, { useMemo } from "react";
 
 // Génère un tableau d'arbres avec des positions aléatoires
-const generateTrees = (count) => {
+const generateTrees = (count : number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
