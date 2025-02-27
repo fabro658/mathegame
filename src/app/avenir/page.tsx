@@ -9,13 +9,14 @@ const generateTrees = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
-    bottom: `${Math.random() * 50 + 10}px`, // Hauteur aléatoire (distance du bas)
+    bottom: `0px`, // Positionner tous les arbres au bas de l'écran
+    isLarge: Math.random() < 0.3, // 30% des arbres seront plus grands
   }));
 };
 
 export default function Primaire() {
   // Générer les arbres une seule fois avec useMemo pour éviter la régénération
-  const trees = useMemo(() => generateTrees(10), []); // Modifier ici pour générer 10 arbres
+  const trees = useMemo(() => generateTrees(10), []); // Générer 10 arbres
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
@@ -38,7 +39,7 @@ export default function Primaire() {
       {trees.map((tree) => (
         <div
           key={tree.id}
-          className="tree"
+          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree
           style={{
             left: tree.left,
             bottom: `0px`, // Positionner tous les arbres au bas de l'écran
