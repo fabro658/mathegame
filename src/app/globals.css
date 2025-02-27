@@ -116,7 +116,10 @@ body {
 }
   
 
-/* animation page a venir */
+
+/* Page a venir */
+
+
 body {
   overflow: hidden;
   height: 100vh;
@@ -146,6 +149,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: moveTrees 10s infinite linear; /* Pour animer les arbres */
+}
+
+/* Animation pour déplacer les arbres */
+@keyframes moveTrees {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50px);
+  }
 }
 
 /* Branches de l'arbre */
@@ -169,6 +183,7 @@ body {
   border: 45px solid transparent;
   border-bottom: 50px solid var(--green2);
   margin-top: -60px;
+  transform: scale(1); /* taille normale */
 }
 
 /* Deuxième couche */
@@ -176,6 +191,7 @@ body {
   border: 60px solid transparent;
   border-bottom: 65px solid var(--brightgreen);
   margin-top: -80px;
+  transform: scale(1.2); /* un peu plus grande */
 }
 
 /* Troisième couche */
@@ -183,6 +199,7 @@ body {
   border: 70px solid transparent;
   border-bottom: 80px solid var(--graygreen);
   margin-top: -100px;
+  transform: scale(1.5); /* encore plus grande */
 }
 
 /* Tronc de l'arbre */
@@ -201,4 +218,18 @@ body {
   height: 40px;
 }
 
+/* Position des arbres avec profondeur */
+.tree--layer1 {
+  left: 10%;
+  transform: translateZ(0);
+}
 
+.tree--layer2 {
+  left: 30%;
+  transform: scale(1.1) translateZ(-50px);
+}
+
+.tree--layer3 {
+  left: 50%;
+  transform: scale(1.3) translateZ(-100px);
+}
