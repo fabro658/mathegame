@@ -15,7 +15,7 @@ const generateTrees = (count: number) => {
 
 export default function Primaire() {
   // Générer les arbres une seule fois avec useMemo pour éviter la régénération
-  const trees = useMemo(() => generateTrees(10), []); // Modifier ici pour générer 10 arbres
+  const trees = useMemo(() => generateTrees(15), []); // Modifier ici pour générer 10 arbres
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
