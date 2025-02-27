@@ -22,8 +22,16 @@ export default function Primaire() {
         </h1>
       </div>
 
-      {/* Fleurs */}
-      <div id="forest"></div>
+      {/* Arbre */}
+      <div className="tree">
+        <div className="tree__5"></div>
+        <div className="tree__1"></div>
+        <div className="tree__2"></div>
+        <div className="tree__3"></div>
+        <div className="tree__4"></div>
+      </div>
+
+      {/* Herbe */}
       <div id="grass"></div>
     </div>
   );
