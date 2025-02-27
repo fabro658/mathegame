@@ -147,13 +147,12 @@ body {
   align-items: center;
 }
 
-/* Grande catégorie d'arbres */
+/* Grande catégorie d'arbres (plus grands, pas plus larges) */
 .tree.large-tree .tree__1,
 .tree.large-tree .tree__2,
 .tree.large-tree .tree__3,
 .tree.large-tree .tree__4 {
-  /* Augmenter la taille des branches et du tronc pour les grands arbres */
-  transform: scale(1.5); /* Agrandir de 1.5x */
+  transform: scaleY(1.5); /* Agrandir seulement en hauteur */
 }
 
 /* Branches de l'arbre */

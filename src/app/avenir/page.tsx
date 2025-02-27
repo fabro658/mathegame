@@ -10,7 +10,7 @@ const generateTrees = (count: number) => {
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
     bottom: `0px`, // Position au bas de l'écran
-    isLarge: Math.random() < 0.3, // 30% des arbres seront plus grands
+    isLarge: Math.random() < 0.3, // 30% des arbres seront plus grands (en hauteur)
   }));
 };
 
