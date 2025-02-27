@@ -5,7 +5,7 @@ import "../globals.css";
 import React, { useMemo } from "react";
 
 // Génère un tableau d'arbres avec des positions aléatoires
-const generateTrees = (count : number) => {
+const generateTrees = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
@@ -39,7 +39,10 @@ export default function Primaire() {
         <div
           key={tree.id}
           className="tree"
-          style={{ left: tree.left, bottom: tree.bottom }}
+          style={{
+            left: tree.left,
+            bottom: `0px`, // Assurer que tous les arbres sont au bas de l'écran
+          }}
         >
           <div className="tree__5"></div>
           <div className="tree__1"></div>

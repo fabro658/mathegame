@@ -116,38 +116,14 @@ body {
 }
   
 /* page a venir*/
-body {
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  background-image: radial-gradient(
-    circle farthest-corner at 100% 0%,
-    #ffa500,
-    50%,
-    lightblue 90%
-  );
-  background-attachment: fixed;
-}
-
-:root {
-  --ground: #42aa46;
-  --tan: #a7ac5c;
-  --green2: #878822;
-  --brown: #211610;
-  --brightgreen: #4a560c;
-  --graygreen: #303b2b;
-}
-
-/* Style de l'arbre */
 .tree {
   position: absolute;
-  bottom: 0; /* Positionne les arbres au bas de l'écran */
+  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Branches de l'arbre */
 .tree__1,
 .tree__2,
 .tree__3,
@@ -157,41 +133,35 @@ body {
   border-radius: 10%;
 }
 
-/* Petite branche (supérieure) */
 .tree__5 {
   border: 20px solid transparent;
   border-bottom: 25px solid var(--tan);
 }
 
-/* Première couche */
 .tree__1 {
   border: 45px solid transparent;
   border-bottom: 50px solid var(--green2);
   margin-top: -60px;
 }
 
-/* Deuxième couche */
 .tree__2 {
   border: 60px solid transparent;
   border-bottom: 65px solid var(--brightgreen);
   margin-top: -80px;
 }
 
-/* Troisième couche */
 .tree__3 {
   border: 70px solid transparent;
   border-bottom: 80px solid var(--graygreen);
   margin-top: -100px;
 }
 
-/* Tronc de l'arbre (allongé) */
 .tree__4 {
   width: 10px;
-  height: 100px; /* Troncs allongés */
+  height: 100px;
   background: var(--brown);
 }
 
-/* Herbe au sol */
 #grass {
   background-image: linear-gradient(to left, var(--green2), var(--ground));
   position: absolute;
