@@ -2,9 +2,21 @@
 
 import Link from "next/link";
 import "../globals.css";
-import React from "react";
+import React, { useMemo } from "react";
+
+// Génère un tableau d'arbres avec des positions aléatoires
+const generateTrees = (count) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
+    bottom: `${Math.random() * 50 + 10}px`, // Hauteur aléatoire
+  }));
+};
 
 export default function Primaire() {
+  // Générer les arbres une seule fois avec useMemo pour éviter la régénération
+  const trees = useMemo(() => generateTrees(15), []);
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
       {/* Bouton Retour */}
@@ -22,14 +34,20 @@ export default function Primaire() {
         </h1>
       </div>
 
-      {/* Arbre */}
-      <div className="tree">
-        <div className="tree__5"></div>
-        <div className="tree__1"></div>
-        <div className="tree__2"></div>
-        <div className="tree__3"></div>
-        <div className="tree__4"></div>
-      </div>
+      {/* Arbres */}
+      {trees.map((tree) => (
+        <div
+          key={tree.id}
+          className="tree"
+          style={{ left: tree.left, bottom: tree.bottom }}
+        >
+          <div className="tree__5"></div>
+          <div className="tree__1"></div>
+          <div className="tree__2"></div>
+          <div className="tree__3"></div>
+          <div className="tree__4"></div>
+        </div>
+      ))}
 
       {/* Herbe */}
       <div id="grass"></div>
