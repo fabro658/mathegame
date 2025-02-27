@@ -5,17 +5,17 @@ import "../globals.css";
 import React, { useMemo } from "react";
 
 // Génère un tableau d'arbres avec des positions aléatoires
-const generateTrees = (count : number) => {
+const generateTrees = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
-    bottom: `${Math.random() * 50 + 10}px`, // Hauteur aléatoire
+    bottom: `${Math.random() * 50 + 10}px`, // Hauteur aléatoire (distance du bas)
   }));
 };
 
 export default function Primaire() {
   // Générer les arbres une seule fois avec useMemo pour éviter la régénération
-  const trees = useMemo(() => generateTrees(15), []);
+  const trees = useMemo(() => generateTrees(10), []); // Modifier ici pour générer 10 arbres
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
@@ -39,7 +39,10 @@ export default function Primaire() {
         <div
           key={tree.id}
           className="tree"
-          style={{ left: tree.left, bottom: tree.bottom }}
+          style={{
+            left: tree.left,
+            bottom: `0px`, // Positionner tous les arbres au bas de l'écran
+          }}
         >
           <div className="tree__5"></div>
           <div className="tree__1"></div>
