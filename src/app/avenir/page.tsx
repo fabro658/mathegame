@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import "css-doodle"; // Ici c'est le bon endroit
 import "../globals.css";
 import React from "react";
 
