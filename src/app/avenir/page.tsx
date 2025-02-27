@@ -4,19 +4,23 @@ import Link from "next/link";
 import "../globals.css";
 import React, { useMemo } from "react";
 
-// Génère un tableau d'arbres avec des positions aléatoires
-const generateTrees = (count: number) => {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 90}vw`, // Position horizontale aléatoire
-    bottom: `0px`, // Positionner tous les arbres au bas de l'écran
-    isLarge: Math.random() < 0.3, // 30% des arbres seront plus grands
-  }));
-};
+// Liste de positions fixes pour les arbres
+const fixedPositions = [
+  { left: "5vw", bottom: "0px", isLarge: false },
+  { left: "20vw", bottom: "0px", isLarge: true },
+  { left: "35vw", bottom: "0px", isLarge: false },
+  { left: "50vw", bottom: "0px", isLarge: true },
+  { left: "65vw", bottom: "0px", isLarge: false },
+  { left: "80vw", bottom: "0px", isLarge: false },
+  { left: "10vw", bottom: "0px", isLarge: true },
+  { left: "25vw", bottom: "0px", isLarge: false },
+  { left: "40vw", bottom: "0px", isLarge: false },
+  { left: "55vw", bottom: "0px", isLarge: true },
+];
 
 export default function Primaire() {
-  // Générer les arbres une seule fois avec useMemo pour éviter la régénération
-  const trees = useMemo(() => generateTrees(10), []); // Générer 10 arbres
+  // Générer les arbres avec les positions fixes
+  const trees = useMemo(() => fixedPositions, []); // Utilisation des positions fixes
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
@@ -36,13 +40,13 @@ export default function Primaire() {
       </div>
 
       {/* Arbres */}
-      {trees.map((tree) => (
+      {trees.map((tree, index) => (
         <div
-          key={tree.id}
-          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree
+          key={index}
+          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree pour les grands arbres
           style={{
             left: tree.left,
-            bottom: `0px`, // Positionner tous les arbres au bas de l'écran
+            bottom: tree.bottom, // Positionner tous les arbres au bas de l'écran
           }}
         >
           <div className="tree__5"></div>
