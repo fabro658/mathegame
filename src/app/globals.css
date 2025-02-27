@@ -171,7 +171,19 @@ body {
   margin-top: -60px;
 }
 
+/* Deuxième couche */
+.tree__2 {
+  border: 60px solid transparent;
+  border-bottom: 65px solid var(--brightgreen);
+  margin-top: -80px;
+}
 
+/* Troisième couche */
+.tree__3 {
+  border: 70px solid transparent;
+  border-bottom: 80px solid var(--graygreen);
+  margin-top: -100px;
+}
 
 /* Tronc de l'arbre */
 .tree__4 {
