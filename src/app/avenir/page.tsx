@@ -1,7 +1,8 @@
 "use client";
 
- import Link from "next/link";
-import "../globals.css"; 
+import Link from "next/link";
+import "css-doodle"; // Ici c'est le bon endroit
+import "../globals.css";
 import React from "react";
 
 export default function Primaire() {
@@ -23,11 +24,8 @@ export default function Primaire() {
       </div>
 
       {/* Fleurs */}
-      <div className="background">
-        <div className="canvas-container">
-          <canvas id="fieldCanvas" style={{ width: '100%', height: '100%' }}> </canvas>
-        </div>
-      </div>
+      <div id="forest"></div>
+      <div id="grass"></div>
     </div>
   );
 }
