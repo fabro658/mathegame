@@ -115,9 +115,8 @@ body {
   }
 }
   
+/* page a venir*/
 
-
-/* Page a venir */
 body {
   overflow: hidden;
   height: 100vh;
@@ -185,10 +184,11 @@ body {
   border-bottom: 80px solid var(--graygreen);
   margin-top: -100px;
 }
-/* Tronc de l'arbre */
+
+/* Tronc de l'arbre (allongé) */
 .tree__4 {
   width: 10px;
-  height: 50px;
+  height: 100px; /* Troncs allongés */
   background: var(--brown);
 }
 
