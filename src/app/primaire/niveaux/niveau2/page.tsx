@@ -5,14 +5,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="relative min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      {/* Vague arrondie en bas */}
-      <div
-        className="absolute bottom-0 left-0 w-screen h-[100px] bg-blue-500 z-0"
-        style={{
-          clipPath: "path('M0,50 C300,150 600,-50 900,50 C1200,150 1500,-50 1800,50 L1800,100 L0,100 Z')",
-        }}
-      ></div>
-
+      
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"

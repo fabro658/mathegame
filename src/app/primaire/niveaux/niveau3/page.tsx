@@ -5,14 +5,6 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen relative bg-gray-100 text-gray-900 flex flex-col items-center justify-center">
-      {/* Lignes verticales */}
-      <div className="absolute top-0 left-0 h-full w-full flex">
-        <div className="w-[1%] bg-blue-900"></div>
-        <div className="w-[1%] bg-blue-700"></div>
-        <div className="w-[1%] bg-blue-500"></div>
-        <div className="w-[1%] bg-blue-300"></div>
-        <div className="w-[1%] bg-blue-100"></div>
-      </div>
 
       {/* Bouton de retour en haut à droite */}
       <Link
