@@ -66,11 +66,6 @@ export default function Page() {
           Fonction
         </Link>
       </div>
-     {/* Animation */}
-        <div className="container">
-        <div className="ball bottom-left"></div>
-        <div className="shadow bottom-left"></div>
-      </div>
     </div>
   );
 }
