@@ -13,10 +13,10 @@ export default function Page() {
         }}
       ></div>
 
-      {/* Bouton de retour */}
+      {/* Bouton de retour en haut à droite */}
       <Link
         href="/primaire"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
