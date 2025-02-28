@@ -93,18 +93,8 @@ body {
   margin: 0;
   padding: 0;
   background: linear-gradient(180deg, #142852, #0e022e);
-  overflow: hidden; /* Cache le débordement de neige */
-  height: 100vh; /* Assurez-vous que la hauteur de l'écran est correcte */
-}
-
-.snowfall {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; /* Assurez-vous que l'élément prend toute la hauteur */
-  pointer-events: none;
-  z-index: 1; /* Permet aux flocons de rester derrière le contenu */
+  overflow: hidden; /* Empêche les barres de défilement */
+  height: 100vh; /* Assure que le body occupe toute la hauteur de la fenêtre */
 }
 
 /* Conteneur des flocons */
@@ -113,12 +103,12 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none; /* Permet de ne pas interférer avec les autres éléments interactifs */
-  z-index: 1;
+  height: 100vh; /* Remplir la hauteur de la fenêtre */
+  pointer-events: none; /* Empêche les flocons d'interférer avec les clics */
+  z-index: 1; /* Assurez-vous que la neige est au-dessus de tous les autres éléments */
 }
 
-/* Styles des flocons */
+/* Style des flocons de neige */
 .snowfall li {
   position: absolute;
   background: white;
@@ -127,23 +117,23 @@ body {
   animation: fall linear infinite, drift linear infinite;
 }
 
-/* Animation de chute des flocons */
+/* Animation des flocons qui tombent */
 @keyframes fall {
   0% {
-    transform: translateY(0);
+    transform: translateY(0); /* Départ du sommet */
   }
   100% {
-    transform: translateY(100vh); /* Les flocons tombent du haut vers le bas */
+    transform: translateY(100vh); /* Descente jusqu'en bas de l'écran */
   }
 }
 
-/* Animation horizontale (dérive) */
+/* Animation horizontale des flocons (dérive) */
 @keyframes drift {
   0% {
-    transform: translateX(0); /* Démarre à la position x initiale */
+    transform: translateX(0); /* Démarrage sans mouvement horizontal */
   }
   100% {
-    transform: translateX(calc(10vw * (random() - 0.5))); /* Mouvement horizontal à gauche et à droite */
+    transform: translateX(calc(10vw * (random() - 0.5))); /* Le flocon bouge légèrement à gauche et à droite */
   }
 }
 

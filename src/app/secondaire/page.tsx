@@ -5,34 +5,33 @@ import Link from "next/link";
 
 export default function Secondaire() {
   useEffect(() => {
-    const snowContainer = document.querySelector(".snowfall");
-  
-    if (snowContainer) {
-      // Créer des flocons
-      for (let i = 0; i < 100; i++) {
-        const snowflake = document.createElement("li");
-  
-        // Position horizontale aléatoire (0 à 100%)
-        snowflake.style.left = `${Math.random() * 100}%`;
-  
-        // Position verticale aléatoire, pour donner l'impression que certains flocons commencent plus bas que d'autres
-        snowflake.style.top = `${Math.random() * -100}px`;
-  
-        // Taille aléatoire des flocons (entre 5px et 15px)
-        const size = Math.random() * 10 + 5;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-  
-        // Animation : random pour la durée (5s à 10s) et le délai (0 à 20s)
-        snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 20}s`;
-  
-        // Ajout des flocons à la liste
-        snowContainer.appendChild(snowflake);
+      const snowContainer = document.querySelector(".snowfall");
+    
+      if (snowContainer) {
+        // Créer des flocons de neige
+        for (let i = 0; i < 100; i++) {
+          const snowflake = document.createElement("li");
+    
+          // Positionnement horizontal aléatoire sur l'écran (0% à 100%)
+          snowflake.style.left = `${Math.random() * 100}%`;
+    
+          // Positionnement vertical aléatoire (cela permet de commencer les flocons à différentes hauteurs)
+          snowflake.style.top = `${Math.random() * -100}px`;
+    
+          // Taille aléatoire des flocons (entre 5px et 15px)
+          const size = Math.random() * 10 + 5;
+          snowflake.style.width = `${size}px`;
+          snowflake.style.height = `${size}px`;
+    
+          // Animation des flocons : durée et délai aléatoires pour des mouvements variés
+          snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // entre 5 et 10 secondes
+          snowflake.style.animationDelay = `${Math.random() * 20}s`; // délai de 0 à 20 secondes pour un effet moins uniforme
+    
+          // Ajouter le flocon à la liste des flocons
+          snowContainer.appendChild(snowflake);
+        }
       }
-    }
-  }, []);
-  
+    }, []);
 
   return (
     <div
