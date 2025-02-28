@@ -11,27 +11,33 @@ export default function Secondaire() {
     if (snowContainer) {
       for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("li");
-        snowflake.style.left = `${Math.random() * 100}%`;
-        snowflake.style.top = `-10px`; // Start above the viewport
+        snowflake.style.left = `${Math.random() * 100}%`; // Positionnement aléatoire horizontal
+        snowflake.style.top = `-${Math.random() * 10}px`; // Début de la chute légèrement au-dessus de la vue
         const size = Math.random() * 10 + 5;
         snowflake.style.width = `${size}px`;
         snowflake.style.height = `${size}px`;
+        
+        // Animation avec une durée et un délai d'animation aléatoire
         snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Increased delay range for more progressive start
+        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Délai pour un début aléatoire
+        
+        // Assignation de la variable CSS personnalisée pour le mouvement horizontal
+        snowflake.style.left = `${Math.random() * 100}%`; // Positionnement aléatoire horizontal
+        
         snowContainer.appendChild(snowflake);
         console.log("Snowflake added:", snowflake);
       }
     }
   }, []);
-    return (
-      <div
-        className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, #142852, #0e022e)",
-        }}
-      >
 
-{/* Bouton Retour */}
+  return (
+    <div
+      className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #142852, #0e022e)",
+      }}
+    >
+      {/* Bouton Retour */}
       <Link
         href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
@@ -78,8 +84,9 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
-            {/* Animation de neige */}
-            <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
+
+      {/* Animation de neige */}
+      <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
     </div>
   );
 }

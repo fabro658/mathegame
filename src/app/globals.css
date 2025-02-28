@@ -87,7 +87,7 @@ body {
 }
 
 
-/* animation page secondaire */
+/* animation page Primaire Secondaire */
 /* Arrière-plan dégradé */
 body {
   margin: 0;
@@ -108,12 +108,14 @@ body {
 
 @keyframes fall {
   0% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateX(0); /* Pas de mouvement horizontal au début */
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(100vh) translateX(calc(100vw * var(--randomX))); /* Mouvement horizontal en fonction de la variable CSS */
   }
 }
+
+
   
 /* page a venir */
 body {
