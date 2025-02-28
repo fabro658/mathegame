@@ -117,28 +117,6 @@ body {
 
   
 /* page a venir */
-body {
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  background-image: radial-gradient(
-    circle farthest-corner at 100% 0%,
-    #ffa500,
-    50%,
-    lightblue 90%
-  );
-  background-attachment: fixed;
-}
-
-:root {
-  --ground: #42aa46;
-  --tan: #a7ac5c;
-  --green2: #878822;
-  --brown: #211610;
-  --brightgreen: #4a560c;
-  --graygreen: #303b2b;
-}
-
 /* Style de l'arbre */
 .tree {
   position: absolute;
@@ -146,14 +124,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1; /* Assurez-vous que les arbres sont au-dessus des troncs */
 }
 
-/* Grande catégorie d'arbres (plus grands, pas plus larges) */
-.tree.large-tree .tree__1,
-.tree.large-tree .tree__2,
-.tree.large-tree .tree__3,
+/* Tronc de l'arbre (allongé pour certains arbres) */
+.tree__4 {
+  width: 10px;
+  height: 100px; /* Troncs allongés */
+  background: var(--brown);
+  z-index: -1; /* Met le tronc derrière les branches */
+}
+
+/* Troncs allongés pour les arbres plus grands */
 .tree.large-tree .tree__4 {
-  transform: scaleY(1.5); /* Agrandir seulement en hauteur */
+  height: 150px; /* Troncs plus grands */
 }
 
 /* Branches de l'arbre */
@@ -164,6 +148,7 @@ body {
   width: 0;
   height: 0;
   border-radius: 10%;
+  z-index: 2; /* Assurez-vous que les branches sont au-dessus du tronc */
 }
 
 /* Petite branche (supérieure) */
@@ -193,18 +178,6 @@ body {
   margin-top: -100px;
 }
 
-/* Tronc de l'arbre (allongé pour certains arbres) */
-.tree__4 {
-  width: 10px;
-  height: 100px; /* Troncs allongés */
-  background: var(--brown);
-}
-
-/* Troncs allongés pour les arbres plus grands */
-.tree.large-tree .tree__4 {
-  height: 150px; /* Troncs plus grands */
-}
-
 /* Herbe au sol */
 #grass {
   background-image: linear-gradient(to left, var(--green2), var(--ground));
@@ -212,4 +185,5 @@ body {
   bottom: 0;
   width: 100vw;
   height: 40px;
+  z-index: 0; /* L'herbe doit être derrière les arbres */
 }
