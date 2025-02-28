@@ -6,29 +6,33 @@ import Link from "next/link";
 export default function Secondaire() {
   useEffect(() => {
     const snowContainer = document.querySelector(".snowfall");
-    console.log("Snow container:", snowContainer);
-
+  
     if (snowContainer) {
+      // Créer des flocons
       for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("li");
-        snowflake.style.left = `${Math.random() * 100}%`; // Positionnement aléatoire horizontal
-        snowflake.style.top = `-${Math.random() * 10}px`; // Début de la chute légèrement au-dessus de la vue
+  
+        // Position horizontale aléatoire (0 à 100%)
+        snowflake.style.left = `${Math.random() * 100}%`;
+  
+        // Position verticale aléatoire, pour donner l'impression que certains flocons commencent plus bas que d'autres
+        snowflake.style.top = `${Math.random() * -100}px`;
+  
+        // Taille aléatoire des flocons (entre 5px et 15px)
         const size = Math.random() * 10 + 5;
         snowflake.style.width = `${size}px`;
         snowflake.style.height = `${size}px`;
-        
-        // Animation avec une durée et un délai d'animation aléatoire
-        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Délai pour un début aléatoire
-        
-        // Assignation de la variable CSS personnalisée pour le mouvement horizontal
-        snowflake.style.left = `${Math.random() * 100}%`; // Positionnement aléatoire horizontal
-        
+  
+        // Animation : random pour la durée (5s à 10s) et le délai (0 à 20s)
+        snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        snowflake.style.animationDelay = `${Math.random() * 20}s`;
+  
+        // Ajout des flocons à la liste
         snowContainer.appendChild(snowflake);
-        console.log("Snowflake added:", snowflake);
       }
     }
   }, []);
+  
 
   return (
     <div

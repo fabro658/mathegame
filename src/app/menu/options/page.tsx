@@ -31,17 +31,17 @@ export default function Option() {
   };
 
   return (
-    <div className="min-h-screen h-auto overflow-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
       <Link
         href="/"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
-
+  
       <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
         <h1 className="text-3xl font-bold text-center mb-8">Option</h1>
-
+  
         {/* Section À propos */}
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
@@ -57,7 +57,7 @@ export default function Option() {
             et de maîtriser les mathématiques.
           </p>
         </section>
-
+  
         {/* Section FAQ */}
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Foire aux questions (FAQ)</h2>
@@ -80,7 +80,7 @@ export default function Option() {
             </li>
           </ul>
         </section>
-
+  
         {/* Section Contacter */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">Contacter l&apos;équipe</h2>
