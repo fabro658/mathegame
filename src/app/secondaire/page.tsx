@@ -5,33 +5,24 @@ import Link from "next/link";
 
 export default function Secondaire() {
   useEffect(() => {
-      const snowContainer = document.querySelector(".snowfall");
-    
-      if (snowContainer) {
-        // Créer des flocons de neige
-        for (let i = 0; i < 100; i++) {
-          const snowflake = document.createElement("li");
-    
-          // Positionnement horizontal aléatoire sur l'écran (0% à 100%)
-          snowflake.style.left = `${Math.random() * 100}%`;
-    
-          // Positionnement vertical aléatoire (cela permet de commencer les flocons à différentes hauteurs)
-          snowflake.style.top = `${Math.random() * -100}px`;
-    
-          // Taille aléatoire des flocons (entre 5px et 15px)
-          const size = Math.random() * 10 + 5;
-          snowflake.style.width = `${size}px`;
-          snowflake.style.height = `${size}px`;
-    
-          // Animation des flocons : durée et délai aléatoires pour des mouvements variés
-          snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // entre 5 et 10 secondes
-          snowflake.style.animationDelay = `${Math.random() * 20}s`; // délai de 0 à 20 secondes pour un effet moins uniforme
-    
-          // Ajouter le flocon à la liste des flocons
-          snowContainer.appendChild(snowflake);
-        }
+    const snowContainer = document.querySelector(".snowfall");
+    console.log("Snow container:", snowContainer);
+
+    if (snowContainer) {
+      for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement("li");
+        snowflake.style.left = `${Math.random() * 100}%`;
+        snowflake.style.top = `-10px`; // Start above the viewport
+        const size = Math.random() * 10 + 5;
+        snowflake.style.width = `${size}px`;
+        snowflake.style.height = `${size}px`;
+        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Increased delay range for more progressive start
+        snowContainer.appendChild(snowflake);
+        console.log("Snowflake added:", snowflake);
       }
-    }, []);
+    }
+  }, []);
 
   return (
     <div
