@@ -137,21 +137,22 @@ export default function ExponentsPractice() {
         </p>
       )}
 
-      <div className="grid grid-cols-3 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
-          const questionIndex = currentPage * questionsPerPage + index;
-          return (
-            <div key={questionIndex} className="flex items-center gap-4">
-              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{q.questionText}</div>
+      {/* Grille question */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText }, idx) => (
+            <div key={idx} className="flex flex-col items-start gap-2">
+              <div className="font-bold text-black">{questionText}</div>
               <input
                 type="text"
-                className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""}`}
-                value={answers[questionIndex] || ""}
-                onChange={(e) => handleChange(questionIndex, e.target.value)}
+                inputMode="numeric"
+                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
+                value={answers[currentPage * questionsPerPage + idx] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
               />
             </div>
-          );
-        })}
+          ))}
       </div>
 
       <div className="mt-6 flex gap-4">
