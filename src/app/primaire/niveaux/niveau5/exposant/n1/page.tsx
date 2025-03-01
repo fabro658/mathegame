@@ -90,13 +90,6 @@ export default function ExponentsPractice() {
     }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
-    }
-  };
-
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
