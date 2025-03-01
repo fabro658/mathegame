@@ -1,18 +1,21 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsPractice() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 6; // Questions affichées par page (2 colonnes x 3 lignes)
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Ajout du message de feedback
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
-  // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
       const superscriptMap: Record<string, string> = {
@@ -20,9 +23,9 @@ export default function ExponentsPractice() {
         6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹",
       };
 
-      return Array.from({ length: totalQuestions }, () => {
-        const base = Math.floor(Math.random() * 10) + 1; // Base entre 1 et 10
-        const exponent = 2; // Exposant fixé à 2
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        const base = Math.floor(Math.random() * 10) + 1;
+        const exponent = 2;
         const correctAnswer = Math.sqrt(base ** exponent).toString();
 
         const exponentUnicode = String(exponent)
@@ -38,58 +41,60 @@ export default function ExponentsPractice() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setFeedbackMessage(null); // Réinitialiser le message de feedback
+    setFeedbackMessage(null);
   };
 
-  // Validation des réponses
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.some((answer) => !answer)) {
+    if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const allCorrect = pageAnswers.every((answer, idx) => answer === pageCorrectAnswers[idx]);
-    if (!allCorrect) {
-      const updatedAnswers = [...answers];
-      pageAnswers.forEach((answer, idx) => {
-        if (answer !== pageCorrectAnswers[idx]) {
-          updatedAnswers[startIndex + idx] = null; // Réinitialise les réponses incorrectes
-        }
-      });
-      setAnswers(updatedAnswers);
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer."); // Message de feedback
-    } else {
-      setFeedbackMessage("Toutes les réponses sont correctes !"); // Message de feedback
-    }
+    let hasError = false;
+    const newAnswers = [...answers];
+    const incorrect: number[] = [];
 
-    // Passe automatiquement à la page suivante si tout est correct
-    if (allCorrect && currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setFeedbackMessage(null); // Réinitialise le message de feedback
-      }, 1500);
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      if (answer !== questions[globalIndex].correctAnswer) {
+        newAnswers[globalIndex] = null;
+        incorrect.push(globalIndex);
+        hasError = true;
+      }
+    });
+
+    setAnswers(newAnswers);
+    setIncorrectAnswers(incorrect);
+
+    if (hasError) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setCurrentPage(currentPage + 1);
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
   const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setFeedbackMessage(null);
     }
   };
 
@@ -98,27 +103,25 @@ export default function ExponentsPractice() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran */}
       <Link
         href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
-      {/* Barre de progression circulaire (visible uniquement sur grands écrans) */}
-      <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
+      <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
-            r={50}
+            r={radius}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={10}
-            strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
@@ -127,64 +130,38 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
+      <h1 className="text-4xl font-bold mb-6">Exercices sur les exposants</h1>
 
-      {/* Message de feedback */}
       {feedbackMessage && (
-        <div className={`mt-4 text-lg font-bold ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
           {feedbackMessage}
-        </div>
+        </p>
       )}
 
-      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {questions
-          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-          .map(({ questionText }, idx) => (
-            <div key={idx} className="flex flex-col items-start gap-2">
-              <div className="font-bold text-black">{questionText}</div>
+      <div className="grid grid-cols-3 gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
+          const questionIndex = currentPage * questionsPerPage + index;
+          return (
+            <div key={questionIndex} className="flex items-center gap-4">
+              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{q.questionText}</div>
               <input
                 type="text"
-                inputMode="numeric"
-                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
-                value={answers[currentPage * questionsPerPage + idx] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+                className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""}`}
+                value={answers[questionIndex] || ""}
+                onChange={(e) => handleChange(questionIndex, e.target.value)}
               />
             </div>
-          ))}
+          );
+        })}
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
-        >
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
           Précédent
         </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
           Valider les réponses
         </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-      </div>
-
-      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
-      <div className="mt-6 w-full sm:hidden">
-        <Link
-          href="/menu/apprendre/exposant"
-          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
       </div>
     </div>
   );
