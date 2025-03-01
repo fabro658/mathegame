@@ -23,7 +23,7 @@ export default function ExponentsPractice() {
         6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹",
       };
 
-      return Array.from({ length: totalQuestions }, (_, index) => {
+      return Array.from({ length: totalQuestions }, () => {
         const base = Math.floor(Math.random() * 10) + 1;
         const exponent = 2;
         const correctAnswer = Math.sqrt(base ** exponent).toString();
@@ -76,11 +76,17 @@ export default function ExponentsPractice() {
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
-    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
-      setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setTimeout(() => {
+        setAnswers(Array(totalQuestions).fill(null));
+        setFeedbackMessage(null);
+      }, 2000);
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
     }
   };
 
