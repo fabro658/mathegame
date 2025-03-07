@@ -91,7 +91,7 @@ export default function Addition() {
       const userAnswer = answer !== null ? parseFloat(answer.toString()) : NaN; // Convertir en nombre
       const correctAnswer = pageCorrectAnswers[index];
 
-      if (isNaN(userAnswer) {
+      if (isNaN(userAnswer)) {
         incorrect.push(startIndex + index); // Ajouter l'indice de la réponse invalide
         allCorrect = false;
       } else if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
@@ -99,7 +99,6 @@ export default function Addition() {
         allCorrect = false;
       }
     });
-  
 
     setIncorrectAnswers(incorrect); // Mettre à jour les réponses incorrectes
 
