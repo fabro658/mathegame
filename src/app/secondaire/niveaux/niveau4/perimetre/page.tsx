@@ -54,9 +54,10 @@ export default function Perimetre() {
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseFloat(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue.toString();
     setAnswers(newAnswers);
   };
+  
 
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
