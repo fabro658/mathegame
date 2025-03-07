@@ -3,142 +3,126 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Perimetre() {
-  const totalQuestions = 30;
-  const questionsPerPage = 3;
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+export default function Addition() {
+  const totalQuestions = 36;
+  const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
+  const [questions, setQuestions] = useState<[number, number][]>([]);
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Pour afficher les messages de feedback
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
+  const [hasPassed, setHasPassed] = useState(false); // Nouvel état pour suivre si toutes les réponses sont correctes
 
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 5);
-        let questionText = "";
-        let correctAnswer = 0;
-
-        if (shapeType === 0) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
-          correctAnswer = 4 * side;
-        } else if (shapeType === 1) {
-          const length = Math.floor(Math.random() * 10) + 1;
-          const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-          correctAnswer = 2 * (length + width);
-        } else if (shapeType === 2) {
-          const side1 = Math.floor(Math.random() * 10) + 1;
-          const side2 = Math.floor(Math.random() * 10) + 1;
-          const side3 = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
-          correctAnswer = side1 + side2 + side3;
-        } else if (shapeType === 3) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
-          correctAnswer = 4 * side;
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let a, b;
+        if (index < 10) {
+          a = Math.floor(Math.random() * 10) + 1;
+          b = Math.floor(Math.random() * 10) + 1;
+        } else if (index < 20) {
+          a = Math.floor(Math.random() * 20) + 10;
+          b = Math.floor(Math.random() * 20) + 5;
+        } else if (index < 30) {
+          do {
+            a = Math.floor(Math.random() * 50) + 10;
+            b = Math.floor(Math.random() * 50) + 10;
+          } while (a === b);
         } else {
-          const side1 = Math.floor(Math.random() * 10) + 1;
-          const side2 = Math.floor(Math.random() * 10) + 1;
-          const side3 = Math.floor(Math.random() * 10) + 1;
-          const side4 = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un trapèze avec des côtés de ${side1} cm, ${side2} cm, ${side3} cm et ${side4} cm ?`;
-          correctAnswer = side1 + side2 + side3 + side4;
+          a = Math.floor(Math.random() * 100) + 50;
+          b = Math.floor(Math.random() * 100) + 50;
         }
-
-        return {
-          questionText,
-          correctAnswer: correctAnswer.toFixed(2),
-        };
+        return [a, b];
       });
     };
 
     setQuestions(generateQuestions());
   }, []);
 
-  const completedAnswers = answers.filter((answer) => answer !== null && answer !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  const handleChange = (index: number, value: string): void => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    const parsedValue = parseInt(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(null); // Réinitialiser le message de feedback
+    setFeedbackMessage(null); // Réinitialiser les messages de feedback
   };
 
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    // Vérifier si toutes les réponses sont remplies
-    if (pageAnswers.some(answer => answer === null || answer === "")) {
+    if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
-    const marginOfError = 0.01;
-    let allCorrect = true;
-    const updatedAnswers = [...answers];
+    let hasError = false;
+    const newAnswers = [...answers];
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
-      const userAnswer = parseFloat(answer || "0");
-      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
-      
-      if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
-        updatedAnswers[startIndex + index] = null;
-        allCorrect = false;
+      const globalIndex = startIndex + index;
+      const [a, b] = questions[globalIndex];
+      if (answer !== a + b) {
+        newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
+        incorrect.push(globalIndex);
+        hasError = true;
       }
     });
 
-    setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    setAnswers(newAnswers);
+    setIncorrectAnswers(incorrect);
+    setHasPassed(!hasError); // Mettre à jour l'état hasPassed
 
-    if (allCorrect) {
+    if (hasError) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      if (currentPage < totalQuestions / questionsPerPage - 1) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
-          setIsValidated(false);
           setFeedbackMessage(null); // Réinitialiser le message de feedback
         }, 1500);
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
       }
-    } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
       setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
       setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/menu/apprendre/opérations arithmétiques"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
         Apprendre
       </Link>
-      <Link href="/secondaire/niveaux/niveau4" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link
+        href="/primaire/niveaux/niveau1"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
         Retour
       </Link>
 
@@ -162,65 +146,66 @@ export default function Perimetre() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
+      <h1 className="text-4xl font-bold mb-6">Addition</h1>
 
-      {/* Affichage des messages de feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
 
-      {/* Affichage des questions */}
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-4">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
+      <div className="grid grid-cols-3 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(([a, b], index) => {
+            const questionIndex = currentPage * questionsPerPage + index;
+            return (
+              <div key={questionIndex} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                  {a} + {b}
+                </div>
                 <input
-                   type="text"
-                    inputMode="numeric"
-                   className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+                  type="text"
+                  inputMode="numeric"
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
               </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
+            );
+          })}
+      </div>
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold" onClick={handleNextPage}>
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      <div className="mt-6 flex gap-4">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }
