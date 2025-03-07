@@ -5,12 +5,15 @@ import Link from "next/link";
 
 export default function Addition() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const questionsPerPage = 6;
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
+  const radius = 50; 
+  const strokeWidth = 10; 
+  const circumference = 2 * Math.PI * radius;
 
   // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
@@ -82,11 +85,6 @@ export default function Addition() {
       setHasPassed(false);
     }
   };
-
-  // Calcul pour dessiner le cercle de progression
-  const radius = 50; // Ajustez le rayon pour qu'il soit égal à celui de l'addition
-  const strokeWidth = 10; // Définir la largeur du cercle
-  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
