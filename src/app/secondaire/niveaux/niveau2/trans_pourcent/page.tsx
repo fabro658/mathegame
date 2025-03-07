@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ConversionDecimale() {
-  const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Nombre de questions par vague
+  const totalQuestions = 36; // Nombre total de questions
+  const questionsPerPage = 6; // Nombre de questions par vague
 
   const [questions, setQuestions] = useState<
     { question: string; correctAnswer: string }[]

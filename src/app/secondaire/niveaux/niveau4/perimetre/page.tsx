@@ -14,24 +14,19 @@ export default function Perimetre() {
 
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 4);
+      return Array.from({ length: totalQuestions }, (_, index) => {
         let questionText = "";
         let correctAnswer = 0;
 
-        if (shapeType === 0) {
+        if (index < 12) {
           const side = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
           correctAnswer = 4 * side;
-        } else if (shapeType === 1) {
+        } else if (index < 24) {
           const length = Math.floor(Math.random() * 10) + 1;
           const width = Math.floor(Math.random() * 10) + 1;
           questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
           correctAnswer = 2 * (length + width);
-        } else if (shapeType === 2) {
-          const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un cercle de rayon ${radius} cm ? (π = 3.14)`;
-          correctAnswer = 2 * Math.PI * radius;
         } else {
           const side1 = Math.floor(Math.random() * 10) + 1;
           const side2 = Math.floor(Math.random() * 10) + 1;
@@ -42,7 +37,7 @@ export default function Perimetre() {
 
         return {
           questionText,
-          correctAnswer: correctAnswer.toFixed(2),
+          correctAnswer: correctAnswer.toString(),
         };
       });
     };
@@ -63,41 +58,36 @@ export default function Perimetre() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => parseFloat(q.correctAnswer));
 
-    // Vérifier si toutes les réponses sont remplies
-    const allAnswersFilled = pageAnswers.every(answer => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
+    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       alert("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    // Vérification des réponses avec une marge d'erreur
     const marginOfError = 0.01;
     let allCorrect = true;
     const updatedAnswers = [...answers];
 
     pageAnswers.forEach((answer, index) => {
       const userAnswer = parseFloat(answer || "0");
-      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
-      
+      const correctAnswer = pageCorrectAnswers[index];
+
       if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
-        updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
+        updatedAnswers[startIndex + index] = null;
         allCorrect = false;
       }
     });
 
-    setAnswers(updatedAnswers); // Mettre à jour les réponses
+    setAnswers(updatedAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
 
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      // Passer à la série suivante si toutes les réponses sont correctes
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
         setIsValidated(false);
-      }, 1500); // Attendre un peu avant de passer à la série suivante pour l'effet
+      }, 1500);
     }
   };
 
@@ -105,6 +95,7 @@ export default function Perimetre() {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -112,6 +103,7 @@ export default function Perimetre() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setHasPassed(false);
     }
   };
 
@@ -121,13 +113,10 @@ export default function Perimetre() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre/perimetre" 
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+      <Link href="/menu/apprendre/perimetre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link
-      href="/secondaire/niveaux/niveau4"
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/secondaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -153,21 +142,19 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {/* Affichage des questions */}
       {!isValidated && (
         <>
           <div className="flex flex-col gap-6">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-           <div className="font-bold text-black">{questionText}</div>
-           <input
-              type="text"
-             inputMode="text"
-              className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+              <div key={index} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
+                <input
+                  type="text"
+                  className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
+                  value={answers[currentPage * questionsPerPage + index] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
+              </div>
             ))}
           </div>
           <div className="mt-6 flex gap-4">
