@@ -63,27 +63,28 @@ export default function Perimetre() {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-
+  
     if (pageAnswers.includes(null)) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
-
+  
     const newAnswers = [...answers];
     let allCorrect = true;
-
+  
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== correctAnswers[globalIndex]) {
+      if (answer !== questions[globalIndex].correctAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null;
       }
     });
-
+  
     setAnswers(newAnswers);
     setIsValidated(true);
     setHasPassed(allCorrect);
   };
+  
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
