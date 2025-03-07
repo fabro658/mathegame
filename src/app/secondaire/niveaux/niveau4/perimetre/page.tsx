@@ -11,6 +11,7 @@ export default function Perimetre() {
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Pour afficher les messages de feedback
 
   useEffect(() => {
     const generateQuestions = () => {
@@ -64,21 +65,21 @@ export default function Perimetre() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
 
-    const allAnswersFilled = pageAnswers.every(answer => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
+    // Vérifier si toutes les réponses sont remplies
+    if (pageAnswers.some(answer => answer === null || answer === "")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
     const marginOfError = 0.01;
     let allCorrect = true;
     const updatedAnswers = [...answers];
@@ -97,11 +98,17 @@ export default function Perimetre() {
     setIsValidated(true);
     setHasPassed(allCorrect);
 
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500);
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      if (currentPage < totalQuestions / questionsPerPage - 1) {
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+          setIsValidated(false);
+          setFeedbackMessage(null); // Réinitialiser le message de feedback
+        }, 1500);
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     }
   };
 
@@ -109,6 +116,7 @@ export default function Perimetre() {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -116,6 +124,7 @@ export default function Perimetre() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -154,7 +163,13 @@ export default function Perimetre() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
-      <p className="text-red-600 font-bold mb-6">Veuillez remplir toutes les questions</p>
+
+      {/* Affichage des messages de feedback */}
+      {feedbackMessage && (
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>
+          {feedbackMessage}
+        </p>
+      )}
 
       {/* Affichage des questions */}
       {!isValidated && (
