@@ -11,7 +11,7 @@ export default function AdditionFractions() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  // Fonction pour simplifier les fractions, en tenant compte des fractions comme 2/2 = 1
+  // Fonction pour simplifier les fractions
   const simplifyFraction = (numerator: number, denominator: number) => {
     if (numerator === denominator) return "1"; // Si le numérateur et le dénominateur sont égaux, simplifie à 1
     return `${numerator}/${denominator}`;
@@ -100,6 +100,7 @@ export default function AdditionFractions() {
       className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
+
 
       <h1 className="text-4xl font-bold mb-8">Addition de Fractions</h1>
 
