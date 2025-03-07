@@ -9,7 +9,6 @@ export default function Perimetre() {
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false); // Utilisé pour afficher un message spécial
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
@@ -65,7 +64,7 @@ export default function Perimetre() {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setFeedbackMessage(null);
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
   const handleValidation = (): void => {
@@ -73,6 +72,7 @@ export default function Perimetre() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
+    // Vérifier si toutes les réponses sont remplies
     if (pageAnswers.some(answer => answer === null || answer === "")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
@@ -95,15 +95,14 @@ export default function Perimetre() {
 
     setAnswers(updatedAnswers);
     setIsValidated(true);
-    setHasPassed(allCorrect); // Mettre à jour hasPassed
 
     if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      setFeedbackMessage("Toutes les réponses sont correctes !");
       if (currentPage < totalQuestions / questionsPerPage - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
           setIsValidated(false);
-          setFeedbackMessage(null);
+          setFeedbackMessage(null); // Réinitialiser le message de feedback
         }, 1500);
       }
     } else {
@@ -115,7 +114,7 @@ export default function Perimetre() {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
       setIsValidated(false);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -123,7 +122,7 @@ export default function Perimetre() {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setIsValidated(false);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -163,15 +162,10 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
+      {/* Affichage des messages de feedback */}
       {feedbackMessage && (
         <p className={`text-xl mb-4 ${feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>
           {feedbackMessage}
-        </p>
-      )}
-
-      {hasPassed && (
-        <p className="text-green-600 font-bold text-xl">
-          Bravo ! Toutes vos réponses sont correctes.
         </p>
       )}
 
@@ -206,7 +200,7 @@ export default function Perimetre() {
         </>
       )}
 
-      {isValidated && !hasPassed && (
+      {isValidated && !feedbackMessage?.includes("correctes") && (
         <div>
           <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
           <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
