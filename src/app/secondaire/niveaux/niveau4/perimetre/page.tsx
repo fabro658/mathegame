@@ -12,48 +12,50 @@ export default function Perimetre() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
+  // Générer de nouvelles questions
+  const generateQuestions = () => {
+    return Array.from({ length: totalQuestions }, () => {
+      const shapeType = Math.floor(Math.random() * 5);
+      let questionText = "";
+      let correctAnswer = 0;
+
+      if (shapeType === 0) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
+        correctAnswer = 4 * side;
+      } else if (shapeType === 1) {
+        const length = Math.floor(Math.random() * 10) + 1;
+        const width = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+        correctAnswer = 2 * (length + width);
+      } else if (shapeType === 2) {
+        const side1 = Math.floor(Math.random() * 10) + 1;
+        const side2 = Math.floor(Math.random() * 10) + 1;
+        const side3 = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
+        correctAnswer = side1 + side2 + side3;
+      } else if (shapeType === 3) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
+        correctAnswer = 4 * side;
+      } else {
+        const side1 = Math.floor(Math.random() * 10) + 1;
+        const side2 = Math.floor(Math.random() * 10) + 1;
+        const side3 = Math.floor(Math.random() * 10) + 1;
+        const side4 = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un trapèze avec des côtés de ${side1} cm, ${side2} cm, ${side3} cm et ${side4} cm ?`;
+        correctAnswer = side1 + side2 + side3 + side4;
+      }
+
+      return {
+        questionText,
+        correctAnswer: correctAnswer.toFixed(2),
+      };
+    });
+  };
+
+  // Charger les questions initiales
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 5);
-        let questionText = "";
-        let correctAnswer = 0;
-
-        if (shapeType === 0) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un carré de côté ${side} cm ?`;
-          correctAnswer = 4 * side;
-        } else if (shapeType === 1) {
-          const length = Math.floor(Math.random() * 10) + 1;
-          const width = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
-          correctAnswer = 2 * (length + width);
-        } else if (shapeType === 2) {
-          const side1 = Math.floor(Math.random() * 10) + 1;
-          const side2 = Math.floor(Math.random() * 10) + 1;
-          const side3 = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
-          correctAnswer = side1 + side2 + side3;
-        } else if (shapeType === 3) {
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
-          correctAnswer = 4 * side;
-        } else {
-          const side1 = Math.floor(Math.random() * 10) + 1;
-          const side2 = Math.floor(Math.random() * 10) + 1;
-          const side3 = Math.floor(Math.random() * 10) + 1;
-          const side4 = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le périmètre d'un trapèze avec des côtés de ${side1} cm, ${side2} cm, ${side3} cm et ${side4} cm ?`;
-          correctAnswer = side1 + side2 + side3 + side4;
-        }
-
-        return {
-          questionText,
-          correctAnswer: correctAnswer.toFixed(2),
-        };
-      });
-    };
-
     setQuestions(generateQuestions());
   }, []);
 
@@ -98,6 +100,9 @@ export default function Perimetre() {
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses sont correctes !");
+      // Réinitialiser les réponses pour la nouvelle série de questions
+      setAnswers(Array(totalQuestions).fill(null));
+      // Passer à la série suivante de questions
       if (currentPage < totalQuestions / questionsPerPage - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);

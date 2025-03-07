@@ -26,7 +26,7 @@ export default function Racines() {
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value, 10);
-    if (/^-?\d+$/.test(value)) {
+    if (/^\d+$/.test(value)) {
       newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     } else if (value === "") {
       newAnswers[index] = null;
