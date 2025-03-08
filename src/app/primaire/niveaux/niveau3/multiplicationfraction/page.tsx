@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -10,6 +10,15 @@ export default function MultiplicationFraction() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
+
+  // Paramètres du cercle de progression
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
+  // Calcul du pourcentage de progression
+  const completedAnswers = answers.filter((answer) => answer !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
     if (denominator === 0) {
@@ -127,6 +136,34 @@ export default function MultiplicationFraction() {
       >
         Retour
       </Link>
+
+      {/* Cercle de progression en haut à gauche */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-4xl font-bold mb-6">Multiplication de Fractions</h1>
 
