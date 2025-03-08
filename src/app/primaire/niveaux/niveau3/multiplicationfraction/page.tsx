@@ -140,6 +140,7 @@ export default function MultiplicationFraction() {
       {/* Cercle de progression en haut à gauche */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
