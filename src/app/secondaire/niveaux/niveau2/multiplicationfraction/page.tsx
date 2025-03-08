@@ -168,7 +168,7 @@ export default function MultiplicationFraction() {
           <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
         </div>
       </div>
-    </div>
+
 
 
       <h1 className="text-4xl font-bold mb-6">Multiplication de Fractions</h1>
@@ -224,6 +224,7 @@ export default function MultiplicationFraction() {
           Suivant
         </button>
       </div>
+    </div>
     </div>
   );
 }
