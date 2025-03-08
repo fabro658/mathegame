@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Addition() {
+export default function Perimetre() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-
+  const [isValidated, setIsValidated] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false);
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
@@ -91,10 +92,7 @@ export default function Addition() {
       const userAnswer = answer !== null ? parseFloat(answer.toString()) : NaN; // Convertir en nombre
       const correctAnswer = pageCorrectAnswers[index];
 
-      if (isNaN(userAnswer)) {
-        incorrect.push(startIndex + index); // Ajouter l'indice de la réponse invalide
-        allCorrect = false;
-      } else if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
+      if (isNaN(userAnswer) || Math.abs(userAnswer - correctAnswer) > marginOfError) {
         incorrect.push(startIndex + index); // Ajouter l'indice de la réponse incorrecte
         allCorrect = false;
       }
@@ -182,18 +180,25 @@ export default function Addition() {
       {!feedbackMessage?.includes("correctes") && (
         <>
           <div className="flex flex-col gap-4">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                   type="text"
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => {
+              const questionIndex = currentPage * questionsPerPage + index;
+              const isIncorrect = incorrectAnswers.includes(questionIndex);
+
+              return (
+                <div key={index} className="flex flex-col items-start gap-2">
+                  <div className="font-bold text-black">{questionText}</div>
+                  <input
+                    type="text"
                     inputMode="numeric"
-                   className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                    className={`border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto ${
+                      isIncorrect ? "border-red-500" : ""
+                    }`}
+                    value={answers[questionIndex] || ""}
+                    onChange={(e) => handleChange(questionIndex, e.target.value)}
                   />
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
           <div className="mt-6 flex gap-4">
             <button

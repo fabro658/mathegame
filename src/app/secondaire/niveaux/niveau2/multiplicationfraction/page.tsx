@@ -65,7 +65,6 @@ export default function MultiplicationFraction() {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
-
     // Validation des réponses
     const newAnswers = [...answers];
     let allCorrect = true;
@@ -131,7 +130,7 @@ export default function MultiplicationFraction() {
             stroke="#e5e5e5"
             strokeWidth={strokeWidth}
           />
-          <circle
+            <circle
             cx="50%"
             cy="50%"
             r={radius}
@@ -197,7 +196,7 @@ export default function MultiplicationFraction() {
         </>
       )}
 
-      {isValidated && (
+{isValidated && (
         <>
           {hasPassed ? (
             <div>
