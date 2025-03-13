@@ -46,8 +46,8 @@ export default function DivisionFractions() {
 
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
         let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedNumerator === simplifiedDenominator) {
-          correctAnswer = "1";
+        if (simplifiedDenominator === 1) {
+          correctAnswer = `${simplifiedNumerator}`; // Si le dénominateur est 1, retourne un entier
         }
 
         return {
@@ -64,7 +64,7 @@ export default function DivisionFractions() {
     // Vérifie si l'entrée est un nombre entier ou une fraction simplifiée
     const regex = /^-?\d+\/\d+$/; // Expression régulière pour une fraction (par exemple "2/3")
     const isInteger = /^-?\d+$/.test(value); // Expression régulière pour un entier
-  
+
     if (value === "" || regex.test(value) || isInteger) {
       const newAnswers = [...answers];
       newAnswers[index] = value.trim();
@@ -74,7 +74,6 @@ export default function DivisionFractions() {
       setFeedbackMessage("Veuillez entrer une fraction ou un nombre entier valide.");
     }
   };
-  
 
   // Valide les réponses de la page actuelle
   const handleValidation = () => {
@@ -94,7 +93,11 @@ export default function DivisionFractions() {
       const globalIndex = startIndex + index;
       const { correctAnswer } = questions[globalIndex];
 
-      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+      // Normaliser la réponse de l'utilisateur et la réponse correcte
+      const normalizedUserAnswer = normalizeAnswer(answer);
+      const normalizedCorrectAnswer = normalizeAnswer(correctAnswer);
+
+      if (normalizedUserAnswer !== normalizedCorrectAnswer) {
         newAnswers[globalIndex] = "";
         hasErrors = true;
       }
@@ -112,7 +115,12 @@ export default function DivisionFractions() {
     }
   };
 
+  // Normaliser la réponse pour la comparaison
   const normalizeAnswer = (answer: string): string => {
+    // Si la réponse est un entier, la convertir en fraction avec dénominateur 1
+    if (/^-?\d+$/.test(answer)) {
+      return `${answer}/1`;
+    }
     return answer.replace(/\s+/g, "").toLowerCase();
   };
 
