@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+
+// Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
+const gcd = (a: number, b: number): number => {
+  if (b === 0) return a;
+  return gcd(b, a % b);
+};
 
 export default function AdditionFractions() {
   const totalQuestions = 36;
@@ -10,14 +16,6 @@ export default function AdditionFractions() {
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
-
-  // Fonction pour simplifier les fractions, en tenant compte des fractions comme 2/2 = 1
-  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    if (numerator === denominator) {
-      return [1, 1]; // Si numérateur = dénominateur, simplifie en 1
-    }
-    return [numerator, denominator];
-  };
 
   // Générer des questions aléatoires
   useEffect(() => {
@@ -33,12 +31,16 @@ export default function AdditionFractions() {
         const numerator2 = a2 * b1;
 
         const numeratorResult = numerator1 + numerator2;
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
+
+        // Calculer le PGDC pour simplifier la fraction
+        const pgdc = gcd(numeratorResult, commonDenominator);
+        const simplifiedNumerator = numeratorResult / pgdc;
+        const simplifiedDenominator = commonDenominator / pgdc;
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+          correctAnswer: `${numeratorResult}/${commonDenominator}`, // Réponse avec le plus grand dénominateur
         };
       });
 
@@ -69,14 +71,7 @@ export default function AdditionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
-      const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
-      const commonDenominator = b1 * b2;
-      const numerator1 = a1 * b2;
-      const numerator2 = a2 * b1;
-      const numeratorResult = numerator1 + numerator2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, commonDenominator);
-      const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+      const correctAnswer = questions[globalIndex].correctAnswer;
 
       if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
         newAnswers[globalIndex] = "";
@@ -97,9 +92,7 @@ export default function AdditionFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    const normalized = answer.replace(/\s+/g, "").toLowerCase();
-    if (normalized === "2/2") return "1"; // S'assure que 2/2 est considéré comme 1
-    return normalized;
+    return answer.replace(/\s+/g, "").toLowerCase();
   };
 
   const handleNextPage = (): void => {
