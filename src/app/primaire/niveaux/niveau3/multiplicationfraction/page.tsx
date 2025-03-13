@@ -3,17 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
-const gcd = (a: number, b: number): number => {
-  if (b === 0) return a;
-  return gcd(b, a % b);
-};
-
-export default function MultiplicationFractions() {
+export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string; simplifiedAnswer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ num1: number; num2: number; correctAnswer: number }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const radius = 50;
@@ -24,36 +18,18 @@ export default function MultiplicationFractions() {
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    if (denominator === 0) {
-      return [numerator, denominator]; // Évite la division par zéro
-    }
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
-    return [numerator / divisor, denominator / divisor];
-  };
-
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
-        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
-        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
-        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
+        const num1 = Math.floor(Math.random() * 10) + 1; // Premier nombre (1 à 10)
+        const num2 = Math.floor(Math.random() * 10) + 1; // Deuxième nombre (1 à 10)
 
-        // Multiplication des fractions : (a1/b1) × (a2/b2)
-        const numeratorResult = a1 * a2;
-        const denominatorResult = b1 * b2;
-
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedNumerator === simplifiedDenominator) {
-          correctAnswer = "1";
-        }
+        // Addition des nombres : num1 + num2
+        const correctAnswer = num1 + num2;
 
         return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
+          num1,
+          num2,
           correctAnswer,
         };
       });
@@ -87,7 +63,7 @@ export default function MultiplicationFractions() {
       const globalIndex = startIndex + index;
       const { correctAnswer } = questions[globalIndex];
 
-      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+      if (normalizeAnswer(answer) !== correctAnswer.toString()) {
         newAnswers[globalIndex] = "";
         hasErrors = true;
       }
@@ -125,7 +101,7 @@ export default function MultiplicationFractions() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
       <Link
-        href="/menu/apprendre/fraction"
+        href="/menu/apprendre/addition"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
@@ -146,14 +122,6 @@ export default function MultiplicationFractions() {
             cy="50%"
             r={radius}
             fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
             stroke="#3b82f6"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
@@ -166,7 +134,7 @@ export default function MultiplicationFractions() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Multiplication de Fractions</h1>
+      <h1 className="text-4xl font-bold mb-6">Addition de Nombres</h1>
 
       {/* Feedback */}
       {feedbackMessage && (
@@ -183,9 +151,9 @@ export default function MultiplicationFractions() {
 
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ num1, num2 }, index) => (
           <div key={index} className="flex items-center gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} × {fraction2}</div>
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{num1} + {num2}</div>
             <input
               type="text"
               inputMode="numeric"
