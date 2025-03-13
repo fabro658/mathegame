@@ -13,7 +13,7 @@ export default function AdditionFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string; simplifiedAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
@@ -41,6 +41,7 @@ export default function AdditionFractions() {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
           correctAnswer: `${numeratorResult}/${commonDenominator}`, // Réponse avec le plus grand dénominateur
+          simplifiedAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`, // Réponse simplifiée
         };
       });
 
@@ -71,9 +72,12 @@ export default function AdditionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const correctAnswer = questions[globalIndex].correctAnswer;
+      const { correctAnswer, simplifiedAnswer } = questions[globalIndex];
 
-      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+      if (
+        normalizeAnswer(answer) !== normalizeAnswer(correctAnswer) &&
+        normalizeAnswer(answer) !== normalizeAnswer(simplifiedAnswer)
+      ) {
         newAnswers[globalIndex] = "";
         hasErrors = true;
       }
@@ -109,36 +113,15 @@ export default function AdditionFractions() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
-      <Link
-        href="/menu/apprendre/fraction"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau3"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+      <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">Apprendre</Link>
+      <Link href="/primaire/niveaux/niveau3" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
 
       <h1 className="text-4xl font-bold mb-6">Addition de Fractions</h1>
 
-      {/* Feedback */}
       {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          } text-center`}
-        >
-          {feedbackMessage}
-        </p>
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>
       )}
 
-      {/* Questions et réponses */}
       <div className="grid grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
@@ -152,29 +135,6 @@ export default function AdditionFractions() {
             />
           </div>
         ))}
-      </div>
-
-      <div className="mt-6 flex gap-4">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
       </div>
     </div>
   );
