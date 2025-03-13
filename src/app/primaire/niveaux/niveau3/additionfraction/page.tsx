@@ -143,7 +143,7 @@ export default function AdditionFractions() {
       )}
 
       {/* Questions et réponses */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} + {fraction2}</div>
