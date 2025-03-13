@@ -1,22 +1,34 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+
+// Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
+const gcd = (a: number, b: number): number => {
+  if (b === 0) return a;
+  return gcd(b, a % b);
+};
 
 export default function SoustractionFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
-  // Simplification des fractions (résultats comme 2/2 = 1)
+  // Calcul du pourcentage de progression
+  const completedAnswers = answers.filter((answer) => answer !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
+  // Simplification de la fraction
   const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
     if (denominator === 0) {
       return [numerator, denominator]; // Évite la division par zéro
     }
-    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
     const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
     return [numerator / divisor, denominator / divisor];
   };
@@ -24,43 +36,42 @@ export default function SoustractionFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        let a1, b1, a2, b2, numerator1, numerator2, numeratorResult;
+        const a1 = Math.floor(Math.random() * 5) + 3; // Numérateur fraction 1 (3 à 7) pour éviter les résultats négatifs
+        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
+        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
+        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
-        do {
-          a1 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 1 (-3 à 3)
-          b1 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 1 (-3 à 3)
-          a2 = Math.floor(Math.random() * 7) - 3; // Numérateur fraction 2 (-3 à 3)
-          b2 = Math.floor(Math.random() * 7) - 3; // Dénominateur fraction 2 (-3 à 3)
+        // Soustraction des fractions : (a1/b1) - (a2/b2)
+        const denominatorResult = b1 * b2;
+        const numeratorResult = (a1 * b2) - (a2 * b1);
 
-          if (b1 === 0) b1 = 1; // Évite la division par zéro
-          if (b2 === 0) b2 = 1; // Évite la division par zéro
-
-          numerator1 = a1 * b2;
-          numerator2 = a2 * b1;
-
-          numeratorResult = numerator1 - numerator2;
-        } while (numeratorResult < 0); // Répète jusqu'à ce que le résultat soit positif ou nul
-
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, b1 * b2);
+        // Si la soustraction donne un résultat négatif, ajuster les numérateurs
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+        if (simplifiedNumerator === simplifiedDenominator) {
+          correctAnswer = "1";
+        }
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+          correctAnswer,
         };
       });
 
     setQuestions(generateQuestions());
   }, []);
 
-  const handleChange = (index: number, value: string): void => {
+  // Met à jour les réponses
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
     setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
-  const handleValidation = (): void => {
+  // Valide les réponses de la page actuelle
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
@@ -75,13 +86,7 @@ export default function SoustractionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
-      const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
-      const numerator1 = a1 * b2;
-      const numerator2 = a2 * b1;
-      const numeratorResult = numerator1 - numerator2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, b1 * b2);
-      const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+      const { correctAnswer } = questions[globalIndex];
 
       if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
         newAnswers[globalIndex] = "";
@@ -102,9 +107,7 @@ export default function SoustractionFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    const normalized = answer.replace(/\s+/g, "").toLowerCase();
-    if (normalized === "2/2") return "1"; // S'assure que 2/2 est considéré comme 1
-    return normalized;
+    return answer.replace(/\s+/g, "").toLowerCase();
   };
 
   const handleNextPage = (): void => {
@@ -135,6 +138,27 @@ export default function SoustractionFractions() {
         Retour
       </Link>
 
+      {/* Cercle de progression en haut à gauche */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
+
       <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
       {/* Feedback */}
@@ -151,7 +175,7 @@ export default function SoustractionFractions() {
       )}
 
       {/* Questions et réponses */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} - {fraction2}</div>
@@ -168,11 +192,11 @@ export default function SoustractionFractions() {
 
       <div className="mt-6 flex gap-4">
         <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
         >
-          Précédent
+          Suivant
         </button>
         <button
           onClick={handleValidation}
@@ -181,11 +205,11 @@ export default function SoustractionFractions() {
           Valider les réponses
         </button>
         <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
         >
-          Suivant
+          Précédent
         </button>
       </div>
     </div>
