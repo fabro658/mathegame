@@ -62,10 +62,16 @@ export default function DivisionFractions() {
 
   // Met à jour les réponses
   const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
-    setAnswers(newAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback
+    // Vérifie si l'entrée est un entier
+    const regex = /^-?\d+$/; // Expression régulière pour un nombre entier
+    if (value === "" || regex.test(value)) {
+      const newAnswers = [...answers];
+      newAnswers[index] = value.trim();
+      setAnswers(newAnswers);
+      setFeedbackMessage(""); // Réinitialiser le message de feedback
+    } else {
+      setFeedbackMessage("Veuillez entrer un nombre entier valide.");
+    }
   };
 
   // Valide les réponses de la page actuelle
