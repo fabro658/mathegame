@@ -60,19 +60,21 @@ export default function DivisionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Met à jour les réponses
   const handleChange = (index: number, value: string) => {
-    // Vérifie si l'entrée est un entier
-    const regex = /^-?\d+$/; // Expression régulière pour un nombre entier
-    if (value === "" || regex.test(value)) {
+    // Vérifie si l'entrée est un nombre entier ou une fraction simplifiée
+    const regex = /^-?\d+\/\d+$/; // Expression régulière pour une fraction (par exemple "2/3")
+    const isInteger = /^-?\d+$/.test(value); // Expression régulière pour un entier
+  
+    if (value === "" || regex.test(value) || isInteger) {
       const newAnswers = [...answers];
       newAnswers[index] = value.trim();
       setAnswers(newAnswers);
       setFeedbackMessage(""); // Réinitialiser le message de feedback
     } else {
-      setFeedbackMessage("Veuillez entrer un nombre entier valide.");
+      setFeedbackMessage("Veuillez entrer une fraction ou un nombre entier valide.");
     }
   };
+  
 
   // Valide les réponses de la page actuelle
   const handleValidation = () => {
