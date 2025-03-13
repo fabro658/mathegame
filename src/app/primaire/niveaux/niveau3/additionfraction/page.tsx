@@ -22,9 +22,9 @@ export default function AdditionFractions() {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
         const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur de 1 à 5
-        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur de 1 à 5
+        const b1 = Math.floor(Math.random() * 9) + 2; // Dénominateur de 2 à 10
         const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur de 1 à 5
-        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur de 1 à 5
+        const b2 = Math.floor(Math.random() * 9) + 2; // Dénominateur de 2 à 10
 
         const commonDenominator = b1 * b2;
         const numerator1 = a1 * b2;
