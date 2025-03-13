@@ -1,17 +1,21 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function MultiplicationFraction() {
+// Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
+const gcd = (a: number, b: number): number => {
+  if (b === 0) return a;
+  return gcd(b, a % b);
+};
+
+export default function MultiplicationFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string; simplifiedAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
-
-  // Paramètres du cercle de progression
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -37,6 +41,7 @@ export default function MultiplicationFraction() {
         const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
         const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
+        // Multiplication des fractions : (a1/b1) × (a2/b2)
         const numeratorResult = a1 * a2;
         const denominatorResult = b1 * b2;
 
@@ -56,6 +61,7 @@ export default function MultiplicationFraction() {
     setQuestions(generateQuestions());
   }, []);
 
+  // Met à jour les réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -63,7 +69,8 @@ export default function MultiplicationFraction() {
     setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
-  const handleValidation = (): void => {
+  // Valide les réponses de la page actuelle
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
@@ -78,12 +85,7 @@ export default function MultiplicationFraction() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [a1, b1] = questions[globalIndex].fraction1.split("/").map(Number);
-      const [a2, b2] = questions[globalIndex].fraction2.split("/").map(Number);
-      const numeratorResult = a1 * a2;
-      const denominatorResult = b1 * b2;
-      const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-      const correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+      const { correctAnswer } = questions[globalIndex];
 
       if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
         newAnswers[globalIndex] = "";
@@ -104,9 +106,7 @@ export default function MultiplicationFraction() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    const normalized = answer.replace(/\s+/g, "").toLowerCase();
-    if (normalized === "2/2") return "1"; // S'assure que 2/2 est considéré comme 1
-    return normalized;
+    return answer.replace(/\s+/g, "").toLowerCase();
   };
 
   const handleNextPage = (): void => {
@@ -182,7 +182,7 @@ export default function MultiplicationFraction() {
       )}
 
       {/* Questions et réponses */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} × {fraction2}</div>
@@ -190,7 +190,7 @@ export default function MultiplicationFraction() {
               type="text"
               inputMode="numeric"
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-              value={answers[currentPage * questionsPerPage + index] || ""}
+              value={answers[currentPage * questionsPerPage + index]}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
           </div>
@@ -199,11 +199,11 @@ export default function MultiplicationFraction() {
 
       <div className="mt-6 flex gap-4">
         <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
         >
-          Précédent
+          Suivant
         </button>
         <button
           onClick={handleValidation}
@@ -212,11 +212,11 @@ export default function MultiplicationFraction() {
           Valider les réponses
         </button>
         <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
+          disabled={currentPage === 0}
         >
-          Suivant
+          Précédent
         </button>
       </div>
     </div>
