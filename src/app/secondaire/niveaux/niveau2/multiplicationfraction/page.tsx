@@ -133,7 +133,7 @@ export default function MultiplicationFractions() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau3"
+        href="/secondaire/niveaux/niveau2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
