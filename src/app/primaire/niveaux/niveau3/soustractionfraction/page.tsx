@@ -174,7 +174,6 @@ export default function SoustractionFractions() {
           {feedbackMessage}
         </p>
       )}
-</div>
 
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -197,6 +196,7 @@ export default function SoustractionFractions() {
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
+    </div>
     </div>
   );
 }

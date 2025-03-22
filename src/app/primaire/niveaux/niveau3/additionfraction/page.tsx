@@ -45,18 +45,22 @@ export default function AdditionFractions() {
         const denominatorResult = b1 * b2;
         const numeratorResult = (a1 * b2) + (a2 * b1);
 
+        // Si la soustraction donne un résultat négatif, ajuster les numérateurs
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedNumerator === simplifiedDenominator) {
-          correctAnswer = "1";
+        
+        let correctAnswer = "";
+        if (simplifiedDenominator === 1) {
+        correctAnswer = `${simplifiedNumerator}`; // Stocke comme un entier
+        } else {
+         correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
         }
 
         return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer,
-        };
-      });
+       fraction1: `${a1}/${b1}`,
+       fraction2: `${a2}/${b2}`,
+      correctAnswer,
+      };
+});
 
     setQuestions(generateQuestions());
   }, []);
@@ -106,7 +110,11 @@ export default function AdditionFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    answer = answer.replace(/\s+/g, "").toLowerCase(); // Supprimer les espaces
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`; // Convertir un entier en fraction (ex: "2" => "2/1")
+    }
+    return answer;
   };
 
   const handleNextPage = (): void => {
