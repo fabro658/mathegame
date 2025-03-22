@@ -98,7 +98,7 @@ export default function EquationsEquivalentes() {
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
@@ -132,7 +132,7 @@ export default function EquationsEquivalentes() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/primaire/niveaux/niveau2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -160,6 +160,7 @@ export default function EquationsEquivalentes() {
 
       <h1 className="text-4xl font-bold mb-6">Équations équivalentes</h1>
 
+      {/* Feedback */}
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
@@ -207,27 +208,10 @@ export default function EquationsEquivalentes() {
         })}
       </div>
 
-      <div className="flex gap-4 mt-6">
-        <button
-          onClick={handlePreviousPage}
-          className="w-32 bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="w-32 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-        >
-          Valider
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="w-32 bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
+      <div className="mt-6 flex gap-4">
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
