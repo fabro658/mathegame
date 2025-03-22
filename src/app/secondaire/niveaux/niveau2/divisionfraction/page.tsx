@@ -20,35 +20,30 @@ export default function DivisionFractions() {
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    if (denominator === 0) {
-      return [numerator, denominator]; // Évite la division par zéro
-    }
-    const gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
-    return [numerator / gcdValue, denominator / gcdValue];
+  // Simplification de la fraction
+  const simplifyFraction = (numerator: number, denominator: number): string => {
+    if (denominator === 0) return `${numerator}/${denominator}`; // Évite la division par zéro
+    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
+    const simplifiedNumerator = numerator / divisor;
+    const simplifiedDenominator = denominator / divisor;
+
+    return simplifiedDenominator === 1 ? `${simplifiedNumerator}` : `${simplifiedNumerator}/${simplifiedDenominator}`;
   };
 
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
-        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
-        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
-        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
+        const a1 = Math.floor(Math.random() * 5) + 1;
+        const b1 = Math.floor(Math.random() * 5) + 1;
+        const a2 = Math.floor(Math.random() * 5) + 1;
+        const b2 = Math.floor(Math.random() * 5) + 1;
 
-        // Division des fractions : a1/b1 ÷ a2/b2 devient a1/b1 × b2/a2
         const numeratorResult = a1 * b2;
         const denominatorResult = b1 * a2;
-
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedDenominator === 1) {
-          correctAnswer = `${simplifiedNumerator}`; // Si le dénominateur est 1, retourne un entier
-        }
+        const correctAnswer = simplifyFraction(numeratorResult, denominatorResult);
 
         return {
           fraction1: `${a1}/${b1}`,
@@ -61,21 +56,19 @@ export default function DivisionFractions() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    // Vérifie si l'entrée est un nombre entier ou une fraction simplifiée
-    const regex = /^-?\d+\/\d+$/; // Expression régulière pour une fraction (par exemple "2/3")
-    const isInteger = /^-?\d+$/.test(value); // Expression régulière pour un entier
+    const fractionRegex = /^-?\d+\/[1-9]\d*$/; // Fraction valide (ex: "2/3", "-4/5")
+    const integerRegex = /^-?\d+$/; // Nombre entier (ex: "5", "-3")
 
-    if (value === "" || regex.test(value) || isInteger) {
+    if (value === "" || fractionRegex.test(value) || integerRegex.test(value)) {
       const newAnswers = [...answers];
       newAnswers[index] = value.trim();
       setAnswers(newAnswers);
-      setFeedbackMessage(""); // Réinitialiser le message de feedback
+      setFeedbackMessage("");
     } else {
-      setFeedbackMessage("Veuillez entrer une fraction ou un nombre entier valide.");
+      setFeedbackMessage("Veuillez entrer un nombre entier ou une fraction valide.");
     }
   };
 
-  // Valide les réponses de la page actuelle
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -93,9 +86,9 @@ export default function DivisionFractions() {
       const globalIndex = startIndex + index;
       const { correctAnswer } = questions[globalIndex];
 
-      // Normaliser la réponse de l'utilisateur et la réponse correcte
-      const normalizedUserAnswer = normalizeAnswer(answer);
-      const normalizedCorrectAnswer = normalizeAnswer(correctAnswer);
+      // Normalisation de l'entrée utilisateur
+      const normalizedUserAnswer = answer.trim();
+      const normalizedCorrectAnswer = correctAnswer.trim();
 
       if (normalizedUserAnswer !== normalizedCorrectAnswer) {
         newAnswers[globalIndex] = "";
@@ -115,15 +108,6 @@ export default function DivisionFractions() {
     }
   };
 
-  // Normaliser la réponse pour la comparaison
-  const normalizeAnswer = (answer: string): string => {
-    // Si la réponse est un entier, la convertir en fraction avec dénominateur 1
-    if (/^-?\d+$/.test(answer)) {
-      return `${answer}/1`;
-    }
-    return answer.replace(/\s+/g, "").toLowerCase();
-  };
-
   const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
@@ -138,7 +122,6 @@ export default function DivisionFractions() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -152,7 +135,6 @@ export default function DivisionFractions() {
         Retour
       </Link>
 
-      {/* Cercle de progression en haut à gauche */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -175,20 +157,12 @@ export default function DivisionFractions() {
 
       <h1 className="text-4xl font-bold mb-6">Division de Fractions</h1>
 
-      {/* Feedback */}
       {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          } text-center`}
-        >
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
           {feedbackMessage}
         </p>
       )}
 
-      {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
@@ -205,26 +179,9 @@ export default function DivisionFractions() {
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
