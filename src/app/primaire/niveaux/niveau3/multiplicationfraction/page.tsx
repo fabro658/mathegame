@@ -24,12 +24,15 @@ export default function MultiplicationFractions() {
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
-    if (denominator === 0) {
-      return [numerator, denominator]; // Évite la division par zéro
-    }
+  const simplifyFraction = (numerator: number, denominator: number): string => {
+    if (denominator === 0) return `${numerator}/0`; // Évite la division par zéro
+    if (numerator === 0) return "0"; // Cas où le numérateur est 0
+
     const gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
-    return [numerator / gcdValue, denominator / gcdValue];
+    const simplifiedNumerator = numerator / gcdValue;
+    const simplifiedDenominator = denominator / gcdValue;
+
+    return simplifiedDenominator === 1 ? `${simplifiedNumerator}` : `${simplifiedNumerator}/${simplifiedDenominator}`;
   };
 
   useEffect(() => {
@@ -44,11 +47,7 @@ export default function MultiplicationFractions() {
         const numeratorResult = a1 * a2;
         const denominatorResult = b1 * b2;
 
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedNumerator === simplifiedDenominator) {
-          correctAnswer = "1";
-        }
+        const correctAnswer = simplifyFraction(numeratorResult, denominatorResult);
 
         return {
           fraction1: `${a1}/${b1}`,
@@ -105,7 +104,22 @@ export default function MultiplicationFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    let normalized = answer.replace(/\s+/g, "").toLowerCase();
+
+    // Vérifie si c'est un nombre entier qui doit être converti en fraction
+    if (!normalized.includes("/") && !isNaN(Number(normalized))) {
+      return normalized;
+    }
+
+    // Vérifie si c'est une fraction valide et simplifie
+    const parts = normalized.split("/");
+    if (parts.length === 2) {
+      const num = parseInt(parts[0], 10);
+      const den = parseInt(parts[1], 10);
+      return simplifyFraction(num, den);
+    }
+
+    return normalized;
   };
 
   const handleNextPage = (): void => {
@@ -136,7 +150,7 @@ export default function MultiplicationFractions() {
         Retour
       </Link>
 
-      {/* Cercle de progression en haut à gauche */}
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -161,19 +175,12 @@ export default function MultiplicationFractions() {
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          } text-center`}
-        >
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
           {feedbackMessage}
         </p>
       )}
 
-      {/* Questions et réponses */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
           <div key={index} className="flex items-center gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} × {fraction2}</div>
@@ -189,26 +196,9 @@ export default function MultiplicationFractions() {
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
