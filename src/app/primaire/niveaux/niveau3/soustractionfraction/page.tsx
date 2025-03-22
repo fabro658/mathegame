@@ -168,12 +168,19 @@ export default function SoustractionFractions() {
 <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
-          {feedbackMessage}
-        </p>
-      )}
+{/* Feedback */}
+{feedbackMessage && (
+  <p
+    className={`text-xl mb-4 text-center ${
+      feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+        ? "text-red-500" //  Messages d'erreur en rouge
+        : "text-green-500" // Messages de succès en vert
+    }`}
+  >
+    {feedbackMessage}
+  </p>
+)}
+
 
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
