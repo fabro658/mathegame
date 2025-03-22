@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 // Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
 const gcd = (a: number, b: number): number => {
@@ -129,15 +130,20 @@ export default function SoustractionFractions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
-
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
-          {feedbackMessage}
-        </p>
-      )}
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
+      <Link
+        href="/menu/apprendre/fraction"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/primaire/niveaux/niveau3"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
       {/* Cercle de progression en haut à gauche */}
 <div className="absolute top-4 left-4 w-32 h-32">
@@ -159,7 +165,16 @@ export default function SoustractionFractions() {
     <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
   </div>
 </div>
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+          {feedbackMessage}
+        </p>
+      )}
+</div>
 
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
