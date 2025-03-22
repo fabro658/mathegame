@@ -13,9 +13,25 @@ export default function AdditionFractions() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string; simplifiedAnswer: string }[]>([]);
+  const [questions, setQuestions] = useState<{ fraction1: string; fraction2: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
+    // Calcul du pourcentage de progression
+    const completedAnswers = answers.filter((answer) => answer !== "").length;
+    const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
+      // Simplification de la fraction
+  const simplifyFraction = (numerator: number, denominator: number): [number, number] => {
+    if (denominator === 0) {
+      return [numerator, denominator]; // Évite la division par zéro
+    }
+    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
+    return [numerator / divisor, denominator / divisor];
+  };
 
   // Générer des questions aléatoires
   useEffect(() => {
@@ -26,29 +42,30 @@ export default function AdditionFractions() {
         const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur de 1 à 5
         const b2 = Math.floor(Math.random() * 9) + 2; // Dénominateur de 2 à 10
 
-        const commonDenominator = b1 * b2;
-        const numerator1 = a1 * b2;
-        const numerator2 = a2 * b1;
+        // Addition des fractions : (a1/b1) + (a2/b2)
+        const denominatorResult = b1 * b2;
+        const numeratorResult = (a1 * b2) + (a2 * b1);
 
-        const numeratorResult = numerator1 + numerator2;
-
-        // Calculer le PGDC pour simplifier la fraction
-        const pgdc = gcd(numeratorResult, commonDenominator);
-        const simplifiedNumerator = numeratorResult / pgdc;
-        const simplifiedDenominator = commonDenominator / pgdc;
+        // Si la soustraction donne un résultat négatif, ajuster les numérateurs
+        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        
+        let correctAnswer = "";
+        if (simplifiedDenominator === 1) {
+        correctAnswer = `${simplifiedNumerator}`; // Stocke comme un entier
+        } else {
+         correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
+        }
 
         return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer: `${numeratorResult}/${commonDenominator}`, // Réponse avec le plus grand dénominateur
-          simplifiedAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`, // Réponse simplifiée
-        };
-      });
+       fraction1: `${a1}/${b1}`,
+       fraction2: `${a2}/${b2}`,
+      correctAnswer,
+      };
+    });
+      setQuestions(generateQuestions());
+    }, []);
 
-    setQuestions(generateQuestions());
-  }, []);
-
-  // Met à jour les réponses
+  // Mettre à jour les réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -72,12 +89,9 @@ export default function AdditionFractions() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const { correctAnswer, simplifiedAnswer } = questions[globalIndex];
+      const { correctAnswer } = questions[globalIndex];
 
-      if (
-        normalizeAnswer(answer) !== normalizeAnswer(correctAnswer) &&
-        normalizeAnswer(answer) !== normalizeAnswer(simplifiedAnswer)
-      ) {
+      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
         newAnswers[globalIndex] = "";
         hasErrors = true;
       }
@@ -96,7 +110,11 @@ export default function AdditionFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    answer = answer.replace(/\s+/g, "").toLowerCase(); // Supprimer les espaces
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`; // Convertir un entier en fraction (ex: "2" => "2/1")
+    }
+    return answer;
   };
 
   const handleNextPage = (): void => {
@@ -110,6 +128,7 @@ export default function AdditionFractions() {
       setCurrentPage(currentPage - 1);
     }
   };
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -126,6 +145,29 @@ export default function AdditionFractions() {
       >
         Retour
       </Link>
+
+      <h1 className="text-4xl font-bold mb-6">Addition de Fractions</h1>
+
+      {/* Cercle de progression en haut à gauche */}
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
 
       <h1 className="text-4xl font-bold mb-6">Addition de Fractions</h1>
 
@@ -159,9 +201,9 @@ export default function AdditionFractions() {
       </div>
 
       <div className="mt-6 flex gap-4">
-      <button
-        onClick={handleNextPage}
-         className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
           disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
         >
           Suivant

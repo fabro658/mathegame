@@ -65,7 +65,7 @@ export default function AdditionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Met à jour les réponses
+  // Mettre à jour les réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
