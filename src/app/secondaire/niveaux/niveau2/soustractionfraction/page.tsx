@@ -47,9 +47,12 @@ export default function SoustractionFractions() {
 
         // Si la soustraction donne un résultat négatif, ajuster les numérateurs
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
-        let correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
-        if (simplifiedNumerator === simplifiedDenominator) {
-          correctAnswer = "1";
+        
+        let correctAnswer = "";
+        if (simplifiedDenominator === 1) {
+          correctAnswer = `${simplifiedNumerator}`; // Stocke comme un entier
+        } else {
+          correctAnswer = `${simplifiedNumerator}/${simplifiedDenominator}`;
         }
 
         return {
@@ -107,7 +110,11 @@ export default function SoustractionFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    answer = answer.replace(/\s+/g, "").toLowerCase(); // Supprimer les espaces
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`; // Convertir un entier en fraction (ex: "2" => "2/1")
+    }
+    return answer;
   };
 
   const handleNextPage = (): void => {
@@ -123,7 +130,7 @@ export default function SoustractionFractions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/fraction"
@@ -139,40 +146,41 @@ export default function SoustractionFractions() {
       </Link>
 
       {/* Cercle de progression en haut à gauche */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
+<div className="absolute top-4 left-4 w-32 h-32">
+  <svg className="transform -rotate-90" width="100%" height="100%">
+    <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+    <circle
+      cx="50%"
+      cy="50%"
+      r={radius}
+      fill="none"
+      stroke="#3b82f6"
+      strokeWidth={strokeWidth}
+      strokeDasharray={circumference}
+      strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+      className="transition-all duration-500"
+    />
+  </svg>
+  <div className="absolute inset-0 flex items-center justify-center">
+    <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+  </div>
+</div>
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          } text-center`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
+{/* Feedback */}
+{feedbackMessage && (
+  <p
+    className={`text-xl mb-4 text-center ${
+      feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+        ? "text-red-500" //  Messages d'erreur en rouge
+        : "text-green-500" // Messages de succès en vert
+    }`}
+  >
+    {feedbackMessage}
+  </p>
+)}
+
 
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -191,27 +199,11 @@ export default function SoustractionFractions() {
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
+    </div>
     </div>
   );
 }

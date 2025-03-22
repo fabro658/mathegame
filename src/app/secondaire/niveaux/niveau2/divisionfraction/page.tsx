@@ -20,15 +20,17 @@ export default function DivisionFractions() {
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
+  // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Simplification de la fraction
   const simplifyFraction = (numerator: number, denominator: number): string => {
-    if (denominator === 0) return `${numerator}/${denominator}`; // Évite la division par zéro
-    const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
-    const simplifiedNumerator = numerator / divisor;
-    const simplifiedDenominator = denominator / divisor;
+    if (denominator === 0) return `${numerator}/0`; // Évite la division par zéro
+    if (numerator === 0) return "0"; // Cas où le numérateur est 0
+
+    const gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
+    const simplifiedNumerator = numerator / gcdValue;
+    const simplifiedDenominator = denominator / gcdValue;
 
     return simplifiedDenominator === 1 ? `${simplifiedNumerator}` : `${simplifiedNumerator}/${simplifiedDenominator}`;
   };
@@ -36,13 +38,15 @@ export default function DivisionFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 5) + 1;
-        const b1 = Math.floor(Math.random() * 5) + 1;
-        const a2 = Math.floor(Math.random() * 5) + 1;
-        const b2 = Math.floor(Math.random() * 5) + 1;
+        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
+        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
+        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
+        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
+        // Division des fractions : a1/b1 ÷ a2/b2 => a1/b1 × b2/a2
         const numeratorResult = a1 * b2;
         const denominatorResult = b1 * a2;
+
         const correctAnswer = simplifyFraction(numeratorResult, denominatorResult);
 
         return {
@@ -55,20 +59,15 @@ export default function DivisionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
+  // Met à jour les réponses
   const handleChange = (index: number, value: string) => {
-    const fractionRegex = /^-?\d+\/[1-9]\d*$/; // Fraction valide (ex: "2/3", "-4/5")
-    const integerRegex = /^-?\d+$/; // Nombre entier (ex: "5", "-3")
-
-    if (value === "" || fractionRegex.test(value) || integerRegex.test(value)) {
-      const newAnswers = [...answers];
-      newAnswers[index] = value.trim();
-      setAnswers(newAnswers);
-      setFeedbackMessage("");
-    } else {
-      setFeedbackMessage("Veuillez entrer un nombre entier ou une fraction valide.");
-    }
+    const newAnswers = [...answers];
+    newAnswers[index] = value.trim();
+    setAnswers(newAnswers);
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
+  // Valide les réponses de la page actuelle
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -86,11 +85,7 @@ export default function DivisionFractions() {
       const globalIndex = startIndex + index;
       const { correctAnswer } = questions[globalIndex];
 
-      // Normalisation de l'entrée utilisateur
-      const normalizedUserAnswer = answer.trim();
-      const normalizedCorrectAnswer = correctAnswer.trim();
-
-      if (normalizedUserAnswer !== normalizedCorrectAnswer) {
+      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
         newAnswers[globalIndex] = "";
         hasErrors = true;
       }
@@ -108,6 +103,25 @@ export default function DivisionFractions() {
     }
   };
 
+  const normalizeAnswer = (answer: string): string => {
+    let normalized = answer.replace(/\s+/g, "").toLowerCase();
+
+    // Vérifie si c'est un nombre entier qui doit être converti en fraction
+    if (!normalized.includes("/") && !isNaN(Number(normalized))) {
+      return normalized;
+    }
+
+    // Vérifie si c'est une fraction valide et simplifie
+    const parts = normalized.split("/");
+    if (parts.length === 2) {
+      const num = parseInt(parts[0], 10);
+      const den = parseInt(parts[1], 10);
+      return simplifyFraction(num, den);
+    }
+
+    return normalized;
+  };
+
   const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
@@ -122,6 +136,7 @@ export default function DivisionFractions() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -135,6 +150,7 @@ export default function DivisionFractions() {
         Retour
       </Link>
 
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -157,6 +173,7 @@ export default function DivisionFractions() {
 
       <h1 className="text-4xl font-bold mb-6">Division de Fractions</h1>
 
+      {/* Feedback */}
       {feedbackMessage && (
         <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
           {feedbackMessage}
