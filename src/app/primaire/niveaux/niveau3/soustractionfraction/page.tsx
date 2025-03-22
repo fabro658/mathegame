@@ -139,6 +139,28 @@ export default function SoustractionFractions() {
         </p>
       )}
 
+      {/* Cercle de progression en haut à gauche */}
+<div className="absolute top-4 left-4 w-32 h-32">
+  <svg className="transform -rotate-90" width="100%" height="100%">
+    <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+    <circle
+      cx="50%"
+      cy="50%"
+      r={radius}
+      fill="none"
+      stroke="#3b82f6"
+      strokeWidth={strokeWidth}
+      strokeDasharray={circumference}
+      strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+      className="transition-all duration-500"
+    />
+  </svg>
+  <div className="absolute inset-0 flex items-center justify-center">
+    <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+  </div>
+</div>
+
+
       {/* Questions et réponses */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
