@@ -38,10 +38,10 @@ export default function MultiplicationFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 1 (1 à 3)
-        const b1 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 1 (1 à 3)
-        const a2 = Math.floor(Math.random() * 3) + 1; // Numérateur fraction 2 (1 à 3)
-        const b2 = Math.floor(Math.random() * 3) + 1; // Dénominateur fraction 2 (1 à 3)
+        const a1 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 1 (1 à 5)
+        const b1 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 1 (1 à 5)
+        const a2 = Math.floor(Math.random() * 5) + 1; // Numérateur fraction 2 (1 à 5)
+        const b2 = Math.floor(Math.random() * 5) + 1; // Dénominateur fraction 2 (1 à 5)
 
         // Multiplication des fractions : a1/b1 × a2/b2
         const numeratorResult = a1 * a2;
@@ -104,22 +104,11 @@ export default function MultiplicationFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    const normalized = answer.replace(/\s+/g, "").toLowerCase();
-
-    // Vérifie si c'est un nombre entier qui doit être converti en fraction
-    if (!normalized.includes("/") && !isNaN(Number(normalized))) {
-      return normalized;
+    answer = answer.replace(/\s+/g, "").toLowerCase(); // Supprimer les espaces
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`; // Convertir un entier en fraction (ex: "2" => "2/1")
     }
-
-    // Vérifie si c'est une fraction valide et simplifie
-    const parts = normalized.split("/");
-    if (parts.length === 2) {
-      const num = parseInt(parts[0], 10);
-      const den = parseInt(parts[1], 10);
-      return simplifyFraction(num, den);
-    }
-
-    return normalized;
+    return answer;
   };
 
   const handleNextPage = (): void => {
@@ -175,7 +164,13 @@ export default function MultiplicationFractions() {
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}

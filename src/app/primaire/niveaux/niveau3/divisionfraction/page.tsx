@@ -103,23 +103,13 @@ export default function DivisionFractions() {
     }
   };
 
+  // Fonction de normalisation des réponses
   const normalizeAnswer = (answer: string): string => {
-    const normalized = answer.replace(/\s+/g, "").toLowerCase();
-
-    // Vérifie si c'est un nombre entier qui doit être converti en fraction
-    if (!normalized.includes("/") && !isNaN(Number(normalized))) {
-      return normalized;
+    answer = answer.replace(/\s+/g, "").toLowerCase(); // Supprimer les espaces
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`; // Convertir un entier en fraction (ex: "2" => "2/1")
     }
-
-    // Vérifie si c'est une fraction valide et simplifie
-    const parts = normalized.split("/");
-    if (parts.length === 2) {
-      const num = parseInt(parts[0], 10);
-      const den = parseInt(parts[1], 10);
-      return simplifyFraction(num, den);
-    }
-
-    return normalized;
+    return answer;
   };
 
   const handleNextPage = (): void => {
@@ -175,7 +165,13 @@ export default function DivisionFractions() {
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
