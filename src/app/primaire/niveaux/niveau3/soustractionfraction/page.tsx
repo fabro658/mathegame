@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 // Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
 const gcd = (a: number, b: number): number => {
