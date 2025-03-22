@@ -104,7 +104,7 @@ export default function MultiplicationFractions() {
   };
 
   const normalizeAnswer = (answer: string): string => {
-    let normalized = answer.replace(/\s+/g, "").toLowerCase();
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
 
     // Vérifie si c'est un nombre entier qui doit être converti en fraction
     if (!normalized.includes("/") && !isNaN(Number(normalized))) {
