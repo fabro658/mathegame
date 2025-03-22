@@ -11,6 +11,9 @@ export default function Perimetre() {
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   // Générer de nouvelles questions
   const generateQuestions = () => {
@@ -131,10 +134,6 @@ export default function Perimetre() {
     }
   };
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
@@ -167,9 +166,15 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {/* Affichage des messages de feedback */}
+      {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("remplir") ? "text-red-500" : "text-green-500"}`}>
+        <p
+          className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+              ? "text-red-500" // Messages d'erreur en rouge
+              : "text-green-500" // Messages de succès en vert
+          }`}
+        >
           {feedbackMessage}
         </p>
       )}
@@ -183,35 +188,29 @@ export default function Perimetre() {
                 <div className="font-bold text-black">{questionText}</div>
                 <input
                    type="text"
-                    inputMode="numeric"
+                   inputMode="numeric"
                    className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-                    value={answers[currentPage * questionsPerPage + index] || ""}
-                    onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                  />
+                   value={answers[currentPage * questionsPerPage + index] || ""}
+                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+                />
               </div>
             ))}
           </div>
           <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
+            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
           </div>
-        </>
-      )}
 
-      {isValidated && !feedbackMessage?.includes("correctes") && (
-        <div>
-          <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-          <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
-            Revenir pour corriger
-          </button>
-        </div>
+          {isValidated && !feedbackMessage?.includes("correctes") && (
+            <div>
+              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
+              <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
+                Revenir pour corriger
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
