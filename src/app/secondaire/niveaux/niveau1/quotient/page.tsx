@@ -114,7 +114,7 @@ export default function Division() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/secondaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -140,7 +140,7 @@ export default function Division() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Quotient</h1>
 
       {/* Feedback */}
       {feedbackMessage && (

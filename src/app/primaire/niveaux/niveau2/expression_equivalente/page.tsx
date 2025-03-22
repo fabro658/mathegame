@@ -164,8 +164,10 @@ export default function EquationsEquivalentes() {
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
+            feedbackMessage.includes("remplir toutes les réponses")
+              ? "text-red-500" // Applique la couleur rouge
+              : feedbackMessage.includes("incorrectes")
+              ? "text-red-500" // Applique la couleur rouge pour les erreurs
               : "text-green-500"
           } text-center`}
         >
