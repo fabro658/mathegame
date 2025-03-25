@@ -7,19 +7,19 @@ export default function Page() {
       {/* Première rangée - Exposants */}
       <div className="flex space-x-8 mb-12">
         <Link
-          href="/secondaire/niveaux/niveau1/expo_sqrt/n1"
+          href="/secondaire/niveaux/niveau3/expo/n1"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Premier niveau
         </Link>
         <Link
-          href="/secondaire/niveaux/niveau1/expo_sqrt/n2"
+          href="/secondaire/niveaux/niveau3/expo/n2"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Deuxième niveau
         </Link>
         <Link
-          href="/secondaire/niveaux/niveau1/expo_sqrt/n3"
+          href="/secondaire/niveaux/niveau3/expo/n3"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center"
         >
           Troisième niveau
