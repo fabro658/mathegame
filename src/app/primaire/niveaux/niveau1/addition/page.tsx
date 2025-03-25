@@ -14,7 +14,7 @@ export default function Addition() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); // Pour garder une trace des questions incorrectes
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); 
 
   useEffect(() => {
     const generateQuestions = (): [number, number][] => {

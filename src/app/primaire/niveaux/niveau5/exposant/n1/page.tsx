@@ -52,13 +52,12 @@ export default function ExponentsPractice() {
     setFeedbackMessage(null);
   };
 
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
+    if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
@@ -69,7 +68,7 @@ export default function ExponentsPractice() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if (answer !== pageCorrectAnswers[index]) {
+      if (answer !== questions[globalIndex].correctAnswer) {
         updatedAnswers[globalIndex] = null;
         incorrect.push(globalIndex);
         hasError = true;
@@ -81,25 +80,22 @@ export default function ExponentsPractice() {
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes.");
-
-      // Passer immédiatement à la page suivante s'il en reste
-      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setCurrentPage(currentPage + 1);
-        setFeedbackMessage(null);
-      }
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
       setFeedbackMessage(null);
     }
   };
 
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => { //  Correction : garder une seule déclaration
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setFeedbackMessage(null);
@@ -141,7 +137,13 @@ export default function ExponentsPractice() {
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
@@ -166,9 +168,9 @@ export default function ExponentsPractice() {
         })}
       </div>
       <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
