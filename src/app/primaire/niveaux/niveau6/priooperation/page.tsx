@@ -10,119 +10,100 @@ export default function PrioOperation() {
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  const [questions, setQuestions] = useState<string[]>([]);
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Fonction sécurisée pour évaluer les expressions mathématiques
-  const safeEval = (expression: string): number | null => {
-    try {
-      return Function(`"use strict"; return (${expression})`)();
-    } catch {
-      return null;
-    }
-  };
-
+  // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
-      const operations = ["+", "-", "*"];
-      const questionsArray: string[] = [];
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let base, exponent, questionText, correctAnswer;
 
-      for (let i = 0; i < totalQuestions; i++) {
-        const num1 = Math.floor(Math.random() * 10) + 1;
-        const num2 = Math.floor(Math.random() * 10) + 1;
-        const num3 = Math.floor(Math.random() * 10) + 1;
-        const num4 = Math.floor(Math.random() * 10) + 1;
-        const op1 = operations[Math.floor(Math.random() * operations.length)];
-        const op2 = operations[Math.floor(Math.random() * operations.length)];
-        const op3 = operations[Math.floor(Math.random() * operations.length)];
-        const op4 = operations[Math.floor(Math.random() * operations.length)];
-
-        if (i < totalQuestions / 4) {
-          questionsArray.push(`(${num1} ${op1} ${num2})`);
-        } else if (i < totalQuestions / 2) {
-          questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} ${num3}`);
-        } else if (i < (3 * totalQuestions) / 4) {
-          questionsArray.push(`(${num1} ${op1} ${num2}) ${op2} (${num3} ${op3} ${num4})`);
+        // Niveau 1 : Simple et progressif
+        if (index < 10) {
+          base = 2; // Base fixe
+          exponent = index + 1; // Exposants croissants de 1 à 10
+          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(base, exponent).toString();
         } else {
-          questionsArray.push(`(${num1} ${op1} (${num2} ${op2} ${num3})) ${op3} (${num4} ${op4} ${num1})`);
-        }
-      }
+          // Niveau supérieur : Diversité
+          base = Math.floor(Math.random() * 6) + 2;
+          exponent = Math.floor(Math.random() * 3) + 1;
 
-      setQuestions(questionsArray);
+          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(base, exponent).toString();
+
+          // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
+          if (index >= 15 && Math.random() > 0.5) {
+            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+            correctAnswer = Math.pow(baseAlt, exponent).toString();
+          }
+        }
+
+        return { questionText, correctAnswer };
+      });
     };
 
-    generateQuestions();
+    setQuestions(generateQuestions());
   }, []);
 
-  const correctAnswers = questions.map((question) => safeEval(question));
-  
-  const handleChange = (index: number, value: string) => {
+  // Gestion des changements de réponse
+  const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setFeedbackMessage(null);
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
-  const handleValidation = () => {
+  // Validation des réponses
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    if (pageAnswers.includes(null)) {
+    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
+
+    if (!allAnswersFilled) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    let hasError = false;
-    const newAnswers = [...answers];
-    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
+    let allCorrect = true;
+    const updatedAnswers = [...answers];
+    const newIncorrectAnswers: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const question = questions[globalIndex];
-
-      // Utilisation d'une expression régulière pour extraire les nombres de la question
-      const match = question.match(/(\d+)\s*([\+\-\*])\s*(\d+)/);
-      if (match) {
-        const [_, num1, op, num2] = match;
-        const expectedAnswer = safeEval(`${num1} ${op} ${num2}`);
-        
-        if (parseInt(answer as string) !== expectedAnswer) {
-          newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
-          incorrect.push(globalIndex);
-          hasError = true;
-        }
+      if (answer !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null;
+        allCorrect = false;
+        newIncorrectAnswers.push(startIndex + index);
       }
     });
 
-    setAnswers(newAnswers);
-    setIncorrectAnswers(incorrect);
+    setAnswers(updatedAnswers);
+    setIncorrectAnswers(newIncorrectAnswers);
 
-    if (hasError) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
-    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
-      setCurrentPage(currentPage + 1);
+    if (allCorrect) {
+      setFeedbackMessage("Toutes les réponses sont correctes !");
     } else {
-      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
     }
   };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+  const handleNextPage = (): void => {
+    if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -171,13 +152,13 @@ export default function PrioOperation() {
           {feedbackMessage}
         </p>
       )}
-      
+
       <div className="grid grid-cols-3 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
           const questionIndex = currentPage * questionsPerPage + index;
           return (
             <div key={questionIndex} className="flex items-center gap-4">
-              <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>{question}</button>
+              <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>{question.questionText}</button>
               <input
                 type="text"
                 className={`border p-4 rounded w-32 text-center text-lg ${incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""}`}
