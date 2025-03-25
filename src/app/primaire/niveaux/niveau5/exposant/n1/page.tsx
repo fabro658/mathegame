@@ -19,17 +19,18 @@ export default function ExponentsPractice() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        let base = 2; // Base fixed to 2
-        let exponent = index + 1; // The exponent will increase for each question
-        let questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
-        let correctAnswer = exponent.toString();
-
+        const base = 2; // Base fixed to 2
+        const exponent = index + 1; // The exponent will increase for each question
+        const questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
+        const correctAnswer = exponent.toString();
+  
         return { questionText, correctAnswer };
       });
     };
-
+  
     setQuestions(generateQuestions());
   }, []);
+  
 
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];

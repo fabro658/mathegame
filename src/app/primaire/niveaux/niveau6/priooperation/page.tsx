@@ -16,7 +16,7 @@ export default function PrioOperation() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  //  Fonction sécurisée pour évaluer les expressions mathématiques
+  // Fonction sécurisée pour évaluer les expressions mathématiques
   const safeEval = (expression: string): number | null => {
     try {
       return Function(`"use strict"; return (${expression})`)();
@@ -58,10 +58,11 @@ export default function PrioOperation() {
   }, []);
 
   const correctAnswers = questions.map((question) => safeEval(question));
-
+  
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value === "" ? null : value;
+    const parsedValue = parseInt(value);
+    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
     setFeedbackMessage(null);
   };
@@ -72,24 +73,28 @@ export default function PrioOperation() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      setFeedbackMessage(" Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
     let hasError = false;
     const newAnswers = [...answers];
-    const incorrect: number[] = [];
+    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const correctAnswer = correctAnswers[globalIndex];
+      const question = questions[globalIndex];
 
-      if (answer !== null) {
-        const parsedAnswer = parseFloat(answer);
-        if (parsedAnswer !== correctAnswer) {
-          hasError = true;
+      // Utilisation d'une expression régulière pour extraire les nombres de la question
+      const match = question.match(/(\d+)\s*([\+\-\*])\s*(\d+)/);
+      if (match) {
+        const [_, num1, op, num2] = match;
+        const expectedAnswer = safeEval(`${num1} ${op} ${num2}`);
+        
+        if (parseInt(answer as string) !== expectedAnswer) {
           newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
           incorrect.push(globalIndex);
+          hasError = true;
         }
       }
     });
@@ -100,7 +105,7 @@ export default function PrioOperation() {
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage(" Toutes les réponses de cette page sont correctes !");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
@@ -110,14 +115,14 @@ export default function PrioOperation() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
@@ -155,8 +160,18 @@ export default function PrioOperation() {
 
       <h1 className="text-3xl font-bold mb-6">Priorités des Opérations</h1>
 
-      {feedbackMessage && <p className="text-xl mb-4 text-center">{feedbackMessage}</p>}
-
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
+      
       <div className="grid grid-cols-3 gap-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
           const questionIndex = currentPage * questionsPerPage + index;
