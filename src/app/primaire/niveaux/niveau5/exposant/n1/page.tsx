@@ -30,13 +30,13 @@ export default function ExponentsPractice() {
 
           if (index >= 15 && Math.random() > 0.5) {
             const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `n = ? si (${base} + ${baseAlt - base})ⁿ = ${Math.pow(baseAlt, exponent)}`;
-            correctAnswer = exponent.toString();
+            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+            correctAnswer = Math.pow(baseAlt, exponent).toString();
           }
         }
 
-        questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
-        correctAnswer = exponent.toString();
+        questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+        correctAnswer = Math.pow(base, exponent).toString();
 
         return { questionText, correctAnswer };
       });
@@ -83,11 +83,11 @@ export default function ExponentsPractice() {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes.");
-
-      // Passer immédiatement à la page suivante s'il en reste
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setCurrentPage(currentPage + 1);
-        setFeedbackMessage(null);
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+          setFeedbackMessage(null);
+        }, 1500);
       }
     }
   };
@@ -141,41 +141,43 @@ export default function ExponentsPractice() {
       <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => {
-          const questionIndex = currentPage * questionsPerPage + idx;
-          return (
-            <div key={questionIndex} className="flex flex-col items-start gap-2">
-              <div className="font-bold text-black">{questionText}</div>
-              <input
-                type="text"
-                inputMode="numeric"
-                className={`border p-4 rounded w-full sm:w-32 text-center text-black text-lg ${
-                  incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
-                }`}
-                value={answers[questionIndex] || ""}
-                onChange={(e) => handleChange(questionIndex, e.target.value)}
-              />
-            </div>
-          );
-        })}
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText }, idx) => {
+            const questionIndex = currentPage * questionsPerPage + idx;
+            return (
+              <div key={questionIndex} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">{questionText}</div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`border p-4 rounded w-full sm:w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-600" disabled={currentPage === 0}>
-          Précédent
-        </button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-600">
-          Valider
-        </button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold hover:bg-blue-600" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-          Suivant
-        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
