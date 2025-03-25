@@ -4,40 +4,61 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Soustraction() {
+  // Déclarations des constantes
   const totalQuestions = 36;
-  const questionsPerPage = 6;
-  const radius = 50;
-  const strokeWidth = 10;
+  const questionsPerPage = 6; // 3 colonnes x 2 lignes
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
   const circumference = 2 * Math.PI * radius;
 
+  // États
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-
-  // Génération des questions
+  // Générer les questions avec une difficulté progressive
   useEffect(() => {
-    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-      if (index < 10) return [index + 1, index + 1] as [number, number]; // Niveau 1 : Soustractions simples
-      if (index < 20) return [10 + index - 9, 5 + index - 9] as [number, number]; // Niveau 2
-      if (index < 30) return [100 + Math.floor(Math.random() * 400), 50 + Math.floor(Math.random() * 200)] as [number, number]; // Niveau 3
-      if (index < 36) return [100 + Math.floor(Math.random() * 800), 100 + Math.floor(Math.random() * 800)] as [number, number]; // Niveau 4
-      return [0, 0] as [number, number]; 
-    });
-  
-    setQuestions(generatedQuestions);
-  }, []);
-  
+    const generateQuestions = (): [number, number][] => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let a, b;
 
+        if (index < 10) {
+          // Nombres simples pour les premières questions
+          a = Math.floor(Math.random() * 10) + 1;
+          b = Math.floor(Math.random() * 10) + 1;
+        } else if (index < 20) {
+          // Nombres un peu plus grands
+          a = Math.floor(Math.random() * 20) + 10;
+          b = Math.floor(Math.random() * 15) + 5;
+        } else if (index < 30) {
+          // Nombres intermédiaires
+          a = Math.floor(Math.random() * 50) + 20;
+          b = Math.floor(Math.random() * 40) + 10;
+        } else {
+          // Nombres plus grands
+          a = Math.floor(Math.random() * 100) + 50;
+          b = Math.floor(Math.random() * 80) + 30;
+        }
+
+        // S'assurer que a >= b
+        return a >= b ? [a, b] : [b, a];
+      });
+    };
+
+    setQuestions(generateQuestions());
+  }, []);
+
+  // Calcul du pourcentage de progression
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
-    setFeedbackMessage("");
+    setFeedbackMessage(""); // Réinitialiser le message de feedback
   };
 
   const handleValidation = () => {
@@ -74,6 +95,7 @@ export default function Soustraction() {
     }
   };
 
+  // Navigation
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
@@ -96,7 +118,7 @@ export default function Soustraction() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/secondaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -123,7 +145,7 @@ export default function Soustraction() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Soustraction</h1>
+      <h1 className="text-4xl font-bold mb-6">Difference</h1>
 
       {/* Feedback */}
       {feedbackMessage && (
@@ -144,7 +166,7 @@ export default function Soustraction() {
           <div key={index} className="flex items-center gap-4">
             <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{a} - {b}</div>
             <input
-              type="number"
+              type="text"
               inputMode="numeric"
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index]}

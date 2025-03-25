@@ -175,28 +175,10 @@ export default function Soustraction() {
           </div>
         ))}
       </div>
-
       <div className="mt-6 flex gap-4">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-6 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
       </div>
     </div>
   );
