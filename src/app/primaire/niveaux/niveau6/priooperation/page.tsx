@@ -72,7 +72,7 @@ export default function PrioOperation() {
     const pageAnswers = answers.slice(startIndex, endIndex);
 
     if (pageAnswers.includes(null)) {
-      setFeedbackMessage("⚠️ Veuillez remplir toutes les réponses avant de valider.");
+      setFeedbackMessage(" Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
@@ -103,7 +103,7 @@ export default function PrioOperation() {
       setFeedbackMessage(" Toutes les réponses de cette page sont correctes !");
       setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("🎉 Bravo ! Vous avez terminé toutes les questions.");
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
@@ -175,9 +175,9 @@ export default function PrioOperation() {
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} disabled={currentPage === 0}>Précédent</button>
-        <button onClick={handleValidation}>Valider</button>
-        <button onClick={handleNextPage} disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
