@@ -154,12 +154,14 @@ export default function ExponentsPractice() {
           .map(({ questionText }, idx) => {
             const questionIndex = currentPage * questionsPerPage + idx;
             return (
-              <div key={questionIndex} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
+              <div key={questionIndex} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                  {questionText}
+                </div>
                 <input
                   type="text"
                   inputMode="numeric"
-                  className={`border p-4 rounded w-full sm:w-32 text-center text-black text-lg ${
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
                     incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
                   }`}
                   value={answers[questionIndex] || ""}
