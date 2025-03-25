@@ -16,40 +16,39 @@ export default function ExponentsPractice() {
   const circumference = 2 * Math.PI * radius;
 
   // Génération des questions
-useEffect(() => {
-  const generateQuestions = () => {
-    return Array.from({ length: totalQuestions }, (_, index) => {
-      let base, exponent, questionText, correctAnswer;
+  useEffect(() => {
+    const generateQuestions = () => {
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        let base, exponent, questionText, correctAnswer;
 
-      // Niveau 1 : Simple et progressif
-      if (index < 10) {
-        base = 2; // Base fixe
-        exponent = index + 1; // Exposants croissants de 1 à 10
-        questionText = `n = ? si ${base}^n = ${Math.pow(base, exponent)}`;
-        correctAnswer = exponent.toString();
-      } else {
-        // Niveau supérieur : Diversité
-        base = Math.floor(Math.random() * 6) + 2;
-        exponent = Math.floor(Math.random() * 3) + 1;
-
-        questionText = `n = ? si ${base}^n = ${Math.pow(base, exponent)}`;
-        correctAnswer = exponent.toString();
-
-        // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
-        if (index >= 15 && Math.random() > 0.5) {
-          const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-          questionText = `n = ? si (${base} + ${baseAlt - base})^n = ${Math.pow(baseAlt, exponent)}`;
+        // Niveau 1 : Simple et progressif
+        if (index < 10) {
+          base = 2; // Base fixe
+          exponent = index + 1; // Exposants croissants de 1 à 10
+          questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
           correctAnswer = exponent.toString();
+        } else {
+          // Niveau supérieur : Diversité
+          base = Math.floor(Math.random() * 6) + 2;
+          exponent = Math.floor(Math.random() * 3) + 1;
+
+          questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
+          correctAnswer = exponent.toString();
+
+          // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
+          if (index >= 15 && Math.random() > 0.5) {
+            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+            questionText = `n = ? si (${base} + ${baseAlt - base})ⁿ = ${Math.pow(baseAlt, exponent)}`;
+            correctAnswer = exponent.toString();
+          }
         }
-      }
 
-      return { questionText, correctAnswer };
-    });
-  };
+        return { questionText, correctAnswer };
+      });
+    };
 
-  setQuestions(generateQuestions());
-}, []);
-
+    setQuestions(generateQuestions());
+  }, []);
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
@@ -87,15 +86,16 @@ useEffect(() => {
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses sont correctes !");
+      // Réinitialiser les réponses de la page actuelle
+      setTimeout(() => {
+        // Passer à la page suivante
+        if (currentPage < totalQuestions / questionsPerPage - 1) {
+          setCurrentPage(currentPage + 1);
+        }
+        setFeedbackMessage(null); // Réinitialiser le message de feedback
+      }, 1500);
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-    }
-
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setFeedbackMessage(null); // Réinitialise le message de feedback
-      }, 1500);
     }
   };
 
@@ -113,7 +113,6 @@ useEffect(() => {
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -161,7 +160,6 @@ useEffect(() => {
           {feedbackMessage}
         </p>
       )}
-
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
