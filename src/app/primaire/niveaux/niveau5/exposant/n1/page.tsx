@@ -19,24 +19,10 @@ export default function ExponentsPractice() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        let base, exponent, questionText, correctAnswer;
-
-        if (index < 10) {
-          base = 2;
-          exponent = index + 1;
-        } else {
-          base = Math.floor(Math.random() * 6) + 2;
-          exponent = Math.floor(Math.random() * 3) + 1;
-
-          if (index >= 15 && Math.random() > 0.5) {
-            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `n = ? si (${base} + ${baseAlt - base})ⁿ = ${Math.pow(baseAlt, exponent)}`;
-            correctAnswer = exponent.toString();
-          }
-        }
-
-        questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
-        correctAnswer = exponent.toString();
+        let base = 2; // Base fixed to 2
+        let exponent = index + 1; // The exponent will increase for each question
+        let questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
+        let correctAnswer = exponent.toString();
 
         return { questionText, correctAnswer };
       });
@@ -95,7 +81,7 @@ export default function ExponentsPractice() {
     }
   };
 
-  const handlePreviousPage = () => { //  Correction : garder une seule déclaration
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setFeedbackMessage(null);
@@ -148,7 +134,7 @@ export default function ExponentsPractice() {
         </p>
       )}
 
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => {
@@ -171,9 +157,10 @@ export default function ExponentsPractice() {
             );
           })}
       </div>
+
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
