@@ -21,7 +21,7 @@ export default function Exposant1() {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
         const exponent = index + 1;  // Exposant de 1 à 36
-        const questionText = `Que vaut 2^${exponent} ?`;
+        const questionText = `Que vaut 2${exponent} ?`;
         const correctAnswer = Math.pow(2, exponent).toString();
         
         return { questionText, correctAnswer };
