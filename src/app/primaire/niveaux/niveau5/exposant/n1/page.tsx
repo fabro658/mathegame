@@ -167,20 +167,24 @@ export default function ExponentsPractice() {
         </p>
       )}
 
-      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
-      <div className="grid grid-cols-2 gap-6">
+      {/* Grille responsive : Questions à gauche et Réponses à droite */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => (
-            <div key={idx} className="flex flex-col items-center gap-2">
-              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{questionText}</div>
-              <input
-                type="text"
-                className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${incorrectAnswers.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : ""}`}
-                value={answers[currentPage * questionsPerPage + idx] || ""}
-                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-              />
-              <small className="text-gray-500">Réponse</small>
+            <div key={idx} className="flex gap-6">
+              <div className="flex-1">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{questionText}</div>
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  className={`border border-gray-400 p-4 rounded w-full text-center text-black text-lg ${incorrectAnswers.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : ""}`}
+                  value={answers[currentPage * questionsPerPage + idx] || ""}
+                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+                />
+                <small className="text-gray-500">Réponse</small>
+              </div>
             </div>
           ))}
       </div>
