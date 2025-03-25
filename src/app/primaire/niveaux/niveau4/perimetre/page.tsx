@@ -14,11 +14,9 @@ export default function Perimetre() {
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [isValidated, setIsValidated] = useState(false);
 
-  // Génération des questions
-  const generateQuestions = () => {
-    return Array.from({ length: totalQuestions }, () => {
+  const generateQuestions = (total: number) => {
+    return Array.from({ length: total }, () => {
       const shapeType = Math.floor(Math.random() * 5);
       let questionText = "";
       let correctAnswer = 0;
@@ -36,19 +34,12 @@ export default function Perimetre() {
         const side1 = Math.floor(Math.random() * 10) + 1;
         const side2 = Math.floor(Math.random() * 10) + 1;
         const side3 = Math.floor(Math.random() * 10) + 1;
-        questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1}, ${side2} et ${side3} cm ?`;
+        questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1}, ${side2}, ${side3} cm ?`;
         correctAnswer = side1 + side2 + side3;
-      } else if (shapeType === 3) {
+      } else {
         const side = Math.floor(Math.random() * 10) + 1;
         questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
         correctAnswer = 4 * side;
-      } else {
-        const side1 = Math.floor(Math.random() * 10) + 1;
-        const side2 = Math.floor(Math.random() * 10) + 1;
-        const side3 = Math.floor(Math.random() * 10) + 1;
-        const side4 = Math.floor(Math.random() * 10) + 1;
-        questionText = `Quel est le périmètre d'un trapèze avec des côtés ${side1}, ${side2}, ${side3}, ${side4} cm ?`;
-        correctAnswer = side1 + side2 + side3 + side4;
       }
 
       return {
@@ -59,14 +50,15 @@ export default function Perimetre() {
   };
 
   useEffect(() => {
-    setQuestions(generateQuestions());
+    setQuestions(generateQuestions(totalQuestions));
   }, []);
 
-  // Calcul de la progression globale
-  const completedAnswers = answers.filter(answer => answer !== null && answer !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const calculateCompletion = (answers: (string | null)[], total: number) => {
+    return Math.round((answers.filter(answer => answer !== null && answer !== "").length / total) * 100);
+  };
 
-  // Gestion de la saisie des réponses
+  const completionPercentage = calculateCompletion(answers, totalQuestions);
+
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -74,7 +66,6 @@ export default function Perimetre() {
     setFeedbackMessage(null);
   };
 
-  // Validation des réponses
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -86,34 +77,42 @@ export default function Perimetre() {
     }
 
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
-    const marginOfError = 0.01;
-    let allCorrect = true;
     const updatedAnswers = [...answers];
 
+    let allCorrect = true;
     pageAnswers.forEach((answer, index) => {
-      const userAnswer = parseFloat(answer || "0");
-      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
-
-      if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
+      if (parseFloat(answer || "0") !== parseFloat(pageCorrectAnswers[index])) {
         updatedAnswers[startIndex + index] = null;
         allCorrect = false;
       }
     });
 
     setAnswers(updatedAnswers);
-    setIsValidated(true);
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses sont correctes !");
-      if (currentPage < totalQuestions / questionsPerPage - 1) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
         setTimeout(() => {
           setCurrentPage(currentPage + 1);
-          setIsValidated(false);
           setFeedbackMessage(null);
         }, 1500);
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setFeedbackMessage(null);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
     }
   };
 
@@ -126,7 +125,6 @@ export default function Perimetre() {
         Retour
       </Link>
 
-      {/* Cercle de Progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -154,6 +152,26 @@ export default function Perimetre() {
           {feedbackMessage}
         </p>
       )}
+
+      <div className="flex flex-col gap-4">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+          <div key={index} className="flex flex-col items-start gap-2">
+            <div className="font-bold text-black">{questionText}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
+              value={answers[currentPage * questionsPerPage + index] || ""}
+              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
+      </div>
     </div>
   );
 }
