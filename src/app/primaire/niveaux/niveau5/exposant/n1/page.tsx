@@ -121,7 +121,7 @@ export default function PrioOperation() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Priorités des Opérations</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
       {feedbackMessage && (
         <p

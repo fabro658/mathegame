@@ -30,12 +30,12 @@ export default function ExponentsPractice() {
 
           if (index >= 15 && Math.random() > 0.5) {
             const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `n = ? si (${base} + ${baseAlt - base})ⁿ = ${Math.pow(baseAlt, exponent)}`;
+            questionText = `Que vaut n si (${base} + ${baseAlt - base})ⁿ = ${Math.pow(baseAlt, exponent)}`;
             correctAnswer = exponent.toString();
           }
         }
 
-        questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
+        questionText = `Que vaut n si ${base}ⁿ = ${Math.pow(base, exponent)}`;
         correctAnswer = exponent.toString();
 
         return { questionText, correctAnswer };
