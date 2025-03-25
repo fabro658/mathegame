@@ -4,14 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsPractice() {
-  const totalQuestions = 36; // Nombre total de questions
-  const questionsPerPage = 6; // Questions affichées par vague
-
+  const totalQuestions = 36; 
+  const questionsPerPage = 6; 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Ajout du message de feedback
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   // Génération des questions
   useEffect(() => {
@@ -118,18 +120,14 @@ export default function ExponentsPractice() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Barre circulaire de progression
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran */}
-      <Link
-        href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold sm:block hidden"
-      >
+      <Link href="/menu/apprendre" 
+      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+        Apprendre
+      </Link>
+      <Link href="/secondaire/niveaux/niveau5" 
+      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -154,25 +152,31 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
 
       {/* Message de feedback */}
       {feedbackMessage && (
-        <div className={`mt-4 text-lg font-bold ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
-        </div>
+        </p>
       )}
 
       {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => (
-            <div key={idx} className="flex flex-col items-start gap-2">
+            <div key={idx} className="flex flex-col items-center gap-2">
               <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{questionText}</div>
               <input
                 type="text"
-                className={`border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg ${incorrectAnswers.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : ""}`}
+                className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${incorrectAnswers.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : ""}`}
                 value={answers[currentPage * questionsPerPage + idx] || ""}
                 onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
               />
@@ -181,37 +185,10 @@ export default function ExponentsPractice() {
           ))}
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-      </div>
-
-      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
-      <div className="mt-6 w-full sm:hidden">
-        <Link
-          href="/menu/apprendre/exposant"
-          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
       </div>
     </div>
   );
