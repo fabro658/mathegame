@@ -18,15 +18,17 @@ export default function Soustraction() {
 
   // Génération des questions
   useEffect(() => {
-    const generatedQuestions = Array.from({ length: totalQuestions }, (_, index) => {
-      if (index < 10) return [index + 1, index + 1]; // Niveau 1 : Soustractions simples
-      if (index < 20) return [10 + index - 9, 5 + index - 9]; // Niveau 2
-      if (index < 30) return [100 + Math.floor(Math.random() * 400), 50 + Math.floor(Math.random() * 200)]; // Niveau 3
-      if (index < 36) return [100 + Math.floor(Math.random() * 800), 100 + Math.floor(Math.random() * 800)]; // Niveau 4
-      return [0, 0]; // Fallback (ne sera jamais utilisé avec totalQuestions = 36)
+    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
+      if (index < 10) return [index + 1, index + 1] as [number, number]; // Niveau 1 : Soustractions simples
+      if (index < 20) return [10 + index - 9, 5 + index - 9] as [number, number]; // Niveau 2
+      if (index < 30) return [100 + Math.floor(Math.random() * 400), 50 + Math.floor(Math.random() * 200)] as [number, number]; // Niveau 3
+      if (index < 36) return [100 + Math.floor(Math.random() * 800), 100 + Math.floor(Math.random() * 800)] as [number, number]; // Niveau 4
+      return [0, 0] as [number, number]; 
     });
+  
     setQuestions(generatedQuestions);
   }, []);
+  
 
   const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);

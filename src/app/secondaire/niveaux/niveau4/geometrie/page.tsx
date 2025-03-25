@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -21,6 +21,7 @@ const ShapesPracticePage = () => {
   const [currentShapes, setCurrentShapes] = useState(0);
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const handleDrop = (index: number, droppedName: string) => {
     const updatedAnswers = [...answers];
@@ -36,6 +37,7 @@ const ShapesPracticePage = () => {
 
     updatedAnswers[targetIndex] = droppedName;
     setAnswers(updatedAnswers);
+    setFeedbackMessage(null); // Réinitialiser le message de feedback
   };
 
   const handleValidation = () => {
@@ -43,15 +45,22 @@ const ShapesPracticePage = () => {
     const endIdx = currentShapes + 3;
     const errors: number[] = [];
 
+    // Vérification des réponses
     for (let i = startIdx; i < endIdx; i++) {
       if (answers[i] !== shapes[i].name) {
         errors.push(i);
       }
     }
 
+    if (answers.slice(startIdx, endIdx).includes(null)) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      return;
+    }
+
     if (errors.length === 0) {
       // Tout est correct, passer à la série suivante
       setErrorIndices([]);
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
       handleNext();
     } else {
       // Réinitialiser uniquement les erreurs
@@ -64,6 +73,7 @@ const ShapesPracticePage = () => {
         updatedAnswers[idx] = null;
       });
       setAnswers(updatedAnswers);
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
   };
 
@@ -75,7 +85,7 @@ const ShapesPracticePage = () => {
     setCurrentShapes((prev) => (prev - 3 + shapes.length) % shapes.length);
   };
 
-  const drawShape = (sides: number) => {
+  const drawShape = (sides: number, shapeName: string) => {
     const points = [];
     const centerX = 50;
     const centerY = 50;
@@ -85,6 +95,24 @@ const ShapesPracticePage = () => {
       return (
         <svg width="100" height="100" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else if (shapeName === "Rectangle") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="20" y="30" width="60" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else if (shapeName === "Carré") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="30" y="30" width="40" height="40" fill="lightblue" stroke="black" strokeWidth="2" />
+        </svg>
+      );
+    } else if (shapeName === "Trapèze") {
+      return (
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <polygon points="20,80 80,80 60,20 40,20" fill="lightblue" stroke="black" strokeWidth="2" />
         </svg>
       );
     } else {
@@ -110,12 +138,10 @@ const ShapesPracticePage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre/geometrie"
+        href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
+      ></Link>
+            <Link
         href="/secondaire/niveaux/niveau4"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
@@ -151,6 +177,19 @@ const ShapesPracticePage = () => {
 
       <h1 className="text-3xl font-bold mb-6">Associer les Noms aux Formes</h1>
 
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
+
       <div className="flex flex-col items-center gap-8">
         {/* Zone des formes */}
         <div className="flex gap-8 justify-center mb-12">
@@ -168,7 +207,7 @@ const ShapesPracticePage = () => {
               }}
               onDragOver={(e) => e.preventDefault()}
             >
-              {drawShape(shape.sides)}
+              {drawShape(shape.sides, shape.name)}
               <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
               {answers[currentShapes + idx] && (
                 <div className="mt-2 text-sm font-bold text-blue-500">{answers[currentShapes + idx]}</div>
@@ -181,7 +220,7 @@ const ShapesPracticePage = () => {
         <div className="grid grid-cols-5 gap-4 mb-12">
           {shapes.map((shape, idx) => (
             <div
-              key={idx}
+            key={idx}
               className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
               draggable
               onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
