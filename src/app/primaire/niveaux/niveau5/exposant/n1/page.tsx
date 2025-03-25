@@ -40,50 +40,54 @@ export default function PrioOperation() {
   };
 
   // Validation des réponses
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
 
-    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
+    if (pageAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    let allCorrect = true;
+    let hasError = false;
     const updatedAnswers = [...answers];
-    const newIncorrectAnswers: number[] = [];
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
-      if (answer !== pageCorrectAnswers[index]) {
-        updatedAnswers[startIndex + index] = null;
-        allCorrect = false;
-        newIncorrectAnswers.push(startIndex + index);
+      const globalIndex = startIndex + index;
+      if (answer !== questions[globalIndex].correctAnswer) {
+        updatedAnswers[globalIndex] = null;
+        incorrect.push(globalIndex);
+        hasError = true;
       }
     });
 
     setAnswers(updatedAnswers);
-    setIncorrectAnswers(newIncorrectAnswers);
+    setIncorrectAnswers(incorrect);
 
-    if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses sont correctes !");
-    } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-    }
-  };
-
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+    if (hasError) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
       setCurrentPage(currentPage + 1);
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
-  const handlePreviousPage = (): void => {
+
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
+    }
+  };
+
+  const handlePreviousPage = () => { //  Correction : garder une seule déclaration
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setFeedbackMessage(null);
     }
   };
 
