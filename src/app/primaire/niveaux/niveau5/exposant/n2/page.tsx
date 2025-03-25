@@ -154,8 +154,8 @@ export default function ExponentsPractice() {
           .map(({ questionText }, idx) => {
             const questionIndex = currentPage * questionsPerPage + idx;
             return (
-              <div key={questionIndex} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+              <div key={questionIndex} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">
                   {questionText}
                 </div>
                 <input
@@ -172,7 +172,7 @@ export default function ExponentsPractice() {
           })}
       </div>
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>

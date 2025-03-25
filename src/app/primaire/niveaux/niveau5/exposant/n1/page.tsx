@@ -148,27 +148,31 @@ export default function ExponentsPractice() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => {
-          const questionIndex = currentPage * questionsPerPage + idx;
-          return (
-            <div key={questionIndex} className="flex flex-col items-start gap-2">
-              <div className="font-bold text-black">{questionText}</div>
-              <input
-                type="text"
-                inputMode="numeric"
-                className={`border p-4 rounded w-full sm:w-32 text-center text-black text-lg ${
-                  incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
-                }`}
-                value={answers[questionIndex] || ""}
-                onChange={(e) => handleChange(questionIndex, e.target.value)}
-              />
-            </div>
-          );
-        })}
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText }, idx) => {
+            const questionIndex = currentPage * questionsPerPage + idx;
+            return (
+              <div key={questionIndex} className="flex flex-col items-start gap-2">
+                <div className="font-bold text-black">
+                  {questionText}
+                </div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
       </div>
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
