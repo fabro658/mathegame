@@ -22,7 +22,7 @@ export default function PrioOperation() {
       return Array.from({ length: totalQuestions }, () => {
         const exponent = Math.floor(Math.random() * 11);  // Exposant entre 0 et 10
         const base = 2;  // Base de l'opération
-        const questionText = `Que vaut ${base}<sup>${exponent}</sup> ?`;
+        const questionText = `Que vaut ${base}<sup>${exponent}</sup> ?`;  // Formater avec <sup> pour exposant
         const correctAnswer = Math.pow(base, exponent).toString();
         
         return { questionText, correctAnswer };
@@ -31,6 +31,7 @@ export default function PrioOperation() {
   
     setQuestions(generateQuestions());
   }, []);
+  
   
 
   // Gestion des changements de réponse
