@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsPractice() {
-  const totalQuestions = 36; 
-  const questionsPerPage = 6; 
+  const totalQuestions = 36; // Nombre total de questions
+  const questionsPerPage = 6; // Questions affichées par vague
+
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Ajout du message de feedback
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -74,51 +74,45 @@ export default function ExponentsPractice() {
 
     let allCorrect = true;
     const updatedAnswers = [...answers];
-    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       if (answer !== pageCorrectAnswers[index]) {
         updatedAnswers[startIndex + index] = null;
-        incorrect.push(startIndex + index);
         allCorrect = false;
       }
     });
 
     setAnswers(updatedAnswers);
-    setIncorrectAnswers(incorrect);
 
     if (allCorrect) {
       setFeedbackMessage("Toutes les réponses sont correctes !");
-      setTimeout(() => {
-        setAnswers(Array(totalQuestions).fill(null));
-        setFeedbackMessage(null);
-      }, 2000);
-      if (currentPage < totalQuestions / questionsPerPage - 1) {
-        setCurrentPage(currentPage + 1);
-      } else {
-        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
-      }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
+    }
+
+    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+        setFeedbackMessage(null); // Réinitialise le message de feedback
+      }, 1500);
     }
   };
 
   const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -152,7 +146,7 @@ export default function ExponentsPractice() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Niveau 1</h1>
+      <h1 className="text-3xl font-bold mb-6">Niveau 2</h1>
 
       {/* Message de feedback */}
       {feedbackMessage && (
@@ -167,28 +161,23 @@ export default function ExponentsPractice() {
         </p>
       )}
 
-      {/* Grille responsive : Questions à gauche et Réponses à droite */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ questionText }, idx) => (
-            <div key={idx} className="flex gap-6">
-              <div className="flex-1">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{questionText}</div>
-              </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  className={`border border-gray-400 p-4 rounded w-full text-center text-black text-lg ${incorrectAnswers.includes(currentPage * questionsPerPage + idx) ? "border-red-500" : ""}`}
-                  value={answers[currentPage * questionsPerPage + idx] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                />
-                <small className="text-gray-500">Réponse</small>
-              </div>
+            <div key={idx} className="flex flex-col items-start gap-2">
+              <div className="font-bold text-black">{questionText}</div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
+                value={answers[currentPage * questionsPerPage + idx] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+              />
             </div>
           ))}
       </div>
-
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>

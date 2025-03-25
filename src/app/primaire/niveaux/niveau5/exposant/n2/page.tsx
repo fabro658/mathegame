@@ -11,41 +11,45 @@ export default function ExponentsPractice() {
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Ajout du message de feedback
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   // Génération des questions
-  useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        let base, exponent, questionText, correctAnswer;
+useEffect(() => {
+  const generateQuestions = () => {
+    return Array.from({ length: totalQuestions }, (_, index) => {
+      let base, exponent, questionText, correctAnswer;
 
-        // Niveau 1 : Simple et progressif
-        if (index < 10) {
-          base = 2; // Base fixe
-          exponent = index + 1; // Exposants croissants de 1 à 10
-          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
-          correctAnswer = Math.pow(base, exponent).toString();
-        } else {
-          // Niveau supérieur : Diversité
-          base = Math.floor(Math.random() * 6) + 2;
-          exponent = Math.floor(Math.random() * 3) + 1;
+      // Niveau 1 : Simple et progressif
+      if (index < 10) {
+        base = 2; // Base fixe
+        exponent = index + 1; // Exposants croissants de 1 à 10
+        questionText = `n = ? si ${base}^n = ${Math.pow(base, exponent)}`;
+        correctAnswer = exponent.toString();
+      } else {
+        // Niveau supérieur : Diversité
+        base = Math.floor(Math.random() * 6) + 2;
+        exponent = Math.floor(Math.random() * 3) + 1;
 
-          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
-          correctAnswer = Math.pow(base, exponent).toString();
+        questionText = `n = ? si ${base}^n = ${Math.pow(base, exponent)}`;
+        correctAnswer = exponent.toString();
 
-          // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
-          if (index >= 15 && Math.random() > 0.5) {
-            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
-            correctAnswer = Math.pow(baseAlt, exponent).toString();
-          }
+        // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
+        if (index >= 15 && Math.random() > 0.5) {
+          const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+          questionText = `n = ? si (${base} + ${baseAlt - base})^n = ${Math.pow(baseAlt, exponent)}`;
+          correctAnswer = exponent.toString();
         }
+      }
 
-        return { questionText, correctAnswer };
-      });
-    };
+      return { questionText, correctAnswer };
+    });
+  };
 
-    setQuestions(generateQuestions());
-  }, []);
+  setQuestions(generateQuestions());
+}, []);
+
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
@@ -110,18 +114,15 @@ export default function ExponentsPractice() {
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Barre circulaire de progression
-  const radius = 50;
-  const strokeWidth = 10; // Variable supprimée de l'état car elle n'est pas utilisée en dehors du calcul
-  const circumference = 2 * Math.PI * radius; // Variable supprimée de l'état pour la même raison
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton "Retour" visible uniquement sur grand écran */}
-      <Link
-        href="/primaire/niveaux/niveau5"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold sm:block hidden"
-      >
+      <Link href="/menu/apprendre" 
+      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+        Apprendre
+      </Link>
+      <Link href="/secondaire/niveaux/niveau5" 
+      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -150,12 +151,18 @@ export default function ExponentsPractice() {
 
       {/* Message de feedback */}
       {feedbackMessage && (
-        <div className={`mt-4 text-lg font-bold ${feedbackMessage.includes("correctes") ? "text-green-500" : "text-red-500"}`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
-        </div>
+        </p>
       )}
 
-      {/* Grille responsive : 2 colonnes sur grands écrans, 1 colonne sur mobiles */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
@@ -172,38 +179,10 @@ export default function ExponentsPractice() {
             </div>
           ))}
       </div>
-
-      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-        <button
-          onClick={handlePreviousPage}
-          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === 0}
-        >
-          Précédent
-        </button>
-        <button
-          onClick={handleValidation}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Valider les réponses
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-        >
-          Suivant
-        </button>
-      </div>
-
-      {/* Le bouton "Apprendre" est sous les autres boutons sur mobile */}
-      <div className="mt-6 w-full sm:hidden">
-        <Link
-          href="/menu/apprendre/exposant"
-          className="w-full bg-black text-white py-3 px-8 rounded font-bold"
-        >
-          Apprendre
-        </Link>
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
       </div>
     </div>
   );
