@@ -84,10 +84,6 @@ export default function ExponentsPractice() {
     } else {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes.");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setTimeout(() => {
-          setCurrentPage(currentPage + 1);
-          setFeedbackMessage(null);
-        }, 1500);
       }
     }
   };
