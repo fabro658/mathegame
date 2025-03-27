@@ -14,7 +14,7 @@ export default function EquationsEquivalentes() {
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const generateEquation = (level: number) => {
+  const generateEquation = () => {
     const operations = ["+", "-", "*", "/"];
     const op = operations[Math.floor(Math.random() * operations.length)];
     let left, right;
@@ -42,17 +42,17 @@ export default function EquationsEquivalentes() {
 
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        const leftEquation = generateEquation(1); // Ici, tu peux ajuster la difficulté selon le niveau
+      return Array.from({ length: totalQuestions }, () => {
+        const leftEquation = generateEquation(); // Générer une équation à gauche
         const isEquivalent = Math.random() > 0.5;
         let rightEquation;
 
         if (isEquivalent) {
-          rightEquation = leftEquation;
+          rightEquation = leftEquation; // L'équation de droite est équivalente à celle de gauche
         } else {
           do {
-            rightEquation = generateEquation(1); // Même chose ici pour la génération de la question à droite
-          } while (rightEquation.result === leftEquation.result);
+            rightEquation = generateEquation(); // Générer une nouvelle équation à droite
+          } while (rightEquation.result === leftEquation.result); // Assurer que les résultats ne sont pas égaux
         }
 
         return { equationLeft: leftEquation.equation, equationRight: rightEquation.equation };
