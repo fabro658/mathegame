@@ -3,137 +3,106 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function EquationsEquivalentes() {
+export default function ExpressionEquivalente() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-  const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string }[]>([]);
-  const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+
+  const [questions, setQuestions] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-
-  const generateEquation = () => {
-    const operations = ["+", "-"];
-    const op = operations[Math.floor(Math.random() * operations.length)];
-    let left, right;
-
-    if (op === "+") {
-      left = Math.floor(Math.random() * 20) + 1;
-      right = Math.floor(Math.random() * 20) + 1;
-    } else if (op === "-") {
-      left = Math.floor(Math.random() * 20) + 10;
-      right = Math.floor(Math.random() * 10) + 1;
-    } else if (op === "*") {
-      left = Math.floor(Math.random() * 10) + 1;
-      right = Math.floor(Math.random() * 10) + 1;
-    } else if (op === "/") {
-      right = Math.floor(Math.random() * 9) + 1;
-      left = right * (Math.floor(Math.random() * 10) + 1);
-    }
-
-    return { equation: `${left} ${op} ${right}`, result: eval(`${left} ${op} ${right}`) };
-  };
-
-  const formatEquation = (equation: string) => {
-    return equation.replace(/\*/g, "x");
-  };
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
   useEffect(() => {
-    const generateQuestions = () => {
+    const generateQuestions = (): string[] => {
       return Array.from({ length: totalQuestions }, () => {
-        const leftEquation = generateEquation(); // Générer une équation à gauche
-        const isEquivalent = Math.random() > 0.5;
-        let rightEquation;
-
-        if (isEquivalent) {
-          rightEquation = leftEquation; // L'équation de droite est équivalente à celle de gauche
-        } else {
-          do {
-            rightEquation = generateEquation(); // Générer une nouvelle équation à droite
-          } while (rightEquation.result === leftEquation.result); // Assurer que les résultats ne sont pas égaux
-        }
-
-        return { equationLeft: leftEquation.equation, equationRight: rightEquation.equation };
+        const a = Math.floor(Math.random() * 10) + 1;
+        const b = Math.floor(Math.random() * 10) + 1;
+        return `${a} + ${b}`;
       });
     };
 
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, isTrue: boolean): void => {
-    const newSelectedButtons = [...selectedButtons];
-    newSelectedButtons[index] = isTrue ? "true" : "false";
-    setSelectedButtons(newSelectedButtons);
-    setFeedbackMessage(null); // Réinitialiser les messages de feedback
+  const handleChange = (index: number, value: string) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = value.trim() === "" ? null : value;
+    setAnswers(newAnswers);
+
+    // Réinitialiser le message de feedback dès qu'une réponse est modifiée
+    setFeedbackMessage(null);
   };
 
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
+    const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes("")) {
-      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+    if (pageAnswers.includes(null)) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
     let hasError = false;
-    const newAnswers = [...selectedButtons];
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const { equationLeft, equationRight } = questions[globalIndex];
-      const leftResult = eval(equationLeft);
-      const rightResult = eval(equationRight);
-      const correctAnswer = leftResult === rightResult ? "true" : "false";
+      const correctExpression = questions[globalIndex];
 
-      if (answer !== correctAnswer) {
-        newAnswers[globalIndex] = "";
+      if (answer !== correctExpression) {
+        incorrect.push(globalIndex);
         hasError = true;
       }
     });
 
-    setSelectedButtons(newAnswers);
+    setIncorrectAnswers(incorrect);
 
     if (hasError) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
-    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
-      setCurrentPage(currentPage + 1);
+      setFeedbackMessage("Certaines expressions sont incorrectes. Veuillez les corriger.");
     } else {
-      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setTimeout(() => setCurrentPage(currentPage + 1), 500); // Passage automatique à la page suivante
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
+      setIncorrectAnswers([]);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
+      setIncorrectAnswers([]);
     }
   };
 
-  const completedAnswers = selectedButtons.filter((answer) => answer !== "").length;
+  const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/expression-equivalente"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau2"
+        href="/primaire/niveaux/niveau1"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -159,53 +128,41 @@ export default function EquationsEquivalentes() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Equations Equivalentes</h1>
+      <h1 className="text-4xl font-bold mb-6">Expression Équivalente</h1>
 
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 ${
-            feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
           } text-center`}
         >
           {feedbackMessage}
         </p>
       )}
 
-<div className="grid grid-cols-2 gap-6 mb-6">
-  {questions
-    .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-    .map(({ equationLeft, equationRight }, index) => {
-      const questionIndex = currentPage * questionsPerPage + index;
-      return (
-        <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-          <p className="text-lg font-bold mb-4">
-            {equationLeft} = {equationRight}
-          </p>
-          <div className="flex gap-4 justify-center">
-            <button
-              onClick={() => handleAnswer(questionIndex, true)}
-              className={`py-2 px-4 rounded font-bold ${
-                selectedButtons[questionIndex] === "true"
-                  ? "bg-orange-500 text-white"
-                  : "bg-blue-500 text-white"
-              }`}
-            >
-              Vrai
-            </button>
-            <button
-              onClick={() => handleAnswer(questionIndex, false)}
-              className={`py-2 px-4 rounded font-bold ${
-                selectedButtons[questionIndex] === "false"
-                  ? "bg-orange-500 text-white"
-                  : "bg-blue-500 text-white"
-              }`}
-            >
-              Faux
-            </button>
-          </div>
-        </div>
-      );
-    })}
+      <div className="grid grid-cols-3 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map((expression, index) => {
+            const questionIndex = currentPage * questionsPerPage + index;
+            return (
+              <div key={questionIndex} className="flex items-center gap-4">
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                  {expression}
+                </div>
+                <input
+                  type="text"
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
       </div>
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
