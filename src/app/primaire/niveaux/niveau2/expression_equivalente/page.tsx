@@ -171,24 +171,23 @@ export default function EquationsEquivalentes() {
         </p>
       )}
 
-      <div className="grid grid-cols-3 gap-6">
-        {questions
-          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-          .map(({ equationLeft, equationRight }, index) => (
-            <div key={index} 
-             className="flex items-center gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                {formatEquation(equationLeft)} = {formatEquation(equationRight)}
-              </div>
-              <div className="flex gap-4">
+<div className="grid grid-cols-2 gap-6 mb-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
+          const questionIndex = currentPage * questionsPerPage + index;
+          return (
+            <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
+              <p className="text-lg font-bold mb-4">
+                {equationLeft} = {equationRight}
+              </p>
+              <div className="flex gap-4 justify-center">
                 <button
                   onClick={() => handleAnswer(currentPage * questionsPerPage + index, true)}
                   className={`py-2 px-4 rounded font-bold ${
                     selectedButtons[currentPage * questionsPerPage + index] === "true"
                       ? "bg-orange-500 text-white"
                       : "bg-blue-500 text-white"
-                  }`}
-                >
+                    }`}
+                    >
                   Vrai
                 </button>
                 <button
@@ -203,7 +202,7 @@ export default function EquationsEquivalentes() {
                 </button>
               </div>
             </div>
-          ))}
+          )}
       </div>
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
