@@ -172,37 +172,40 @@ export default function EquationsEquivalentes() {
       )}
 
 <div className="grid grid-cols-2 gap-6 mb-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
-          const questionIndex = currentPage * questionsPerPage + index;
-          return (
-            <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-              <p className="text-lg font-bold mb-4">
-                {equationLeft} = {equationRight}
-              </p>
-              <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => handleAnswer(currentPage * questionsPerPage + index, true)}
-                  className={`py-2 px-4 rounded font-bold ${
-                    selectedButtons[currentPage * questionsPerPage + index] === "true"
-                      ? "bg-orange-500 text-white"
-                      : "bg-blue-500 text-white"
-                    }`}
-                    >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => handleAnswer(currentPage * questionsPerPage + index, false)}
-                  className={`py-2 px-4 rounded font-bold ${
-                    selectedButtons[currentPage * questionsPerPage + index] === "false"
-                      ? "bg-orange-500 text-white"
-                      : "bg-blue-500 text-white"
-                  }`}
-                >
-                  Faux
-                </button>
-              </div>
-            </div>
-          )}
+  {questions
+    .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+    .map(({ equationLeft, equationRight }, index) => {
+      const questionIndex = currentPage * questionsPerPage + index;
+      return (
+        <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
+          <p className="text-lg font-bold mb-4">
+            {equationLeft} = {equationRight}
+          </p>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => handleAnswer(questionIndex, true)}
+              className={`py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "true"
+                  ? "bg-orange-500 text-white"
+                  : "bg-blue-500 text-white"
+              }`}
+            >
+              Vrai
+            </button>
+            <button
+              onClick={() => handleAnswer(questionIndex, false)}
+              className={`py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "false"
+                  ? "bg-orange-500 text-white"
+                  : "bg-blue-500 text-white"
+              }`}
+            >
+              Faux
+            </button>
+          </div>
+        </div>
+      );
+    })}
       </div>
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
