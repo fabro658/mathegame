@@ -1,20 +1,15 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function EquationsEquivalentes() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const levels = 3;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-
   const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string }[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
   const generateEquation = (level: number) => {
@@ -46,8 +41,7 @@ export default function EquationsEquivalentes() {
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        const level = Math.ceil(((index + 1) / totalQuestions) * levels);
-        const leftEquation = generateEquation(level);
+        const leftEquation = generateEquation(1); // Ici, tu peux ajuster la difficulté selon le niveau
         const isEquivalent = Math.random() > 0.5;
         let rightEquation;
 
@@ -55,7 +49,7 @@ export default function EquationsEquivalentes() {
           rightEquation = leftEquation;
         } else {
           do {
-            rightEquation = generateEquation(level);
+            rightEquation = generateEquation(1); // Même chose ici pour la génération de la question à droite
           } while (rightEquation.result === leftEquation.result);
         }
 
@@ -85,7 +79,6 @@ export default function EquationsEquivalentes() {
 
     let hasError = false;
     const newAnswers = [...selectedButtons];
-    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
@@ -96,13 +89,11 @@ export default function EquationsEquivalentes() {
 
       if (answer !== correctAnswer) {
         newAnswers[globalIndex] = "";
-        incorrect.push(globalIndex);
         hasError = true;
       }
     });
 
     setSelectedButtons(newAnswers);
-    setIncorrectAnswers(incorrect);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
@@ -140,7 +131,7 @@ export default function EquationsEquivalentes() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau3"
+        href="/primaire/niveaux/niveau2"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -210,7 +201,7 @@ export default function EquationsEquivalentes() {
               </div>
             </div>
           ))}
-        </div>
+      </div>
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
