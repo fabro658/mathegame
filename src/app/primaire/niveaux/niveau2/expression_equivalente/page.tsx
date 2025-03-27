@@ -71,53 +71,58 @@ export default function EquationsEquivalentes() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleValidation = () => {
+  const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
-
-    if (pageAnswers.includes("")) {
-      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
-      return;
-    }
-
-    let hasError = false;
-    const incorrect: number[] = [];
-
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
-      if (!isCorrect) {
-        incorrect.push(globalIndex);
-        hasError = true;
+    const endIndex = Math.min(startIndex + questionsPerPage, totalQuestions);
+    let correctCount = 0;
+    const newIncorrectAnswers: number[] = [];
+  
+    // Vérifier si toutes les questions de la page ont été répondues
+    for (let i = startIndex; i < endIndex; i++) {
+      if (selectedButtons[i] === "") {
+        setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+        return;
       }
-    });
-
-    setIncorrectAnswers(incorrect);
-
-    if (hasError) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
-    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+    }
+  
+    // Vérifier les réponses
+    for (let i = startIndex; i < endIndex; i++) {
+      const isCorrect = 
+        (selectedButtons[i] === "true" && questions[i].isEquivalent) ||
+        (selectedButtons[i] === "false" && !questions[i].isEquivalent);
+      
+      if (!isCorrect) {
+        newIncorrectAnswers.push(i);
+      } else {
+        correctCount++;
+      }
+    }
+  
+    setIncorrectAnswers(newIncorrectAnswers);
+    
+    // Calculer les réponses complétées
+    const newCompletedAnswers = selectedButtons.filter(answer => answer !== "").length;
+    setCompletedAnswers(newCompletedAnswers);
+  
+    if (newIncorrectAnswers.length > 0) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else if (currentPage < Math.ceil(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
-
-    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
     }
   };
 

@@ -16,7 +16,10 @@ export default function ComparerEntiers() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState(""); // Message de feedback
-
+  const radius = 50; // Rayon du cercle
+  const strokeWidth = 10; // Largeur du cercle
+  const circumference = 2 * Math.PI * radius;
+  
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
       const number1 = Math.floor(Math.random() * 100) + 1;
@@ -81,11 +84,6 @@ export default function ComparerEntiers() {
       setCurrentPage(currentPage - 1);
     }
   };
-
-  // Propriétés pour le cercle de progression
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
 
   // Calculer le pourcentage de progression
   const answeredCount = answers.filter((answer) => answer !== "").length;
