@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function EquationsEquivalentes() {
   const totalQuestions = 30;
   const questionsPerPage = 6;
-  const levels = 3;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -15,7 +14,6 @@ export default function EquationsEquivalentes() {
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [completedAnswers, setCompletedAnswers] = useState(0);
 
   // Fonction pour générer une équation aléatoire
@@ -82,30 +80,19 @@ export default function EquationsEquivalentes() {
     }
 
     let hasError = false;
-    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
       if (!isCorrect) {
-        incorrect.push(globalIndex);
         hasError = true;
       }
     });
-
-    setIncorrectAnswers(incorrect);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      setTimeout(() => {
-        setFeedbackMessage(null);
-        setSelectedButtons(Array(totalQuestions).fill(""));
-        if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
-          setCurrentPage(currentPage + 1);
-        }
-      }, 1000);
     }
 
     setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
@@ -198,10 +185,12 @@ export default function EquationsEquivalentes() {
           );
         })}
       </div>
+
+      {/* Boutons de navigation */}
       <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
