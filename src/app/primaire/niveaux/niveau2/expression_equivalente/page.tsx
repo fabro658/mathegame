@@ -4,18 +4,21 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function EquationsEquivalentes() {
-  const totalQuestions = 30;
+  const totalQuestions = 36;
   const questionsPerPage = 6;
+  const levels = 3;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
-  const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string; isEquivalent: boolean }[]>([]);
+  const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string }[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [feedbackColor, setFeedbackColor] = useState<string>("text-black");
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Génération aléatoire d'une équation
-  const generateEquation = () => {
-    const operations = ["+", "-", "*", "/"];
+  const generateEquation = (level: number) => {
+    const operations = ["+", "-"];
     const op = operations[Math.floor(Math.random() * operations.length)];
     let left, right;
 
@@ -28,7 +31,7 @@ export default function EquationsEquivalentes() {
     } else if (op === "*") {
       left = Math.floor(Math.random() * 10) + 1;
       right = Math.floor(Math.random() * 10) + 1;
-    } else {
+    } else if (op === "/") {
       right = Math.floor(Math.random() * 9) + 1;
       left = right * (Math.floor(Math.random() * 10) + 1);
     }
@@ -36,11 +39,15 @@ export default function EquationsEquivalentes() {
     return { equation: `${left} ${op} ${right}`, result: eval(`${left} ${op} ${right}`) };
   };
 
-  // Génération des questions
+  const formatEquation = (equation: string) => {
+    return equation.replace(/\*/g, "x");
+  };
+
   useEffect(() => {
     const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const leftEquation = generateEquation();
+      return Array.from({ length: totalQuestions }, (_, index) => {
+        const level = Math.ceil(((index + 1) / totalQuestions) * levels);
+        const leftEquation = generateEquation(level);
         const isEquivalent = Math.random() > 0.5;
         let rightEquation;
 
@@ -48,142 +55,166 @@ export default function EquationsEquivalentes() {
           rightEquation = leftEquation;
         } else {
           do {
-            rightEquation = generateEquation();
+            rightEquation = generateEquation(level);
           } while (rightEquation.result === leftEquation.result);
         }
 
-        return {
-          equationLeft: leftEquation.equation,
-          equationRight: rightEquation.equation,
-          isEquivalent,
-        };
+        return { equationLeft: leftEquation.equation, equationRight: rightEquation.equation };
       });
     };
 
     setQuestions(generateQuestions());
   }, []);
 
-  // Validation des réponses
+  const handleAnswer = (index: number, isTrue: boolean): void => {
+    const newSelectedButtons = [...selectedButtons];
+    newSelectedButtons[index] = isTrue ? "true" : "false";
+    setSelectedButtons(newSelectedButtons);
+    setFeedbackMessage(null); // Réinitialiser les messages de feedback
+  };
+
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = selectedButtons.slice(startIndex, endIndex);
 
     if (pageAnswers.includes("")) {
-      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
-      setFeedbackColor("text-red-500");
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    let hasErrors = false;
+    let hasError = false;
     const newAnswers = [...selectedButtons];
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      if ((answer === "true" && !questions[globalIndex].isEquivalent) || (answer === "false" && questions[globalIndex].isEquivalent)) {
+      const { equationLeft, equationRight } = questions[globalIndex];
+      const leftResult = eval(equationLeft);
+      const rightResult = eval(equationRight);
+      const correctAnswer = leftResult === rightResult ? "true" : "false";
+
+      if (answer !== correctAnswer) {
         newAnswers[globalIndex] = "";
-        hasErrors = true;
+        incorrect.push(globalIndex);
+        hasError = true;
       }
     });
 
     setSelectedButtons(newAnswers);
+    setIncorrectAnswers(incorrect);
 
-    if (hasErrors) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-      setFeedbackColor("text-red-500");
+    if (hasError) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setCurrentPage(currentPage + 1);
     } else {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-      setFeedbackColor("text-green-500");
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
-  // Sélection d'une réponse
-  const handleAnswerSelection = (index: number, answer: string) => {
-    const newAnswers = [...selectedButtons];
-    newAnswers[index] = answer;
-    setSelectedButtons(newAnswers);
-    setFeedbackMessage(null);
-  };
-
-  // Changement de page
   const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage)) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
 
-  // Calcul de la progression
-  const completedAnswers = selectedButtons.filter(answer => answer !== "").length;
-  const progressPercentage = (completedAnswers / totalQuestions) * 100;
+  const completedAnswers = selectedButtons.filter((answer) => answer !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-6">Équations Équivalentes</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+      <Link
+        href="/menu/apprendre"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/secondaire/niveaux/niveau3"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+      >
+        Retour
+      </Link>
 
-      {/* Cercle de progression */}
-      <div className="relative w-24 h-24 mb-6">
-        <svg className="w-full h-full" viewBox="0 0 100 100">
-          <circle className="text-gray-200 stroke-current" strokeWidth="10" cx="50" cy="50" r="40" fill="none" />
+      <div className="absolute top-4 left-4 w-32 h-32">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
-            className="text-green-500 stroke-current"
-            strokeWidth="10"
-            cx="50"
-            cy="50"
-            r="40"
+            cx="50%"
+            cy="50%"
+            r={radius}
             fill="none"
-            strokeDasharray="251.2"
-            strokeDashoffset={(1 - progressPercentage / 100) * 251.2}
-            strokeLinecap="round"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-lg font-bold">
-          {Math.round(progressPercentage)}%
-        </span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
-      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
-        const globalIndex = currentPage * questionsPerPage + index;
-        return (
-          <div key={index} className="mb-4 p-4 border rounded-md bg-white shadow-md w-full max-w-lg">
-            <p className="text-lg">{question.equationLeft} = {question.equationRight}</p>
-            <div className="flex justify-between mt-2">
-              <button
-                className={`px-4 py-2 rounded ${selectedButtons[globalIndex] === "true" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                onClick={() => handleAnswerSelection(globalIndex, "true")}
-              >
-                Vrai
-              </button>
-              <button
-                className={`px-4 py-2 rounded ${selectedButtons[globalIndex] === "false" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                onClick={() => handleAnswerSelection(globalIndex, "false")}
-              >
-                Faux
-              </button>
-            </div>
-          </div>
-        );
-      })}
+      <h1 className="text-4xl font-bold mb-6">Equations Equivalentes</h1>
 
-      {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackColor} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
 
-      {/* Navigation */}
+      <div className="grid grid-cols-3 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ equationLeft, equationRight }, index) => (
+            <div key={index} className="flex flex-col gap-4 items-start">
+              <div className="font-bold text-black">
+                {formatEquation(equationLeft)} = {formatEquation(equationRight)}
+              </div>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => handleAnswer(currentPage * questionsPerPage + index, true)}
+                  className={`py-2 px-4 rounded font-bold ${
+                    selectedButtons[currentPage * questionsPerPage + index] === "true"
+                      ? "bg-orange-500 text-white"
+                      : "bg-blue-500 text-white"
+                  }`}
+                >
+                  Vrai
+                </button>
+                <button
+                  onClick={() => handleAnswer(currentPage * questionsPerPage + index, false)}
+                  className={`py-2 px-4 rounded font-bold ${
+                    selectedButtons[currentPage * questionsPerPage + index] === "false"
+                      ? "bg-orange-500 text-white"
+                      : "bg-blue-500 text-white"
+                  }`}
+                >
+                  Faux
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className={`bg-gray-500 text-white py-3 px-6 rounded font-bold ${currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""}`} disabled={currentPage === 0}>Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
-        <button onClick={handleNextPage} className={`bg-blue-500 text-white py-3 px-6 rounded font-bold ${currentPage >= Math.floor(totalQuestions / questionsPerPage) ? "opacity-50 cursor-not-allowed" : ""}`} disabled={currentPage >= Math.floor(totalQuestions / questionsPerPage)}>Suivant</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
