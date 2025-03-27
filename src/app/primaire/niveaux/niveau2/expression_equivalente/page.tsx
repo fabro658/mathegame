@@ -74,7 +74,7 @@ const handleValidation = () => {
   const pageAnswers = selectedButtons.slice(startIndex, endIndex);
 
   if (pageAnswers.includes("")) {
-    setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+    setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
     return;
   }
 
@@ -90,11 +90,12 @@ const handleValidation = () => {
 
   if (hasError) {
     setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+  } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+    setCurrentPage(currentPage + 1);
   } else {
-    setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+    setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
   }
-
-  setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
 };
 
 // Gestion des changements de page
@@ -152,10 +153,17 @@ return (
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
+
 
       <div className="grid grid-cols-2 gap-6 mb-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
