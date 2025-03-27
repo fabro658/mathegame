@@ -18,7 +18,7 @@ export default function EquationsEquivalentes() {
 
   // Fonction pour générer une équation aléatoire
   const generateEquation = () => {
-    const operations = ["+", "-", "*", "/"];
+    const operations = ["+", "-"];
     const op = operations[Math.floor(Math.random() * operations.length)];
     let left, right;
 
@@ -67,70 +67,68 @@ export default function EquationsEquivalentes() {
 
     setQuestions(generateQuestions());
   }, []);
+// Fonction de validation des réponses
+const handleValidation = () => {
+  const startIndex = currentPage * questionsPerPage;
+  const endIndex = startIndex + questionsPerPage;
+  const pageAnswers = selectedButtons.slice(startIndex, endIndex);
 
-  // Fonction de validation des réponses
-  const handleValidation = () => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
+  if (pageAnswers.includes("")) {
+    setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+    return;
+  }
 
-    if (pageAnswers.includes("")) {
-      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
-      return;
+  let hasError = false;
+
+  pageAnswers.forEach((answer, index) => {
+    const globalIndex = startIndex + index;
+    const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
+    if (!isCorrect) {
+      hasError = true;
     }
+  });
 
-    let hasError = false;
+  if (hasError) {
+    setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+  } else {
+    setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+  }
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
-      if (!isCorrect) {
-        hasError = true;
-      }
-    });
+  setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
+};
 
-    if (hasError) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
-    } else {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
-    }
+// Gestion des changements de page
+const handleNextPage = () => {
+  if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    setCurrentPage(currentPage + 1);
+    setFeedbackMessage(null);
+  }
+};
 
-    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
-  };
+const handlePreviousPage = () => {
+  if (currentPage > 0) {
+    setCurrentPage(currentPage - 1);
+    setFeedbackMessage(null);
+  }
+};
 
-  // Gestion des changements de page
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
-    }
-  };
+const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
-    }
-  };
-
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau2"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link> 
-
-      <div className="absolute top-4 left-4 w-32 h-32">
+return (
+  <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <Link
+      href="/menu/apprendre/opérations arithmétiques"
+      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+    >
+      Apprendre
+    </Link>
+    <Link
+      href="/primaire/niveaux/niveau2"
+      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+    >
+      Retour
+    </Link> 
+    <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
