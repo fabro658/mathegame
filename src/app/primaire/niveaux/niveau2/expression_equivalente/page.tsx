@@ -175,8 +175,9 @@ export default function EquationsEquivalentes() {
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map(({ equationLeft, equationRight }, index) => (
-            <div key={index} className="flex flex-col gap-4 items-start">
-              <div className="font-bold text-black">
+            <div key={index} 
+             className="flex items-center gap-4">
+            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                 {formatEquation(equationLeft)} = {formatEquation(equationRight)}
               </div>
               <div className="flex gap-4">
