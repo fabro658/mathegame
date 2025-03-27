@@ -166,18 +166,27 @@ return (
                 {equationLeft} = {equationRight}
               </p>
               <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)))}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)))}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Faux
-                </button>
+              <button
+  onClick={() => {
+    const updatedButtons = [...selectedButtons];  // Copiez le tableau existant
+    updatedButtons[questionIndex] = "true";  // Mettez à jour l'élément spécifique
+    setSelectedButtons(updatedButtons);  // Mettez à jour l'état
+  }}
+  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
+>
+  Vrai
+</button>
+<button
+  onClick={() => {
+    const updatedButtons = [...selectedButtons]; 
+    updatedButtons[questionIndex] = "false";  
+    setSelectedButtons(updatedButtons); 
+  }}
+  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
+>
+  Faux
+</button>
+
               </div>
             </div>
           );
