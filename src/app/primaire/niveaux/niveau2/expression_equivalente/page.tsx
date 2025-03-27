@@ -70,59 +70,53 @@ export default function EquationsEquivalentes() {
 
     setQuestions(generateQuestions());
   }, []);
-
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
-    const endIndex = Math.min(startIndex + questionsPerPage, totalQuestions);
-    let correctCount = 0;
-    const newIncorrectAnswers: number[] = [];
-  
-    // Vérifier si toutes les questions de la page ont été répondues
-    for (let i = startIndex; i < endIndex; i++) {
-      if (selectedButtons[i] === "") {
-        setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
-        return;
-      }
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = selectedButtons.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
+      return;
     }
-  
-    // Vérifier les réponses
-    for (let i = startIndex; i < endIndex; i++) {
-      const isCorrect = 
-        (selectedButtons[i] === "true" && questions[i].isEquivalent) ||
-        (selectedButtons[i] === "false" && !questions[i].isEquivalent);
-      
+
+    let hasError = false;
+    const incorrect: number[] = [];
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
       if (!isCorrect) {
-        newIncorrectAnswers.push(i);
-      } else {
-        correctCount++;
+        incorrect.push(globalIndex);
+        hasError = true;
       }
-    }
-  
-    setIncorrectAnswers(newIncorrectAnswers);
-    
-    // Calculer les réponses complétées
-    const newCompletedAnswers = selectedButtons.filter(answer => answer !== "").length;
-    setCompletedAnswers(newCompletedAnswers);
-  
-    if (newIncorrectAnswers.length > 0) {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-    } else if (currentPage < Math.ceil(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+    });
+
+    setIncorrectAnswers(incorrect);
+
+    if (hasError) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
+
+    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
   };
 
-  const handleNextPage = (): void => {
+  const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
     }
   };
 
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setFeedbackMessage(null);
     }
   };
 
@@ -142,7 +136,6 @@ export default function EquationsEquivalentes() {
       >
         Retour
       </Link>
-
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -214,7 +207,6 @@ export default function EquationsEquivalentes() {
           );
         })}
       </div>
-
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
