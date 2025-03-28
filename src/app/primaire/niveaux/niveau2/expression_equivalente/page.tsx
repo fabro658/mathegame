@@ -74,7 +74,7 @@ const handleValidation = () => {
   const pageAnswers = selectedButtons.slice(startIndex, endIndex);
 
   if (pageAnswers.includes("")) {
-    setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+    setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
     return;
   }
 
