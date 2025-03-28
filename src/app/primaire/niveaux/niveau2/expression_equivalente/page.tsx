@@ -71,7 +71,7 @@ export default function EquationsEquivalentes() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...selectedButtons];
-    const parsedValue = parseInt(value);  // Essaie de parser la valeur comme un nombre
+    const parsedValue = parseInt(value);  
     newAnswers[index] = isNaN(parsedValue) ? "" : String(parsedValue);  // Si NaN, assigne une chaîne vide, sinon assigne la valeur sous forme de chaîne
     setSelectedButtons(newAnswers);
     setFeedbackMessage(null); // Réinitialiser les messages de feedback
@@ -186,40 +186,51 @@ export default function EquationsEquivalentes() {
         </p>
       )}
 
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
-          const questionIndex = currentPage * questionsPerPage + index;
-          return (
-            <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-              <p className="text-lg font-bold mb-4">
-                {equationLeft} = {equationRight}
-              </p>
-              <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)))}
-                  className={`w-32 py-2 px-4 rounded font-bold ${
-                    selectedButtons[questionIndex] === "true"
-                      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-                      : "bg-blue-500"
-                  } text-white`}
-                >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)))}
-                  className={`w-32 py-2 px-4 rounded font-bold ${
-                    selectedButtons[questionIndex] === "false"
-                      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-                      : "bg-blue-500"
-                  } text-white`}
-                >
-                  Faux
-                </button>
-              </div>
-            </div>
-          );
-        })}
+<div className="grid grid-cols-2 gap-6 mb-6">
+  {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
+    const questionIndex = currentPage * questionsPerPage + index;
+    return (
+      <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
+        <p className="text-lg font-bold mb-4">
+          {equationLeft} = {equationRight}
+        </p>
+
+        <div className="flex gap-4 justify-center">
+          {/* Champ de saisie pour changer la réponse */}
+          <input
+            type="text"
+            value={selectedButtons[questionIndex] || ""}
+            onChange={(e) => handleChange(questionIndex, e.target.value)} // Utilisation de handleChange ici
+            className="w-32 py-2 px-4 rounded border border-gray-300 text-center"
+          />
+
+          {/* Boutons "Vrai" et "Faux" */}
+          <button
+            onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)))}
+            className={`w-32 py-2 px-4 rounded font-bold ${
+              selectedButtons[questionIndex] === "true"
+                ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
+                : "bg-blue-500"
+            } text-white`}
+          >
+            Vrai
+          </button>
+          <button
+            onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)))}
+            className={`w-32 py-2 px-4 rounded font-bold ${
+              selectedButtons[questionIndex] === "false"
+                ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
+                : "bg-blue-500"
+            } text-white`}
+          >
+            Faux
+          </button>
+        </div>
       </div>
+    );
+  })}
+</div>
+
 
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
