@@ -10,13 +10,11 @@ export default function EquationsEquivalentes() {
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-
   const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string; isEquivalent: boolean }[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
-  const [completedAnswers, setCompletedAnswers] = useState(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); 
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-"];
@@ -71,6 +69,16 @@ export default function EquationsEquivalentes() {
     setQuestions(generateQuestions());
   }, []);
 
+  const handleChange = (index: number, value: string) => {
+    const newAnswers = [...selectedButtons];
+    const parsedValue = parseInt(value);  // Essaie de parser la valeur comme un nombre
+    newAnswers[index] = isNaN(parsedValue) ? "" : String(parsedValue);  // Si NaN, assigne une chaîne vide, sinon assigne la valeur sous forme de chaîne
+    setSelectedButtons(newAnswers);
+    setFeedbackMessage(null); // Réinitialiser les messages de feedback
+  };
+  
+  
+
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -82,28 +90,31 @@ export default function EquationsEquivalentes() {
     }
 
     let hasError = false;
-    const incorrect: number[] = [];
+    const newAnswers = [...selectedButtons];
+    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
+    
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
       if (!isCorrect) {
+        newAnswers[globalIndex] = ""; // Réinitialiser seulement les mauvaises réponses à une chaîne vide
         incorrect.push(globalIndex);
         hasError = true;
       }
     });
+    
 
-    setIncorrectAnswers(incorrect);
+    setSelectedButtons(newAnswers);
+    setIncorrectAnswers(incorrect); //
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
-
-    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
   };
 
   const handleNextPage = () => {
@@ -112,15 +123,15 @@ export default function EquationsEquivalentes() {
       setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
-  
+
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
-  
 
+  const completedAnswers = selectedButtons.filter((selectedButtons) => selectedButtons !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (

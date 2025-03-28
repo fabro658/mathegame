@@ -9,7 +9,6 @@ export default function Addition() {
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-
   const [questions, setQuestions] = useState<[number, number][]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
