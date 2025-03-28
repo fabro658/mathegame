@@ -90,11 +90,12 @@ const handleValidation = () => {
 
   if (hasError) {
     setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+  } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+    setCurrentPage(currentPage + 1);
   } else {
-    setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+    setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
   }
-
-  setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
 };
 
 // Gestion des changements de page
@@ -123,7 +124,7 @@ return (
       Apprendre
     </Link>
     <Link
-      href="/secondaire/niveaux/niveau3"
+      href="/primaire/niveaux/niveau2"
       className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
     >
       Retour
@@ -152,12 +153,19 @@ return (
 
       {/* Feedback */}
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
 
-      <div className="grid grid-cols-2 gap-6 mb-6">
+
+<div className="grid grid-cols-2 gap-6 mb-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
           const questionIndex = currentPage * questionsPerPage + index;
           return (
@@ -166,18 +174,30 @@ return (
                 {equationLeft} = {equationRight}
               </p>
               <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)))}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)))}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Faux
-                </button>
+              <button
+              onClick={() => {
+                const updatedButtons = [...selectedButtons];
+                updatedButtons[questionIndex] = "true";
+                setSelectedButtons(updatedButtons);
+              }}
+              className={`bg-blue-500 text-white py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "true" ? "bg-green-500" : ""
+              }`}
+            >
+              Vrai
+            </button>
+            <button
+              onClick={() => {
+                const updatedButtons = [...selectedButtons];
+                updatedButtons[questionIndex] = "false";
+                setSelectedButtons(updatedButtons);
+              }}
+              className={`bg-blue-500 text-white py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "false" ? "bg-red-500" : ""
+              }`}
+            >
+              Faux
+            </button>            
               </div>
             </div>
           );

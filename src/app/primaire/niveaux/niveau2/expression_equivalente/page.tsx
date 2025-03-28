@@ -175,26 +175,29 @@ return (
               </p>
               <div className="flex gap-4 justify-center">
               <button
-  onClick={() => {
-    const updatedButtons = [...selectedButtons];  // Copiez le tableau existant
-    updatedButtons[questionIndex] = "true";  // Mettez à jour l'élément spécifique
-    setSelectedButtons(updatedButtons);  // Mettez à jour l'état
-  }}
-  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
->
-  Vrai
-</button>
-<button
-  onClick={() => {
-    const updatedButtons = [...selectedButtons]; 
-    updatedButtons[questionIndex] = "false";  
-    setSelectedButtons(updatedButtons); 
-  }}
-  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
->
-  Faux
-</button>
-
+              onClick={() => {
+                const updatedButtons = [...selectedButtons];
+                updatedButtons[questionIndex] = "true";
+                setSelectedButtons(updatedButtons);
+              }}
+              className={`bg-blue-500 text-white py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "true" ? "bg-green-500" : ""
+              }`}
+            >
+              Vrai
+            </button>
+            <button
+              onClick={() => {
+                const updatedButtons = [...selectedButtons];
+                updatedButtons[questionIndex] = "false";
+                setSelectedButtons(updatedButtons);
+              }}
+              className={`bg-blue-500 text-white py-2 px-4 rounded font-bold ${
+                selectedButtons[questionIndex] === "false" ? "bg-red-500" : ""
+              }`}
+            >
+              Faux
+            </button>            
               </div>
             </div>
           );
