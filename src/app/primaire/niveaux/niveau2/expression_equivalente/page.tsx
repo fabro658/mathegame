@@ -109,16 +109,17 @@ export default function EquationsEquivalentes() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
-
+  
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
+      setFeedbackMessage(null); // Réinitialiser le message de feedback
     }
   };
+  
 
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
