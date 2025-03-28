@@ -17,7 +17,7 @@ export default function Perimetre() {
 
   const generateQuestions = (total: number) => {
     return Array.from({ length: total }, () => {
-      const shapeType = Math.floor(Math.random() * 5);
+      const shapeType = Math.floor(Math.random() * 7);
       let questionText = "";
       let correctAnswer = 0;
 
@@ -36,10 +36,22 @@ export default function Perimetre() {
         const side3 = Math.floor(Math.random() * 10) + 1;
         questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1}, ${side2}, ${side3} cm ?`;
         correctAnswer = side1 + side2 + side3;
-      } else {
+      } else if (shapeType === 3) {
         const side = Math.floor(Math.random() * 10) + 1;
         questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
         correctAnswer = 4 * side;
+      } else if (shapeType === 4) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un pentagone régulier de côté ${side} cm ?`;
+        correctAnswer = 5 * side;
+      } else if (shapeType === 5) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un hexagone régulier de côté ${side} cm ?`;
+        correctAnswer = 6 * side;
+      } else {
+        const diameter = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre (circonférence) d'un cercle de diamètre ${diameter} cm ?`;
+        correctAnswer = Math.PI * diameter;
       }
 
       return {
@@ -53,15 +65,11 @@ export default function Perimetre() {
     setQuestions(generateQuestions(totalQuestions));
   }, []);
 
-  const calculateCompletion = (answers: (string | null)[], total: number) => {
-    return Math.round((answers.filter(answer => answer !== null && answer !== "").length / total) * 100);
-  };
+  const completionPercentage = Math.round((answers.filter(answer => answer !== null && answer !== "").length / totalQuestions) * 100);
 
-  const completionPercentage = calculateCompletion(answers, totalQuestions);
-
-  const handleChange = (index: number, value: string): void => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = value.trim() !== "" ? value : null;
     setAnswers(newAnswers);
     setFeedbackMessage(null);
   };
@@ -76,12 +84,12 @@ export default function Perimetre() {
       return;
     }
 
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => parseFloat(q.correctAnswer));
     const updatedAnswers = [...answers];
 
     let allCorrect = true;
     pageAnswers.forEach((answer, index) => {
-      if (parseFloat(answer || "0") !== parseFloat(pageCorrectAnswers[index])) {
+      if (parseFloat(answer || "0") !== pageCorrectAnswers[index]) {
         updatedAnswers[startIndex + index] = null;
         allCorrect = false;
       }
@@ -90,12 +98,11 @@ export default function Perimetre() {
     setAnswers(updatedAnswers);
 
     if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses sont correctes !");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-        setTimeout(() => {
-          setCurrentPage(currentPage + 1);
-          setFeedbackMessage(null);
-        }, 1500);
+        setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
@@ -147,29 +154,11 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {feedbackMessage && (
-        <p className={`text-xl mb-4 text-center ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"}`}>
-          {feedbackMessage}
-        </p>
-      )}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>}
 
-      <div className="flex flex-col gap-4">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-            <div className="font-bold text-black">{questionText}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
       </div>
     </div>
