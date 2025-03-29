@@ -162,24 +162,33 @@ export default function EquationsEquivalentes() {
             <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
               <p className="text-lg font-bold mb-4">{equationLeft} = {equationRight}</p>
               <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => {
-                    setFeedbackMessage(null);
-                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
-                  }}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => {
-                    setFeedbackMessage(null);
-                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
-                  }}
-                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
-                >
-                  Faux
-                </button>
+              <button
+  onClick={() => {
+    setFeedbackMessage(null);
+    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
+  }}
+  className={`w-32 py-2 px-4 rounded font-bold ${
+    selectedButtons[questionIndex] === "true"
+      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
+      : "bg-blue-500"
+  } text-white`}
+>
+  Vrai
+</button>
+<button
+  onClick={() => {
+    setFeedbackMessage(null);
+    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
+  }}
+  className={`w-32 py-2 px-4 rounded font-bold ${
+    selectedButtons[questionIndex] === "false"
+      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
+      : "bg-blue-500"
+  } text-white`}
+>
+  Faux
+</button>
+
               </div>
             </div>
           );
