@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -10,11 +10,13 @@ export default function EquationsEquivalentes() {
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
+
   const [questions, setQuestions] = useState<{ equationLeft: string; equationRight: string; isEquivalent: boolean }[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>(Array(totalQuestions).fill(""));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); 
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
+  const [completedAnswers, setCompletedAnswers] = useState(0);
 
   const generateEquation = (level: number) => {
     const operations = ["+", "-"];
@@ -69,16 +71,6 @@ export default function EquationsEquivalentes() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleChange = (index: number, value: string) => {
-    const newAnswers = [...selectedButtons];
-    const parsedValue = parseInt(value);  
-    newAnswers[index] = isNaN(parsedValue) ? "" : String(parsedValue);  // Si NaN, assigne une chaîne vide, sinon assigne la valeur sous forme de chaîne
-    setSelectedButtons(newAnswers);
-    setFeedbackMessage(null); // Réinitialiser les messages de feedback
-  };
-  
-  
-
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -90,62 +82,52 @@ export default function EquationsEquivalentes() {
     }
 
     let hasError = false;
-    const newAnswers = [...selectedButtons];
-    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
-    
+    const incorrect: number[] = [];
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
       if (!isCorrect) {
-        newAnswers[globalIndex] = ""; // Réinitialiser seulement les mauvaises réponses à une chaîne vide
         incorrect.push(globalIndex);
         hasError = true;
       }
     });
-    
 
-    setSelectedButtons(newAnswers);
-    setIncorrectAnswers(incorrect); //
+    setIncorrectAnswers(incorrect);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes!");
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
       setCurrentPage(currentPage + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
+
+    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
-  const completedAnswers = selectedButtons.filter((selectedButtons) => selectedButtons !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
+      <Link href="/menu/apprendre/opérations arithmétiques" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link
-        href="/primaire/niveaux/niveau2"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
+      <Link href="/primaire/niveaux/niveau2" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -171,71 +153,43 @@ export default function EquationsEquivalentes() {
 
       <h1 className="text-4xl font-bold mb-6">Équations équivalentes</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses")
-              ? "text-red-500" // Applique la couleur rouge
-              : feedbackMessage.includes("incorrectes")
-              ? "text-red-500" // Applique la couleur rouge pour les erreurs
-              : "text-green-500"
-          } text-center`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
+      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>}
 
-<div className="grid grid-cols-2 gap-6 mb-6">
-  {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
-    const questionIndex = currentPage * questionsPerPage + index;
-    return (
-      <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-        <p className="text-lg font-bold mb-4">
-          {equationLeft} = {equationRight}
-        </p>
-
-        <div className="flex gap-4 justify-center">
-          {/* Champ de saisie pour changer la réponse */}
-          <input
-            type="text"
-            value={selectedButtons[questionIndex] || ""}
-            onChange={(e) => handleChange(questionIndex, e.target.value)} // Utilisation de handleChange ici
-            className="w-32 py-2 px-4 rounded border border-gray-300 text-center"
-          />
-
-          {/* Boutons "Vrai" et "Faux" */}
-          <button
-            onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)))}
-            className={`w-32 py-2 px-4 rounded font-bold ${
-              selectedButtons[questionIndex] === "true"
-                ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-                : "bg-blue-500"
-            } text-white`}
-          >
-            Vrai
-          </button>
-          <button
-            onClick={() => setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)))}
-            className={`w-32 py-2 px-4 rounded font-bold ${
-              selectedButtons[questionIndex] === "false"
-                ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-                : "bg-blue-500"
-            } text-white`}
-          >
-            Faux
-          </button>
-        </div>
+      <div className="grid grid-cols-2 gap-6 mb-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
+          const questionIndex = currentPage * questionsPerPage + index;
+          return (
+            <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
+              <p className="text-lg font-bold mb-4">{equationLeft} = {equationRight}</p>
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
+                  }}
+                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
+                >
+                  Vrai
+                </button>
+                <button
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
+                  }}
+                  className="bg-blue-500 text-white py-2 px-4 rounded font-bold"
+                >
+                  Faux
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
-
 
       <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
