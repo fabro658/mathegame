@@ -156,6 +156,23 @@ export default function Perimetre() {
 
       {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>}
 
+{questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
+  const globalIndex = currentPage * questionsPerPage + index;
+  return (
+    <div key={globalIndex} className="mb-4">
+      <p className="text-lg font-medium">{q.questionText}</p>
+      <input
+        type="text"
+        value={answers[globalIndex] || ""}
+        onChange={(e) => handleChange(globalIndex, e.target.value)}
+        className="border p-2 w-full mt-2"
+      />
+    </div>
+  );
+})}
+
+
+
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
