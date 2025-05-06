@@ -2,35 +2,30 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import "../globals.css";
+import React, { useMemo } from "react";
+
+// Liste de positions fixes pour les arbres
+const fixedPositions = [
+  { left: "5vw", bottom: "0px", isLarge: false },
+  { left: "20vw", bottom: "0px", isLarge: true },
+  { left: "35vw", bottom: "0px", isLarge: false },
+  { left: "50vw", bottom: "0px", isLarge: true },
+  { left: "65vw", bottom: "0px", isLarge: false },
+  { left: "80vw", bottom: "0px", isLarge: false },
+  { left: "10vw", bottom: "0px", isLarge: true },
+  { left: "25vw", bottom: "0px", isLarge: false },
+  { left: "40vw", bottom: "0px", isLarge: false },
+  { left: "55vw", bottom: "0px", isLarge: true },
+];
 
 export default function Primaire() {
-  useEffect(() => {
-    const snowContainer = document.querySelector(".snowfall");
-    console.log("Snow container:", snowContainer);
+  // Générer les arbres avec les positions fixes
+  const trees = useMemo(() => fixedPositions, []); // Utilisation des positions fixes
 
-    if (snowContainer) {
-      for (let i = 0; i < 100; i++) {
-        const snowflake = document.createElement("li");
-        snowflake.style.left = `${Math.random() * 100}%`;
-        snowflake.style.top = `-10px`; // Start above the viewport
-        const size = Math.random() * 10 + 5;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Increased delay range for more progressive start
-        snowContainer.appendChild(snowflake);
-        console.log("Snowflake added:", snowflake);
-      }
-    }
-  }, []);
-    return (
-      <div
-        className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, #142852, #0e022e)",
-        }}
-      >
 
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -83,8 +78,28 @@ export default function Primaire() {
           </div>
         </Link> 
       </div>
-            {/* Animation de neige */}
-            <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
+
+
+      {/* Arbres */}
+      {trees.map((tree, index) => (
+        <div
+          key={index}
+          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree pour les grands arbres
+          style={{
+            left: tree.left,
+            bottom: tree.bottom, // Positionner tous les arbres au bas de l'écran
+          }}
+        >
+          <div className="tree__5"></div>
+          <div className="tree__1"></div>
+          <div className="tree__2"></div>
+          <div className="tree__3"></div>
+          <div className="tree__4"></div>
+        </div>
+      ))}
+
+      {/* Herbe */}
+      <div id="grass"></div>
     </div>
   );
 }
