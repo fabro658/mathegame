@@ -41,35 +41,34 @@ export default function Primaire() {
           Choisis un sujet!
         </h2>
       </div>
-
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-20">
-        <Link href="/secondaire/niveaux/niveau1">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Arithmétique
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau2">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Fractions
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau3">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Probabilités
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau4">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Géométrie
-          </div>
-        </Link>
-        <Link href="/secondaire/niveaux/niveau5">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
-            Algèbre
-          </div>
-        </Link>
-      </div>
+<div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-20">
+  <Link href="/secondaire/niveaux/niveau1">
+    <div className="w-full rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 text-xl font-semibold py-4 px-6 text-center shadow-lg">
+      Arithmétique
+    </div>
+  </Link>
+  <Link href="/secondaire/niveaux/niveau2">
+    <div className="w-full rounded-lg bg-orange-500 text-white hover:bg-orange-600 text-xl font-semibold py-4 px-6 text-center shadow-lg">
+      Fractions
+    </div>
+  </Link>
+  <Link href="/secondaire/niveaux/niveau3">
+    <div className="w-full rounded-lg bg-red-500 text-white hover:bg-red-600 text-xl font-semibold py-4 px-6 text-center shadow-lg">
+      Probabilités
+    </div>
+  </Link>
+  <Link href="/secondaire/niveaux/niveau4">
+    <div className="w-full rounded-lg bg-blue-700 text-white hover:bg-blue-800 text-xl font-semibold py-4 px-6 text-center shadow-lg">
+      Géométrie
+    </div>
+  </Link>
+  <Link href="/secondaire/niveaux/niveau5">
+    <div className="w-full rounded-lg bg-green-600 text-white hover:bg-green-700 text-xl font-semibold py-4 px-6 text-center shadow-lg">
+      Algèbre
+    </div>
+  </Link>
+</div>
 
       {/* Arbres */}
       {trees.map((tree, index) => (
