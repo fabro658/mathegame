@@ -1,28 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
+import "../globals.css";
+import React, { useMemo } from "react";
 
-export default function Secondaire() {
-  useEffect(() => {
-    const snowContainer = document.querySelector(".snowfall");
-    console.log("Snow container:", snowContainer);
+// Liste de positions fixes pour les arbres
+const fixedPositions = [
+  { left: "5vw", bottom: "0px", isLarge: false },
+  { left: "20vw", bottom: "0px", isLarge: true },
+  { left: "35vw", bottom: "0px", isLarge: false },
+  { left: "50vw", bottom: "0px", isLarge: true },
+  { left: "65vw", bottom: "0px", isLarge: false },
+  { left: "80vw", bottom: "0px", isLarge: false },
+  { left: "10vw", bottom: "0px", isLarge: true },
+  { left: "25vw", bottom: "0px", isLarge: false },
+  { left: "40vw", bottom: "0px", isLarge: false },
+  { left: "55vw", bottom: "0px", isLarge: true },
+];
 
-    if (snowContainer) {
-      for (let i = 0; i < 100; i++) {
-        const snowflake = document.createElement("li");
-        snowflake.style.left = `${Math.random() * 100}%`;
-        snowflake.style.top = `-10px`; // Start above the viewport
-        const size = Math.random() * 10 + 5;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-        snowflake.style.animationDelay = `${Math.random() * 20}s`; // Increased delay range for more progressive start
-        snowContainer.appendChild(snowflake);
-        console.log("Snowflake added:", snowflake);
-      }
-    }
-  }, []);
+export default function Primaire() {
+  // Générer les arbres avec les positions fixes
+  const trees = useMemo(() => fixedPositions, []); // Utilisation des positions fixes
+
 
   return (
     <div
@@ -51,7 +50,7 @@ export default function Secondaire() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-0">
+      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-20">
         <Link href="/secondaire/niveaux/niveau1">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72">
             Arithmétique
@@ -78,9 +77,27 @@ export default function Secondaire() {
           </div>
         </Link>
       </div>
+      
+      {/* Arbres */}
+{trees.map((tree, index) => (
+        <div
+          key={index}
+          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree pour les grands arbres
+          style={{
+            left: tree.left,
+            bottom: tree.bottom, // Positionner tous les arbres au bas de l'écran
+          }}
+        >
+          <div className="tree__5"></div>
+          <div className="tree__1"></div>
+          <div className="tree__2"></div>
+          <div className="tree__3"></div>
+          <div className="tree__4"></div>
+        </div>
+      ))}
 
-      {/* Animation de neige */}
-      <ul className="snowfall absolute inset-0 pointer-events-none"></ul>
+      {/* Herbe */}
+      <div id="grass"></div>
     </div>
   );
 }
