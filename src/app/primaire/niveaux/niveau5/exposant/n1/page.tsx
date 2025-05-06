@@ -21,8 +21,8 @@ export default function Niveau1() {
 
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        const base = 2;
-        const exponent = Math.floor(Math.random() * 10); // 0 à 9
+        const base = Math.floor(Math.random() * 11);      // 0 à 10 inclus
+        const exponent = Math.floor(Math.random() * 5);   // 0 à 4 inclus        
         const exponentStr = exponent.toString().split("").map(d => superscriptMap[parseInt(d)]).join("");
         const questionText = `Que vaut ${base}${exponentStr} ?`;
         const correctAnswer = Math.pow(base, exponent).toString();
