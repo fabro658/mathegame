@@ -19,17 +19,10 @@ const fixedPositions = [
 ];
 
 export default function Primaire() {
-  // Générer les arbres avec les positions fixes
-  const trees = useMemo(() => fixedPositions, []); // Utilisation des positions fixes
-
+  const trees = useMemo(() => fixedPositions, []);
 
   return (
-    <div
-      className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, #142852, #0e022e)",
-      }}
-    >
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative">
       {/* Bouton Retour */}
       <Link
         href="/"
@@ -77,15 +70,15 @@ export default function Primaire() {
           </div>
         </Link>
       </div>
-      
+
       {/* Arbres */}
-{trees.map((tree, index) => (
+      {trees.map((tree, index) => (
         <div
           key={index}
-          className={`tree ${tree.isLarge ? "large-tree" : ""}`} // Appliquer la classe large-tree pour les grands arbres
+          className={`tree ${tree.isLarge ? "large-tree" : ""}`}
           style={{
             left: tree.left,
-            bottom: tree.bottom, // Positionner tous les arbres au bas de l'écran
+            bottom: tree.bottom,
           }}
         >
           <div className="tree__5"></div>
