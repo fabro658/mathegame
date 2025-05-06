@@ -85,7 +85,9 @@ export default function EquationsEquivalentes() {
     const incorrect: number[] = [];
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const isCorrect = (answer === "true" && questions[globalIndex].isEquivalent) || (answer === "false" && !questions[globalIndex].isEquivalent);
+      const isCorrect =
+        (answer === "true" && questions[globalIndex].isEquivalent) ||
+        (answer === "false" && !questions[globalIndex].isEquivalent);
       if (!isCorrect) {
         incorrect.push(globalIndex);
         hasError = true;
@@ -103,7 +105,7 @@ export default function EquationsEquivalentes() {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
 
-    setCompletedAnswers(selectedButtons.filter(answer => answer !== "").length);
+    setCompletedAnswers(selectedButtons.filter((answer) => answer !== "").length);
   };
 
   const handleNextPage = () => {
@@ -153,42 +155,57 @@ export default function EquationsEquivalentes() {
 
       <h1 className="text-4xl font-bold mb-6">Équations équivalentes</h1>
 
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("Veuillez répondre")
+              ? "text-red-500"
+              : "text-green-500"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
       <div className="grid grid-cols-2 gap-6 mb-6">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
           const questionIndex = currentPage * questionsPerPage + index;
           return (
             <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-              <p className="text-lg font-bold mb-4">{equationLeft} = {equationRight}</p>
+              <p className="text-lg font-bold mb-4">
+                {equationLeft} = {equationRight}
+              </p>
               <div className="flex gap-4 justify-center">
-              <button
-  onClick={() => {
-    setFeedbackMessage(null);
-    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
-  }}
-  className={`w-32 py-2 px-4 rounded font-bold ${
-    selectedButtons[questionIndex] === "true"
-      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-      : "bg-blue-500"
-  } text-white`}
->
-  Vrai
-</button>
-<button
-  onClick={() => {
-    setFeedbackMessage(null);
-    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
-  }}
-  className={`w-32 py-2 px-4 rounded font-bold ${
-    selectedButtons[questionIndex] === "false"
-      ? incorrectAnswers.includes(questionIndex) ? "bg-red-500" : "bg-orange-500"
-      : "bg-blue-500"
-  } text-white`}
->
-  Faux
-</button>
-
+                <button
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
+                  }}
+                  className={`w-32 py-2 px-4 rounded font-bold ${
+                    selectedButtons[questionIndex] === "true"
+                      ? incorrectAnswers.includes(questionIndex)
+                        ? "bg-red-500"
+                        : "bg-orange-500"
+                      : "bg-blue-500"
+                  } text-white`}
+                >
+                  Vrai
+                </button>
+                <button
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
+                  }}
+                  className={`w-32 py-2 px-4 rounded font-bold ${
+                    selectedButtons[questionIndex] === "false"
+                      ? incorrectAnswers.includes(questionIndex)
+                        ? "bg-red-500"
+                        : "bg-orange-500"
+                      : "bg-blue-500"
+                  } text-white`}
+                >
+                  Faux
+                </button>
               </div>
             </div>
           );
@@ -196,9 +213,15 @@ export default function EquationsEquivalentes() {
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
+          Précédent
+        </button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Valider
+        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Suivant
+        </button>
       </div>
     </div>
   );
