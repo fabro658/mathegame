@@ -15,35 +15,30 @@ export default function Division() {
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  useEffect(() => {
-    const generateQuestions = (): [number, number][] => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        let denominator: number, numerator: number, quotient: number;
+  const generateQuestions = (): [number, number][] => {
+    return Array.from({ length: totalQuestions }, (_, index) => {
+      let denominator: number, quotient: number;
   
-        if (index < 10) {
-          denominator = Math.floor(Math.random() * 10) + 1; // 1 to 10
-          quotient = Math.floor(Math.random() * 10) + 1;     // 1 to 10
-        } else if (index < 20) {
-          denominator = Math.floor(Math.random() * 10) + 1;  // 1 to 10
-          quotient = Math.floor(Math.random() * 20) + 1;     // 1 to 20
-        } else if (index < 30) {
-          denominator = Math.floor(Math.random() * 20) + 1;  // 1 to 20
-          quotient = Math.floor(Math.random() * 10) + 1;     // 1 to 10
-        } else {
-          denominator = Math.floor(Math.random() * 50) + 1;  // 1 to 50
-          quotient = Math.floor(Math.random() * 5) + 1;      // 1 to 5
-        }
+      if (index < 10) {
+        denominator = Math.floor(Math.random() * 10) + 1;
+        quotient = Math.floor(Math.random() * 10) + 1;
+      } else if (index < 20) {
+        denominator = Math.floor(Math.random() * 10) + 1;
+        quotient = Math.floor(Math.random() * 20) + 1;
+      } else if (index < 30) {
+        denominator = Math.floor(Math.random() * 20) + 1;
+        quotient = Math.floor(Math.random() * 10) + 1;
+      } else {
+        denominator = Math.floor(Math.random() * 50) + 1;
+        quotient = Math.floor(Math.random() * 5) + 1;
+      }
   
-        numerator = denominator * quotient;
+      const numerator = denominator * quotient;
   
-        return [numerator, denominator];
-      });
-    };
+      return [numerator, denominator];
+    });
+  };  
   
-    setQuestions(generateQuestions());
-  }, []);
-  
-
   const correctAnswers = questions.map(([numerator, denominator]) => numerator / denominator);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
