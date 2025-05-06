@@ -18,19 +18,28 @@ export default function PrioOperation() {
 
   // Génération des questions avec des exposants croissants pour 2^n
   useEffect(() => {
+    const superscriptMap = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"];
+  
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, () => {
-        const exponent = Math.floor(Math.random() * 11);  // Exposant entre 0 et 10
-        const base = 2;  // Base de l'opération
-        const questionText = `Que vaut ${base}<sup>${exponent}</sup> ?`;  // Formater avec <sup> pour exposant
+        const exponent = Math.floor(Math.random() * 10); // 0 à 9
+        const base = 2;
+  
+        // Convertir l'exposant en caractères Unicode
+        const exponentStr = exponent.toString().split("")
+          .map((digit) => superscriptMap[parseInt(digit)])
+          .join("");
+  
+        const questionText = `Que vaut ${base}${exponentStr} ?`;
         const correctAnswer = Math.pow(base, exponent).toString();
-        
+  
         return { questionText, correctAnswer };
       });
     };
   
     setQuestions(generateQuestions());
   }, []);
+  
   
   
 
