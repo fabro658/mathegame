@@ -139,21 +139,21 @@ body {
   --graygreen: #303b2b;
 }
 
-/* Style de l'arbre */
+/* Style des  l'arbres */
 .tree {
   position: absolute;
-  bottom: 0; /* Positionne les arbres au bas de l'écran */
+  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Grande catégorie d'arbres (plus grands, pas plus larges) */
+/* Agrandissement vertical pour les grands arbres */
 .tree.large-tree .tree__1,
 .tree.large-tree .tree__2,
 .tree.large-tree .tree__3,
 .tree.large-tree .tree__4 {
-  transform: scaleY(1.5); /* Agrandir seulement en hauteur */
+  transform: scaleY(1.5);
 }
 
 /* Branches de l'arbre */
@@ -164,45 +164,49 @@ body {
   width: 0;
   height: 0;
   border-radius: 10%;
+  position: relative;
+  z-index: 1; /* Branches au-dessus du tronc */
 }
 
-/* Petite branche (supérieure) */
+/* Petite branche du haut */
 .tree__5 {
   border: 20px solid transparent;
   border-bottom: 25px solid var(--tan);
 }
 
-/* Première couche */
+/* Première couche de branche */
 .tree__1 {
   border: 45px solid transparent;
   border-bottom: 50px solid var(--green2);
   margin-top: -60px;
 }
 
-/* Deuxième couche */
+/* Deuxième couche de branche */
 .tree__2 {
   border: 60px solid transparent;
   border-bottom: 65px solid var(--brightgreen);
   margin-top: -80px;
 }
 
-/* Troisième couche */
+/* Troisième couche de branche */
 .tree__3 {
   border: 70px solid transparent;
   border-bottom: 80px solid var(--graygreen);
   margin-top: -100px;
 }
 
-/* Tronc de l'arbre (allongé pour certains arbres) */
+/* Tronc de l'arbre */
 .tree__4 {
   width: 10px;
-  height: 100px; /* Troncs allongés */
+  height: 100px;
   background: var(--brown);
+  position: relative;
+  z-index: 0; /* Tronc derrière les branches */
 }
 
-/* Troncs allongés pour les arbres plus grands */
+/* Tronc plus long pour les grands arbres */
 .tree.large-tree .tree__4 {
-  height: 150px; /* Troncs plus grands */
+  height: 150px;
 }
 
 /* Herbe au sol */
@@ -212,4 +216,5 @@ body {
   bottom: 0;
   width: 100vw;
   height: 40px;
+  z-index: 2; /* S'assure que l'herbe est au-dessus des arbres, si voulu */
 }
