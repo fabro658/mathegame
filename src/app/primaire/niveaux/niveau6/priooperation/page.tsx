@@ -16,40 +16,58 @@ export default function PrioOperation() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Génération des questions
   useEffect(() => {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
-        let base, exponent, questionText, correctAnswer;
-
-        // Niveau 1 : Simple et progressif
+        let questionText = "", correctAnswer = "";
+  
+        // Priorité d'opération - Niveau 1 (index < 10)
         if (index < 10) {
-          base = 2; // Base fixe
-          exponent = index + 1; // Exposants croissants de 1 à 10
-          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
-          correctAnswer = Math.pow(base, exponent).toString();
+          const questionType = index % 5;
+          switch (questionType) {
+            case 0:
+              questionText = "Que vaut 2 + 3 × 4 ?";
+              correctAnswer = (2 + 3 * 4).toString(); // 14
+              break;
+            case 1:
+              questionText = "Que vaut (2 + 3) × 4 ?";
+              correctAnswer = ((2 + 3) * 4).toString(); // 20
+              break;
+            case 2:
+              questionText = "Que vaut 2 × 3 + 4 ?";
+              correctAnswer = (2 * 3 + 4).toString(); // 10
+              break;
+            case 3:
+              questionText = "Que vaut 2 + 3 ^ 2 ?";
+              correctAnswer = (2 + Math.pow(3, 2)).toString(); // 11
+              break;
+            case 4:
+              questionText = "Que vaut (2 + 3) ^ 2 ?";
+              correctAnswer = (Math.pow((2 + 3), 2)).toString(); // 25
+              break;
+          }
         } else {
-          // Niveau supérieur : Diversité
-          base = Math.floor(Math.random() * 6) + 2;
-          exponent = Math.floor(Math.random() * 3) + 1;
-
+          // Niveau supérieur : puissances simples ou avec parenthèses
+          let base = Math.floor(Math.random() * 6) + 2;
+          let exponent = Math.floor(Math.random() * 3) + 1;
+  
           questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
           correctAnswer = Math.pow(base, exponent).toString();
-
-          // Ajout de parenthèses ou bases plus complexes après la 15ᵉ question
+  
           if (index >= 15 && Math.random() > 0.5) {
             const baseAlt = base + Math.floor(Math.random() * 4) + 1;
             questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
             correctAnswer = Math.pow(baseAlt, exponent).toString();
           }
         }
-
+  
         return { questionText, correctAnswer };
       });
     };
-
+  
     setQuestions(generateQuestions());
   }, []);
+  
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
