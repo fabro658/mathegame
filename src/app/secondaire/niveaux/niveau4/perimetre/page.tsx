@@ -12,10 +12,9 @@ export default function Perimetre() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Générer de nouvelles questions
-  const generateQuestions = () => {
-    return Array.from({ length: totalQuestions }, () => {
-      const shapeType = Math.floor(Math.random() * 5);
+  const generateQuestions = (total: number) => {
+    return Array.from({ length: total }, () => {
+      const shapeType = Math.floor(Math.random() * 7);
       let questionText = "";
       let correctAnswer = 0;
 
@@ -26,27 +25,27 @@ export default function Perimetre() {
       } else if (shapeType === 1) {
         const length = Math.floor(Math.random() * 10) + 1;
         const width = Math.floor(Math.random() * 10) + 1;
-        questionText = `Quel est le périmètre d'un rectangle de longueur ${length} cm et de largeur ${width} cm ?`;
+        questionText = `Quel est le périmètre d'un rectangle de ${length} cm x ${width} cm ?`;
         correctAnswer = 2 * (length + width);
       } else if (shapeType === 2) {
         const side1 = Math.floor(Math.random() * 10) + 1;
         const side2 = Math.floor(Math.random() * 10) + 1;
         const side3 = Math.floor(Math.random() * 10) + 1;
-        questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1} cm, ${side2} cm et ${side3} cm ?`;
+        questionText = `Quel est le périmètre d'un triangle avec des côtés de ${side1}, ${side2}, ${side3} cm ?`;
         correctAnswer = side1 + side2 + side3;
       } else if (shapeType === 3) {
         const side = Math.floor(Math.random() * 10) + 1;
         questionText = `Quel est le périmètre d'un losange de côté ${side} cm ?`;
         correctAnswer = 4 * side;
-      } else {
-        const side1 = Math.floor(Math.random() * 10) + 1;
-        const side2 = Math.floor(Math.random() * 10) + 1;
-        const side3 = Math.floor(Math.random() * 10) + 1;
-        const side4 = Math.floor(Math.random() * 10) + 1;
-        questionText = `Quel est le périmètre d'un trapèze avec des côtés de ${side1} cm, ${side2} cm, ${side3} cm et ${side4} cm ?`;
-        correctAnswer = side1 + side2 + side3 + side4;
+      } else if (shapeType === 4) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un pentagone régulier de côté ${side} cm ?`;
+        correctAnswer = 5 * side;
+      } else if (shapeType === 5) {
+        const side = Math.floor(Math.random() * 10) + 1;
+        questionText = `Quel est le périmètre d'un hexagone régulier de côté ${side} cm ?`;
+        correctAnswer = 6 * side;
       }
-
       return {
         questionText,
         correctAnswer: correctAnswer.toFixed(2),
@@ -54,9 +53,8 @@ export default function Perimetre() {
     });
   };
 
-  // Charger les questions initiales
   useEffect(() => {
-    setQuestions(generateQuestions());
+    setQuestions(generateQuestions(totalQuestions));
   }, []);
 
   const completedAnswers = answers.filter((answer) => answer !== null && answer !== "").length;
