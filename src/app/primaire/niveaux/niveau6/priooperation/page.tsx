@@ -48,8 +48,8 @@ export default function PrioOperation() {
           }
         } else {
           // Niveau supérieur : puissances simples ou avec parenthèses
-          let base = Math.floor(Math.random() * 6) + 2;
-          let exponent = Math.floor(Math.random() * 3) + 1;
+          const base = Math.floor(Math.random() * 6) + 2;
+          const exponent = Math.floor(Math.random() * 3) + 1;          
   
           questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
           correctAnswer = Math.pow(base, exponent).toString();
