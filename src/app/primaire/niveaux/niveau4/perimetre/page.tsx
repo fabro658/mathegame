@@ -57,7 +57,6 @@ export default function Perimetre() {
     });
   };
 
-
   // Charger les questions initiales
   useEffect(() => {setQuestions(generateQuestions());
   }, []);
