@@ -20,7 +20,7 @@ export default function PrioOperation() {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
         let questionText = "", correctAnswer = "";
-  
+
         // Priorité d'opération - Niveau 1 (index < 10)
         if (index < 10) {
           const questionType = index % 5;
@@ -38,43 +38,50 @@ export default function PrioOperation() {
               correctAnswer = (2 * 3 + 4).toString(); // 10
               break;
             case 3:
-              questionText = "Que vaut 2 + 3 ^ 2 ?";
-              correctAnswer = (2 + Math.pow(3, 2)).toString(); // 11
+              questionText = "Que vaut 6 - 2 × 3 ?";
+              correctAnswer = (6 - 2 * 3).toString(); // 0
               break;
             case 4:
-              questionText = "Que vaut (2 + 3) ^ 2 ?";
-              correctAnswer = (Math.pow((2 + 3), 2)).toString(); // 25
+              questionText = "Que vaut (6 - 2) × 3 ?";
+              correctAnswer = ((6 - 2) * 3).toString(); // 12
               break;
           }
         } else {
-          // Niveau supérieur : puissances simples ou avec parenthèses
-          const base = Math.floor(Math.random() * 6) + 2;
-          const exponent = Math.floor(Math.random() * 3) + 1;          
-  
-          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
-          correctAnswer = Math.pow(base, exponent).toString();
-  
-          if (index >= 15 && Math.random() > 0.5) {
-            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
-            correctAnswer = Math.pow(baseAlt, exponent).toString();
+          // Questions plus avancées
+          if (index < 20) {
+            // Sans exposants
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            questionText = `Que vaut ${a} + ${b} × 2 ?`;
+            correctAnswer = (a + b * 2).toString();
+          } else {
+            // Avec exposants
+            const base = Math.floor(Math.random() * 6) + 2;
+            const exponent = Math.floor(Math.random() * 3) + 1;
+            questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+            correctAnswer = Math.pow(base, exponent).toString();
+
+            if (Math.random() > 0.5) {
+              const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+              questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+              correctAnswer = Math.pow(baseAlt, exponent).toString();
+            }
           }
         }
-  
+
         return { questionText, correctAnswer };
       });
     };
-  
+
     setQuestions(generateQuestions());
   }, []);
-  
 
   // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
-    setFeedbackMessage(null); // Réinitialiser le message de feedback
+    setFeedbackMessage(null);
   };
 
   // Validation des réponses
@@ -107,7 +114,15 @@ export default function PrioOperation() {
     setIncorrectAnswers(newIncorrectAnswers);
 
     if (allCorrect) {
-      setFeedbackMessage("Toutes les réponses sont correctes !");
+      const nextPage = currentPage + 1;
+      if (nextPage < totalQuestions / questionsPerPage) {
+        setCurrentPage(nextPage);
+        setFeedbackMessage("Toutes les réponses sont correctes !");
+      } else {
+        setAnswers(Array(totalQuestions).fill(null));
+        setIncorrectAnswers([]);
+        setFeedbackMessage(" Félicitations ! Vous avez complété toutes les questions !");
+      }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
     }
@@ -187,6 +202,7 @@ export default function PrioOperation() {
           );
         })}
       </div>
+
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
