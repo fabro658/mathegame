@@ -9,8 +9,6 @@ const CarreIllustration = () => (
     <svg width="200" height="200">
       <rect x="40" y="40" width="120" height="120" stroke="black" fill="none" strokeWidth="2" />
       <text x="100" y="30" textAnchor="middle" fontSize="14">4 cm</text>
-      <text x="100" y="185" textAnchor="middle" fontSize="14">4 cm</text>
-      <text x="25" y="110" textAnchor="middle" fontSize="14" transform="rotate(-90 25,110)">4 cm</text>
       <text x="175" y="110" textAnchor="middle" fontSize="14" transform="rotate(90 175,110)">4 cm</text>
     </svg>
     <p className="mt-4 font-bold text-center">L&rsquo;aire du carré est le produit de sa base et de sa hauteur :<br />4 × 4 = 16cm²</p>
@@ -22,9 +20,7 @@ const RectangleIllustration = () => (
     <svg width="250" height="150">
       <rect x="50" y="30" width="150" height="80" stroke="black" fill="none" strokeWidth="2" />
       <text x="125" y="20" textAnchor="middle" fontSize="14">15 cm</text>
-      <text x="125" y="130" textAnchor="middle" fontSize="14">15 cm</text>
       <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
-      <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
     </svg>
     <p className="mt-4 font-bold text-center">L&rsquo;aire du rectangle est le produit de sa base et de sa hauteur :<br />15 × 8 = 120 cm²</p>
   </div>
@@ -35,7 +31,7 @@ const TriangleIllustration = () => (
     <svg width="200" height="150">
       <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
-      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 40,70)">8 cm</text>
+      <text x="60" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 40,70)">8 cm</text>
     </svg>
     <p className="mt-4 font-bold text-center">L&rsquo;aire du triangle est le produit de sa base et de sa hauteur divisé par 2 :<br />(10 × 8)/2 = 40 cm²</p>
   </div>
