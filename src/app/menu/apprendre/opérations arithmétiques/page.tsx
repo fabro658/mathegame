@@ -34,7 +34,7 @@ export default function AireLearning() {
       name: "Multiplication",
       description: "La multiplication est une opération mathématique qui consiste à multiplier deux nombres.",
       formula: "A × B",
-      example: "Si A = 4 et B = 6, la multiplication donne : 4 × 6 = 24",
+      example: "Si A = 3 et B = 4, la multiplication donne : 3 × 4 = 12",
       imageUrl:"/apprendre_multiplication.jpeg",
     },
     {
