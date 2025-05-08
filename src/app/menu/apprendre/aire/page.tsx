@@ -29,13 +29,24 @@ const RectangleIllustration = () => (
 const TriangleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="200" height="150">
+      {/* Triangle */}
       <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
+      {/* Ligne de hauteur */}
+      <line x1="100" y1="30" x2="100" y2="120" stroke="red" strokeWidth="2" strokeDasharray="4" />
+      {/* Mesures */}
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
-      <text x="60" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 40,70)">8 cm</text>
+      <text x="90" y="75" textAnchor="end" fontSize="14" fill="red">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">L&rsquo;aire du triangle est le produit de sa base et de sa hauteur divisé par 2 :<br />(10 × 8)/2 = 40 cm²</p>
+    <p className="mt-4 font-bold text-center">
+      L&rsquo;aire du triangle est :<br />
+      <span style={{ display: "inline-block", lineHeight: "1.6" }}>
+        <strong>(base × hauteur)</strong><br />÷ 2
+      </span><br />
+      (10 × 8) ÷ 2 = 40 cm²
+    </p>
   </div>
 );
+
 
 const CercleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
