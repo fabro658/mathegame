@@ -3,92 +3,56 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Définir le type pour la priorité d'opération
-interface Operation {
-  name: string;
-  description: string;
-  formula: string;
-  example: string;
-}
-
 export default function PrioriteOperation() {
-  const [selectedOperation, setSelectedOperation] = useState<Operation | null>(null);
-
-  const operations: Operation[] = [
-    {
-      name: "Addition",
-      description: "L'addition est une opération mathématique qui consiste à additionner deux nombres.",
-      formula: "A + B",
-      example: "Si A = 3 et B = 5, l'addition donne : 3 + 5 = 8",
-    },
-    {
-      name: "Soustraction",
-      description: "La soustraction est une opération mathématique qui consiste à soustraire un nombre d'un autre.",
-      formula: "A - B",
-      example: "Si A = 8 et B = 5, la soustraction donne : 8 - 5 = 3",
-    },
-    {
-      name: "Multiplication",
-      description: "La multiplication est une opération mathématique qui consiste à multiplier deux nombres.",
-      formula: "A × B",
-      example: "Si A = 4 et B = 6, la multiplication donne : 4 × 6 = 24",
-    },
-    {
-      name: "Division",
-      description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
-      formula: "A ÷ B",
-      example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
-    }
-  ];
-
-  const handleSelectOperation = (operation: Operation): void => {
-    setSelectedOperation(operation);
-  };
+  const [showExample, setShowExample] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Options des opérations à gauche */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/menu/apprendre"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
+    <div className="flex flex-col items-center min-h-screen bg-yellow-50 text-black px-4 py-8">
+      <Link
+        href="/menu/apprendre"
+        className="self-end bg-orange-500 text-white py-2 px-6 rounded font-bold mb-6"
+      >
+        Retour
+      </Link>
 
-        <h1 className="text-3xl font-bold mb-6 text-center">Opérations mathématiques</h1>
-        
-        <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
+      <h1 className="text-4xl font-extrabold text-blue-800 mb-6 text-center">Priorité des opérations</h1>
+      
+      <p className="text-lg max-w-2xl text-center mb-8">
+        En mathématiques, il faut suivre un ordre précis pour résoudre les calculs. Cet ordre s’appelle la règle <strong>PEMDAS</strong> :
+      </p>
 
-        <div className="flex flex-col gap-6">
-          {operations.map((operation, index) => (
-            <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-              onClick={() => handleSelectOperation(operation)}
-            >
-              {operation.name}
-            </button>
-          ))}
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl mb-8">
+        <h2 className="text-2xl font-bold text-center mb-4">Pyramide des priorités</h2>
+        <ul className="text-lg space-y-2">
+          <li> <strong>P</strong> : Parenthèses</li>
+          <li> <strong>E</strong> : Exposants (carré, cube...)</li>
+          <li> <strong>M</strong> : Multiplication</li>
+          <li> <strong>D</strong> : Division</li>
+          <li> <strong>A</strong> : Addition</li>
+          <li> <strong>S</strong> : Soustraction</li>
+        </ul>
+      </div>
+
+      <button
+        className="bg-green-500 text-white px-6 py-3 rounded font-bold hover:bg-green-700 transition-all mb-6"
+        onClick={() => setShowExample(!showExample)}
+      >
+        {showExample ? "Cacher l'exemple" : "Voir un exemple"}
+      </button>
+
+      {showExample && (
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
+          <h2 className="text-2xl font-bold mb-4">Exemple étape par étape :</h2>
+          <p className="text-lg mb-2">
+            Résolvons : <strong>2 + 3 × (4 + 1)</strong>
+          </p>
+          <ol className="list-decimal space-y-2 pl-5 text-md">
+            <li> On commence par les parenthèses : (4 + 1) = 5</li>
+            <li> On fait la multiplication : 3 × 5 = 15</li>
+            <li> On termine avec l’addition : 2 + 15 = <strong>17</strong></li>
+          </ol>
         </div>
-      </div>
-
-      {/* Formules et explications au centre */}
-      <div className="w-full sm:w-3/4 p-8">
-        {selectedOperation && (
-          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
-            <p className="text-md mb-6">{selectedOperation.description}</p>
-
-            <div className="mt-8">
-              <p className="text-lg font-bold mb-2">Formule :</p>
-              <p className="text-lg mb-4">{selectedOperation.formula}</p>
-              <p className="text-lg font-bold mb-2">Exemple :</p>
-              <p className="text-lg">{selectedOperation.example}</p>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }
