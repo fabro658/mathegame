@@ -6,20 +6,61 @@ import Link from "next/link";
 // Illustrations codées pour les opérations sur les fractions
 const AdditionIllustration = () => (
   <div className="flex flex-col items-center mt-6">
-    <div className="text-xl font-mono bg-gray-100 p-4 rounded border text-center">
-      1/4 + 2/4 = (1 + 2)/4 = 3/4
-      <br />
-      🍰 | 🍰🍰 = 🍰🍰🍰 sur 4 parts
-    </div>
+    <svg width="300" height="120">
+      {/* Cercle 1 avec 1/4 rempli */}
+      <g transform="translate(60,60)">
+        <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+        <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightblue" />
+      </g>
+
+      {/* Cercle 2 avec 2/4 rempli */}
+      <g transform="translate(180,60)">
+        <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+        <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightgreen" />
+        <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="lightgreen" />
+      </g>
+    </svg>
+    <p className="mt-4 font-bold text-center">1/4 + 2/4 = 3/4</p>
   </div>
 );
 
 const SoustractionIllustration = () => (
-  <div className="flex flex-col items-center mt-6">
-    <div className="text-xl font-mono bg-gray-100 p-4 rounded border text-center">
-      3/5 - 1/5 = (3 - 1)/5 = 2/5
-      <br />
-      🍕🍕🍕 - 🍕 = 🍕🍕 sur 5 parts
+  <div className="flex flex-col items-center mt-6 gap-10">
+    <div>
+      <svg width="300" height="120">
+        {/* Cercle 1 avec 3/5 rempli */}
+        <g transform="translate(60,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 29.39,40.45 Z" fill="lightcoral" />
+          <path d="M0,0 L29.39,40.45 A50,50 0 0,1 -29.39,40.45 Z" fill="lightcoral" />
+          <path d="M0,0 L-29.39,40.45 A50,50 0 0,1 -47.55,15.45 Z" fill="lightcoral" />
+        </g>
+
+        {/* Cercle 2 avec 1/5 rempli */}
+        <g transform="translate(180,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 29.39,40.45 Z" fill="lightsalmon" />
+        </g>
+      </svg>
+      <p className="mt-4 font-bold text-center">3/5 - 1/5 = 2/5</p>
+    </div>
+
+    <div>
+      <svg width="300" height="120">
+        {/* Cercle 1 avec 2/3 rempli */}
+        <g transform="translate(60,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 -25,43.3 Z" fill="orange" />
+          <path d="M0,0 L-25,43.3 A50,50 0 0,1 -50,0 Z" fill="orange" />
+        </g>
+
+        {/* Cercle 2 avec 1/6 rempli (converti à même dénominateur pour visualisation) */}
+        <g transform="translate(180,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="yellow" />
+        </g>
+      </svg>
+      <p className="mt-4 font-bold text-center">2/3 - 1/6 = 4/6 - 1/6 = 3/6 = 1/2</p>
     </div>
   </div>
 );
@@ -35,11 +76,42 @@ const MultiplicationIllustration = () => (
 );
 
 const DivisionIllustration = () => (
-  <div className="flex flex-col items-center mt-6">
-    <div className="text-xl font-mono bg-gray-100 p-4 rounded border text-center">
-      3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 2/4 = 1 1/2
-      <br />
-      🍎🍎🍎 ÷ 1/2 = 1 pomme et demie
+  <div className="flex flex-col items-center mt-6 gap-10">
+    <div>
+      <svg width="300" height="120">
+        {/* 3/4 ÷ 1/2 --> visuellement : 3 parts sur 4 divisées par 1/2 */}
+        <g transform="translate(60,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="#ADD8E6" />
+          <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="#ADD8E6" />
+          <path d="M0,0 L-50,0 A50,50 0 0,1 0,-50 Z" fill="#ADD8E6" />
+        </g>
+
+        <g transform="translate(180,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="#90EE90" />
+          <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="#90EE90" />
+        </g>
+      </svg>
+      <p className="mt-4 font-bold text-center">3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 1/2</p>
+    </div>
+
+    <div>
+      <svg width="300" height="120">
+        {/* 2/3 ÷ 2/5 --> transformé : (2/3) × (5/2) */}
+        <g transform="translate(60,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 -25,43.3 Z" fill="#FFA07A" />
+          <path d="M0,0 L-25,43.3 A50,50 0 0,1 -50,0 Z" fill="#FFA07A" />
+        </g>
+
+        <g transform="translate(180,60)">
+          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
+          <path d="M0,0 L50,0 A50,50 0 0,1 29.39,40.45 Z" fill="#FFD700" />
+          <path d="M0,0 L29.39,40.45 A50,50 0 0,1 0,50 Z" fill="#FFD700" />
+        </g>
+      </svg>
+      <p className="mt-4 font-bold text-center">2/3 ÷ 2/5 = 2/3 × 5/2 = 10/6 = 5/3 ≈ 1 2/3</p>
     </div>
   </div>
 );
