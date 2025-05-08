@@ -8,6 +8,7 @@ interface Operation {
   description: string;
   formula: string;
   example: string;
+  imageUrl: string;
 }
 
 export default function OperationsLearning() {
@@ -19,24 +20,28 @@ export default function OperationsLearning() {
       description: "L'addition est une opération mathématique qui consiste à additionner deux nombres.",
       formula: "A + B",
       example: "Si A = 3 et B = 5, l'addition donne : 3 + 5 = 8",
+      imageUrl:,
     },
     {
       name: "Soustraction",
       description: "La soustraction est une opération mathématique qui consiste à soustraire un nombre d'un autre.",
       formula: "A - B",
       example: "Si A = 8 et B = 5, la soustraction donne : 8 - 5 = 3",
+      imageUrl:,
     },
     {
       name: "Multiplication",
       description: "La multiplication est une opération mathématique qui consiste à multiplier deux nombres.",
       formula: "A × B",
       example: "Si A = 4 et B = 6, la multiplication donne : 4 × 6 = 24",
+      imageUrl:,
     },
     {
       name: "Division",
       description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
       formula: "A ÷ B",
       example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
+      imageUrl: "/apprendre_division.jpeg",
     }
   ];
 
