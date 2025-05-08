@@ -17,12 +17,8 @@ export default function PrioriteOperation() {
     <main className="flex min-h-screen bg-gray-100 text-black">
       {/* Barre latérale */}
       <div className="w-1/4 bg-white p-6 shadow-lg relative">
-        <Link
-          href="/menu/apprendre"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
+      <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
+
 
         <h1 className="text-3xl font-bold mb-6 text-center mt-20">Priorité des opérations</h1>
 
