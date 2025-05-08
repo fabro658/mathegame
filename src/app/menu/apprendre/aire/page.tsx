@@ -35,7 +35,7 @@ const TriangleIllustration = () => (
     <svg width="200" height="150">
       <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
-      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
+      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 40,70)">8 cm</text>
     </svg>
     <p className="mt-4 font-bold text-center">L&rsquo;aire du triangle est le produit de sa base et de sa hauteur divisé par 2 :<br />(10 × 8)/2 = 40 cm²</p>
   </div>
@@ -89,7 +89,7 @@ export default function PerimetreLearning() {
     {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d&rsquo;un cercle est 2 fois pi multiplié par le rayon.",
-      formula: "Périmètre = π × rayon^2",
+      formula: "Périmètre = π × rayon²",
       example: "Si le rayon est 10 cm, le périmètre est : π × 10^2 = 314,16 cm²",
       imageComponent: <CercleIllustration />
     }
