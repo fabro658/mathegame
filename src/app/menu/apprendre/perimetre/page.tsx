@@ -75,23 +75,23 @@ export default function PerimetreLearning() {
     },
     {
       name: "Rectangle",
-      description: "Le périmètre d'un rectangle est 2 fois la somme de sa longueur et de sa largeur.",
+      description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
       formula: "Périmètre = 2 × (longueur + largeur)",
-      example: "Si la longueur est 150 cm et la largeur est 80 cm, le périmètre est : 2 × (150 + 80) = 460 cm",
+      example: "Si la longueur est 15 cm et la largeur est 8 cm, le périmètre est : 2 × (15 + 8) = 46 cm",
       imageComponent: <RectangleIllustration />
     },
     {
       name: "Triangle",
       description: "Le périmètre d'un triangle est la somme de ses trois côtés.",
       formula: "Périmètre = côté1 + côté2 + côté3",
-      example: "Si les côtés mesurent 100 cm, 80 cm et 90 cm, le périmètre est : 100 + 80 + 90 = 270 cm",
+      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : 10 + 8 + 9 = 27 cm",
       imageComponent: <TriangleIllustration />
     },
     {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
       formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 60 cm, le périmètre est : 2 × 3.14 × 60 = 376.8 cm",
+      example: "Si le rayon est 6 cm, le périmètre est : 2 × π × 6 = 37.70 cm",
       imageComponent: <CercleIllustration />
     }
   ];
