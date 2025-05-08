@@ -44,12 +44,12 @@ const TriangleIllustration = () => (
 
 const CercleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
-    <svg width="200" height="200">
-      <circle cx="100" cy="100" r="60" stroke="black" fill="none" strokeWidth="2" />
-      <line x1="100" y1="100" x2="160" y2="100" stroke="red" strokeWidth="2" />
-      <text x="130" y="90" textAnchor="middle" fontSize="14" fill="red">rayon = 6 cm</text>
+    <svg width="300" height="300">
+      <circle cx="150" cy="150" r="100" stroke="black" fill="none" strokeWidth="2" />
+      <line x1="150" y1="150" x2="250" y2="150" stroke="red" strokeWidth="2" />
+      <text x="200" y="140" textAnchor="middle" fontSize="14" fill="red">rayon = 10 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 2 × π × 6 = 37.70 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 2 × π × 10 = 62.8 cm</p>
   </div>
 );
 
