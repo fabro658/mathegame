@@ -8,8 +8,8 @@ export default function PrioriteOperation() {
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Colonne de gauche */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg relative">
+      {/* Options des formes à gauche */}
+      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
