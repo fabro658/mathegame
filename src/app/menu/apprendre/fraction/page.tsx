@@ -6,11 +6,11 @@ import Link from "next/link";
 interface FractionCircleProps {
   numerator: number;
   denominator: number;
-  fillColor: string;
+  fillColors: string[];
   position: { x: number; y: number };
 }
 
-const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
+const FractionCircle = ({ numerator, denominator, fillColors, position }: FractionCircleProps) => {
   const radius = 50;
   const paths = [];
 
@@ -33,7 +33,7 @@ const FractionCircle = ({ numerator, denominator, fillColor, position }: Fractio
     `;
 
     paths.push(
-      <path key={i} d={d} fill={fillColor} stroke="black" strokeWidth="1" />
+      <path key={i} d={d} fill={fillColors[i % fillColors.length]} stroke="black" strokeWidth="1" />
     );
   }
 
@@ -45,31 +45,28 @@ const FractionCircle = ({ numerator, denominator, fillColor, position }: Fractio
   );
 };
 
-// ADDITION
 const AdditionIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="480" height="130">
-      <FractionCircle numerator={1} denominator={4} fillColor="lightblue" position={{ x: 60, y: 60 }} />
-      <FractionCircle numerator={2} denominator={4} fillColor="lightgreen" position={{ x: 180, y: 60 }} />
-      <FractionCircle numerator={3} denominator={4} fillColor="lightcoral" position={{ x: 300, y: 60 }} />
+      <FractionCircle numerator={1} denominator={4} fillColors={["lightblue"]} position={{ x: 60, y: 60 }} />
+      <FractionCircle numerator={2} denominator={4} fillColors={["lightgreen"]} position={{ x: 180, y: 60 }} />
+      <FractionCircle numerator={3} denominator={4} fillColors={["lightblue", "lightgreen", "lightgreen"]} position={{ x: 300, y: 60 }} />
     </svg>
     <p className="mt-4 font-bold text-center">1/4 + 2/4 = 3/4</p>
   </div>
 );
 
-// SOUSTRACTION
 const SoustractionIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="480" height="130">
-      <FractionCircle numerator={3} denominator={5} fillColor="lightcoral" position={{ x: 60, y: 60 }} />
-      <FractionCircle numerator={1} denominator={5} fillColor="lightsalmon" position={{ x: 180, y: 60 }} />
-      <FractionCircle numerator={2} denominator={5} fillColor="orange" position={{ x: 300, y: 60 }} />
+      <FractionCircle numerator={3} denominator={5} fillColors={["lightcoral"]} position={{ x: 60, y: 60 }} />
+      <FractionCircle numerator={1} denominator={5} fillColors={["lightsalmon"]} position={{ x: 180, y: 60 }} />
+      <FractionCircle numerator={2} denominator={5} fillColors={["lightcoral", "lightcoral"]} position={{ x: 300, y: 60 }} />
     </svg>
     <p className="mt-4 font-bold text-center">3/5 - 1/5 = 2/5</p>
   </div>
 );
 
-// MULTIPLICATION (résultat affiché uniquement en texte, car non visuel direct en cercle)
 const MultiplicationIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <div className="text-xl font-mono bg-gray-100 p-4 rounded border text-center">
@@ -78,18 +75,17 @@ const MultiplicationIllustration = () => (
       1 demi × 3/4 = 3 parts sur 8 au total
     </div>
     <svg width="160" height="120">
-      <FractionCircle numerator={3} denominator={8} fillColor="#90EE90" position={{ x: 80, y: 60 }} />
+      <FractionCircle numerator={3} denominator={8} fillColors={["#ADD8E6", "#90EE90", "#90EE90"]} position={{ x: 80, y: 60 }} />
     </svg>
   </div>
 );
 
-// DIVISION (visualisé comme produit inversé)
 const DivisionIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="480" height="130">
-      <FractionCircle numerator={3} denominator={4} fillColor="#ADD8E6" position={{ x: 60, y: 60 }} />
-      <FractionCircle numerator={1} denominator={2} fillColor="#FFD700" position={{ x: 180, y: 60 }} />
-      <FractionCircle numerator={6} denominator={4} fillColor="#FFA07A" position={{ x: 300, y: 60 }} />
+      <FractionCircle numerator={3} denominator={4} fillColors={["#ADD8E6"]} position={{ x: 60, y: 60 }} />
+      <FractionCircle numerator={1} denominator={2} fillColors={["#FFD700"]} position={{ x: 180, y: 60 }} />
+      <FractionCircle numerator={6} denominator={4} fillColors={["#ADD8E6", "#ADD8E6", "#FFD700", "#FFD700", "#FFD700", "#FFD700"]} position={{ x: 300, y: 60 }} />
     </svg>
     <p className="mt-4 font-bold text-center">3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 1/2</p>
   </div>
