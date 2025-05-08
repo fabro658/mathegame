@@ -91,7 +91,7 @@ export default function PerimetreLearning() {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
       formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 6 cm, le périmètre est : 2 × π × 6 = 37.70 cm",
+      example: "Si le rayon est 6 cm, le périmètre est : 2 × π × 10 = 62.8 cm",
       imageComponent: <CercleIllustration />
     }
   ];
