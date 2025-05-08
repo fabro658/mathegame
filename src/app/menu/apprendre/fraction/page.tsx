@@ -11,13 +11,17 @@ const AdditionIllustration = () => (
       <g transform="translate(60,60)">
         <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
         <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightblue" stroke="black" strokeWidth="1" />
+        <text x="20" y="-55" fontSize="12" textAnchor="middle">1/4</text>
+        <line x1="20" y1="-50" x2="10" y2="-30" stroke="black" strokeWidth="1" />
       </g>
 
       {/* Cercle 2 avec 2/4 rempli */}
       <g transform="translate(180,60)">
         <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
         <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightgreen" stroke="black" strokeWidth="1" />
-        <path d="MISSING_PATH" fill="lightgreen" stroke="black" strokeWidth="1" />
+        <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="lightgreen" stroke="black" strokeWidth="1" />
+        <text x="25" y="-55" fontSize="12" textAnchor="middle">2/4</text>
+        <line x1="25" y1="-50" x2="10" y2="-30" stroke="black" strokeWidth="1" />
       </g>
     </svg>
     <p className="mt-4 font-bold text-center">1/4 + 2/4 = 3/4</p>
