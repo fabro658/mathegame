@@ -2,89 +2,111 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
+// Illustrations SVG pour chaque forme
+const CarreIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="200" height="200">
+      <rect x="40" y="40" width="120" height="120" stroke="black" fill="none" strokeWidth="2" />
+      <text x="100" y="30" textAnchor="middle" fontSize="14">4 cm</text>
+      <text x="100" y="185" textAnchor="middle" fontSize="14">4 cm</text>
+      <text x="25" y="110" textAnchor="middle" fontSize="14" transform="rotate(-90 25,110)">4 cm</text>
+      <text x="175" y="110" textAnchor="middle" fontSize="14" transform="rotate(90 175,110)">4 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">L'aire du carré est le produit de ca base et de la hauteur :<br />4 × 4 = 16</p>
+  </div>
+);
+
+const RectangleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="250" height="150">
+      <rect x="50" y="30" width="150" height="80" stroke="black" fill="none" strokeWidth="2" />
+      <text x="125" y="20" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="125" y="130" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
+      <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">L'aire du rectangle est le produit de ca base et de la hauteur: <br />15 × 8 = 120 cm^2</p>
+  </div>
+);
+
+const TriangleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="200" height="150">
+      <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
+      <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
+      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">L'aire du rectangle est le produit de ca base et de la hauteur diviser par 2 : <br />(10 × 8)/2 = 40 cm^2</p>
+  </div>
+);
+
+const CercleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="300" height="300">
+      <circle cx="150" cy="150" r="100" stroke="black" fill="none" strokeWidth="2" />
+      <line x1="150" y1="150" x2="250" y2="150" stroke="red" strokeWidth="2" />
+      <text x="200" y="140" textAnchor="middle" fontSize="14" fill="red">rayon = 10 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">Périmètre = π × 10^2 = 314.16 cm</p>
+  </div>
+);
+
+// Type des formes
 interface Shape {
   name: string;
   description: string;
   formula: string;
   example: string;
-  imageUrl: string;
+  imageComponent?: React.ReactNode;
 }
 
-export default function AireLearning() {
+export default function PerimetreLearning() {
   const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
 
   const shapes: Shape[] = [
     {
       name: "Carré",
-      description:
-        "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
-      formula: "Aire = côté × côté",
-      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
-      imageUrl: "/airecarre.jpeg",
+      description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
+      formula: "Périmètre = base × hauteur",
+      example: "Si le côté mesure 4 cm, l'aire est : 4 × 4 = 16 cm^2",
+      imageComponent: <CarreIllustration />
     },
     {
       name: "Rectangle",
-      description:
-        "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
-      formula: "Aire = base × hauteur",
-      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
-      imageUrl: "/airerectangle.jpeg",
+      description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
+      formula: "Périmètre = base × hauteur",
+      example: "Si la base est 15 cm et la hauteur est 8 cm, l'aire est : 15 × 8 = 120 cm^2",
+      imageComponent: <RectangleIllustration />
     },
     {
       name: "Triangle",
-      description:
-        "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
-      formula: "Aire = (base × hauteur) ÷ 2",
-      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
-      imageUrl: "/airetriangle.jpeg",
-    },
-    {
-      name: "Trapèze",
-      description:
-        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
-      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example:
-        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/airetrapeze.jpeg",
+      description: "Le périmètre d'un triangle est la somme de ses trois côtés.",
+      formula: "Périmètre = (base × hauteur)/2",
+      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : (10 × 8)/2= 40 cm^2",
+      imageComponent: <TriangleIllustration />
     },
     {
       name: "Cercle",
-      description: "L'aire d'un cercle est calculée en utilisant le rayon.",
-      formula: "Aire = π × rayon²",
-      example: "Si le rayon est 7 cm, l'aire est : 3.14 × 7² = 153.86 cm²",
-      imageUrl: "/airecercle.jpeg",
-    },
+      description: "Le périmètre (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
+      formula: "Périmètre = π × rayon^2",
+      example: "Si le rayon est 6 cm, le périmètre est : π × 10^2 = 314,16 cm",
+      imageComponent: <CercleIllustration />
+    }
   ];
-
-  const handleSelectShape = (shape: Shape): void => {
-    setSelectedShape(shape);
-  };
 
   return (
     <main className="flex min-h-screen bg-gray-100 text-black">
-      {/* Barre latérale */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/menu/apprendre"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
-
-        <h1 className="text-3xl font-bold mb-6">Calculer l&apos;aire</h1>
-
-        <p className="text-lg mb-6">
-          Sélectionne une forme pour apprendre comment calculer son aire :
-        </p>
-
+        <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
+        <h1 className="text-3xl font-bold mb-6 text-center">Formes géométriques</h1>
+        <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son périmètre :</p>
         <div className="flex flex-col gap-4">
           {shapes.map((shape, index) => (
             <button
               key={index}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              onClick={() => handleSelectShape(shape)}
+              onClick={() => setSelectedShape(shape)}
             >
               {shape.name}
             </button>
@@ -92,7 +114,6 @@ export default function AireLearning() {
         </div>
       </div>
 
-      {/* Section centrale agrandie */}
       <div className="w-3/4 p-10 flex flex-col items-center">
         {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
@@ -102,16 +123,8 @@ export default function AireLearning() {
             <p className="text-lg mb-6">{selectedShape.formula}</p>
             <p className="text-2xl font-bold mb-4">Exemple :</p>
             <p className="text-lg mb-6">{selectedShape.example}</p>
-
-            {/* Image beaucoup plus grande */}
             <div className="mt-8 flex justify-center">
-              <Image
-                src={selectedShape.imageUrl}
-                alt={selectedShape.name}
-                width={500} // Taille encore augmentée
-                height={500}
-                className="object-contain"
-              />
+              {selectedShape.imageComponent}
             </div>
           </div>
         )}
