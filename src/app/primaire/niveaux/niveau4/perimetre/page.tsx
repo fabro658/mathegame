@@ -154,7 +154,7 @@ export default function Perimetre() {
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 text-center ${
-            feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"
+            /incorrectes|remplir toutes les réponses/i.test(feedbackMessage) ? "text-red-500" : "text-green-500"
           }`}
         >
           {feedbackMessage}
