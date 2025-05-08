@@ -3,116 +3,93 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Illustrations codées pour les opérations sur les fractions
-const AdditionIllustration = () => (
-  <div className="flex flex-col items-center mt-6">
-    <svg width="300" height="120">
-      {/* Cercle 1 avec 1/4 rempli */}
-      <g transform="translate(60,60)">
-        <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-        <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightblue" stroke="black" strokeWidth="1" />
-      </g>
+interface FractionCircleProps {
+  numerator: number;
+  denominator: number;
+  fillColor: string;
+  position: { x: number; y: number };
+}
 
-      {/* Cercle 2 avec 2/4 rempli */}
-      <g transform="translate(180,60)">
-        <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-        <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="lightgreen" stroke="black" strokeWidth="1" />
-        <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="lightgreen" stroke="black" strokeWidth="1" />
-      </g>
-    </svg>
-    <p className="mt-4 font-bold text-center">1/4 + 2/4 = 3/4</p>
+const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
+  const radius = 50;
+  const paths = [];
+
+  for (let i = 0; i < numerator; i++) {
+    const startAngle = (2 * Math.PI * i) / denominator;
+    const endAngle = (2 * Math.PI * (i + 1)) / denominator;
+
+    const x1 = radius * Math.cos(startAngle);
+    const y1 = radius * Math.sin(startAngle);
+    const x2 = radius * Math.cos(endAngle);
+    const y2 = radius * Math.sin(endAngle);
+
+    const largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0;
+
+    const d = `
+      M0,0
+      L${x1},${y1}
+      A${radius},${radius} 0 ${largeArcFlag},1 ${x2},${y2}
+      Z
+    `;
+
+    paths.push(
+      <path key={i} d={d} fill={fillColor} stroke="black" strokeWidth="1" />
+    );
+  }
+
+  return (
+    <g transform={`translate(${position.x},${position.y})`}>
+      <circle r={radius} fill="#eee" stroke="black" strokeWidth="2" />
+      {paths}
+    </g>
+  );
+};
+
+const OperationExample = ({ a, b, r, colorA, colorB, colorR }: any) => (
+  <svg width="480" height="130">
+    <FractionCircle numerator={a.n} denominator={a.d} fillColor={colorA} position={{ x: 60, y: 60 }} />
+    <FractionCircle numerator={b.n} denominator={b.d} fillColor={colorB} position={{ x: 180, y: 60 }} />
+    <FractionCircle numerator={r.n} denominator={r.d} fillColor={colorR} position={{ x: 300, y: 60 }} />
+  </svg>
+);
+
+const AdditionIllustration = () => (
+  <div className="flex flex-col items-center gap-10 mt-6">
+    <OperationExample a={{ n: 1, d: 4 }} b={{ n: 2, d: 4 }} r={{ n: 3, d: 4 }} colorA="lightblue" colorB="lightgreen" colorR="lightcoral" />
+    <p>1/4 + 2/4 = 3/4</p>
+
+    <OperationExample a={{ n: 2, d: 5 }} b={{ n: 1, d: 5 }} r={{ n: 3, d: 5 }} colorA="lightblue" colorB="lightgreen" colorR="lightcoral" />
+    <p>2/5 + 1/5 = 3/5</p>
   </div>
 );
 
 const SoustractionIllustration = () => (
-  <div className="flex flex-col items-center mt-6 gap-10">
-    <div>
-      <svg width="300" height="120">
-        {/* Cercle 1 avec 3/5 rempli */}
-        <g transform="translate(60,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 15.45,47.55 Z" fill="lightcoral" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L15.45,47.55 A50,50 0 0,1 -40.45,29.39 Z" fill="lightcoral" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L-40.45,29.39 A50,50 0 0,1 -50,0 Z" fill="lightcoral" stroke="black" strokeWidth="1" />
-        </g>
+  <div className="flex flex-col items-center gap-10 mt-6">
+    <OperationExample a={{ n: 3, d: 5 }} b={{ n: 1, d: 5 }} r={{ n: 2, d: 5 }} colorA="lightcoral" colorB="lightsalmon" colorR="orange" />
+    <p>3/5 - 1/5 = 2/5</p>
 
-        {/* Cercle 2 avec 1/5 rempli */}
-        <g transform="translate(180,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 15.45,47.55 Z" fill="lightsalmon" stroke="black" strokeWidth="1" />
-        </g>
-      </svg>
-      <p className="mt-4 font-bold text-center">3/5 - 1/5 = 2/5</p>
-    </div>
-
-    <div>
-      <svg width="300" height="120">
-        {/* Cercle 1 avec 2/3 rempli */}
-        <g transform="translate(60,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 -25,43.3 Z" fill="orange" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L-25,43.3 A50,50 0 0,1 -43.3,-25 Z" fill="orange" stroke="black" strokeWidth="1" />
-        </g>
-
-        {/* Cercle 2 avec 1/6 rempli */}
-        <g transform="translate(180,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 25,43.3 Z" fill="yellow" stroke="black" strokeWidth="1" />
-        </g>
-      </svg>
-      <p className="mt-4 font-bold text-center">2/3 - 1/6 = 4/6 - 1/6 = 3/6 = 1/2</p>
-    </div>
+    <OperationExample a={{ n: 5, d: 6 }} b={{ n: 2, d: 6 }} r={{ n: 3, d: 6 }} colorA="lightcoral" colorB="lightsalmon" colorR="orange" />
+    <p>5/6 - 2/6 = 3/6 = 1/2</p>
   </div>
 );
 
 const MultiplicationIllustration = () => (
-  <div className="flex flex-col items-center mt-6">
-    <div className="text-xl font-mono bg-gray-100 p-4 rounded border text-center">
-      1/2 × 3/4 = (1×3)/(2×4) = 3/8
-      <br />
-      1 demi × 3/4 = 3 parts sur 8 au total
-    </div>
+  <div className="flex flex-col items-center gap-10 mt-6">
+    <OperationExample a={{ n: 1, d: 2 }} b={{ n: 3, d: 4 }} r={{ n: 3, d: 8 }} colorA="#ADD8E6" colorB="#FFD700" colorR="#90EE90" />
+    <p>1/2 × 3/4 = 3/8</p>
+
+    <OperationExample a={{ n: 2, d: 3 }} b={{ n: 3, d: 5 }} r={{ n: 6, d: 15 }} colorA="#ADD8E6" colorB="#FFD700" colorR="#90EE90" />
+    <p>2/3 × 3/5 = 6/15</p>
   </div>
 );
 
 const DivisionIllustration = () => (
-  <div className="flex flex-col items-center mt-6 gap-10">
-    <div>
-      <svg width="300" height="120">
-        {/* 3/4 ÷ 1/2 */}
-        <g transform="translate(60,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="#ADD8E6" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="#ADD8E6" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L-50,0 A50,50 0 0,1 0,-50 Z" fill="#ADD8E6" stroke="black" strokeWidth="1" />
-        </g>
+  <div className="flex flex-col items-center gap-10 mt-6">
+    <OperationExample a={{ n: 3, d: 4 }} b={{ n: 1, d: 2 }} r={{ n: 6, d: 4 }} colorA="#ADD8E6" colorB="#FFD700" colorR="#FFA07A" />
+    <p>3/4 ÷ 1/2 = 6/4 = 1 1/2</p>
 
-        <g transform="translate(180,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 0,50 Z" fill="#90EE90" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L0,50 A50,50 0 0,1 -50,0 Z" fill="#90EE90" stroke="black" strokeWidth="1" />
-        </g>
-      </svg>
-      <p className="mt-4 font-bold text-center">3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 1/2</p>
-    </div>
-
-    <div>
-      <svg width="300" height="120">
-        {/* 2/3 ÷ 2/5 */}
-        <g transform="translate(60,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 -25,43.3 Z" fill="#FFA07A" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L-25,43.3 A50,50 0 0,1 -43.3,-25 Z" fill="#FFA07A" stroke="black" strokeWidth="1" />
-        </g>
-
-        <g transform="translate(180,60)">
-          <circle r="50" fill="#eee" stroke="black" strokeWidth="2" />
-          <path d="M0,0 L50,0 A50,50 0 0,1 15.45,47.55 Z" fill="#FFD700" stroke="black" strokeWidth="1" />
-          <path d="M0,0 L15.45,47.55 A50,50 0 0,1 -40.45,29.39 Z" fill="#FFD700" stroke="black" strokeWidth="1" />
-        </g>
-      </svg>
-      <p className="mt-4 font-bold text-center">2/3 ÷ 2/5 = 2/3 × 5/2 = 10/6 = 5/3 ≈ 1 2/3</p>
-    </div>
+    <OperationExample a={{ n: 2, d: 3 }} b={{ n: 2, d: 5 }} r={{ n: 10, d: 6 }} colorA="#ADD8E6" colorB="#FFD700" colorR="#FFA07A" />
+    <p>2/3 ÷ 2/5 = 10/6 = 1 2/3</p>
   </div>
 );
 
@@ -132,35 +109,31 @@ export default function FractionOperationsLearning() {
       name: "Addition de fractions",
       description: "L'addition de fractions nécessite des dénominateurs identiques. Si les dénominateurs sont différents, il faut d'abord les rendre égaux.",
       formula: "A/B + C/B = (A + C)/B",
-      example: "Si A/B = 1/4 et C/B = 2/4, on a : 1/4 + 2/4 = (1 + 2)/4 = 3/4",
+      example: "1/4 + 2/4 = 3/4",
       illustration: <AdditionIllustration />
     },
     {
       name: "Soustraction de fractions",
       description: "La soustraction de fractions suit la même règle que l'addition. On doit rendre les dénominateurs égaux si nécessaire.",
       formula: "A/B - C/B = (A - C)/B",
-      example: "Si A/B = 3/5 et C/B = 1/5, on a : 3/5 - 1/5 = (3 - 1)/5 = 2/5",
+      example: "3/5 - 1/5 = 2/5",
       illustration: <SoustractionIllustration />
     },
     {
       name: "Multiplication de fractions",
       description: "Pour multiplier des fractions, on multiplie les numérateurs entre eux et les dénominateurs entre eux.",
       formula: "A/B × C/D = (A×C)/(B×D)",
-      example: "Si A/B = 1/2 et C/D = 3/4, on a : 1/2 × 3/4 = (1×3)/(2×4) = 3/8",
+      example: "1/2 × 3/4 = 3/8",
       illustration: <MultiplicationIllustration />
     },
     {
       name: "Division de fractions",
       description: "Pour diviser des fractions, on multiplie la première fraction par l'inverse de la deuxième.",
       formula: "A/B ÷ C/D = A/B × D/C",
-      example: "Si A/B = 3/4 et C/D = 1/2, on a : 3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 1 2/4 = 1 1/2",
+      example: "3/4 ÷ 1/2 = 6/4 = 1 1/2",
       illustration: <DivisionIllustration />
     },
   ];
-
-  const handleSelectOperation = (operation: FractionOperation): void => {
-    setSelectedOperation(operation);
-  };
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-black">
@@ -180,7 +153,7 @@ export default function FractionOperationsLearning() {
             <button
               key={index}
               className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-4 transition-all duration-300 hover:bg-blue-700"
-              onClick={() => handleSelectOperation(operation)}
+              onClick={() => setSelectedOperation(operation)}
             >
               {operation.name}
             </button>
@@ -199,7 +172,7 @@ export default function FractionOperationsLearning() {
             <p className="text-lg mb-4">{selectedOperation.example}</p>
 
             {selectedOperation.illustration && (
-              <div className="mt-6 flex justify-center">
+              <div className="mt-6 flex flex-col items-center gap-10">
                 {selectedOperation.illustration}
               </div>
             )}
