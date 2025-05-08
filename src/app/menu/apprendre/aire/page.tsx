@@ -55,7 +55,7 @@ const CercleIllustration = () => (
       <line x1="150" y1="150" x2="250" y2="150" stroke="red" strokeWidth="2" />
       <text x="200" y="140" textAnchor="middle" fontSize="14" fill="red">rayon = 10 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = π × 10² = 314.16 cm</p>
+    <p className="mt-4 font-bold text-center">L&rsquo;aire du cercle est ::<br /> π × 10² = 314.16 cm</p>
   </div>
 );
 
