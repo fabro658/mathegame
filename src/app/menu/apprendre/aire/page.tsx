@@ -37,7 +37,7 @@ const TriangleIllustration = () => (
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
       <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">L'aire du rectangle est le produit de ca base et de la hauteur diviser par 2 : <br />(10 × 8)/2 = 40 cm^2</p>
+    <p className="mt-4 font-bold text-center">L'aire du triangle est le produit de ca base et de la hauteur divisé par 2 : <br />(10 × 8)/2 = 40 cm^2</p>
   </div>
 );
 
@@ -66,12 +66,12 @@ export default function PerimetreLearning() {
 
   const shapes: Shape[] = [
     {
-      name: "Carré",
-      description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
-      formula: "Périmètre = base × hauteur",
-      example: "Si le côté mesure 4 cm, l'aire est : 4 × 4 = 16 cm^2",
-      imageComponent: <CarreIllustration />
-    },
+        name: "Carré",
+        description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
+        formula: "Périmètre = 4 × côté",
+        example: "Si le côté mesure 4 cm, le périmètre est : 4 × 4 = 16 cm",
+        imageComponent: <CarreIllustration />
+      },
     {
       name: "Rectangle",
       description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
