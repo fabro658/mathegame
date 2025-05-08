@@ -52,9 +52,9 @@ export default function PerimetreLearning() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Options des formes à gauche */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
+    <main className="flex min-h-screen bg-gray-100 text-black">
+      {/* Barre latérale */}
+      <div className="w-1/4 bg-white p-6 shadow-lg">
         <Link
           href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -67,47 +67,43 @@ export default function PerimetreLearning() {
           Sélectionne une forme pour apprendre comment calculer son périmetre :
         </p>
         
-        <div className="flex flex-col gap-4">
-          {shapes.map((shape, index) => (
-            <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
-              onClick={() => handleSelectShape(shape)}
-            >
-              {shape.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-
-      {/* Formules et explications au centre */}
-      <div className="w-full sm:w-3/4 p-8">
-        {selectedShape && (
-          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
-            <h2 className="text-2xl font-bold mb-6">{selectedShape.name}</h2>
-            <p className="text-md mb-6">{selectedShape.description}</p>
-
-            <div className="mt-8">
-              <p className="text-lg font-bold mb-2">Formule :</p>
-              <p className="text-lg mb-4">{selectedShape.formula}</p>
-              <p className="text-lg font-bold mb-2">Exemple :</p>
-              <p className="text-lg">{selectedShape.example}</p>
-            </div>
-            
-            {/* Afficher l'image sous l'espace des formules en utilisant Image de Next.js */}
-            <div className="mt-6 flex justify-center">
-              <Image 
-                src={selectedShape.imageUrl} 
-                alt={selectedShape.name} 
-                width={192} // Largeur de l'image
-                height={192} // Hauteur de l'image
-                className="object-contain"  // Assurez-vous que l'image reste dans son conteneur
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+       <div className="flex flex-col gap-4">
+                 {shapes.map((shape, index) => (
+                   <button
+                     key={index}
+                     className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+                     onClick={() => handleSelectShape(shape)}
+                   >
+                     {shape.name}
+                   </button>
+                 ))}
+               </div>
+             </div>
+       
+             {/* Section centrale agrandie */}
+             <div className="w-3/4 p-10 flex flex-col items-center">
+               {selectedShape && (
+                 <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
+                   <h2 className="text-3xl font-bold mb-6">{selectedShape.name}</h2>
+                   <p className="text-lg mb-6">{selectedShape.description}</p>
+                   <p className="text-2xl font-bold mb-4">Formule :</p>
+                   <p className="text-lg mb-6">{selectedShape.formula}</p>
+                   <p className="text-2xl font-bold mb-4">Exemple :</p>
+                   <p className="text-lg mb-6">{selectedShape.example}</p>
+       
+                   {/* Image beaucoup plus grande */}
+                   <div className="mt-8 flex justify-center">
+                     <Image
+                       src={selectedShape.imageUrl}
+                       alt={selectedShape.name}
+                       width={500} // Taille encore augmentée
+                       height={500}
+                       className="object-contain"
+                     />
+                   </div>
+                 </div>
+               )}
+             </div>
+           </main>
+         );
+       }
