@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-interface Operation {
+interface Shape {
   name: string;
   description: string;
   formula: string;
@@ -11,10 +12,10 @@ interface Operation {
   imageUrl: string;
 }
 
-export default function OperationsLearning() {
-  const [selectedOperation, setSelectedOperation] = useState<Operation | null>(null);
+export default function AireLearning() {
+  const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
 
-  const operations: Operation[] = [
+  const shapes: Shape[] = [
     {
       name: "Addition",
       description: "L'addition est une opération mathématique qui consiste à additionner deux nombres.",
@@ -45,8 +46,8 @@ export default function OperationsLearning() {
     }
   ];
 
-  const handleSelectOperation = (operation: Operation): void => {
-    setSelectedOperation(operation);
+  const handleSelectShape = (shape: Shape): void => {
+    setSelectedShape(shape);
   };
 
   return (
@@ -64,13 +65,13 @@ export default function OperationsLearning() {
         <p className="text-lg mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
 
         <div className="flex flex-col gap-4">
-          {operations.map((operation, index) => (
+          {shapes.map((shape, index) => (
             <button
               key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold transition-all duration-300 hover:bg-blue-700"
-              onClick={() => handleSelectOperation(operation)}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              onClick={() => handleSelectShape(shape)}
             >
-              {operation.name}
+              {shape.name}
             </button>
           ))}
         </div>
@@ -78,16 +79,25 @@ export default function OperationsLearning() {
 
       {/* Section centrale agrandie */}
       <div className="w-3/4 p-10 flex flex-col items-center">
-        {selectedOperation && (
+        {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
-            <h2 className="text-3xl font-bold mb-6">{selectedOperation.name}</h2>
-            <p className="text-lg mb-6">{selectedOperation.description}</p>
-
+            <h2 className="text-3xl font-bold mb-6">{selectedShape.name}</h2>
+            <p className="text-lg mb-6">{selectedShape.description}</p>
             <p className="text-2xl font-bold mb-4">Formule :</p>
-            <p className="text-lg mb-6">{selectedOperation.formula}</p>
-
+            <p className="text-lg mb-6">{selectedShape.formula}</p>
             <p className="text-2xl font-bold mb-4">Exemple :</p>
-            <p className="text-lg">{selectedOperation.example}</p>
+            <p className="text-lg mb-6">{selectedShape.example}</p>
+
+            {/* Image beaucoup plus grande */}
+            <div className="mt-8 flex justify-center">
+              <Image
+                src={selectedShape.imageUrl}
+                alt={selectedShape.name}
+                width={500} // Taille encore augmentée
+                height={500}
+                className="object-contain"
+              />
+            </div>
           </div>
         )}
       </div>
