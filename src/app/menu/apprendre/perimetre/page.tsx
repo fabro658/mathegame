@@ -21,12 +21,12 @@ const RectangleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="250" height="150">
       <rect x="50" y="30" width="150" height="80" stroke="black" fill="none" strokeWidth="2" />
-      <text x="125" y="20" textAnchor="middle" fontSize="14">150 cm</text>
-      <text x="125" y="130" textAnchor="middle" fontSize="14">150 cm</text>
-      <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">80 cm</text>
-      <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">80 cm</text>
+      <text x="125" y="20" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="125" y="130" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
+      <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 2 × (150 + 80) = 460 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 2 × (15 + 8) = 46 cm</p>
   </div>
 );
 
@@ -34,11 +34,11 @@ const TriangleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="200" height="150">
       <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
-      <text x="100" y="135" textAnchor="middle" fontSize="14">100 cm</text>
-      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">80 cm</text>
-      <text x="160" y="70" textAnchor="middle" fontSize="14" transform="rotate(45 160,70)">90 cm</text>
+      <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
+      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
+      <text x="160" y="70" textAnchor="middle" fontSize="14" transform="rotate(45 160,70)">9 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 100 + 80 + 90 = 270 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 10 + 8 + 9 = 27 cm</p>
   </div>
 );
 
@@ -47,9 +47,9 @@ const CercleIllustration = () => (
     <svg width="200" height="200">
       <circle cx="100" cy="100" r="60" stroke="black" fill="none" strokeWidth="2" />
       <line x1="100" y1="100" x2="160" y2="100" stroke="red" strokeWidth="2" />
-      <text x="130" y="90" textAnchor="middle" fontSize="14" fill="red">rayon = 60 cm</text>
+      <text x="130" y="90" textAnchor="middle" fontSize="14" fill="red">rayon = 6 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 2 × 3.14 × 60 = 376.8 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 2 × π × 6 = 37.70 cm</p>
   </div>
 );
 

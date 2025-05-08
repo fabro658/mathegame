@@ -5,10 +5,12 @@ import Link from "next/link";
 
 export default function PrioriteOperation() {
   const [showExample, setShowExample] = useState(false);
-  const [exampleIndex, setExampleIndex] = useState(1); // 1 ou 2
+  const [exampleIndex, setExampleIndex] = useState(1); // de 1 à 4
 
-  const toggleExample = () => {
-    setExampleIndex((prev) => (prev === 1 ? 2 : 1));
+  const totalExamples = 4;
+
+  const nextExample = () => {
+    setExampleIndex((prev) => (prev === totalExamples ? 1 : prev + 1));
   };
 
   return (
@@ -68,7 +70,7 @@ export default function PrioriteOperation() {
 
           {showExample && (
             <div className="space-y-6">
-              {exampleIndex === 1 ? (
+              {exampleIndex === 1 && (
                 <div>
                   <h2 className="text-2xl font-bold mb-4">Exemple 1&nbsp;: sans exposants</h2>
                   <p className="text-lg mb-2">
@@ -80,9 +82,11 @@ export default function PrioriteOperation() {
                     <li>On termine avec l&rsquo;addition&nbsp;: 2 + 15 = <strong>17</strong></li>
                   </ol>
                 </div>
-              ) : (
+              )}
+
+              {exampleIndex === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold mb-4">Exemple 2&nbsp;: avec parenthèses et exposants</h2>
+                  <h2 className="text-2xl font-bold mb-4">Exemple 2&nbsp;: avec exposants</h2>
                   <p className="text-lg mb-2">
                     Résolvons&nbsp;: <strong>(2 + 1)² + 4</strong>
                   </p>
@@ -94,13 +98,41 @@ export default function PrioriteOperation() {
                 </div>
               )}
 
-              {/* Bouton de navigation entre les exemples */}
+              {exampleIndex === 3 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">Exemple 3&nbsp;: division et addition</h2>
+                  <p className="text-lg mb-2">
+                    Résolvons&nbsp;: <strong>12 ÷ 3 + 5</strong>
+                  </p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On commence par la division&nbsp;: 12 ÷ 3 = 4</li>
+                    <li>Puis l&rsquo;addition&nbsp;: 4 + 5 = <strong>9</strong></li>
+                  </ol>
+                </div>
+              )}
+
+              {exampleIndex === 4 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">Exemple 4&nbsp;: parenthèses imbriquées et exposants</h2>
+                  <p className="text-lg mb-2">
+                    Résolvons&nbsp;: <strong>((1 + 2)² + 1) × 2</strong>
+                  </p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On commence par les parenthèses internes&nbsp;: (1 + 2) = 3</li>
+                    <li>Puis l&rsquo;exposant&nbsp;: 3² = 9</li>
+                    <li>On ajoute 1&nbsp;: 9 + 1 = 10</li>
+                    <li>On multiplie par 2&nbsp;: 10 × 2 = <strong>20</strong></li>
+                  </ol>
+                </div>
+              )}
+
+              {/* Bouton suivant */}
               <div className="text-center">
                 <button
-                  onClick={toggleExample}
+                  onClick={nextExample}
                   className="mt-4 bg-blue-500 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition"
                 >
-                  Voir {exampleIndex === 1 ? "Exemple 2" : "Exemple 1"}
+                  Voir l’exemple suivant
                 </button>
               </div>
             </div>
