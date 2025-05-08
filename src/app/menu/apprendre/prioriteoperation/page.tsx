@@ -5,6 +5,11 @@ import Link from "next/link";
 
 export default function PrioriteOperation() {
   const [showExample, setShowExample] = useState(false);
+  const [exampleIndex, setExampleIndex] = useState(1); // 1 ou 2
+
+  const toggleExample = () => {
+    setExampleIndex((prev) => (prev === 1 ? 2 : 1));
+  };
 
   return (
     <main className="flex min-h-screen bg-gray-100 text-black">
@@ -32,7 +37,6 @@ export default function PrioriteOperation() {
           <p><strong>S</strong> : Soustraction</p>
         </div>
 
-        {/* Bouton déplacé ici, sous l'acronyme */}
         <button
           className="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-700 transition-all"
           onClick={() => setShowExample(!showExample)}
@@ -63,16 +67,42 @@ export default function PrioriteOperation() {
           )}
 
           {showExample && (
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Exemple pas à pas&nbsp;:</h2>
-              <p className="text-lg mb-2">
-                Résolvons&nbsp;: <strong>2 + 3 × (4 + 1)</strong>
-              </p>
-              <ol className="list-decimal space-y-2 pl-6 text-md">
-                <li>On commence par les parenthèses&nbsp;: (4 + 1) = 5</li>
-                <li>On fait la multiplication&nbsp;: 3 × 5 = 15</li>
-                <li>On termine avec l&rsquo;addition&nbsp;: 2 + 15 = <strong>17</strong></li>
-              </ol>
+            <div className="space-y-6">
+              {exampleIndex === 1 ? (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">Exemple 1&nbsp;: sans exposants</h2>
+                  <p className="text-lg mb-2">
+                    Résolvons&nbsp;: <strong>2 + 3 × (4 + 1)</strong>
+                  </p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On commence par les parenthèses&nbsp;: (4 + 1) = 5</li>
+                    <li>On fait la multiplication&nbsp;: 3 × 5 = 15</li>
+                    <li>On termine avec l&rsquo;addition&nbsp;: 2 + 15 = <strong>17</strong></li>
+                  </ol>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">Exemple 2&nbsp;: avec parenthèses et exposants</h2>
+                  <p className="text-lg mb-2">
+                    Résolvons&nbsp;: <strong>(2 + 1)² + 4</strong>
+                  </p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On commence par les parenthèses&nbsp;: (2 + 1) = 3</li>
+                    <li>Puis les exposants&nbsp;: 3² = 9</li>
+                    <li>On termine avec l&rsquo;addition&nbsp;: 9 + 4 = <strong>13</strong></li>
+                  </ol>
+                </div>
+              )}
+
+              {/* Bouton de navigation entre les exemples */}
+              <div className="text-center">
+                <button
+                  onClick={toggleExample}
+                  className="mt-4 bg-blue-500 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition"
+                >
+                  Voir {exampleIndex === 1 ? "Exemple 2" : "Exemple 1"}
+                </button>
+              </div>
             </div>
           )}
         </div>
