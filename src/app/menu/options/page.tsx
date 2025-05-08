@@ -40,7 +40,6 @@ export default function Option() {
       </Link>
   
       <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg space-y-12">
-        <h1 className="text-3xl font-bold text-center mb-8">Option</h1>
   
         {/* Section À propos */}
         <section className="mb-8">
