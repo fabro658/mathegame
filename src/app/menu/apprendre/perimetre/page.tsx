@@ -21,29 +21,29 @@ export default function PerimetreLearning() {
       name: "Carré",
       description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
       formula: "Périmètre = 4 × côté",
-      example: "Si le côté mesure 5 cm, le périmètre est : 4 × 5 = 20 cm",
-      imageUrl: "/images/carre.png",  // Image du carré
+      example: "Si le côté mesure 5 cm, le périmètre est : 4 + 4 + 4 + 4 = 20 cm",
+      imageUrl: "/perimetre_carre.png",  // Image du carré
     },
     {
       name: "Rectangle",
       description: "Le périmètre d'un rectangle est calculé en ajoutant la longueur et la largeur, puis en multipliant par 2.",
       formula: "Périmètre = 2 × (longueur + largeur)",
       example: "Si la longueur est 6 cm et la largeur est 4 cm, le périmètre est : 2 × (6 + 4) = 20 cm",
-      imageUrl: "/images/rectangle.png",  // Image du rectangle
+      imageUrl: "/perimetre_rectangle.png",  // Image du rectangle
     },
     {
       name: "Triangle",
       description: "Le périmètre d'un triangle est calculé en additionnant les longueurs de ses trois côtés.",
       formula: "Périmètre = côté1 + côté2 + côté3",
       example: "Si les côtés mesurent 5 cm, 6 cm et 7 cm, le périmètre est : 5 + 6 + 7 = 18 cm",
-      imageUrl: "/images/triangle.png",  // Image du triangle
+      imageUrl: "/perimetre_triangle.png",  // Image du triangle
     },
     {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d'un cercle est calculé en multipliant le rayon par 2π.",
       formula: "Périmètre = 2 × π × rayon",
       example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
-      imageUrl: "/images/cercle.png",  // Image du cercle
+      imageUrl: "/perimetre_cercle.png",  // Image du cercle
     }
   ];
 
