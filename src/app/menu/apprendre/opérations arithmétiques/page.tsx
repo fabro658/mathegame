@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Définir le type pour l'opération mathématique
 interface Operation {
   name: string;
   description: string;
@@ -46,12 +45,9 @@ export default function OperationsLearning() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row min-h-screen bg-gray-100 text-black">
-      
-      {/* Colonne gauche : boutons + retour */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg">
-        
-        {/* Bouton Retour intégré dans le flux */}
+    <main className="flex min-h-screen bg-gray-100 text-black">
+      {/* Barre latérale */}
+      <div className="w-1/4 bg-white p-6 shadow-lg">
         <div className="flex justify-end mb-6">
           <Link
             href="/menu/apprendre"
@@ -61,14 +57,14 @@ export default function OperationsLearning() {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
-        <p className="text-lg mb-6 text-center">Sélectionne une opération pour apprendre à la réaliser :</p>
+        <h1 className="text-3xl font-bold mb-6">Opérations arithmétiques</h1>
+        <p className="text-lg mb-6">Sélectionne une opération pour apprendre à la réaliser :</p>
 
         <div className="flex flex-col gap-4">
           {operations.map((operation, index) => (
             <button
               key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold mb-2 transition-all duration-300 hover:bg-blue-700"
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold transition-all duration-300 hover:bg-blue-700"
               onClick={() => handleSelectOperation(operation)}
             >
               {operation.name}
@@ -77,22 +73,21 @@ export default function OperationsLearning() {
         </div>
       </div>
 
-      {/* Colonne droite : contenu explicatif */}
-      <div className="w-full sm:w-3/4 p-8 flex items-start justify-center">
+      {/* Section centrale agrandie */}
+      <div className="w-3/4 p-10 flex flex-col items-center">
         {selectedOperation && (
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl min-h-[70vh] transition-all duration-300">
-            <h2 className="text-2xl font-bold mb-6">{selectedOperation.name}</h2>
-            <p className="text-md mb-6">{selectedOperation.description}</p>
+          <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
+            <h2 className="text-3xl font-bold mb-6">{selectedOperation.name}</h2>
+            <p className="text-lg mb-6">{selectedOperation.description}</p>
 
-            <div className="mt-8">
-              <p className="text-lg font-bold mb-2">Formule :</p>
-              <p className="text-lg mb-4">{selectedOperation.formula}</p>
-              <p className="text-lg font-bold mb-2">Exemple :</p>
-              <p className="text-lg">{selectedOperation.example}</p>
-            </div>
+            <p className="text-2xl font-bold mb-4">Formule :</p>
+            <p className="text-lg mb-6">{selectedOperation.formula}</p>
+
+            <p className="text-2xl font-bold mb-4">Exemple :</p>
+            <p className="text-lg">{selectedOperation.example}</p>
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }
