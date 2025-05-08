@@ -248,6 +248,9 @@ const ShapesPracticePage = () => {
             <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">
               Valider les réponses
             </button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
+          Suivant
+        </button>
           </div>
         </>
       )}
