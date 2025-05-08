@@ -15,8 +15,7 @@ export default function Perimetre() {
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Générer de nouvelles questions
-  const generateQuestions = () => {
+  const generateQuestionsPrimaire = () => {
     return Array.from({ length: totalQuestions }, () => {
       const shapeType = Math.floor(Math.random() * 5);
       let questionText = "";
@@ -57,11 +56,13 @@ export default function Perimetre() {
     });
   };
 
-  // Charger les questions initiales
-  useEffect(() => {setQuestions(generateQuestions());
+  useEffect(() => {
+    setQuestions(generateQuestionsPrimaire());
   }, []);
 
-  const completionPercentage = Math.round((answers.filter(answer => answer !== null && answer !== "").length / totalQuestions) * 100);
+  const completionPercentage = Math.round(
+    (answers.filter((answer) => answer !== null && answer !== "").length / totalQuestions) * 100
+  );
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -70,17 +71,17 @@ export default function Perimetre() {
     setFeedbackMessage(null);
   };
 
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.some(answer => answer === null || answer === "")) {
+    if (pageAnswers.some((answer) => answer === null || answer === "")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => parseFloat(q.correctAnswer));
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => parseFloat(q.correctAnswer));
     const updatedAnswers = [...answers];
 
     let allCorrect = true;
@@ -124,7 +125,7 @@ export default function Perimetre() {
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/secondaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/primaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -150,29 +151,41 @@ export default function Perimetre() {
 
       <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {feedbackMessage && <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>{feedbackMessage}</p>}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
-{questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
-  const globalIndex = currentPage * questionsPerPage + index;
-  return (
-    <div key={globalIndex} className="mb-4">
-      <p className="text-lg font-medium">{q.questionText}</p>
-      <input
-        type="text"
-        value={answers[globalIndex] || ""}
-        onChange={(e) => handleChange(globalIndex, e.target.value)}
-        className="border p-2 w-full mt-2"
-      />
-    </div>
-  );
-})}
-
-
+      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
+        const globalIndex = currentPage * questionsPerPage + index;
+        return (
+          <div key={globalIndex} className="mb-4 w-full max-w-md">
+            <p className="text-lg font-medium">{q.questionText}</p>
+            <input
+              type="text"
+              value={answers[globalIndex] || ""}
+              onChange={(e) => handleChange(globalIndex, e.target.value)}
+              className="border p-2 w-full mt-2"
+            />
+          </div>
+        );
+      })}
 
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>Suivant</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
+          Précédent
+        </button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Valider
+        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
+          Suivant
+        </button>
       </div>
     </div>
   );
