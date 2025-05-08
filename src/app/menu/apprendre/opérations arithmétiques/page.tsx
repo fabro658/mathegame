@@ -41,7 +41,7 @@ export default function AireLearning() {
       name: "Division",
       description: "La division est une opération mathématique qui consiste à diviser un nombre par un autre.",
       formula: "A ÷ B",
-      example: "Si A = 12 et B = 3, la division donne : 12 ÷ 3 = 4",
+      example: "Si A = 6 et B = 3, la division donne : 6 ÷ 3 = 2",
       imageUrl: "/apprendre_division.jpeg",
     }
   ];
