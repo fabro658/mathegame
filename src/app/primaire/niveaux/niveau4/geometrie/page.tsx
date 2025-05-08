@@ -26,6 +26,7 @@ const ShapesPracticePage = () => {
   const [errorIndices, setErrorIndices] = useState<number[]>([]);
   const [progress, setProgress] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const generateRandomShapes = () => {
@@ -44,7 +45,6 @@ const ShapesPracticePage = () => {
     const globalIndex = currentPage * questionsPerPage + index;
     const updatedAnswers = [...answers];
 
-    // Mise à jour progression
     if (shapes[globalIndex].name === droppedName) {
       if (updatedAnswers[globalIndex] !== shapes[globalIndex].name) {
         setProgress((prev) => prev + 100 / totalQuestions);
@@ -64,6 +64,7 @@ const ShapesPracticePage = () => {
 
     const currentAnswers = answers.slice(start, end);
     const errors: number[] = [];
+    const updatedAnswers = [...answers];
 
     if (currentAnswers.includes(null)) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
@@ -77,11 +78,25 @@ const ShapesPracticePage = () => {
     }
 
     if (errors.length === 0) {
+      // ✅ Toutes les réponses sont bonnes
+      for (let i = start; i < end; i++) {
+        updatedAnswers[i] = null;
+      }
+      setAnswers(updatedAnswers);
       setErrorIndices([]);
-      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      setFeedbackMessage("Toutes les réponses sont correctes !");
+
+      if ((currentPage + 1) * questionsPerPage < totalQuestions) {
+        setTimeout(() => {
+          setCurrentPage(currentPage + 1);
+          setFeedbackMessage(null);
+        }, 1000);
+      } else {
+        setIsComplete(true);
+        setFeedbackMessage(null);
+      }
     } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-      const updatedAnswers = [...answers];
+      // ❌ Mauvaises réponses
       errors.forEach((i) => {
         if (updatedAnswers[i] === shapes[i].name) {
           setProgress((prev) => prev - 100 / totalQuestions);
@@ -90,14 +105,7 @@ const ShapesPracticePage = () => {
       });
       setAnswers(updatedAnswers);
       setErrorIndices(errors);
-    }
-  };
-
-  const handleNext = () => {
-    if ((currentPage + 1) * questionsPerPage < totalQuestions) {
-      setCurrentPage(currentPage + 1);
-      setErrorIndices([]);
-      setFeedbackMessage(null);
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
     }
   };
 
@@ -184,60 +192,65 @@ const ShapesPracticePage = () => {
         </p>
       )}
 
-      {/* Formes à associer */}
-      <div className="flex gap-8 justify-center mb-12">
-        {currentShapes.map((shape, idx) => {
-          const globalIndex = currentPage * questionsPerPage + idx;
-          return (
-            <div
-              key={idx}
-              className={`w-32 h-32 border-2 ${
-                errorIndices.includes(globalIndex) ? 'border-red-500' : 'border-gray-500'
-              } flex flex-col items-center justify-center`}
-              onDrop={(e) => {
-                e.preventDefault();
-                handleDrop(idx, e.dataTransfer.getData("name"));
-              }}
-              onDragOver={(e) => e.preventDefault()}
-            >
-              <svg width="100" height="100" viewBox="0 0 100 100">
-                {drawShape(shape.sides, shape.name)}
-              </svg>
-              <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
-              {answers[globalIndex] && (
-                <div className="mt-2 text-sm font-bold text-blue-500">{answers[globalIndex]}</div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Noms des formes à glisser */}
-      <div className="grid grid-cols-5 gap-4 mb-12">
-        {allShapes.map((shape, idx) => (
-          <div
-            key={idx}
-            className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
-            draggable
-            onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
-          >
-            {shape.name}
+      {isComplete ? (
+        <div className="text-2xl font-bold text-green-600 mt-10">
+          🎉 Félicitations ! Vous avez complété toutes les séries !
+        </div>
+      ) : (
+        <>
+          {/* Formes */}
+          <div className="flex gap-8 justify-center mb-12">
+            {currentShapes.map((shape, idx) => {
+              const globalIndex = currentPage * questionsPerPage + idx;
+              return (
+                <div
+                  key={idx}
+                  className={`w-32 h-32 border-2 ${
+                    errorIndices.includes(globalIndex) ? 'border-red-500' : 'border-gray-500'
+                  } flex flex-col items-center justify-center`}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    handleDrop(idx, e.dataTransfer.getData("name"));
+                  }}
+                  onDragOver={(e) => e.preventDefault()}
+                >
+                  <svg width="100" height="100" viewBox="0 0 100 100">
+                    {drawShape(shape.sides, shape.name)}
+                  </svg>
+                  <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
+                  {answers[globalIndex] && (
+                    <div className="mt-2 text-sm font-bold text-blue-500">{answers[globalIndex]}</div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
 
-      {/* Boutons de navigation */}
-      <div className="flex gap-4 mt-8">
-        <button onClick={handlePrevious} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={currentPage === 0}>
-          Précédent
-        </button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">
-          Valider les réponses
-        </button>
-        <button onClick={handleNext} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-          Suivant
-        </button>
-      </div>
+          {/* Réponses glissables */}
+          <div className="grid grid-cols-5 gap-4 mb-12">
+            {allShapes.map((shape, idx) => (
+              <div
+                key={idx}
+                className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
+                draggable
+                onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
+              >
+                {shape.name}
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation */}
+          <div className="flex gap-4 mt-8">
+            <button onClick={handlePrevious} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={currentPage === 0}>
+              Précédent
+            </button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">
+              Valider les réponses
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
