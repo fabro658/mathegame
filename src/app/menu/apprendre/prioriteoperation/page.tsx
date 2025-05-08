@@ -7,52 +7,75 @@ export default function PrioriteOperation() {
   const [showExample, setShowExample] = useState(false);
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-yellow-50 text-black px-4 py-8">
-      <Link
-        href="/menu/apprendre"
-        className="self-end bg-orange-500 text-white py-2 px-6 rounded font-bold mb-6"
-      >
-        Retour
-      </Link>
+    <div className="flex min-h-screen bg-gray-100 text-black">
+      {/* Colonne de gauche */}
+      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg relative">
+        <Link
+          href="/menu/apprendre"
+          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Retour
+        </Link>
 
-      <h1 className="text-4xl font-extrabold text-blue-800 mb-6 text-center">Priorité des opérations</h1>
-      
-      <p className="text-lg max-w-2xl text-center mb-8">
-        En mathématiques, il faut suivre un ordre précis pour résoudre les calculs. Cet ordre s’appelle la règle <strong>PEMDAS</strong> :
-      </p>
+        <h1 className="text-3xl font-bold mb-6 text-center">Priorité des opérations</h1>
 
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl mb-8">
-        <h2 className="text-2xl font-bold text-center mb-4">Pyramide des priorités</h2>
-        <ul className="text-lg space-y-2">
-          <li> <strong>P</strong> : Parenthèses</li>
-          <li> <strong>E</strong> : Exposants (carré, cube...)</li>
-          <li> <strong>M</strong> : Multiplication</li>
-          <li> <strong>D</strong> : Division</li>
-          <li> <strong>A</strong> : Addition</li>
-          <li> <strong>S</strong> : Soustraction</li>
-        </ul>
+        <p className="text-lg text-center mb-6">
+          Apprends l'ordre dans lequel on fait les opérations :
+        </p>
+
+        <div className="text-left text-md space-y-2">
+          <p><strong>P</strong> : Parenthèses</p>
+          <p><strong>E</strong> : Exposants</p>
+          <p><strong>M</strong> : Multiplication</p>
+          <p><strong>D</strong> : Division</p>
+          <p><strong>A</strong> : Addition</p>
+          <p><strong>S</strong> : Soustraction</p>
+        </div>
+
+        <button
+          className="mt-8 bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-700 transition-all"
+          onClick={() => setShowExample(!showExample)}
+        >
+          {showExample ? "Cacher l'exemple" : "Montrer un exemple"}
+        </button>
       </div>
 
-      <button
-        className="bg-green-500 text-white px-6 py-3 rounded font-bold hover:bg-green-700 transition-all mb-6"
-        onClick={() => setShowExample(!showExample)}
-      >
-        {showExample ? "Cacher l'exemple" : "Voir un exemple"}
-      </button>
+      {/* Colonne centrale */}
+      <div className="w-full sm:w-3/4 p-8">
+        <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
+          {!showExample && (
+            <div>
+              <h2 className="text-2xl font-bold mb-4 text-center">Règle PEMDAS</h2>
+              <p className="text-lg text-center">
+                En mathématiques, on suit toujours un ordre pour résoudre les calculs.
+                <br /> On utilise la règle appelée <strong>PEMDAS</strong>, qui donne la priorité aux opérations dans cet ordre :
+              </p>
+              <ul className="list-disc pl-8 mt-4 text-md space-y-1">
+                <li>Parenthèses</li>
+                <li>Exposants</li>
+                <li>Multiplication</li>
+                <li>Division</li>
+                <li>Addition</li>
+                <li>Soustraction</li>
+              </ul>
+            </div>
+          )}
 
-      {showExample && (
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
-          <h2 className="text-2xl font-bold mb-4">Exemple étape par étape :</h2>
-          <p className="text-lg mb-2">
-            Résolvons : <strong>2 + 3 × (4 + 1)</strong>
-          </p>
-          <ol className="list-decimal space-y-2 pl-5 text-md">
-            <li> On commence par les parenthèses : (4 + 1) = 5</li>
-            <li> On fait la multiplication : 3 × 5 = 15</li>
-            <li> On termine avec l’addition : 2 + 15 = <strong>17</strong></li>
-          </ol>
+          {showExample && (
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Exemple pas à pas :</h2>
+              <p className="text-lg mb-2">
+                Résolvons : <strong>2 + 3 × (4 + 1)</strong>
+              </p>
+              <ol className="list-decimal space-y-2 pl-6 text-md">
+                <li>On commence par les parenthèses : (4 + 1) = 5</li>
+                <li>On fait la multiplication : 3 × 5 = 15</li>
+                <li>On termine avec l’addition : 2 + 15 = <strong>17</strong></li>
+              </ol>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
