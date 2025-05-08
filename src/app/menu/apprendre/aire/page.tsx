@@ -13,7 +13,7 @@ const CarreIllustration = () => (
       <text x="25" y="110" textAnchor="middle" fontSize="14" transform="rotate(-90 25,110)">4 cm</text>
       <text x="175" y="110" textAnchor="middle" fontSize="14" transform="rotate(90 175,110)">4 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">L'aire du carré est le produit de ca base et de la hauteur :<br />4 × 4 = 16</p>
+    <p className="mt-4 font-bold text-center">L&rsquo;aire du carré est le produit de sa base et de sa hauteur :<br />4 × 4 = 16</p>
   </div>
 );
 
@@ -26,7 +26,7 @@ const RectangleIllustration = () => (
       <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
       <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">L'aire du rectangle est le produit de ca base et de la hauteur: <br />15 × 8 = 120 cm^2</p>
+    <p className="mt-4 font-bold text-center">L&rsquo;aire du rectangle est le produit de sa base et de sa hauteur :<br />15 × 8 = 120 cm²</p>
   </div>
 );
 
@@ -37,7 +37,7 @@ const TriangleIllustration = () => (
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
       <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">L'aire du triangle est le produit de ca base et de la hauteur divisé par 2 : <br />(10 × 8)/2 = 40 cm^2</p>
+    <p className="mt-4 font-bold text-center">L&rsquo;aire du triangle est le produit de sa base et de sa hauteur divisé par 2 :<br />(10 × 8)/2 = 40 cm²</p>
   </div>
 );
 
@@ -48,7 +48,7 @@ const CercleIllustration = () => (
       <line x1="150" y1="150" x2="250" y2="150" stroke="red" strokeWidth="2" />
       <text x="200" y="140" textAnchor="middle" fontSize="14" fill="red">rayon = 10 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = π × 10^2 = 314.16 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = π × 10² = 314.16 cm</p>
   </div>
 );
 
@@ -66,31 +66,31 @@ export default function PerimetreLearning() {
 
   const shapes: Shape[] = [
     {
-        name: "Carré",
-        description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
-        formula: "Périmètre = 4 × côté",
-        example: "Si le côté mesure 4 cm, le périmètre est : 4 × 4 = 16 cm",
-        imageComponent: <CarreIllustration />
-      },
+      name: "Carré",
+      description: "Le périmètre d&rsquo;un carré est calculé en multipliant la longueur de son côté par 4.",
+      formula: "Périmètre = 4 × côté",
+      example: "Si le côté mesure 4 cm, le périmètre est : 4 × 4 = 16 cm",
+      imageComponent: <CarreIllustration />
+    },
     {
       name: "Rectangle",
-      description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
-      formula: "Périmètre = base × hauteur",
-      example: "Si la base est 15 cm et la hauteur est 8 cm, l'aire est : 15 × 8 = 120 cm^2",
+      description: "Le périmètre d&rsquo;un rectangle est la somme de sa longueur et de sa largeur.",
+      formula: "Périmètre = 2 × (longueur + largeur)",
+      example: "Si la longueur est 15 cm et la largeur est 8 cm, le périmètre est : 2 × (15 + 8) = 46 cm",
       imageComponent: <RectangleIllustration />
     },
     {
       name: "Triangle",
-      description: "Le périmètre d'un triangle est la somme de ses trois côtés.",
-      formula: "Périmètre = (base × hauteur)/2",
-      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : (10 × 8)/2= 40 cm^2",
+      description: "Le périmètre d&rsquo;un triangle est la somme de ses trois côtés.",
+      formula: "Périmètre = côté 1 + côté 2 + côté 3",
+      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : 10 + 8 + 9 = 27 cm",
       imageComponent: <TriangleIllustration />
     },
     {
       name: "Cercle",
-      description: "Le périmètre (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
-      formula: "Périmètre = π × rayon^2",
-      example: "Si le rayon est 6 cm, le périmètre est : π × 10^2 = 314,16 cm",
+      description: "Le périmètre (ou circonférence) d&rsquo;un cercle est 2 fois pi multiplié par le rayon.",
+      formula: "Périmètre = 2 × π × rayon",
+      example: "Si le rayon est 10 cm, le périmètre est : 2 × π × 10 = 62,83 cm",
       imageComponent: <CercleIllustration />
     }
   ];
