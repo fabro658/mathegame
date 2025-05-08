@@ -7,9 +7,9 @@ export default function PrioriteOperation() {
   const [showExample, setShowExample] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-black">
-      {/* Colonne de gauche */}
-      <div className="w-full sm:w-1/4 bg-white p-6 shadow-lg relative">
+    <main className="flex min-h-screen bg-gray-100 text-black">
+      {/* Barre latérale */}
+      <div className="w-1/4 bg-white p-6 shadow-lg relative">
         <Link
           href="/menu/apprendre"
           className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
@@ -17,23 +17,13 @@ export default function PrioriteOperation() {
           Retour
         </Link>
 
-        {/* Bouton placé juste sous le bouton Retour */}
-        <div className="absolute top-20 right-4">
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-700 transition-all"
-            onClick={() => setShowExample(!showExample)}
-          >
-            {showExample ? "Cacher l’exemple" : "Montrer un exemple"}
-          </button>
-        </div>
-
         <h1 className="text-3xl font-bold mb-6 text-center mt-20">Priorité des opérations</h1>
 
         <p className="text-lg text-center mb-6">
           Apprends l&rsquo;ordre dans lequel on fait les opérations&nbsp;:
         </p>
 
-        <div className="text-left text-md space-y-2">
+        <div className="text-left text-md space-y-2 mb-8">
           <p><strong>P</strong> : Parenthèses</p>
           <p><strong>E</strong> : Exposants</p>
           <p><strong>M</strong> : Multiplication</p>
@@ -41,6 +31,14 @@ export default function PrioriteOperation() {
           <p><strong>A</strong> : Addition</p>
           <p><strong>S</strong> : Soustraction</p>
         </div>
+
+        {/* Bouton déplacé ici, sous l'acronyme */}
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-700 transition-all"
+          onClick={() => setShowExample(!showExample)}
+        >
+          {showExample ? "Cacher l’exemple" : "Montrer un exemple"}
+        </button>
       </div>
 
       {/* Colonne centrale */}
@@ -79,6 +77,6 @@ export default function PrioriteOperation() {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
