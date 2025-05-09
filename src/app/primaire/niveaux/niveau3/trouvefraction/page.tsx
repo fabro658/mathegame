@@ -135,7 +135,7 @@ export default function FractionIdentification() {
         Menu
       </Link>
       <Link
-        href="/primaire/niveaux/niveau1"
+        href="/primaire/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -195,7 +195,7 @@ export default function FractionIdentification() {
 
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>

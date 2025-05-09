@@ -14,7 +14,7 @@ const FractionCircle = ({ numerator, denominator, fillColors, position }: Fracti
   const radius = 50;
   const paths = [];
 
-  for (let i = 0; i < numerator; i++) {
+  for (let i = 0; i < denominator; i++) {
     const startAngle = (2 * Math.PI * i) / denominator;
     const endAngle = (2 * Math.PI * (i + 1)) / denominator;
 
@@ -32,15 +32,18 @@ const FractionCircle = ({ numerator, denominator, fillColors, position }: Fracti
       Z
     `;
 
+    const isFilled = i < numerator;
+    const fill = isFilled ? fillColors[i % fillColors.length] : "#eee";
+
     paths.push(
-      <path key={i} d={d} fill={fillColors[i % fillColors.length]} stroke="black" strokeWidth="1" />
+      <path key={i} d={d} fill={fill} stroke="black" strokeWidth="1" />
     );
   }
 
   return (
     <g transform={`translate(${position.x},${position.y})`}>
-      <circle r={radius} fill="#eee" stroke="black" strokeWidth="2" />
       {paths}
+      <circle r={radius} fill="none" stroke="black" strokeWidth="2" />
     </g>
   );
 };
