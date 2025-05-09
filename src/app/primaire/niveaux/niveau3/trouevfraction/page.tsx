@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FractionCircle } from './FractionCircle';
 import {
   FractionCircle,
   FractionIllustration_1_2,
