@@ -31,16 +31,10 @@ export default function Niveau1() {
             Soustraction de fraction
           </a>
           <a
-            href="/primaire/niveaux/niveau3/multiplicationfraction"
-            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+            href="/primaire/niveaux/niveau3/trouvefraction"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
             >
-            Multiplication de fraction
-          </a>
-          <a
-            href="/primaire/niveaux/niveau3/divisionfraction"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
-            >
-            Division de fraction
+            Trouver la fraction
           </a>
         </div>
       </div>
