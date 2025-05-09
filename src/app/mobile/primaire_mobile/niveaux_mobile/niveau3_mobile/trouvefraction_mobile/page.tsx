@@ -11,7 +11,7 @@ interface FractionCircleProps {
 }
 
 const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
-  const radius = 50;
+  const radius = 70; // ✅ Agrandi ici
   const slices = [];
 
   for (let i = 0; i < denominator; i++) {
@@ -123,13 +123,13 @@ export default function FractionIdentification() {
     <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black relative px-4 pt-20 pb-36 w-full">
       {/* Navigation */}
       <Link
-        href="/menu/apprendre"
+        href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
-        Menu
+        Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau3"
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -144,19 +144,19 @@ export default function FractionIdentification() {
       )}
 
       {/* Questions en colonne */}
-      <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
+      <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
         {denominators
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map((den, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
             return (
               <div key={questionIndex} className="flex flex-col items-center gap-2 w-full">
-                <svg width="100" height="100" viewBox="0 0 120 120" className="w-full max-w-[100px] h-auto">
-                  <FractionCircle numerator={1} denominator={den} fillColor="#9f0" position={{ x: 60, y: 60 }} />
+                <svg width="140" height="140" viewBox="0 0 160 160" className="w-full max-w-[140px] h-auto">
+                  <FractionCircle numerator={1} denominator={den} fillColor="#9f0" position={{ x: 80, y: 80 }} />
                 </svg>
                 <input
                   type="text"
-                  className={`border border-gray-400 p-2 rounded w-full max-w-[100px] text-center text-sm sm:text-lg ${
+                  className={`border border-gray-400 p-2 rounded w-full max-w-[120px] text-center text-base sm:text-lg ${
                     incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
                   }`}
                   value={answers[questionIndex] || ""}
