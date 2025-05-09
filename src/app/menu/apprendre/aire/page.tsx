@@ -54,19 +54,15 @@ const TriangleIllustration = () => (
 const TrapezeIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="300" height="200">
-      {/* Groupe pivoté à 180 degrés autour du centre (150, 100) */}
-      <g transform="rotate(180, 150, 100)">
         {/* Trapèze */}
         <polygon points="80,50 220,50 180,150 120,150" stroke="black" fill="none" strokeWidth="2" />
 
         {/* Hauteur */}
         <line x1="100" y1="50" x2="100" y2="150" stroke="red" strokeWidth="2" strokeDasharray="4" />
-
         {/* Mesures */}
         <text x="150" y="40" textAnchor="middle" fontSize="14">base1 = 14 cm</text>
         <text x="150" y="170" textAnchor="middle" fontSize="14">base2 = 6 cm</text>
         <text x="90" y="100" textAnchor="end" fontSize="14" fill="red">hauteur = 10 cm</text>
-      </g>
     </svg>
     <p className="mt-4 font-bold text-center">
       L&rsquo;aire du trapèze est :<br />
