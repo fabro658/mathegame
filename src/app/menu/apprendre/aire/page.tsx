@@ -74,36 +74,36 @@ interface Shape {
   imageComponent?: React.ReactNode;
 }
 
-export default function PerimetreLearning() {
+export default function AireLearning() {
   const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
 
   const shapes: Shape[] = [
     {
       name: "Carré",
-      description: "Le périmètre d&rsquo;un carré est calculé en multipliant la longueur de son côté par 4.",
+      description: "L'aire d'un carré est calculé en multipliant la longueur de son côté par 4.",
       formula: "Aire = base × hauteur",
       example: "Si le côté mesure 4 cm, l'aire est : 4 × 4 = 16 cm²",
       imageComponent: <CarreIllustration />
     },
     {
       name: "Rectangle",
-      description: "Le périmètre d&rsquo;un rectangle est la somme de sa longueur et de sa largeur.",
+      description: "L'aire d'un rectangle est la somme de sa longueur et de sa largeur.",
       formula: "Aire = base × hauteur",
       example: "Si la base est 15 cm et la hauteur est 8 cm, l'aire est : 15 × 8 = 120 cm²",
       imageComponent: <RectangleIllustration />
     },
     {
       name: "Triangle",
-      description: "Le périmètre d&rsquo;un triangle est la somme de ses trois côtés.",
-      formula: "Périmètre = (base × hauteur)/2",
+      description: "L'aire d'un triangle est la somme de ses trois côtés.",
+      formula: "Aire = (base × hauteur)/2",
       example: "Si la base mesure 10 cm et la hauteur 8 cm, l'aire est : (10× 8)/2 = 40 cm²",
       imageComponent: <TriangleIllustration />
     },
     {
       name: "Cercle",
-      description: "Le périmètre (ou circonférence) d&rsquo;un cercle est 2 fois pi multiplié par le rayon.",
+      description: "L'aire (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
       formula: "Aire = π × rayon²",
-      example: "Si le rayon est 10 cm, le périmètre est : π × 10^2 = 314,16 cm²",
+      example: "Si le rayon est 10 cm, l est : π × 10^2 = 314,16 cm²",
       imageComponent: <CercleIllustration />
     }
   ];
