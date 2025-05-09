@@ -131,7 +131,13 @@ export default function Soustraction() {
       <h1 className="text-4xl font-bold mb-6">Difference</h1>
 
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
           {feedbackMessage}
         </p>
       )}
