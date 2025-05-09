@@ -144,8 +144,8 @@ export default function FractionIdentification() {
       )}
 
       {/* Questions en colonne */}
-      <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
-        {denominators
+      <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black py-6 px-4">
+      {denominators
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map((den, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
