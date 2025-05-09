@@ -17,7 +17,7 @@ import {
   FractionIllustration_4_5,
   FractionIllustration_5_6,
   FractionIllustration_7_8,
-  FractionIllustration_9_10,
+  FractionIllustration_9_10
 } from './FractionCircle';
 
 const radius = 50;
