@@ -13,6 +13,7 @@ interface FractionCircleProps {
 const FractionCircle = ({ numerator, denominator, fillColors, position }: FractionCircleProps) => {
   const radius = 50;
   const paths = [];
+  const lines = [];
 
   for (let i = 0; i < denominator; i++) {
     const startAngle = (2 * Math.PI * i) / denominator;
@@ -36,13 +37,26 @@ const FractionCircle = ({ numerator, denominator, fillColors, position }: Fracti
     const fill = isFilled ? fillColors[i % fillColors.length] : "#eee";
 
     paths.push(
-      <path key={i} d={d} fill={fill} stroke="black" strokeWidth="1" />
+      <path key={`path-${i}`} d={d} fill={fill} stroke="black" strokeWidth="1" />
+    );
+
+    lines.push(
+      <line
+        key={`line-${i}`}
+        x1={0}
+        y1={0}
+        x2={x1}
+        y2={y1}
+        stroke="black"
+        strokeWidth="1"
+      />
     );
   }
 
   return (
     <g transform={`translate(${position.x},${position.y})`}>
       {paths}
+      {lines}
       <circle r={radius} fill="none" stroke="black" strokeWidth="2" />
     </g>
   );
