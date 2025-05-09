@@ -54,23 +54,27 @@ const TriangleIllustration = () => (
 const TrapezeIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="300" height="200">
-      {/* Trapèze */}
-      <polygon points="80,50 220,50 180,150 120,150" stroke="black" fill="none" strokeWidth="2" />
+      {/* Groupe pivoté à 180 degrés autour du centre (150, 100) */}
+      <g transform="rotate(180, 150, 100)">
+        {/* Trapèze */}
+        <polygon points="80,50 220,50 180,150 120,150" stroke="black" fill="none" strokeWidth="2" />
 
-      {/* Hauteur */}
-      <line x1="100" y1="50" x2="100" y2="150" stroke="red" strokeWidth="2" strokeDasharray="4" />
+        {/* Hauteur */}
+        <line x1="100" y1="50" x2="100" y2="150" stroke="red" strokeWidth="2" strokeDasharray="4" />
 
-      {/* Mesures */}
-      <text x="150" y="40" textAnchor="middle" fontSize="14">base1 = 140 cm</text>
-      <text x="150" y="170" textAnchor="middle" fontSize="14">base2 = 60 cm</text>
-      <text x="90" y="100" textAnchor="end" fontSize="14" fill="red">hauteur = 100 cm</text>
+        {/* Mesures */}
+        <text x="150" y="40" textAnchor="middle" fontSize="14">base1 = 14 cm</text>
+        <text x="150" y="170" textAnchor="middle" fontSize="14">base2 = 6 cm</text>
+        <text x="90" y="100" textAnchor="end" fontSize="14" fill="red">hauteur = 10 cm</text>
+      </g>
     </svg>
     <p className="mt-4 font-bold text-center">
       L&rsquo;aire du trapèze est :<br />
-      ((140 + 60) × 100) / 2 = 10 000 cm²
+      ((14 + 6) × 10) / 2 = 100 cm²
     </p>
   </div>
 );
+
 const CercleIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="300" height="300">
@@ -127,7 +131,7 @@ export default function AireLearning() {
       name: "Trapèze",
       description: "L'aire d'un trapèze est égale à la moyenne des deux bases multipliée par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) / 2",
-      example: "Si base1 = 140 cm, base2 = 60 cm, et hauteur = 100 cm, alors l'aire est : ((140 + 60) × 100) / 2 = 10 000 cm²",
+      example: "Si base1 = 14 cm, base2 = 6 cm, et hauteur = 10 cm, alors l'aire est : ((14 + 6) × 10) / 2 = 100 cm²",
       imageComponent: <TrapezeIllustration />
     }    
   ];
