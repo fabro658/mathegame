@@ -19,7 +19,7 @@ import {
   FractionIllustration_5_6,
   FractionIllustration_7_8,
   FractionIllustration_9_10,
-} from '@/components/FractionIllustrations';
+} from '@/FractionCircle';
 
 const radius = 50;
 const strokeWidth = 10;
