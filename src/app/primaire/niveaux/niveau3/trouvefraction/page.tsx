@@ -138,13 +138,16 @@ export default function FractionRecognitionQuiz() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
         {fractionComponents.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ component }, index) => (
-          <div key={index} className="flex flex-col items-center gap-2">
-            {component}
+          <div
+            key={index}
+            className="flex flex-col items-center justify-center bg-white p-6 rounded shadow-md"
+          >
+            <div className="w-48 h-48 flex items-center justify-center">{component}</div>
             <input
               type="text"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+              className="border border-gray-400 mt-4 p-4 rounded w-32 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index]}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
