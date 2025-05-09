@@ -11,7 +11,7 @@ interface FractionCircleProps {
 }
 
 const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
-  const radius = 50;
+  const radius = 70;
   const slices = [];
 
   for (let i = 0; i < denominator; i++) {
@@ -135,7 +135,7 @@ export default function FractionIdentification() {
         Apprendre
       </Link>
       <Link
-        href="/primaire/niveaux/niveau"
+        href="/primaire/niveaux/niveau3"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour

@@ -11,7 +11,7 @@ interface FractionCircleProps {
 }
 
 const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
-  const radius = 70; // ✅ Agrandi ici
+  const radius = 70;
   const slices = [];
 
   for (let i = 0; i < denominator; i++) {
