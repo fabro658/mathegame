@@ -87,8 +87,8 @@ export default function Addition() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 text-black py-6 px-4">
-      {/* Navigation Buttons */}
+<div className="flex flex-col items-center min-h-screen bg-gray-100 text-black py-6 px-4">
+{/* Navigation Buttons */}
       <div className="flex justify-between w-full mb-6">
         <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile">
           <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
