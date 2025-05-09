@@ -54,19 +54,20 @@ const TriangleIllustration = () => (
 const TrapezeIllustration = () => (
   <div className="flex flex-col items-center mt-6">
     <svg width="300" height="200">
-        {/* Trapèze */}
-        <polygon points="80,50 220,50 180,150 120,150" stroke="black" fill="none" strokeWidth="2" />
+      {/* Trapèze avec base du bas plus grande que celle du haut */}
+      <polygon points="120,50 180,50 220,150 80,150" stroke="black" fill="none" strokeWidth="2" />
 
-        {/* Hauteur */}
-        <line x1="100" y1="50" x2="100" y2="150" stroke="red" strokeWidth="2" strokeDasharray="4" />
-        {/* Mesures */}
-        <text x="150" y="40" textAnchor="middle" fontSize="14">base1 = 14 cm</text>
-        <text x="150" y="170" textAnchor="middle" fontSize="14">base2 = 6 cm</text>
-        <text x="90" y="100" textAnchor="end" fontSize="14" fill="red">hauteur = 10 cm</text>
+      {/* Hauteur */}
+      <line x1="150" y1="50" x2="150" y2="150" stroke="red" strokeWidth="2" strokeDasharray="4" />
+
+      {/* Mesures */}
+      <text x="150" y="40" textAnchor="middle" fontSize="14">base1 = 6 cm</text>
+      <text x="150" y="170" textAnchor="middle" fontSize="14">base2 = 14 cm</text>
+      <text x="140" y="100" textAnchor="end" fontSize="14" fill="red">hauteur = 10 cm</text>
     </svg>
     <p className="mt-4 font-bold text-center">
       L&rsquo;aire du trapèze est :<br />
-      ((14 + 6) × 10) / 2 = 100 cm²
+      ((6 + 14) × 10) / 2 = 100 cm²
     </p>
   </div>
 );
