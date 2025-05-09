@@ -120,17 +120,17 @@ export default function FractionIdentification() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black relative px-4 pt-20 pb-36 w-full">
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black px-4 pt-20 pb-10 w-full overflow-y-auto">
       {/* Navigation */}
       <Link
-        href="/menu/apprendre/fraction"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        href="/menu/apprendre"
+        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
       >
-        Apprendre
+        Menu
       </Link>
       <Link
         href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
       >
         Retour
       </Link>
@@ -169,7 +169,7 @@ export default function FractionIdentification() {
       </div>
 
       {/* Boutons */}
-      <div className="absolute bottom-6 flex gap-4 justify-center w-full px-4">
+      <div className="mt-10 flex gap-4 justify-center w-full px-4 pb-10">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-5 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Valider</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Suivant</button>
