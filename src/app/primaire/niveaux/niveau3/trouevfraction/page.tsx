@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FractionCircle } from './FractionCircle';
 import {
+  FractionCircle,
   FractionIllustration_1_2,
   FractionIllustration_1_3,
   FractionIllustration_1_4,
@@ -19,7 +20,8 @@ import {
   FractionIllustration_5_6,
   FractionIllustration_7_8,
   FractionIllustration_9_10,
-} from '@/FractionCircle';
+} from './FractionCircle';
+
 
 const radius = 50;
 const strokeWidth = 10;
