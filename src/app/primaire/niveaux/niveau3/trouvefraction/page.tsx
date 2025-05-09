@@ -169,29 +169,30 @@ export default function FractionIdentification() {
         </p>
       )}
 
-      <div className="grid grid-cols-3 gap-6">
-        {denominators
-          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-          .map((den, index) => {
-            const questionIndex = currentPage * questionsPerPage + index;
-            return (
-              <div key={questionIndex} className="flex flex-col items-center gap-2">
-                <svg width="120" height="120">
-                  <FractionCircle numerator={1} denominator={den} fillColor="#9f0" position={{ x: 60, y: 60 }} />
-                </svg>
-                <input
-                  type="text"
-                  className={`border border-gray-400 p-2 rounded w-24 text-center text-lg ${
-                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
-                  }`}
-                  value={answers[questionIndex] || ""}
-                  onChange={(e) => handleChange(questionIndex, e.target.value)}
-                  placeholder="1/n"
-                />
-              </div>
-            );
-          })}
-      </div>
+<div className="grid grid-cols-3 gap-10 items-center">
+  {denominators
+    .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+    .map((den, index) => {
+      const questionIndex = currentPage * questionsPerPage + index;
+      return (
+        <div key={questionIndex} className="flex flex-col items-center gap-4">
+          <svg width="180" height="180">
+            <FractionCircle numerator={1} denominator={den} fillColor="#9f0" position={{ x: 90, y: 90 }} />
+          </svg>
+          <input
+            type="text"
+            className={`border border-gray-400 p-2 rounded w-24 text-center text-lg ${
+              incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+            }`}
+            value={answers[questionIndex] || ""}
+            onChange={(e) => handleChange(questionIndex, e.target.value)}
+            placeholder="1/n"
+          />
+        </div>
+      );
+    })}
+</div>
+
 
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
