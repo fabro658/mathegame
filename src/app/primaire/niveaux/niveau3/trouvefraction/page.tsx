@@ -138,16 +138,16 @@ export default function FractionRecognitionQuiz() {
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-3 gap-12 w-full max-w-6xl">
         {fractionComponents.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ component }, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center bg-white p-6 rounded shadow-md"
+            className="flex flex-col items-center justify-center bg-white p-4 rounded shadow-md"
           >
-            <div className="w-48 h-48 flex items-center justify-center">{component}</div>
+            <div className="w-40 h-40 flex items-center justify-center">{component}</div>
             <input
               type="text"
-              className="border border-gray-400 mt-4 p-4 rounded w-32 text-center text-black text-lg"
+              className="border border-gray-400 mt-2 p-2 rounded w-24 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index]}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
@@ -155,7 +155,7 @@ export default function FractionRecognitionQuiz() {
         ))}
       </div>
 
-      <div className="mt-6 flex gap-4">
+      <div className="mt-8 flex gap-4">
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         {currentPage > 0 && (
           <button onClick={() => setCurrentPage(currentPage - 1)} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
