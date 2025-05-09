@@ -52,9 +52,6 @@ const FractionCircle = ({ numerator, denominator, fillColor, position }: Fractio
 export default function FractionIdentification() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
 
   const [denominators, setDenominators] = useState<number[]>([]);
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
@@ -63,12 +60,11 @@ export default function FractionIdentification() {
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
   useEffect(() => {
-    const generateDenominators = () => {
-      const values = [2, 3, 4, 5];
-      const generated = Array.from({ length: totalQuestions }, () => values[Math.floor(Math.random() * values.length)]);
-      setDenominators(generated);
-    };
-    generateDenominators();
+    const values = [2, 3, 4, 5];
+    const generated = Array.from({ length: totalQuestions }, () =>
+      values[Math.floor(Math.random() * values.length)]
+    );
+    setDenominators(generated);
   }, []);
 
   const handleChange = (index: number, value: string) => {
@@ -123,11 +119,9 @@ export default function FractionIdentification() {
     }
   };
 
-  const completedAnswers = answers.filter((a) => a !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black relative px-4 pt-20 pb-36 w-full">
+      {/* Navigation */}
       <Link
         href="/menu/apprendre"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
@@ -141,47 +135,28 @@ export default function FractionIdentification() {
         Retour
       </Link>
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
-
-      <h1 className="text-4xl font-bold mb-6">Complète la fraction</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center">Complète la fraction</h1>
 
       {feedbackMessage && (
-        <p className={`text-xl mb-4 ${feedbackMessage.includes("incorrect") ? "text-red-500" : "text-green-500"} text-center`}>
+        <p className={`text-center text-lg sm:text-xl mb-4 ${feedbackMessage.includes("incorrect") ? "text-red-500" : "text-green-600"}`}>
           {feedbackMessage}
         </p>
       )}
 
-      <div className="grid grid-cols-3 gap-6">
+      {/* Questions en colonne */}
+      <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
         {denominators
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map((den, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
             return (
-              <div key={questionIndex} className="flex flex-col items-center gap-2">
-                <svg width="120" height="120">
+              <div key={questionIndex} className="flex flex-col items-center gap-2 w-full">
+                <svg width="100" height="100" viewBox="0 0 120 120" className="w-full max-w-[100px] h-auto">
                   <FractionCircle numerator={1} denominator={den} fillColor="#9f0" position={{ x: 60, y: 60 }} />
                 </svg>
                 <input
                   type="text"
-                  className={`border border-gray-400 p-2 rounded w-24 text-center text-lg ${
+                  className={`border border-gray-400 p-2 rounded w-full max-w-[100px] text-center text-sm sm:text-lg ${
                     incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
                   }`}
                   value={answers[questionIndex] || ""}
@@ -193,10 +168,11 @@ export default function FractionIdentification() {
           })}
       </div>
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+      {/* Boutons */}
+      <div className="absolute bottom-6 flex gap-4 justify-center w-full px-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-5 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Valider</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
