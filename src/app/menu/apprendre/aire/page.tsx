@@ -75,28 +75,28 @@ export default function PerimetreLearning() {
     {
       name: "Carré",
       description: "Le périmètre d&rsquo;un carré est calculé en multipliant la longueur de son côté par 4.",
-      formula: "Périmètre = base × hauteur",
-      example: "Si le côté mesure 4 cm, le périmètre est : 4 × 4 = 16 cm²",
+      formula: "Aire = base × hauteur",
+      example: "Si le côté mesure 4 cm, l'aire est : 4 × 4 = 16 cm²",
       imageComponent: <CarreIllustration />
     },
     {
       name: "Rectangle",
       description: "Le périmètre d&rsquo;un rectangle est la somme de sa longueur et de sa largeur.",
-      formula: "Périmètre = base × hauteur",
-      example: "Si la longueur est 15 cm et la largeur est 8 cm, le périmètre est : 15 × 8 = 120 cm²",
+      formula: "Aire = base × hauteur",
+      example: "Si la base est 15 cm et la hauteur est 8 cm, l'aire est : 15 × 8 = 120 cm²",
       imageComponent: <RectangleIllustration />
     },
     {
       name: "Triangle",
       description: "Le périmètre d&rsquo;un triangle est la somme de ses trois côtés.",
       formula: "Périmètre = (base × hauteur)/2",
-      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : (10× 8)/2 = 40 cm²",
+      example: "Si la base mesure 10 cm et la hauteur 8 cm, l'aire est : (10× 8)/2 = 40 cm²",
       imageComponent: <TriangleIllustration />
     },
     {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d&rsquo;un cercle est 2 fois pi multiplié par le rayon.",
-      formula: "Périmètre = π × rayon²",
+      formula: "Aire = π × rayon²",
       example: "Si le rayon est 10 cm, le périmètre est : π × 10^2 = 314,16 cm²",
       imageComponent: <CercleIllustration />
     }
