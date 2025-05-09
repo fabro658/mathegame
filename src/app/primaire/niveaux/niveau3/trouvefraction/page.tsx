@@ -12,9 +12,9 @@ interface FractionCircleProps {
 
 const FractionCircle = ({ numerator, denominator, fillColor, position }: FractionCircleProps) => {
   const radius = 50;
-  const paths = [];
+  const slices = [];
 
-  for (let i = 0; i < numerator; i++) {
+  for (let i = 0; i < denominator; i++) {
     const startAngle = (2 * Math.PI * i) / denominator;
     const endAngle = (2 * Math.PI * (i + 1)) / denominator;
     const x1 = radius * Math.cos(startAngle);
@@ -30,15 +30,21 @@ const FractionCircle = ({ numerator, denominator, fillColor, position }: Fractio
       Z
     `;
 
-    paths.push(
-      <path key={i} d={d} fill={fillColor} stroke="black" strokeWidth="1" />
+    slices.push(
+      <path
+        key={i}
+        d={d}
+        fill={i < numerator ? fillColor : "#eee"}
+        stroke="black"
+        strokeWidth="1"
+      />
     );
   }
 
   return (
     <g transform={`translate(${position.x},${position.y})`}>
-      <circle r={radius} fill="#eee" stroke="black" strokeWidth="2" />
-      {paths}
+      {slices}
+      <circle r={radius} fill="none" stroke="black" strokeWidth="2" />
     </g>
   );
 };
@@ -58,7 +64,7 @@ export default function FractionIdentification() {
 
   useEffect(() => {
     const generateDenominators = () => {
-      const values = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const values = [2, 3, 4, 5];
       const generated = Array.from({ length: totalQuestions }, () => values[Math.floor(Math.random() * values.length)]);
       setDenominators(generated);
     };
