@@ -1,23 +1,22 @@
+"use client";
 import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-white text-gray-900 relative">
-     {/* Bouton de retour */}
-     <Link
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
+      {/* Bouton de retour en haut à droite */}
+      <Link
         href="/mobile/primaire_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold shadow"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
 
       {/* Titre */}
-      <h1 className="text-3xl font-bold mb-12 text-center mt-16 sm:mt-12">
-        Choisissez une opération
-      </h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
       {/* Boutons */}
-      <div className="flex flex-col gap-4 w-full max-w-md mx-auto px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/additionfraction_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
@@ -31,16 +30,10 @@ export default function Page() {
           Soustraction de fraction
         </a>
         <a
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/multiplicationfraction_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/trouvefraction_mobile"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
         >
-          Multiplication de fraction
-        </a>
-        <a
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/divisionfraction_mobile"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center"
-        >
-          Division de fraction
+          Trouver la fraction
         </a>
       </div>
     </div>

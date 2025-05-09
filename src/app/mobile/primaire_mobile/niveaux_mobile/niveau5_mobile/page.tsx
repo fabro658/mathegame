@@ -1,8 +1,9 @@
+"use client";
 import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"
@@ -14,8 +15,8 @@ export default function Page() {
       {/* Titre */}
       <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
 
-      {/* Boutons en une seule colonne */}
-      <div className="flex flex-col gap-8 items-center w-full max-w-md">
+      {/* Boutons */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n1_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center w-4/5"
