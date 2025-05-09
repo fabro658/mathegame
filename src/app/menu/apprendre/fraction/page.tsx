@@ -92,16 +92,32 @@ const SoustractionIllustration2 = () => (
 );
 
 const MultiplicationIllustration1 = () => (
-  <svg width="160" height="120">
-    <FractionCircle numerator={3} denominator={8} fillColors={["#ADD8E6", "#90EE90", "#90EE90"]} position={{ x: 80, y: 60 }} />
+  <svg width="500" height="130">
+    {/* 1/2 */}
+    <FractionCircle numerator={1} denominator={2} fillColors={["#ADD8E6"]} position={{ x: 60, y: 60 }} />
+
+    {/* 3/4 */}
+    <FractionCircle numerator={3} denominator={4} fillColors={["#90EE90"]} position={{ x: 180, y: 60 }} />
+
+    {/* Résultat : 3/8 */}
+    <FractionCircle numerator={3} denominator={8} fillColors={["#ADD8E6", "#90EE90", "#90EE90"]} position={{ x: 320, y: 60 }} />
   </svg>
 );
 
 const MultiplicationIllustration2 = () => (
-  <svg width="400" height="130">
-    <text x="10" y="70" fontSize="20">2/3 × 3/5 = (2×3)/(3×5) = 6/15</text>
+  <svg width="500" height="130">
+    {/* 2/3 */}
+    <FractionCircle numerator={2} denominator={3} fillColors={["#FFA07A"]} position={{ x: 60, y: 60 }} />
+
+    {/* 3/5 */}
+    <FractionCircle numerator={3} denominator={5} fillColors={["#8FBC8F"]} position={{ x: 180, y: 60 }} />
+
+    {/* Résultat : 6/15 */}
+    <FractionCircle numerator={6} denominator={15} fillColors={["#FFA07A", "#FFA07A", "#8FBC8F", "#8FBC8F", "#8FBC8F", "#8FBC8F"]} position={{ x: 320, y: 60 }} />
   </svg>
 );
+
+
 
 const DivisionIllustration1 = () => (
   <svg width="480" height="130">
