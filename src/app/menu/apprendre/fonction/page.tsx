@@ -119,7 +119,7 @@ const functionConcepts: FunctionConcept[] = [
       <>
         <p>Une fonction linéaire est une fonction dont le graphique est une droite.</p>
         <p className="mt-2">
-          Elle s’écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l'endroit où la droite coupe l’axe vertical.
+          Elle s&rsquo;écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l&apos;endroit où la droite coupe l&rsquo;axe vertical.
           Plus <strong>a</strong> est grand, plus la pente est raide.
         </p>
       </>
