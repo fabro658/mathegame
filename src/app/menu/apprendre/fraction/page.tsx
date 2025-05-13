@@ -208,12 +208,13 @@ export default function FractionOperationsLearning() {
           illustration: <DivisionIllustration1 />,
         },
         {
-          description: "Division avec réduction.",
+          description: "Pour diviser deux fractions, on inverse la deuxième fraction (appelée aussi 'multiplication par l'inverse') puis on effectue une multiplication.",
           example: "2/3 ÷ 5/6 = 2/3 × 6/5 = 12/15 = 4/5",
           illustration: <DivisionIllustration2 />,
         }
       ]
     }
+    
   ];
 
   return (
