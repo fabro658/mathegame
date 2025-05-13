@@ -26,49 +26,44 @@ export default function Perimetre() {
       };
   
       if (shapeType === 0) {
-        // Carré : aire = côté²
         const side = randomFloat(5, 20);
-        questionText = `Quelle est l'aire d'un carré dont le côté mesure ${side} cm ?`;
+        questionText = `Quelle est l&rsquo;aire d&rsquo;un carré dont le côté mesure ${side} cm ?`;
         correctAnswer = side * side;
       } else if (shapeType === 1) {
-        // Rectangle : aire = longueur × largeur
         const length = randomFloat(10, 30);
         const width = randomFloat(5, 20);
-        questionText = `Quelle est l'aire d'un rectangle de ${length} cm de long et ${width} cm de large ?`;
+        questionText = `Quelle est l&rsquo;aire d&rsquo;un rectangle de ${length} cm de long et ${width} cm de large ?`;
         correctAnswer = length * width;
       } else if (shapeType === 2) {
-        // Triangle : aire = (base × hauteur) / 2
         const base = randomFloat(8, 25);
         const height = randomFloat(5, 20);
         questionText = `Un triangle a une base de ${base} cm et une hauteur de ${height} cm. Quelle est son aire ?`;
         correctAnswer = (base * height) / 2;
       } else if (shapeType === 3) {
-        // Losange : aire = (diagonale1 × diagonale2) / 2
         const d1 = randomFloat(6, 20);
         const d2 = randomFloat(6, 20);
-        questionText = `Quelle est l'aire d'un losange dont les diagonales mesurent ${d1} cm et ${d2} cm ?`;
+        questionText = `Quelle est l&rsquo;aire d&rsquo;un losange dont les diagonales mesurent ${d1} cm et ${d2} cm ?`;
         correctAnswer = (d1 * d2) / 2;
       } else if (shapeType === 4) {
-        // Parallélogramme : aire = base × hauteur
         const base = randomFloat(10, 30);
         const height = randomFloat(5, 15);
-        questionText = `Détermine l'aire d'un parallélogramme ayant une base de ${base} cm et une hauteur de ${height} cm.`;
+        questionText = `D&eacute;termine l&rsquo;aire d&rsquo;un parall&eacute;logramme ayant une base de ${base} cm et une hauteur de ${height} cm.`;
         correctAnswer = base * height;
       } else if (shapeType === 5) {
-        // Trapèze : aire = (base1 + base2) × hauteur / 2
         const base1 = randomFloat(8, 25);
         const base2 = randomFloat(8, 25);
         const height = randomFloat(5, 15);
-        questionText = `Un trapèze a deux bases de ${base1} cm et ${base2} cm, ainsi qu'une hauteur de ${height} cm. Quelle est son aire ?`;
+        questionText = `Un trap&egrave;ze a deux bases de ${base1} cm et ${base2} cm, ainsi qu&rsquo;une hauteur de ${height} cm. Quelle est son aire ?`;
         correctAnswer = ((base1 + base2) * height) / 2;
       }
   
       return {
         questionText,
-        correctAnswer: correctAnswer.toFixed(2), // cm²
+        correctAnswer: correctAnswer.toFixed(2),
       };
     });
   };
+  
   
 
   // Générer les questions dès le chargement
