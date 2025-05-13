@@ -94,16 +94,41 @@ const ExponentialFunctionVisual = () => {
 
 const StepFunctionVisual = () => {
   const steps = Array.from({ length: 20 }, (_, i) => {
-    const x1 = i - 10;
-    const x2 = x1 + 1;
-    const y = -Math.floor(x1);
+    const x = i - 10;
+    const y = -Math.floor(x); // l’axe Y est inversé dans le SVG
     return (
       <g key={i}>
-        <line x1={x1} y1={y} x2={x2} y2={y} stroke="purple" strokeWidth="0.2" />
-        <line x1={x2} y1={y} x2={x2} y2={y - 0.1} stroke="purple" strokeWidth="0.2" />
+        {/* Marche horizontale */}
+        <line
+          x1={x}
+          y1={y}
+          x2={x + 1}
+          y2={y}
+          stroke="purple"
+          strokeWidth="0.2"
+        />
+
+        {/* Point fermé à gauche (inclusif) */}
+        <circle
+          cx={x}
+          cy={y}
+          r={0.15}
+          fill="black"
+        />
+
+        {/* Point ouvert à droite (exclusif) */}
+        <circle
+          cx={x + 1}
+          cy={y}
+          r={0.15}
+          fill="white"
+          stroke="black"
+          strokeWidth="0.1"
+        />
       </g>
     );
   });
+
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
       <Axes />
@@ -131,7 +156,7 @@ const functionConcepts: FunctionConcept[] = [
   {
     name: "Fonction quadratique",
     description:
-      "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas. Elle modélise des situations où les changements ne sont pas constants, comme un objet qui tombe ou une trajectoire courbe.",
+      "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas.",
     formula: "f(x) = x²",
     example: "f(3) = 3² = 9",
     visual: <QuadraticFunctionVisual />,
@@ -139,7 +164,7 @@ const functionConcepts: FunctionConcept[] = [
   {
     name: "Fonction valeur absolue",
     description:
-      "La fonction valeur absolue donne toujours un résultat positif ou nul. Elle mesure la distance d’un nombre à zéro sur la droite des réels, sans se soucier du signe. Le graphique a une forme de 'V' symétrique par rapport à l’axe vertical.",
+      "La fonction valeur absolue donne toujours un résultat positif ou nul.",
     formula: "f(x) = |x|",
     example: "f(-5) = |-5| = 5",
     visual: <AbsoluteFunctionVisual />,
@@ -147,7 +172,7 @@ const functionConcepts: FunctionConcept[] = [
   {
     name: "Fonction exponentielle",
     description:
-      "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement. C’est une fonction utilisée en économie, biologie ou physique, notamment pour modéliser la croissance d'une population ou la radioactivité.",
+      "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement.",
     formula: "f(x) = 2ˣ",
     example: "f(3) = 2³ = 8",
     visual: <ExponentialFunctionVisual />,
