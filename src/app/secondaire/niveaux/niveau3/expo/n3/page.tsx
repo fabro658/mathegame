@@ -4,13 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ExponentsLevel3() {
-  const totalQuestions = 36; // Nombre total de questions
+  const totalQuestions = 30; // Nombre total de questions
   const questionsPerPage = 6; // 6 questions par page
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   // Génération des questions pour le niveau 3
@@ -77,13 +75,10 @@ export default function ExponentsLevel3() {
     });
 
     setAnswers(updatedAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
 
     if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
-        setIsValidated(false);
       }, 1500);
     }
   };
@@ -91,62 +86,41 @@ export default function ExponentsLevel3() {
   const handleNextPage = (): void => {
     if (currentPage < totalQuestions / questionsPerPage - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Bouton Apprendre visible sur mobile uniquement */}
-      <Link
-        href="/menu/apprendre/exposant"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold sm:hidden"
-      >
+      <Link href="/menu/apprendre" 
+      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      
-      {/* Bouton Retour visible sur ordinateur uniquement */}
-      <Link
-        href="/secondaire/niveaux/niveau3/expo"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold hidden sm:block"
-      >
+      <Link href="/secondaire/niveaux/niveau3" 
+      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
-      {/* Barre de progression circulaire visible uniquement sur ordinateur */}
-      <div className="absolute top-4 left-4 w-32 h-32 hidden sm:block">
+      <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={50} fill="none" stroke="#e5e5e5" strokeWidth={10} />
           <circle
             cx="50%"
             cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
+            r={50}
             fill="none"
             stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            strokeWidth={10}
+            strokeDasharray={2 * Math.PI * 50}
+            strokeDashoffset={2 * Math.PI * 50 - (2 * Math.PI * 50 * completionPercentage) / 100}
             className="transition-all duration-500"
           />
         </svg>
@@ -157,73 +131,45 @@ export default function ExponentsLevel3() {
 
       <h1 className="text-3xl font-bold mb-6">Niveau 3</h1>
 
-      {!isValidated && (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, idx) => (
-              <div key={idx} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + idx] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText }, idx) => (
+            <div key={idx} className="flex flex-col items-start gap-2">
+              <div className="font-bold text-black">{questionText}</div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-4 rounded w-full sm:w-32 text-center text-black text-lg"
+                value={answers[currentPage * questionsPerPage + idx] || ""}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + idx, e.target.value)}
+              />
             </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+          ))}
+      </div>
+
+      <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto">
+        <button
+          onClick={handlePreviousPage}
+          className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
+          disabled={currentPage === 0}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleValidation}
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Valider les réponses
+        </button>
+        <button
+          onClick={handleNextPage}
+          className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
+          disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+        >
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }

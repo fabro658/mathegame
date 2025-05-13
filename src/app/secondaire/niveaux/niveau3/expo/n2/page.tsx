@@ -35,7 +35,7 @@ export default function ExponentsPractice() {
           }
         }
 
-        questionText = `Que vaut n si ${base}ⁿ = ${Math.pow(base, exponent)}`;
+        questionText = `n = ? si ${base}ⁿ = ${Math.pow(base, exponent)}`;
         correctAnswer = exponent.toString();
 
         return { questionText, correctAnswer };
@@ -111,7 +111,7 @@ export default function ExponentsPractice() {
       className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/secondaire/niveaux/niveau3/expo" 
+      <Link href="/secondaire/niveaux/niveau3" 
       className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
