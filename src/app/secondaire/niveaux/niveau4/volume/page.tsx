@@ -3,152 +3,151 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Volume() {
-  const totalQuestions = 36; // 30 questions au total
-  const questionsPerPage = 3; // 3 questions par vague
+export default function Perimetre() {
+  const totalQuestions = 30;
+  const questionsPerPage = 3;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]); // Typage explicite
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
+  const generateQuestionsSecondaire = () => {
+    return Array.from({ length: totalQuestions }, () => {
+      const shapeType = Math.floor(Math.random() * 6); // 6 solides
+      let questionText = "";
+      let correctAnswer = 0;
+  
+      const randomFloat = (min: number, max: number, decimals: number = 1) => {
+        return parseFloat((Math.random() * (max - min) + min).toFixed(decimals));
+      };
+  
+      if (shapeType === 0) {
+        // Cube : V = côté³
+        const side = randomFloat(2, 10);
+        questionText = `Calcule le volume d'un cube dont le côté mesure ${side} cm.`;
+        correctAnswer = side ** 3;
+      } else if (shapeType === 1) {
+        // Pavé droit : V = L × l × h
+        const length = randomFloat(5, 15);
+        const width = randomFloat(3, 10);
+        const height = randomFloat(2, 10);
+        questionText = `Un pavé droit mesure ${length} cm de long, ${width} cm de large et ${height} cm de haut. Quel est son volume ?`;
+        correctAnswer = length * width * height;
+      } else if (shapeType === 2) {
+        // Cylindre : V = π × r² × h
+        const radius = randomFloat(2, 8);
+        const height = randomFloat(5, 15);
+        questionText = `Calcule le volume d'un cylindre de rayon ${radius} cm et de hauteur ${height} cm (utilise π ≈ 3.14).`;
+        correctAnswer = 3.14 * radius ** 2 * height;
+      } else if (shapeType === 3) {
+        // Prisme triangulaire : V = (base × hauteur_tri) / 2 × hauteur_prisme
+        const base = randomFloat(3, 10);
+        const heightTri = randomFloat(3, 10);
+        const heightPrism = randomFloat(4, 12);
+        questionText = `Un prisme a pour base un triangle de base ${base} cm et de hauteur ${heightTri} cm. Sa hauteur est de ${heightPrism} cm. Calcule son volume.`;
+        correctAnswer = (base * heightTri) / 2 * heightPrism;
+      } else if (shapeType === 4) {
+        // Pyramide à base carrée : V = (côté² × h) / 3
+        const base = randomFloat(4, 10);
+        const height = randomFloat(5, 15);
+        questionText = `Une pyramide a une base carrée de côté ${base} cm et une hauteur de ${height} cm. Quel est son volume ?`;
+        correctAnswer = (base ** 2 * height) / 3;
+      } else {
+        // Cône : V = (π × r² × h) / 3
+        const radius = randomFloat(2, 6);
+        const height = randomFloat(5, 12);
+        questionText = `Un cône a un rayon de ${radius} cm et une hauteur de ${height} cm. Calcule son volume (utilise π ≈ 3.14).`;
+        correctAnswer = (3.14 * radius ** 2 * height) / 3;
+      }
+  
+      return {
+        questionText,
+        correctAnswer: correctAnswer.toFixed(2), // arrondi à 2 décimales
+      };
+    });
+  };  
+
+  // Générer les questions dès le chargement
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, () => {
-        const shapeType = Math.floor(Math.random() * 4);
-        let questionText = "";
-        let correctAnswer = 0;
-
-        if (shapeType === 0) { // Cube
-          const side = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le volume d'un cube de côté ${side} cm ?`;
-          correctAnswer = Math.pow(side, 3);
-        } else if (shapeType === 1) { // Sphère
-          const radius = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le volume d'une sphère de rayon ${radius} cm ? (π = 3.14)`;
-          correctAnswer = (4 / 3) * Math.PI * Math.pow(radius, 3);
-        } else if (shapeType === 2) { // Cône
-          const radius = Math.floor(Math.random() * 10) + 1;
-          const height = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le volume d'un cône de rayon ${radius} cm et de hauteur ${height} cm ? (π = 3.14)`;
-          correctAnswer = (1 / 3) * Math.PI * Math.pow(radius, 2) * height;
-        } else { // Cylindre
-          const radius = Math.floor(Math.random() * 10) + 1;
-          const height = Math.floor(Math.random() * 10) + 1;
-          questionText = `Quel est le volume d'un cylindre de rayon ${radius} cm et de hauteur ${height} cm ? (π = 3.14)`;
-          correctAnswer = Math.PI * Math.pow(radius, 2) * height;
-        }
-
-        return {
-          questionText,
-          correctAnswer: correctAnswer.toFixed(2),
-        };
-      });
-    };
-
-    setQuestions(generateQuestions());
+    setQuestions(generateQuestionsSecondaire());
   }, []);
 
-  // Gestion des changements de réponses
-  const handleChange = (index: number, value: string): void => {
+  const completionPercentage = Math.round(
+    (answers.filter((answer) => answer !== null && answer !== "").length / totalQuestions) * 100
+  );
+
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
+    newAnswers[index] = value.trim() !== "" ? value : null;
     setAnswers(newAnswers);
+    setFeedbackMessage(null);
   };
 
-  // Validation des réponses
-  const handleValidation = (): void => {
+  const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
-    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q: { correctAnswer: string }) => q.correctAnswer);
 
-    // Vérifier si toutes les réponses sont remplies
-    const allAnswersFilled = pageAnswers.every((answer) => answer && answer.trim() !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez remplir toutes les réponses avant de valider.");
-      return; // Empêche la validation si des réponses sont vides
+    if (pageAnswers.some((answer) => answer === null || answer === "")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      return;
     }
 
-    // Vérifier les réponses avec une marge d'erreur
-    const marginOfError = 0.01;
-    let allCorrect = true;
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => parseFloat(q.correctAnswer));
     const updatedAnswers = [...answers];
 
+    let allCorrect = true;
     pageAnswers.forEach((answer, index) => {
-      const userAnswer = parseFloat(answer || "0");
-      const correctAnswer = parseFloat(pageCorrectAnswers[index]);
-
-      if (Math.abs(userAnswer - correctAnswer) > marginOfError) {
-        updatedAnswers[startIndex + index] = null; // Effacer la réponse incorrecte
+      if (parseFloat(answer || "0") !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null;
         allCorrect = false;
       }
     });
 
-    setAnswers(updatedAnswers); // Mettre à jour les réponses
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+    setAnswers(updatedAnswers);
 
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      // Passer à la série suivante si toutes les réponses sont correctes
-      setTimeout(() => {
+    if (allCorrect) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
         setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500); // Attendre un peu avant de passer à la série suivante pour l'effet
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     }
   };
 
-  // Navigation entre les pages de questions
-  const handleNextPage = (): void => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-    }
-  };
-
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
+      setFeedbackMessage(null);
     }
   };
 
-  // Calcul de la progression
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
-  // Variables pour la barre circulaire
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
-  const circumference = 2 * Math.PI * radius;
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/menu/apprendre/volume"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
+      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link
-        href="/secondaire/niveaux/niveau4"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
+      <Link href="/secondaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#e5e5e5"
-            strokeWidth={strokeWidth}
-          />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
@@ -166,76 +165,44 @@ export default function Volume() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le volume</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {/* Affichage des questions */}
-      {!isValidated && (
-        <>
-          <div className="flex flex-col gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-              <div key={index} className="flex flex-col items-start gap-2">
-                <div className="font-bold text-black">{questionText}</div>
-                <input
-                  type="text"
-                  inputMode="text"
-                  className="border border-gray-400 p-6 rounded w-96 text-center text-black text-lg mx-auto"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            /incorrectes|remplir toutes les réponses/i.test(feedbackMessage) ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
       )}
 
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
+        const globalIndex = currentPage * questionsPerPage + index;
+        return (
+          <div key={globalIndex} className="mb-4 w-full max-w-md">
+            <p className="text-lg font-medium">{q.questionText}</p>
+            <input
+              type="text"
+              value={answers[globalIndex] || ""}
+              onChange={(e) => handleChange(globalIndex, e.target.value)}
+              className="border p-2 w-full mt-2"
+            />
+          </div>
+        );
+      })}
+
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
+          Précédent
+        </button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Valider
+        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }
