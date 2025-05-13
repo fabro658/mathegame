@@ -11,7 +11,7 @@ interface FunctionConcept {
   visual: React.ReactNode;
 }
 
-// 🔁 Composant réutilisable pour les axes
+// Composant réutilisable pour les axes
 const Axes = () => (
   <>
     <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" strokeWidth="0.05" />
@@ -19,7 +19,7 @@ const Axes = () => (
   </>
 );
 
-// 📈 Fonctions visuelles
+//Fonctions visuelles
 
 const LinearFunctionVisual = () => (
   <svg width="300" height="300" viewBox="-10 -10 20 20">
@@ -112,47 +112,49 @@ const StepFunctionVisual = () => {
   );
 };
 
-// 📚 Données de concepts
-
 const functionConcepts: FunctionConcept[] = [
   {
     name: "Fonction linéaire",
-    description: "Une fonction linéaire est de la forme f(x) = ax + b.",
+    description:
+      "Une fonction linéaire est une fonction dont le graphique est une droite. Elle s’écrit sous la forme f(x) = ax + b, où 'a' est le coefficient directeur (la pente) et 'b' est l’ordonnée à l’origine (là où la droite coupe l’axe vertical). Plus 'a' est grand, plus la pente est raide.",
     formula: "f(x) = 2x + 1",
     example: "f(4) = 2(4) + 1 = 9",
     visual: <LinearFunctionVisual />,
   },
   {
     name: "Fonction quadratique",
-    description: "Fonction polynomiale de degré 2 : parabole.",
+    description:
+      "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas. Elle modélise des situations où les changements ne sont pas constants, comme un objet qui tombe ou une trajectoire courbe.",
     formula: "f(x) = x²",
     example: "f(3) = 3² = 9",
     visual: <QuadraticFunctionVisual />,
   },
   {
     name: "Fonction valeur absolue",
-    description: "Retourne toujours une valeur positive.",
+    description:
+      "La fonction valeur absolue donne toujours un résultat positif ou nul. Elle mesure la distance d’un nombre à zéro sur la droite des réels, sans se soucier du signe. Le graphique a une forme de 'V' symétrique par rapport à l’axe vertical.",
     formula: "f(x) = |x|",
     example: "f(-5) = |-5| = 5",
     visual: <AbsoluteFunctionVisual />,
   },
   {
     name: "Fonction exponentielle",
-    description: "Croissance rapide selon la base.",
+    description:
+      "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement. C’est une fonction utilisée en économie, biologie ou physique, notamment pour modéliser la croissance d'une population ou la radioactivité.",
     formula: "f(x) = 2ˣ",
     example: "f(3) = 2³ = 8",
     visual: <ExponentialFunctionVisual />,
-  },  
+  },
   {
     name: "Fonction en escalier (partie entière)",
-    description: "Arrondit à l’entier inférieur.",
+    description:
+      "La fonction en escalier, ou fonction partie entière, associe à chaque nombre le plus grand entier inférieur ou égal à ce nombre. Par exemple, f(3.7) = 3. Son graphique ressemble à des marches, d'où le nom « fonction en escalier ».",
     formula: "f(x) = ⌊x⌋",
     example: "f(3.7) = 3",
     visual: <StepFunctionVisual />,
   }
 ];
-
-// 🧠 Composant principal
+// Composant principal
 
 export default function FonctionLearning() {
   const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
