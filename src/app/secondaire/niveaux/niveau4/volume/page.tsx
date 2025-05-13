@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Perimetre() {
+export default function Volume() {
   const totalQuestions = 30;
   const questionsPerPage = 3;
   const radius = 50;
