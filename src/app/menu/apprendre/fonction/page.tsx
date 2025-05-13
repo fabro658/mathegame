@@ -11,27 +11,45 @@ interface FunctionConcept {
   visual: React.ReactNode;
 }
 
-// ➕ FONCTIONS SVG VISUELLES
+// 🔁 Composant réutilisable pour les axes
+const Axes = () => (
+  <>
+    <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" strokeWidth="0.05" />
+    <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" strokeWidth="0.05" />
+  </>
+);
+
+// 📈 Fonctions visuelles
 
 const LinearFunctionVisual = () => (
   <svg width="300" height="300" viewBox="-10 -10 20 20">
-    <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" />
-    <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" />
-    <line x1="-5" y1={-(2 * -5 + 1)} x2="5" y2={-(2 * 5 + 1)} stroke="blue" strokeWidth="0.2" />
+    <Axes />
+    <line
+      x1="-5"
+      y1={-(2 * -5 + 1)}
+      x2="5"
+      y2={-(2 * 5 + 1)}
+      stroke="blue"
+      strokeWidth="0.2"
+    />
   </svg>
 );
 
 const QuadraticFunctionVisual = () => {
   const points = Array.from({ length: 201 }, (_, i) => {
     const x = (i - 100) / 10;
-    const y = -(x * x);
+    const y = -x * x;
     return `${x},${y}`;
   }).join(" ");
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" />
-      <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" />
-      <polyline fill="none" stroke="green" strokeWidth="0.2" points={points} />
+      <Axes />
+      <polyline
+        fill="none"
+        stroke="green"
+        strokeWidth="0.2"
+        points={points}
+      />
     </svg>
   );
 };
@@ -44,9 +62,13 @@ const AbsoluteFunctionVisual = () => {
   }).join(" ");
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" />
-      <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" />
-      <polyline fill="none" stroke="orange" strokeWidth="0.2" points={points} />
+      <Axes />
+      <polyline
+        fill="none"
+        stroke="orange"
+        strokeWidth="0.2"
+        points={points}
+      />
     </svg>
   );
 };
@@ -59,9 +81,13 @@ const ExponentialFunctionVisual = () => {
   }).join(" ");
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" />
-      <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" />
-      <polyline fill="none" stroke="red" strokeWidth="0.2" points={points} />
+      <Axes />
+      <polyline
+        fill="none"
+        stroke="red"
+        strokeWidth="0.2"
+        points={points}
+      />
     </svg>
   );
 };
@@ -80,14 +106,13 @@ const StepFunctionVisual = () => {
   });
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" />
-      <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" />
+      <Axes />
       {steps}
     </svg>
   );
 };
 
-// 📚 LISTE DES CONCEPTS
+// 📚 Données de concepts
 
 const functionConcepts: FunctionConcept[] = [
   {
@@ -127,7 +152,7 @@ const functionConcepts: FunctionConcept[] = [
   }
 ];
 
-// 🧠 COMPOSANT PRINCIPAL
+// 🧠 Composant principal
 
 export default function FonctionLearning() {
   const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
@@ -161,7 +186,7 @@ export default function FonctionLearning() {
         </div>
       </div>
 
-      {/* Zone principale */}
+      {/* Section centrale */}
       <div className="w-3/4 p-10 flex flex-col items-center">
         {selectedConcept && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
