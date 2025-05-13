@@ -22,12 +22,12 @@ export default function ComparerEntiers() {
   
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
-      const number1 = Math.floor(Math.random() * 100) + 1;
-      const number2 = Math.floor(Math.random() * 100) + 1;
+      const number1 = Math.floor(Math.random() * 201) - 100; // de -100 à 100
+      const number2 = Math.floor(Math.random() * 201) - 100;
       const correctAnswer = number1 > number2 ? ">" : number1 < number2 ? "<" : "=";
       return { type: "compare", numbers: [number1, number2], correctAnswer };
     });
-  };
+  };  
 
   useEffect(() => {
     setQuestions(generateQuestions());
@@ -169,9 +169,9 @@ export default function ComparerEntiers() {
       </div>
 
       <div className="mt-6 flex gap-4">
+      <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
