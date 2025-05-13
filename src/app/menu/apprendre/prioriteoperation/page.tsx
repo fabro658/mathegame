@@ -65,8 +65,8 @@ export default function PrioriteOperation() {
           )}
 
           {showExample && (
-            <div className="space-y-6">
-              {exampleIndex === 1 && (
+            <div className="space-y-6 min-h-[400px] flex flex-col justify-between">
+            {exampleIndex === 1 && (
                 <div>
                   <h2 className="text-2xl font-bold mb-4">Exemple 1&nbsp;: sans exposants</h2>
                   <p className="text-lg mb-2">
