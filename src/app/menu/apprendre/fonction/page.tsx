@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface FunctionConcept {
   name: string;
-  description: string;
+  description: React.ReactNode;
   formula: string;
   example: string;
   visual: React.ReactNode;
@@ -115,12 +115,19 @@ const StepFunctionVisual = () => {
 const functionConcepts: FunctionConcept[] = [
   {
     name: "Fonction linéaire",
-    description:
-      "Une fonction linéaire est une fonction dont le graphique est une droite. Elle s’écrit sous la forme f(x) = ax + b, où 'a' est le coefficient directeur (la pente) et 'b' est l’ordonnée à l’origine (là où la droite coupe l’axe vertical). Plus 'a' est grand, plus la pente est raide.",
+    description: (
+      <>
+        <p>Une fonction linéaire est une fonction dont le graphique est une droite.</p>
+        <p className="mt-2">
+          Elle s’écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l'endroit où la droite coupe l’axe vertical.
+          Plus <strong>a</strong> est grand, plus la pente est raide.
+        </p>
+      </>
+    ),
     formula: "f(x) = 2x + 1",
     example: "f(4) = 2(4) + 1 = 9",
     visual: <LinearFunctionVisual />,
-  },
+  },  
   {
     name: "Fonction quadratique",
     description:
