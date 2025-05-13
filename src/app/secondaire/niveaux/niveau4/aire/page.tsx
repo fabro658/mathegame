@@ -165,7 +165,7 @@ export default function Perimetre() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
+      <h1 className="text-3xl font-bold mb-6">Questions sur l'aire</h1>
 
       {feedbackMessage && (
         <p
