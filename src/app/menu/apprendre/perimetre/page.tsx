@@ -26,7 +26,7 @@ const RectangleIllustration = () => (
       <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
       <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 2 × (15 + 8) = 46 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 15 + 8 + 15 + = 46 cm</p>
   </div>
 );
 
@@ -76,7 +76,7 @@ export default function PerimetreLearning() {
     {
       name: "Rectangle",
       description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
-      formula: "Périmètre = 2 × (longueur + largeur)",
+      formula: "Périmètre = 2 × (base + hauteur)",
       example: "Si la longueur est 15 cm et la largeur est 8 cm, le périmètre est : 2 × (15 + 8) = 46 cm",
       imageComponent: <RectangleIllustration />
     },

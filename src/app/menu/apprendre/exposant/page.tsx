@@ -10,7 +10,6 @@ interface ExponentConcept {
   description: string;
   formula: string;
   example: string;
-  imageUrl: string; // URL de l'image pour chaque concept
 }
 
 export default function ExponentsLearning() {
@@ -22,35 +21,30 @@ export default function ExponentsLearning() {
       description: "Lorsque les bases sont identiques, on additionne les exposants.",
       formula: "aⁿ × aᵐ = aⁿ⁺ᵐ",
       example: "Exemple : 2³ × 2² = 2³⁺² = 2⁵ = 32",
-      imageUrl: "/images/multiplication.png", // Image à remplacer
     },
     {
       name: "Division d'exposants",
       description: "Lorsque les bases sont identiques, on soustrait les exposants.",
       formula: "aⁿ ÷ aᵐ = aⁿ⁻ᵐ",
       example: "Exemple : 2⁵ ÷ 2² = 2⁵⁻² = 2³ = 8",
-      imageUrl: "/images/division.png", // Image à remplacer
     },
     {
       name: "Puissance d'une puissance",
       description: "On multiplie les exposants lorsqu'une puissance est élevée à une autre.",
-      formula: "(aⁿ)ᵐ = aⁿ×ᵐ",
-      example: "Exemple : (2³)² = 2³×² = 2⁶ = 64",
-      imageUrl: "/images/puissance.png", // Image à remplacer
+      formula: "(aⁿ)ᵐ = aⁿˣᵐ = aⁿᵐ",
+      example: "Exemple : (2³)² = 2³ˣ² = 2⁶ = 64",
     },
     {
       name: "Exposant zéro",
       description: "Tout nombre élevé à la puissance zéro est égal à 1, sauf 0⁰ qui est indéfini.",
       formula: "a⁰ = 1 (pour a ≠ 0)",
       example: "Exemple : 5⁰ = 1",
-      imageUrl: "/images/exposant-zero.png", // Image à remplacer
     },
     {
       name: "Exposant négatif",
       description: "Un exposant négatif correspond à l'inverse du nombre élevé à l'exposant positif.",
       formula: "a⁻ⁿ = 1 / aⁿ",
       example: "Exemple : 2⁻³ = 1 / 2³ = 1 / 8",
-      imageUrl: "/images/exposant-negatif.png", // Image à remplacer
     },
   ];
 
@@ -96,17 +90,6 @@ export default function ExponentsLearning() {
             <p className="text-lg mb-4">{selectedConcept.formula}</p>
             <p className="text-lg font-bold mb-2">Exemple :</p>
             <p className="text-lg">{selectedConcept.example}</p>
-
-            {/* Afficher l'image */}
-            <div className="mt-6 flex justify-center">
-              <Image 
-                src={selectedConcept.imageUrl} 
-                alt={selectedConcept.name} 
-                width={192} 
-                height={192} 
-                className="object-contain"
-              />
-            </div>
           </div>
         )}
       </div>
