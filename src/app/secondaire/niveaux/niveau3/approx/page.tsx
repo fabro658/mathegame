@@ -7,22 +7,24 @@ export default function Arrondissement() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
 
-  const generateQuestions = () => {
-    return Array.from({ length: totalQuestions }, () => {
-      const number = parseFloat((Math.random() * 100).toFixed(2)); // nombre avec 2 décimales
+  const [questions, setQuestions] = useState<{ text: string; correctAnswer: number }[]>([]);
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [isValidated, setIsValidated] = useState(false);
+  const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Générer les questions une seule fois au chargement
+  useEffect(() => {
+    const generated = Array.from({ length: totalQuestions }, () => {
+      const number = parseFloat((Math.random() * 100).toFixed(2)); // 2 décimales
       const rounded = parseFloat(number.toFixed(1)); // arrondi au dixième
       return {
         text: number.toFixed(2),
         correctAnswer: rounded,
       };
     });
-  };
-
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState(generateQuestions());
+    setQuestions(generated);
+  }, []);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
