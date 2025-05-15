@@ -27,35 +27,35 @@ export default function Perimetre() {
   
       if (shapeType === 0) {
         const side = randomFloat(5, 20);
-        questionText = "Quelle est l&aposaire d&aposun carré dont le côté mesure ${side} cm ?";
+        questionText = `Quelle est l&apos;aire d&apos;un carré dont le côté mesure ${side} cm ?`;
         correctAnswer = side * side;
       } else if (shapeType === 1) {
         const length = randomFloat(10, 30);
         const width = randomFloat(5, 20);
-        questionText = "Quelle est l&aposaire d&aposun rectangle de ${length} cm de long et ${width} cm de large ?";
+        questionText = `Quelle est l&apos;aire d&apos;un rectangle de ${length} cm de long et ${width} cm de large ?`;
         correctAnswer = length * width;
       } else if (shapeType === 2) {
         const base = randomFloat(8, 25);
         const height = randomFloat(5, 20);
-        questionText = "Un triangle a une base de ${base} cm et une hauteur de ${height} cm. Quelle est son aire ?";
+        questionText = `Un triangle a une base de ${base} cm et une hauteur de ${height} cm. Quelle est son aire ?`;
         correctAnswer = (base * height) / 2;
       } else if (shapeType === 3) {
         const d1 = randomFloat(6, 20);
         const d2 = randomFloat(6, 20);
-        questionText = "Quelle est l&aposaire d&aposun losange dont les diagonales mesurent ${d1} cm et ${d2} cm ?";
+        questionText = `Quelle est l&apos;aire d&apos;un losange dont les diagonales mesurent ${d1} cm et ${d2} cm ?`;
         correctAnswer = (d1 * d2) / 2;
       } else if (shapeType === 4) {
         const base = randomFloat(10, 30);
         const height = randomFloat(5, 15);
-        questionText = "D&eacute;termine l&aposaire d&aposun parall&eacute;logramme ayant une base de ${base} cm et une hauteur de ${height} cm.";
+        questionText = `Détermine l&apos;aire d&apos;un parallélogramme ayant une base de ${base} cm et une hauteur de ${height} cm.`;
         correctAnswer = base * height;
       } else if (shapeType === 5) {
         const base1 = randomFloat(8, 25);
         const base2 = randomFloat(8, 25);
         const height = randomFloat(5, 15);
-        questionText = `Un trap&egrave;ze a deux bases de ${base1} cm et ${base2} cm, ainsi qu&rsquo;une hauteur de ${height} cm. Quelle est son aire ?`;
+        questionText = `Un trapèze a deux bases de ${base1} cm et ${base2} cm, ainsi qu&apos;une hauteur de ${height} cm. Quelle est son aire ?`;
         correctAnswer = ((base1 + base2) * height) / 2;
-      }
+      }      
   
       return {
         questionText,
