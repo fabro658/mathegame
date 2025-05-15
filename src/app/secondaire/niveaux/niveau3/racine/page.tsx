@@ -4,38 +4,38 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Racines() {
-  const totalQuestions = 36;
+  const totalQuestions = 30;
   const questionsPerPage = 6;
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
+  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
-  const [questions, setQuestions] = useState<number[]>([]); // carrés parfaits
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Générer les questions une seule fois
   useEffect(() => {
     const generated = Array.from({ length: totalQuestions }, () => {
-      const result = Math.floor(Math.random() * 20) + 1; // √1 à √400
-      return result * result;
+      const root = Math.floor(Math.random() * 20) + 1; // racine entre 1 et 20
+      const value = root * root;
+      return {
+        questionText: `√${value}`,
+        correctAnswer: root.toString(),
+      };
     });
     setQuestions(generated);
   }, []);
 
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+  const completionPercentage = Math.round(
+    (answers.filter((a) => a !== null && a !== "").length / totalQuestions) * 100
+  );
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseInt(value, 10);
-    if (/^\d+$/.test(value)) {
-      newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
-    } else if (value === "") {
-      newAnswers[index] = null;
-    }
+    newAnswers[index] = value.trim() !== "" ? value : null;
     setAnswers(newAnswers);
+    setFeedbackMessage(null);
   };
 
   const handleValidation = () => {
@@ -43,36 +43,47 @@ export default function Racines() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null)) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (pageAnswers.some((a) => a === null || a === "")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    const newAnswers = [...answers];
+    const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => parseFloat(q.correctAnswer));
+    const updatedAnswers = [...answers];
+    let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const correctAnswer = Math.sqrt(questions[globalIndex]);
-      if (answer !== correctAnswer) {
-        newAnswers[globalIndex] = null;
+      if (parseFloat(answer || "0") !== pageCorrectAnswers[index]) {
+        updatedAnswers[startIndex + index] = null;
+        allCorrect = false;
       }
     });
 
-    setAnswers(newAnswers);
-    setIsValidated(true);
-  };
+    setAnswers(updatedAnswers);
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setIsValidated(false);
+    if (allCorrect) {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+        setCurrentPage(currentPage + 1);
+      } else {
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
+    } else {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
+      setFeedbackMessage(null);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setCurrentPage(currentPage + 1);
+      setFeedbackMessage(null);
     }
   };
 
@@ -105,39 +116,44 @@ export default function Racines() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Racines Carrées</h1>
+      <h1 className="text-3xl font-bold mb-6">Racines Carrées</h1>
 
-      {questions.length > 0 && !isValidated && (
-        <>
-          <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((value, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  √{value}
-                </div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] || ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
-          </div>
-        </>
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            /incorrectes|remplir toutes les réponses/i.test(feedbackMessage) ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
       )}
+
+      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
+        const globalIndex = currentPage * questionsPerPage + index;
+        return (
+          <div key={globalIndex} className="mb-4 w-full max-w-md">
+            <p className="text-lg font-medium">{q.questionText}</p>
+            <input
+              type="text"
+              value={answers[globalIndex] || ""}
+              onChange={(e) => handleChange(globalIndex, e.target.value)}
+              className="border p-2 w-full mt-2 text-black"
+            />
+          </div>
+        );
+      })}
+
+      <div className="mt-6 flex gap-4">
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
+          Précédent
+        </button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Valider
+        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
+          Suivant
+        </button>
+      </div>
     </div>
   );
 }
