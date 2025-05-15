@@ -47,23 +47,22 @@ export default function Perimetre() {
       } else if (shapeType === 4) {
         const base = randomFloat(10, 30);
         const height = randomFloat(5, 15);
-        questionText = `Détermine l&apos;aire d&apos;un parallélogramme ayant une base de ${base} cm et une hauteur de ${height} cm.`;
+        questionText = `D&eacute;termine l&apos;aire d&apos;un parall&eacute;logramme ayant une base de ${base} cm et une hauteur de ${height} cm.`;
         correctAnswer = base * height;
       } else if (shapeType === 5) {
         const base1 = randomFloat(8, 25);
         const base2 = randomFloat(8, 25);
         const height = randomFloat(5, 15);
-        questionText = `Un trapèze a deux bases de ${base1} cm et ${base2} cm, ainsi qu&apos;une hauteur de ${height} cm. Quelle est son aire ?`;
+        questionText = `Un trap&egrave;ze a deux bases de ${base1} cm et ${base2} cm, ainsi qu&apos;une hauteur de ${height} cm. Quelle est son aire ?`;
         correctAnswer = ((base1 + base2) * height) / 2;
-      }      
+      }
   
       return {
         questionText,
         correctAnswer: correctAnswer.toFixed(2),
       };
     });
-  };
-  
+  };  
   
 
   // Générer les questions dès le chargement
