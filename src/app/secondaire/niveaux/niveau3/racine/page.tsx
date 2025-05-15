@@ -14,10 +14,10 @@ export default function Racines() {
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const questions = Array.from({ length: totalQuestions }, (_, index) => {
-    if (index < 12) return [index + 1, 'square'];
-    if (index < 24) return [index + 1, 'cube'];
-    return [index + 1, Math.random() > 0.5 ? 'square' : 'cube'];
+  // On génère des questions avec uniquement des carrés parfaits (résultats entiers)
+  const squareRoots = Array.from({ length: totalQuestions }, (_, i) => {
+    const result = Math.floor(Math.random() * 20) + 1; // valeurs entre 1 et 20
+    return result * result; // carré parfait (ex: 4, 9, 16, ...)
   });
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
@@ -48,9 +48,8 @@ export default function Racines() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const [number, type] = questions[globalIndex];
-      const correctAnswer = type === 'square' ? Math.sqrt(Number(number)) : Math.cbrt(Number(number));
-      if (answer !== Math.round(correctAnswer)) {
+      const correctAnswer = Math.sqrt(squareRoots[globalIndex]);
+      if (answer !== correctAnswer) {
         newAnswers[globalIndex] = null;
       }
     });
@@ -78,8 +77,7 @@ export default function Racines() {
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/secondaire/niveaux/niveau3" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/secondaire/niveaux/niveau3" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -103,15 +101,15 @@ export default function Racines() {
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Racines Carrées et Cubiques</h1>
+      <h1 className="text-4xl font-bold mb-6">Racines Carrées</h1>
 
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([number, type], index) => (
+            {squareRoots.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((value, index) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {type === 'square' ? `√${number}` : `∛${number}`}
+                  √{value}
                 </div>
                 <input
                   type="text"
