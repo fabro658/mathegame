@@ -15,10 +15,11 @@ export default function Racines() {
   const [currentPage, setCurrentPage] = useState(0);
 
   // On génère des questions avec uniquement des carrés parfaits (résultats entiers)
-  const squareRoots = Array.from({ length: totalQuestions }, (_, i) => {
-    const result = Math.floor(Math.random() * 20) + 1; // valeurs entre 1 et 20
-    return result * result; // carré parfait (ex: 4, 9, 16, ...)
+  const squareRoots = Array.from({ length: totalQuestions }, () => {
+    const result = Math.floor(Math.random() * 20) + 1;
+    return result * result;
   });
+  
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
