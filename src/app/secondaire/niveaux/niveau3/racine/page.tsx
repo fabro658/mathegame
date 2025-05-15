@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Racines() {
@@ -13,13 +13,16 @@ export default function Racines() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [questions, setQuestions] = useState<number[]>([]); // carrés parfaits
 
-  // On génère des questions avec uniquement des carrés parfaits (résultats entiers)
-  const squareRoots = Array.from({ length: totalQuestions }, () => {
-    const result = Math.floor(Math.random() * 20) + 1;
-    return result * result;
-  });
-  
+  // Générer les questions une seule fois
+  useEffect(() => {
+    const generated = Array.from({ length: totalQuestions }, () => {
+      const result = Math.floor(Math.random() * 20) + 1; // √1 à √400
+      return result * result;
+    });
+    setQuestions(generated);
+  }, []);
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -49,7 +52,7 @@ export default function Racines() {
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
-      const correctAnswer = Math.sqrt(squareRoots[globalIndex]);
+      const correctAnswer = Math.sqrt(questions[globalIndex]);
       if (answer !== correctAnswer) {
         newAnswers[globalIndex] = null;
       }
@@ -104,10 +107,10 @@ export default function Racines() {
 
       <h1 className="text-4xl font-bold mb-6">Racines Carrées</h1>
 
-      {!isValidated && (
+      {questions.length > 0 && !isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {squareRoots.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((value, index) => (
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((value, index) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   √{value}
