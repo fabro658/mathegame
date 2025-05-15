@@ -13,13 +13,13 @@ export default function Arrondissement() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Générer les questions une seule fois au chargement
+  // Génère les questions une seule fois
   useEffect(() => {
     const generated = Array.from({ length: totalQuestions }, () => {
-      const number = parseFloat((Math.random() * 100).toFixed(2)); // 2 décimales
-      const rounded = parseFloat(number.toFixed(1)); // arrondi au dixième
+      const number = parseFloat((Math.random() * 100).toFixed(2)); // ex: 73.42
+      const rounded = parseFloat(number.toFixed(1)); // ex: 73.4
       return {
-        text: number.toFixed(2),
+        text: number.toFixed(2).replace(".", ","), // affichage avec virgule
         correctAnswer: rounded,
       };
     });
@@ -27,8 +27,9 @@ export default function Arrondissement() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
+    const standardized = value.replace(",", "."); // virgule → point
+    const parsedValue = parseFloat(standardized);
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
   };
