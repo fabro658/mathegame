@@ -12,6 +12,7 @@ export default function Racines() {
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
@@ -36,6 +37,7 @@ export default function Racines() {
     newAnswers[index] = value.trim() !== "" ? value : null;
     setAnswers(newAnswers);
     setFeedbackMessage(null);
+    setIncorrectAnswers((prev) => prev.filter((i) => i !== index)); // enlever l'erreur visuelle au changement
   };
 
   const handleValidation = () => {
@@ -50,16 +52,20 @@ export default function Racines() {
 
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map((q) => parseFloat(q.correctAnswer));
     const updatedAnswers = [...answers];
+    const newIncorrect: number[] = [];
     let allCorrect = true;
 
     pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
       if (parseFloat(answer || "0") !== pageCorrectAnswers[index]) {
-        updatedAnswers[startIndex + index] = null;
+        updatedAnswers[globalIndex] = null;
+        newIncorrect.push(globalIndex);
         allCorrect = false;
       }
     });
 
     setAnswers(updatedAnswers);
+    setIncorrectAnswers(newIncorrect);
 
     if (allCorrect) {
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
@@ -121,34 +127,42 @@ export default function Racines() {
       {feedbackMessage && (
         <p
           className={`text-xl mb-4 text-center ${
-            /incorrectes|remplir toutes les réponses/i.test(feedbackMessage) ? "text-red-500" : "text-green-500"
+            /incorrectes|remplir toutes les réponses/i.test(feedbackMessage)
+              ? "text-red-500"
+              : "text-green-500"
           }`}
         >
           {feedbackMessage}
         </p>
       )}
 
-      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, index) => {
-        const globalIndex = currentPage * questionsPerPage + index;
-        return (
-          <div key={globalIndex} className="mb-4 w-full max-w-md">
-            <p className="text-lg font-medium">{q.questionText}</p>
-            <input
-              type="text"
-              value={answers[globalIndex] || ""}
-              onChange={(e) => handleChange(globalIndex, e.target.value)}
-              className="border p-2 w-full mt-2 text-black"
-            />
-          </div>
-        );
-      })}
+      <div className="grid grid-cols-3 gap-6">
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
+          const questionIndex = currentPage * questionsPerPage + index;
+          return (
+            <div key={questionIndex} className="flex items-center gap-4">
+              <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>
+                {question.questionText}
+              </button>
+              <input
+                type="text"
+                className={`border p-4 rounded w-32 text-center text-lg ${
+                  incorrectAnswers.includes(questionIndex) ? "border-red-500" : "border-gray-400"
+                }`}
+                value={answers[questionIndex] || ""}
+                onChange={(e) => handleChange(questionIndex, e.target.value)}
+              />
+            </div>
+          );
+        })}
+      </div>
 
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
           Précédent
         </button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Valider
+          Valider les réponses
         </button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
           Suivant
