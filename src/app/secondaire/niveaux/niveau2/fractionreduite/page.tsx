@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function FractionsReduites() {
-  const totalQuestions = 30; // Nombre total de questions
-  const questionsPerPage = 3; // Nombre de questions par vague
+  const totalQuestions = 30;
+  const questionsPerPage = 3;
 
   const [questions, setQuestions] = useState<
     { fraction: string; correctAnswer: string }[]
@@ -21,18 +21,25 @@ export default function FractionsReduites() {
     const generateQuestions = () => {
       return Array.from({ length: totalQuestions }, (_, index) => {
         const numerator = Math.floor(Math.random() * 20) + 1;
-        const denominator = Math.floor(Math.random() * 20) + 1;
+        const denominator = Math.floor(Math.random() * 19) + 2; // évite 0 ou 1
         const divisor = gcd(numerator, denominator);
-        const reducedFraction = `${numerator / divisor}/${denominator / divisor}`;
+
+        const reducedNumerator = numerator / divisor;
+        const reducedDenominator = denominator / divisor;
+
+        const reducedFraction =
+          reducedDenominator === 1
+            ? `${reducedNumerator}`
+            : `${reducedNumerator}/${reducedDenominator}`;
 
         if (index < totalQuestions / 4) {
           return { fraction: `${numerator}/${denominator}`, correctAnswer: reducedFraction };
         } else {
           const operation = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
           const secondNumerator = Math.floor(Math.random() * 10) + 1;
-          const secondDenominator = Math.floor(Math.random() * 10) + 1;
+          const secondDenominator = Math.floor(Math.random() * 9) + 2;
           const expression = `${numerator}/${denominator} ${operation} ${secondNumerator}/${secondDenominator}`;
-          const correctAnswer = "TODO"; // Implémenter le calcul
+          const correctAnswer = "TODO";
           return { fraction: expression, correctAnswer };
         }
       });
@@ -52,7 +59,7 @@ export default function FractionsReduites() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
     const correctAnswers = questions
-    .slice(startIndex, endIndex)
+      .slice(startIndex, endIndex)
       .map((q) => q.correctAnswer);
 
     const allAnswersFilled = pageAnswers.every((answer) => answer.trim() !== "");
@@ -96,8 +103,8 @@ export default function FractionsReduites() {
     (completedAnswers / totalQuestions) * 100
   );
 
-  const radius = 50; // Rayon pour la barre circulaire
-  const strokeWidth = 10; // Largeur de la barre
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   return (
@@ -105,12 +112,12 @@ export default function FractionsReduites() {
       <Link
         href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-        >
+      >
         Apprendre
       </Link>
       <Link
-       href="/secondaire/niveaux/niveau2" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        href="/secondaire/niveaux/niveau2"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
@@ -179,31 +186,14 @@ export default function FractionsReduites() {
           </div>
 
           <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+      </div>
         </>
       )}
 
-{isValidated && (
+      {isValidated && (
         <>
           {hasPassed ? (
             <div>
