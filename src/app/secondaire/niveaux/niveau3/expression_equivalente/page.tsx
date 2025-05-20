@@ -217,7 +217,7 @@ export default function EquationsEquivalentes() {
           Précédent
         </button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Valider
+          Valider les réponses
         </button>
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
           Suivant

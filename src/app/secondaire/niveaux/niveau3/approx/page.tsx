@@ -13,11 +13,10 @@ export default function Arrondissement() {
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Génère les questions une seule fois
   useEffect(() => {
     const generated = Array.from({ length: totalQuestions }, () => {
-      const number = parseFloat((Math.random() * 100).toFixed(2)); // ex: 73.42
-      const rounded = parseFloat(number.toFixed(1)); // ex: 73.4
+      const number = parseFloat((Math.random() * 100).toFixed(2));
+      const rounded = parseFloat(number.toFixed(1));
       return {
         text: number.toFixed(2).replace(".", ","), // affichage avec virgule
         correctAnswer: rounded,
@@ -27,7 +26,7 @@ export default function Arrondissement() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    const standardized = value.replace(",", "."); // virgule → point
+    const standardized = value.replace(",", ".");
     const parsedValue = parseFloat(standardized);
     const newAnswers = [...answers];
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
@@ -125,7 +124,9 @@ export default function Arrondissement() {
                 </div>
                 <input
                   type="text"
-                  inputMode="decimal"
+                  inputMode="text"
+                  pattern="[0-9]+([.,][0-9]+)?"
+                  placeholder="ex: 12,3"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] ?? ""}
                   onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
