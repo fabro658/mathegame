@@ -123,8 +123,8 @@ export default function Arrondissement() {
                   {question.text}
                 </div>
                 <input
-                  type="text"
-                  inputMode="text"
+              type="text"
+              inputMode="numeric"
                   pattern="[0-9]+([.,][0-9]+)?"
                   placeholder="ex: 12,3"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
