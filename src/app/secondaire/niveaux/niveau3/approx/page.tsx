@@ -16,7 +16,6 @@ export default function Arrondissement() {
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
 
   const completedAnswers = answers.filter((a) => a !== null && a !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
@@ -85,7 +84,6 @@ export default function Arrondissement() {
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
       setIsValidated(true);
-      setHasPassed(true);
     }
   };
 
