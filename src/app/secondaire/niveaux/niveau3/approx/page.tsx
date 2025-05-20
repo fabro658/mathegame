@@ -6,12 +6,20 @@ import Link from "next/link";
 export default function Arrondissement() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
 
   const [questions, setQuestions] = useState<{ text: string; correctAnswer: number }[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
+  const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+
+  const completedAnswers = answers.filter((a) => a !== null && a !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   useEffect(() => {
     const generated = Array.from({ length: totalQuestions }, () => {
@@ -26,12 +34,18 @@ export default function Arrondissement() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    // Autorise uniquement chiffres + une virgule ou un point avec max 1 décimale
     if (/^[0-9]*([,.][0-9]?)?$/.test(value)) {
       const newAnswers = [...answers];
-      newAnswers[index] = value;
+      newAnswers[index] = value.trim();
       setAnswers(newAnswers);
+      setFeedbackMessage(null);
     }
+  };
+
+  const normalizeAnswer = (value: string): number | null => {
+    const clean = value.replace(",", ".").trim();
+    const parsed = parseFloat(clean);
+    return isNaN(parsed) ? null : parseFloat(parsed.toFixed(1));
   };
 
   const handleValidation = () => {
@@ -39,51 +53,55 @@ export default function Arrondissement() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
-      alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
+    if (pageAnswers.some((a) => !a || a.trim() === "")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
 
-    let allCorrect = true;
+    const incorrect: number[] = [];
+    let hasErrors = false;
     const newAnswers = [...answers];
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-      const question = questions[globalIndex];
-      const parsed = parseFloat(answer!.replace(",", "."));
+    pageAnswers.forEach((answer, idx) => {
+      const globalIndex = startIndex + idx;
+      const userValue = normalizeAnswer(answer!);
+      const correctValue = questions[globalIndex].correctAnswer;
 
-      if (parsed !== question.correctAnswer) {
-        allCorrect = false;
-        newAnswers[globalIndex] = null;
+      if (userValue !== correctValue) {
+        incorrect.push(globalIndex);
+        newAnswers[globalIndex] = "";
+        hasErrors = true;
       }
     });
 
+    setIncorrectAnswers(incorrect);
     setAnswers(newAnswers);
-    setIsValidated(true);
-    setHasPassed(allCorrect);
+
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
+    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+      setFeedbackMessage("Toutes les réponses de cette page sont correctes !");
+      setCurrentPage(currentPage + 1);
+    } else {
+      setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      setIsValidated(true);
+      setHasPassed(true);
+    }
   };
 
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
-      setHasPassed(false);
+      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
-      setHasPassed(false);
+      setFeedbackMessage(null);
     }
   };
-
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-  const completedAnswers = answers.filter((a) => a !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -116,52 +134,55 @@ export default function Arrondissement() {
 
       <h1 className="text-4xl font-bold mb-6">Arrondir au dixième</h1>
 
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("Veuillez")
+              ? "text-red-500"
+              : "text-green-500"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
+
       {!isValidated && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
-                  {question.text}
+            {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
+              const globalIndex = currentPage * questionsPerPage + index;
+              return (
+                <div key={globalIndex} className="flex items-center gap-4">
+                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                    {question.text}
+                  </div>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    pattern="^[0-9]+([,.][0-9]?)?$"
+                    placeholder="ex: 12,3"
+                    className={`border p-4 rounded w-32 text-center text-black text-lg ${
+                      incorrectAnswers.includes(globalIndex) ? "border-red-500" : "border-gray-400"
+                    }`}
+                    value={answers[globalIndex] ?? ""}
+                    onChange={(e) => handleChange(globalIndex, e.target.value)}
+                  />
                 </div>
-                <input
-                  type="text"
-                  inputMode="text"
-                  pattern="^[0-9]+([,.][0-9]?)?$"
-                  placeholder="ex: 12,3"
-                  className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index] ?? ""}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-      </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">Bravo ! Toutes vos réponses sont correctes.</p>
-              <button className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold" onClick={handleNextPage}>
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">Certaines réponses sont incorrectes. Corrigez-les.</p>
-              <button className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold" onClick={() => setIsValidated(false)}>
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
+            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
+              Précédent
+            </button>
+            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+              Valider les réponses
+            </button>
+            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+              Suivant
+            </button>
+          </div>
         </>
       )}
     </div>
