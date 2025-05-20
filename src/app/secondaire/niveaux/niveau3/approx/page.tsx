@@ -8,7 +8,7 @@ export default function Arrondissement() {
   const questionsPerPage = 6;
 
   const [questions, setQuestions] = useState<{ text: string; correctAnswer: number }[]>([]);
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
   const [isValidated, setIsValidated] = useState(false);
   const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -26,11 +26,12 @@ export default function Arrondissement() {
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    const standardized = value.replace(",", ".");
-    const parsedValue = parseFloat(standardized);
-    const newAnswers = [...answers];
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
-    setAnswers(newAnswers);
+    // Autorise uniquement chiffres + une virgule ou un point avec max 1 décimale
+    if (/^[0-9]*([,.][0-9]?)?$/.test(value)) {
+      const newAnswers = [...answers];
+      newAnswers[index] = value;
+      setAnswers(newAnswers);
+    }
   };
 
   const handleValidation = () => {
@@ -38,7 +39,7 @@ export default function Arrondissement() {
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null)) {
+    if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       alert("Veuillez remplir toutes les réponses sur cette page avant de valider.");
       return;
     }
@@ -49,8 +50,9 @@ export default function Arrondissement() {
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const question = questions[globalIndex];
+      const parsed = parseFloat(answer!.replace(",", "."));
 
-      if (answer !== question.correctAnswer) {
+      if (parsed !== question.correctAnswer) {
         allCorrect = false;
         newAnswers[globalIndex] = null;
       }
@@ -80,7 +82,7 @@ export default function Arrondissement() {
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  const completedAnswers = answers.filter((a) => a !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
@@ -123,9 +125,9 @@ export default function Arrondissement() {
                   {question.text}
                 </div>
                 <input
-              type="text"
-              inputMode="numeric"
-                  pattern="[0-9]+([.,][0-9]+)?"
+                  type="text"
+                  inputMode="text"
+                  pattern="^[0-9]+([,.][0-9]?)?$"
                   placeholder="ex: 12,3"
                   className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                   value={answers[currentPage * questionsPerPage + index] ?? ""}
@@ -136,16 +138,10 @@ export default function Arrondissement() {
           </div>
 
           <div className="mt-6 flex gap-4">
-            <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === 0}>
-              Précédent
-            </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-              Valider les réponses
-            </button>
-            <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-8 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-              Suivant
-            </button>
-          </div>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+      </div>
         </>
       )}
 
