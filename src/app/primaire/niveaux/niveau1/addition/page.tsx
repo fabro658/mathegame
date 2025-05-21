@@ -180,6 +180,17 @@ export default function Addition() {
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
+
+      {/* Drapeau pirate en haut à gauche */}
+<div className="absolute top-8 left-8 z-0 opacity-80">
+  <svg width="80" height="80" viewBox="0 0 100 100">
+    <rect x="10" y="10" width="10" height="80" fill="#4b5563" />
+    <path d="M20,10 Q40,30 20,50 Q40,70 20,90" fill="#111827" />
+    <circle cx="30" cy="35" r="4" fill="white" />
+    <circle cx="40" cy="35" r="4" fill="white" />
+    <path d="M30,45 Q35,50 40,45" stroke="white" strokeWidth="2" fill="none" />
+  </svg>
+</div>
     </div>
   );
 }
