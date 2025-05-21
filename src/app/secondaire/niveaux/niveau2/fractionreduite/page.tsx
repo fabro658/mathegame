@@ -40,9 +40,9 @@ export default function FractionReduction() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const num = Math.floor(Math.random() * 8) + 2;     // 2 à 9
-        const den = Math.floor(Math.random() * 8) + 2;     // 2 à 9
-        const mult = Math.floor(Math.random() * 4) + 2;    // multiplier la fraction pour éviter qu'elle soit déjà réduite
+        const num = Math.floor(Math.random() * 8) + 2;
+        const den = Math.floor(Math.random() * 8) + 2;
+        const mult = Math.floor(Math.random() * 4) + 2;
 
         const originalNum = num * mult;
         const originalDen = den * mult;
@@ -156,7 +156,7 @@ export default function FractionReduction() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Réduction de fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Fractions réduites</h1>
 
       {feedbackMessage && (
         <p
@@ -172,13 +172,13 @@ export default function FractionReduction() {
 
       {!isValidated && (
         <>
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-2 gap-8">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
               .map(({ original }, index) => (
                 <div key={index} className="flex flex-col items-start gap-2">
                   <div className="font-bold text-black text-xl">
-                    Réduis la fraction : {original}
+                    {original}
                   </div>
                   <input
                     type="text"
@@ -186,7 +186,7 @@ export default function FractionReduction() {
                     onChange={(e) =>
                       handleChange(currentPage * questionsPerPage + index, e.target.value)
                     }
-                    className="border border-gray-300 p-2 rounded"
+                    className="border border-gray-300 p-2 rounded w-32"
                   />
                 </div>
               ))}
