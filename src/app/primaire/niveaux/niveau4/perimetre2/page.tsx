@@ -16,12 +16,45 @@ const generateQuestions = (): PerimeterQuestion[] => {
   return [
     {
       id: 1,
-      context: "Voici un terrain de jeux rectangulaire pour enfants. Calcule son périmètre.",
-      width: 20,
+      context: "Une piste cyclable en forme de L fait 30 m dans un sens et 20 m dans l'autre. Calcule la longueur totale à parcourir aller-retour.",
+      width: 30,
+      height: 20,
+      unit: "m",
+      correctAnswer: 100
+    },
+    {
+      id: 2,
+      context: "Une clôture entoure un terrain composé de deux rectangles accolés : un de 20 m × 10 m et un autre de 10 m × 10 m. Calcule la longueur totale de la clôture.",
+      width: 60,
+      height: 0,
+      unit: "m",
+      correctAnswer: 100
+    },
+    {
+      id: 3,
+      context: "Un sentier en forme de U mesure 15 m de long sur les côtés et 10 m en bas. Quelle est la distance totale si on longe tout le contour du U ?",
+      width: 15,
       height: 10,
       unit: "m",
-      correctAnswer: 60,
+      correctAnswer: 40
     },
+    {
+      id: 4,
+      context: "Une piste de course fait le tour d’un rectangle de 40 m sur 20 m, mais un des petits côtés est remplacé par une ligne droite de 30 m. Quel est le périmètre ?",
+      width: 40,
+      height: 20,
+      unit: "m",
+      correctAnswer: 130
+    },
+    {
+      id: 5,
+      context: "Un jardin en forme de T a une base de 20 m et une barre transversale de 30 m. Si chaque segment mesure 10 m de large, calcule le contour du T.",
+      width: 30,
+      height: 10,
+      unit: "m",
+      correctAnswer: 100
+    },
+    
     {
       id: 2,
       context: "Une piscine rectangulaire doit être entourée d'une clôture. Quelle est la longueur totale nécessaire ?",
