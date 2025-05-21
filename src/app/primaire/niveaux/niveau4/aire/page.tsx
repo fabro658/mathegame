@@ -44,7 +44,7 @@ const generateConnectedShape = (maxBlocks = 20): Cell[][] => {
         [x, y + 1],
         [x, y - 1],
       ];
-      neighbors.sort(() => Math.random() - 0.5); // shuffle
+      neighbors.sort(() => Math.random() - 0.5);
       stack.push(...neighbors);
     }
   }
@@ -79,14 +79,20 @@ export default function AreaByCounting() {
     setAnswers(newAnswers);
   };
 
-  const validateAnswers = () => {
-    const newFeedback = questions.map((q, i) => {
-      const entered = parseInt(answers[i]);
-      if (isNaN(entered)) return "⚠️ Entrez un nombre";
-      return entered === q.correctAnswer
-        ? "Correct !"
-        : ` Faux. Réponse : ${q.correctAnswer}`;
-    });
+  const validateOne = (index: number) => {
+    const val = parseInt(answers[index]);
+    if (isNaN(val)) {
+      updateFeedback(index, "Veuillez entrer un nombre");
+    } else if (val === questions[index].correctAnswer) {
+      updateFeedback(index, "Réponse correcte");
+    } else {
+      updateFeedback(index, `Faux`);
+    }
+  };
+
+  const updateFeedback = (index: number, message: string) => {
+    const newFeedback = [...feedback];
+    newFeedback[index] = message;
     setFeedback(newFeedback);
   };
 
@@ -98,7 +104,6 @@ export default function AreaByCounting() {
         height={gridSize * cellSize}
         style={{ border: "1px solid #ddd" }}
       >
-        {/* Grille */}
         {grid.map((row, y) =>
           row.map((_, x) => (
             <rect
@@ -112,7 +117,6 @@ export default function AreaByCounting() {
             />
           ))
         )}
-        {/* Forme colorée */}
         {grid.map((row, y) =>
           row.map((val, x) =>
             val === 1 ? (
@@ -134,46 +138,49 @@ export default function AreaByCounting() {
 
   return (
     <div className="h-screen overflow-y-auto bg-gray-100 text-black p-8">
-      <h1 className="text-3xl font-bold mb-8 text-center"> Aire en comptant les carrés</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
 
       <div className="flex flex-col gap-10 max-w-3xl mx-auto">
         {questions.map((q, i) => (
           <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-lg font-bold mb-4">Question {i + 1} :</p>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-lg font-bold">Question {i + 1} :</p>
+              {feedback[i] && (
+                <span
+                  className={`text-sm font-semibold ${
+                    feedback[i] === "Réponse correcte"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {feedback[i]}
+                </span>
+              )}
+            </div>
+
             <div className="flex justify-center mb-4">
               {renderSVG(q.grid, colors[i % colors.length])}
             </div>
             <label className="block mb-2 font-semibold">
               Quelle est l’aire de cette figure (en unités carrées) ?
             </label>
-            <input
-              type="text"
-              placeholder="ex: 23"
-              className="w-full border border-gray-400 p-3 text-lg rounded"
-              value={answers[i]}
-              onChange={(e) => handleChange(i, e.target.value)}
-            />
-            {feedback[i] && (
-              <p
-                className={`mt-2 font-bold ${
-                  feedback[i].includes("") ? "text-green-600" : "text-red-600"
-                }`}
+            <div className="flex flex-col md:flex-row items-start gap-4">
+              <input
+                type="text"
+                placeholder="ex: 23"
+                className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
+                value={answers[i]}
+                onChange={(e) => handleChange(i, e.target.value)}
+              />
+              <button
+                onClick={() => validateOne(i)}
+                className="text-red-600 font-bold border border-red-400 px-6 py-2 rounded hover:bg-red-100"
               >
-                {feedback[i]}
-              </p>
-            )}
+                Valider la réponse
+              </button>
+            </div>
           </div>
         ))}
-      </div>
-
-      {/* Bouton collé en bas */}
-      <div className="sticky bottom-0 bg-white py-4 shadow-inner w-full flex justify-center mt-10">
-        <button
-          onClick={validateAnswers}
-          className="bg-blue-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-blue-700 transition"
-        >
-          ✅ Valider toutes les réponses
-        </button>
       </div>
     </div>
   );
