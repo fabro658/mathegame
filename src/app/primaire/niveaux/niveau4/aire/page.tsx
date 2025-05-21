@@ -11,17 +11,42 @@ interface Question {
 }
 
 const gridSize = 10;
+const colors = ["#60a5fa", "#f87171", "#34d399", "#fbbf24", "#a78bfa"];
 
-const generateRandomGridShape = (): Cell[][] => {
+const generateConnectedShape = (maxBlocks = 20): Cell[][] => {
   const grid: Cell[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
+  const stack: [number, number][] = [];
+  const visited = new Set<string>();
 
-  let blocksToFill = Math.floor(Math.random() * 16) + 15; // 15 à 30 cases
-  while (blocksToFill > 0) {
-    const row = Math.floor(Math.random() * gridSize);
-    const col = Math.floor(Math.random() * gridSize);
-    if (grid[row][col] === 0) {
-      grid[row][col] = 1;
-      blocksToFill--;
+  const startX = Math.floor(gridSize / 2);
+  const startY = Math.floor(gridSize / 2);
+  stack.push([startX, startY]);
+
+  let blocks = 0;
+  while (stack.length > 0 && blocks < maxBlocks) {
+    const [x, y] = stack.pop()!;
+    const key = `${x},${y}`;
+    if (
+      x >= 0 &&
+      x < gridSize &&
+      y >= 0 &&
+      y < gridSize &&
+      !visited.has(key) &&
+      grid[y][x] === 0
+    ) {
+      grid[y][x] = 1;
+      visited.add(key);
+      blocks++;
+
+      const neighbors: [number, number][] = [
+        [x + 1, y],
+        [x - 1, y],
+        [x, y + 1],
+        [x, y - 1],
+      ];
+      // shuffle neighbors
+      neighbors.sort(() => Math.random() - 0.5);
+      stack.push(...neighbors);
     }
   }
 
@@ -29,10 +54,9 @@ const generateRandomGridShape = (): Cell[][] => {
 };
 
 const generateQuestion = (id: number): Question => {
-  const grid = generateRandomGridShape();
-  const correctAnswer = grid.flat().filter((v) => v === 1).length;
-
-  return { id, grid, correctAnswer };
+  const shape = generateConnectedShape(15 + Math.floor(Math.random() * 10));
+  const correctAnswer = shape.flat().filter((v) => v === 1).length;
+  return { id, grid: shape, correctAnswer };
 };
 
 export default function AreaByCounting() {
@@ -41,12 +65,15 @@ export default function AreaByCounting() {
   const [answers, setAnswers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<string[]>([]);
 
+  // Initialiser UNE SEULE FOIS les questions
   useEffect(() => {
-    const qs = Array.from({ length: totalQuestions }, (_, i) => generateQuestion(i));
-    setQuestions(qs);
-    setAnswers(Array(qs.length).fill(""));
-    setFeedback(Array(qs.length).fill(""));
-  }, []);
+    if (questions.length === 0) {
+      const qs = Array.from({ length: totalQuestions }, (_, i) => generateQuestion(i));
+      setQuestions(qs);
+      setAnswers(Array(totalQuestions).fill(""));
+      setFeedback(Array(totalQuestions).fill(""));
+    }
+  }, [questions]);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -55,32 +82,35 @@ export default function AreaByCounting() {
   };
 
   const validateAnswers = () => {
-    const result = questions.map((q, i) => {
-      const val = parseInt(answers[i]);
-      if (isNaN(val)) return " Veuillez entrer un nombre";
-      return val === q.correctAnswer ? " Correct !" : ` Faux. Réponse : ${q.correctAnswer}`;
+    const newFeedback = questions.map((q, i) => {
+      const entered = parseInt(answers[i]);
+      if (isNaN(entered)) return "⚠️ Entrez un nombre";
+      return entered === q.correctAnswer
+        ? "Correct !"
+        : ` Faux. Réponse : ${q.correctAnswer}`;
     });
-    setFeedback(result);
+    setFeedback(newFeedback);
   };
 
-  const renderGridSVG = (grid: Cell[][]) => {
-    const cellSize = 20;
-    const colors = ["#60a5fa", "#f87171", "#34d399", "#fbbf24", "#a78bfa"];
-    const fillColor = colors[Math.floor(Math.random() * colors.length)];
-
+  const renderSVG = (grid: Cell[][], color: string) => {
+    const cellSize = 30;
     return (
-      <svg width={cellSize * gridSize} height={cellSize * gridSize}>
-        {/* Quadrillage */}
+      <svg
+        width={gridSize * cellSize}
+        height={gridSize * cellSize}
+        style={{ border: "1px solid #ddd" }}
+      >
+        {/* Grille */}
         {grid.map((row, y) =>
           row.map((_, x) => (
             <rect
-              key={`grid-${x}-${y}`}
+              key={`bg-${x}-${y}`}
               x={x * cellSize}
               y={y * cellSize}
               width={cellSize}
               height={cellSize}
+              fill="#fff"
               stroke="#ccc"
-              fill="white"
             />
           ))
         )}
@@ -94,7 +124,8 @@ export default function AreaByCounting() {
                 y={y * cellSize}
                 width={cellSize}
                 height={cellSize}
-                fill={fillColor}
+                fill={color}
+                stroke="#000"
               />
             ) : null
           )
@@ -104,25 +135,30 @@ export default function AreaByCounting() {
   };
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen text-black">
-      <h1 className="text-3xl font-bold mb-6 text-center"> Aire sur quadrillage</h1>
+    <div className="p-8 bg-gray-100 min-h-screen text-black flex flex-col items-center">
+      <h1 className="text-3xl font-bold mb-8 text-center"> Aire en comptant les carrés</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="flex flex-col gap-10 w-full max-w-3xl">
         {questions.map((q, i) => (
-          <div key={q.id} className="bg-white p-4 rounded-lg shadow-md">
-            <p className="font-semibold mb-2">Question {i + 1} :</p>
-            <div className="flex justify-center mb-3">{renderGridSVG(q.grid)}</div>
-            <label className="block mb-2 font-medium">Quelle est l’aire de cette figure (en unités carrées) ?</label>
+          <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-lg font-bold mb-4">Question {i + 1} :</p>
+            <div className="flex justify-center mb-4">
+              {renderSVG(q.grid, colors[i % colors.length])}
+            </div>
+            <label className="block mb-2 font-semibold">
+              Quelle est l’aire de cette figure (en unités carrées) ?
+            </label>
             <input
-              type="number"
-              className="w-full border border-gray-400 p-2 rounded"
+              type="text"
+              placeholder="ex: 23"
+              className="w-full border border-gray-400 p-3 text-lg rounded"
               value={answers[i]}
               onChange={(e) => handleChange(i, e.target.value)}
             />
             {feedback[i] && (
               <p
                 className={`mt-2 font-bold ${
-                  feedback[i].startsWith("✅") ? "text-green-600" : "text-red-600"
+                  feedback[i].includes("") ? "text-green-600" : "text-red-600"
                 }`}
               >
                 {feedback[i]}
@@ -132,14 +168,12 @@ export default function AreaByCounting() {
         ))}
       </div>
 
-      <div className="mt-8 text-center">
-        <button
-          onClick={validateAnswers}
-          className="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-blue-700"
-        >
-          Valider mes réponses
-        </button>
-      </div>
+      <button
+        onClick={validateAnswers}
+        className="mt-10 bg-blue-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-blue-700"
+      >
+        Valider toutes les réponses
+      </button>
     </div>
   );
 }
