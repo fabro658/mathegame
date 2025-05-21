@@ -182,7 +182,7 @@ export default function Addition() {
       </div>
 
       {/* Drapeau pirate en haut à gauche */}
-<div className="absolute top-8 left-8 z-0 opacity-80">
+<div className="absolute bottom-8 right-8 z-0 opacity-80">
   <svg width="80" height="80" viewBox="0 0 100 100">
     <rect x="10" y="10" width="10" height="80" fill="#4b5563" />
     <path d="M20,10 Q40,30 20,50 Q40,70 20,90" fill="#111827" />

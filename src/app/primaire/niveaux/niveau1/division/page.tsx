@@ -174,7 +174,7 @@ export default function Division() {
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
       {/* Plage et mer en bas */}
-<div className="absolute bottom-0 left-0 w-full h-32 z-0">
+<div className="absolute bottom-0 right -0 w-full h-32 z-0">
   <svg width="100%" height="100%" preserveAspectRatio="none">
     <rect width="100%" height="100%" fill="#fef3c7" /> {/* plage */}
     <path d="M0,20 Q50,40 100,20 T200,20 T300,20 T400,20 T500,20" fill="#60a5fa" />
