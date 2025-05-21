@@ -7,12 +7,12 @@ const gcd = (a: number, b: number): number => {
   return b === 0 ? a : gcd(b, a % b);
 };
 
-export default function DivisionFractions() {
+export default function FractionReduction() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
 
   const [questions, setQuestions] = useState<
-    { fraction1: string; fraction2: string; correctAnswer: string }[]
+    { original: string; correctAnswer: string }[]
   >([]);
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,19 +40,16 @@ export default function DivisionFractions() {
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 3) + 1;
-        const b1 = Math.floor(Math.random() * 3) + 1;
-        const a2 = Math.floor(Math.random() * 3) + 1;
-        const b2 = Math.floor(Math.random() * 3) + 1;
+        const num = Math.floor(Math.random() * 8) + 2;     // 2 à 9
+        const den = Math.floor(Math.random() * 8) + 2;     // 2 à 9
+        const mult = Math.floor(Math.random() * 4) + 2;    // multiplier la fraction pour éviter qu'elle soit déjà réduite
 
-        const num = a1 * b2;
-        const den = b1 * a2;
-        const correctAnswer = simplifyFraction(num, den);
+        const originalNum = num * mult;
+        const originalDen = den * mult;
 
         return {
-          fraction1: `${a1}/${b1}`,
-          fraction2: `${a2}/${b2}`,
-          correctAnswer,
+          original: `${originalNum}/${originalDen}`,
+          correctAnswer: simplifyFraction(originalNum, originalDen),
         };
       });
 
@@ -159,7 +156,7 @@ export default function DivisionFractions() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Fractions réduites</h1>
+      <h1 className="text-3xl font-bold mb-6">Réduction de fractions</h1>
 
       {feedbackMessage && (
         <p
@@ -178,10 +175,10 @@ export default function DivisionFractions() {
           <div className="flex flex-col gap-6">
             {questions
               .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-              .map(({ fraction1, fraction2 }, index) => (
+              .map(({ original }, index) => (
                 <div key={index} className="flex flex-col items-start gap-2">
                   <div className="font-bold text-black text-xl">
-                    {fraction1} ÷ {fraction2}
+                    Réduis la fraction : {original}
                   </div>
                   <input
                     type="text"
