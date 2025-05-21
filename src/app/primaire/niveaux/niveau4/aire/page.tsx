@@ -91,7 +91,7 @@ export default function AreaByCounting() {
     } else if (val === questions[index].correctAnswer) {
       updateFeedback(index, "Réponse correcte");
     } else {
-      updateFeedback(index, "Faux");
+      updateFeedback(index, "Réponse érronée");
     }
   };
 
@@ -170,7 +170,7 @@ export default function AreaByCounting() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau3"
+        href="/primaire/niveaux/niveau4"
         className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
@@ -216,7 +216,7 @@ export default function AreaByCounting() {
                 <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
                 {feedback[globalIndex] && (
                   <span
-                    className={`text-sm font-semibold ${
+                    className={`text-2xl font-semibold ${
                       feedback[globalIndex] === "Réponse correcte"
                         ? "text-green-600"
                         : "text-red-600"

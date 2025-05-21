@@ -188,7 +188,7 @@ export default function PerimetreByCounting() {
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau3"
+        href="/primaire/niveaux/niveau4"
         className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
@@ -227,7 +227,7 @@ export default function PerimetreByCounting() {
                 <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
                 {feedback[globalIndex] && (
                   <span
-                    className={`text-sm font-semibold ${
+                    className={`text-2xl font-semibold ${
                       feedback[globalIndex] === "Réponse correcte"
                         ? "text-green-600"
                         : "text-red-600"
