@@ -18,8 +18,8 @@ const generateConnectedShape = (maxBlocks = 20): Cell[][] => {
   const stack: [number, number][] = [];
   const visited = new Set<string>();
 
-  const startX = Math.floor(gridSize / 2);
-  const startY = Math.floor(gridSize / 2);
+  const startX = Math.floor(Math.random() * gridSize);
+  const startY = Math.floor(Math.random() * gridSize);
   stack.push([startX, startY]);
 
   let blocks = 0;
@@ -44,8 +44,7 @@ const generateConnectedShape = (maxBlocks = 20): Cell[][] => {
         [x, y + 1],
         [x, y - 1],
       ];
-      // shuffle neighbors
-      neighbors.sort(() => Math.random() - 0.5);
+      neighbors.sort(() => Math.random() - 0.5); // shuffle
       stack.push(...neighbors);
     }
   }
@@ -65,7 +64,6 @@ export default function AreaByCounting() {
   const [answers, setAnswers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<string[]>([]);
 
-  // Initialiser UNE SEULE FOIS les questions
   useEffect(() => {
     if (questions.length === 0) {
       const qs = Array.from({ length: totalQuestions }, (_, i) => generateQuestion(i));
@@ -114,7 +112,7 @@ export default function AreaByCounting() {
             />
           ))
         )}
-        {/* Forme */}
+        {/* Forme colorée */}
         {grid.map((row, y) =>
           row.map((val, x) =>
             val === 1 ? (
@@ -135,10 +133,10 @@ export default function AreaByCounting() {
   };
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen text-black flex flex-col items-center">
+    <div className="h-screen overflow-y-auto bg-gray-100 text-black p-8">
       <h1 className="text-3xl font-bold mb-8 text-center"> Aire en comptant les carrés</h1>
 
-      <div className="flex flex-col gap-10 w-full max-w-3xl">
+      <div className="flex flex-col gap-10 max-w-3xl mx-auto">
         {questions.map((q, i) => (
           <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
             <p className="text-lg font-bold mb-4">Question {i + 1} :</p>
@@ -168,12 +166,15 @@ export default function AreaByCounting() {
         ))}
       </div>
 
-      <button
-        onClick={validateAnswers}
-        className="mt-10 bg-blue-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-blue-700"
-      >
-        Valider toutes les réponses
-      </button>
+      {/* Bouton collé en bas */}
+      <div className="sticky bottom-0 bg-white py-4 shadow-inner w-full flex justify-center mt-10">
+        <button
+          onClick={validateAnswers}
+          className="bg-blue-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-blue-700 transition"
+        >
+          ✅ Valider toutes les réponses
+        </button>
+      </div>
     </div>
   );
 }
