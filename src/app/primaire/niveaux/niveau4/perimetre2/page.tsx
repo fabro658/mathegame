@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 interface PerimeterQuestion {
@@ -197,7 +197,6 @@ const TerrainIllustration = ({ width, height, unit }: { width: number; height: n
 );
 
 export default function PerimetrePractice() {
-  const questionsPerPage = 1;
   const questions = generateQuestions();
   const totalQuestions = questions.length;
 
