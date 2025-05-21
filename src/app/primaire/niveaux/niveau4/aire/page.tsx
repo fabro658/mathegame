@@ -152,14 +152,14 @@ export default function AreaByCounting() {
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black pt-8 px-4 relative">
-      <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-32 space-y-12">
+        <h1 className="text-3xl font-bold text-center">Aire en comptant les carrés</h1>
 
-      <div className="flex flex-col gap-10 max-w-3xl mx-auto pb-48">
         {currentQuestions.map((q, i) => {
           const globalIndex = startIndex + i;
           return (
-            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
+            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md border">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
                 {feedback[globalIndex] && (
@@ -200,8 +200,8 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Footer fixe avec navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-inner py-4 flex justify-center gap-8 z-20 border-t border-gray-200">
+      {/* Pagination en bas en dehors du scroll */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white py-4 border-t border-gray-300 flex justify-center gap-6 shadow-inner z-50">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
