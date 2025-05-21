@@ -15,9 +15,16 @@ export default function DivisionFractions() {
     { fraction1: string; fraction2: string; correctAnswer: string }[]
   >([]);
   const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+
+  const completedAnswers = answers.filter((a) => a.trim() !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   const simplifyFraction = (numerator: number, denominator: number): string => {
     if (denominator === 0) return `${numerator}/0`;
@@ -40,7 +47,6 @@ export default function DivisionFractions() {
 
         const num = a1 * b2;
         const den = b1 * a2;
-
         const correctAnswer = simplifyFraction(num, den);
 
         return {
@@ -53,66 +59,70 @@ export default function DivisionFractions() {
     setQuestions(generateQuestions());
   }, []);
 
-  const handleAnswer = (index: number, value: string): void => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
     setAnswers(newAnswers);
+    setFeedbackMessage("");
+  };
+
+  const handleValidation = () => {
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
+    const pageAnswers = answers.slice(startIndex, endIndex);
+
+    if (pageAnswers.includes("")) {
+      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
+      return;
+    }
+
+    let hasErrors = false;
+    const newAnswers = [...answers];
+
+    pageAnswers.forEach((answer, index) => {
+      const globalIndex = startIndex + index;
+      const { correctAnswer } = questions[globalIndex];
+
+      if (normalizeAnswer(answer) !== normalizeAnswer(correctAnswer)) {
+        newAnswers[globalIndex] = "";
+        hasErrors = true;
+      }
+    });
+
+    setAnswers(newAnswers);
+
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
+    } else {
+      if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
+        setCurrentPage(currentPage + 1);
+      } else {
+        setIsValidated(true);
+        setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
+      }
+    }
   };
 
   const normalizeAnswer = (answer: string): string => {
     answer = answer.replace(/\s+/g, "").toLowerCase();
-    if (/^\d+$/.test(answer)) return `${answer}`; // "2" reste "2"
+    if (/^\d+$/.test(answer)) {
+      return `${answer}/1`;
+    }
     return answer;
   };
 
-  const handleValidation = (): void => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-
-    const pageAnswers = answers.slice(startIndex, endIndex);
-    const correctAnswers = questions.slice(startIndex, endIndex).map((q) => q.correctAnswer);
-
-    const allAnswersFilled = pageAnswers.every((answer) => answer !== "");
-
-    if (!allAnswersFilled) {
-      alert("Veuillez répondre à toutes les questions avant de valider.");
-      return;
-    }
-
-    const allCorrect = pageAnswers.every(
-      (answer, idx) => normalizeAnswer(answer) === normalizeAnswer(correctAnswers[idx])
-    );
-
-    setIsValidated(true);
-    setHasPassed(allCorrect);
-
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsValidated(false);
-      }, 1500);
-    }
-  };
-
   const handleNextPage = () => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
+    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setIsValidated(false);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setIsValidated(false);
     }
   };
-
-  const completedAnswers = answers.filter((answer) => answer.trim() !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
@@ -149,7 +159,19 @@ export default function DivisionFractions() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division de Fractions</h1>
+      <h1 className="text-3xl font-bold mb-6">Fractions réduites</h1>
+
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 ${
+            feedbackMessage.includes("remplir") || feedbackMessage.includes("incorrectes")
+              ? "text-red-500"
+              : "text-green-500"
+          } text-center`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
       {!isValidated && (
         <>
@@ -165,7 +187,7 @@ export default function DivisionFractions() {
                     type="text"
                     value={answers[currentPage * questionsPerPage + index] || ""}
                     onChange={(e) =>
-                      handleAnswer(currentPage * questionsPerPage + index, e.target.value)
+                      handleChange(currentPage * questionsPerPage + index, e.target.value)
                     }
                     className="border border-gray-300 p-2 rounded"
                   />
@@ -174,57 +196,10 @@ export default function DivisionFractions() {
           </div>
 
           <div className="mt-6 flex gap-4">
-            <button
-              onClick={handlePreviousPage}
-              className="bg-gray-500 text-white py-3 px-8 rounded font-bold hover:bg-gray-600"
-              disabled={currentPage === 0}
-            >
-              Précédent
-            </button>
-            <button
-              onClick={handleValidation}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-            >
-              Valider les réponses
-            </button>
-            <button
-              onClick={handleNextPage}
-              className="bg-blue-500 text-white py-3 px-8 rounded font-bold hover:bg-blue-600"
-              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
-            >
-              Suivant
-            </button>
-          </div>
-        </>
-      )}
-
-      {isValidated && (
-        <>
-          {hasPassed ? (
-            <div>
-              <p className="text-green-600 font-bold text-xl">
-                Bravo ! Toutes vos réponses sont correctes.
-              </p>
-              <button
-                className="mt-6 bg-blue-500 text-white py-3 px-8 rounded font-bold"
-                onClick={handleNextPage}
-              >
-                Suivant
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p className="text-red-600 font-bold text-xl">
-                Certaines réponses sont incorrectes. Corrigez-les.
-              </p>
-              <button
-                className="mt-6 bg-gray-500 text-white py-3 px-8 rounded font-bold"
-                onClick={() => setIsValidated(false)}
-              >
-                Revenir pour corriger
-              </button>
-            </div>
-          )}
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+      </div>
         </>
       )}
     </div>
