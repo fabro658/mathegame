@@ -90,7 +90,7 @@ export default function AreaByCounting() {
     } else if (val === questions[index].correctAnswer) {
       updateFeedback(index, "Réponse correcte");
     } else {
-      updateFeedback(index, `Faux`);
+      updateFeedback(index, "Faux");
     }
   };
 
@@ -152,13 +152,12 @@ export default function AreaByCounting() {
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black p-8 pb-32 relative">
+    <div className="min-h-screen bg-gray-100 text-black pt-8 px-4 pb-40">
       <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
 
       <div className="flex flex-col gap-10 max-w-3xl mx-auto">
         {currentQuestions.map((q, i) => {
           const globalIndex = startIndex + i;
-
           return (
             <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center justify-between mb-4">
@@ -175,7 +174,6 @@ export default function AreaByCounting() {
                   </span>
                 )}
               </div>
-
               <div className="flex justify-center mb-4">
                 {renderSVG(q.grid, colors[q.id % colors.length])}
               </div>
@@ -203,13 +201,13 @@ export default function AreaByCounting() {
       </div>
 
       {/* Sticky footer with pagination */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-inner py-4 flex justify-center gap-8 z-10">
+      <div className="sticky bottom-0 left-0 right-0 bg-white shadow-inner py-4 mt-8 flex justify-center gap-8 z-20 border-t border-gray-200">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
           className={`px-6 py-3 rounded font-bold ${
             currentPage === 0
-              ? "bg-gray-300 text-gray-600"
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
@@ -220,7 +218,7 @@ export default function AreaByCounting() {
           disabled={currentPage === totalPages - 1}
           className={`px-6 py-3 rounded font-bold ${
             currentPage === totalPages - 1
-              ? "bg-gray-300 text-gray-600"
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
