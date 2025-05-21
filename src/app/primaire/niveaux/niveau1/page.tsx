@@ -31,7 +31,7 @@ export default function Niveau1() {
           🏴‍☠️ Capitaine des Nombres !
         </h1>
         <p className="text-xl sm:text-2xl text-gray-700 font-medium">
-          Choisis ton épreuve mathématique sur l’île aux chiffres 💰
+          Choisis ton épreuve mathématique 💰
         </p>
       </div>
 
@@ -41,25 +41,25 @@ export default function Niveau1() {
           href="/primaire/niveaux/niveau1/addition"
           className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➕ Addition ⚓
+          Addition ⚓
         </a>
         <a
           href="/primaire/niveaux/niveau1/soustraction"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➖ Soustraction 🦜
+          Soustraction 🦜
         </a>
         <a
           href="/primaire/niveaux/niveau1/multiplication"
           className="bg-yellow-600 hover:bg-yellow-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ✖️ Multiplication 🗺️
+          Multiplication 🗺️
         </a>
         <a
           href="/primaire/niveaux/niveau1/division"
           className="bg-red-600 hover:bg-red-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➗ Division 💎
+          Division 💎
         </a>
       </div>
     </div>
