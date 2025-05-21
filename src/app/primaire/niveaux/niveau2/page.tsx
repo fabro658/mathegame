@@ -42,25 +42,25 @@ export default function Niveau1() {
           href="/primaire/niveaux/niveau2/comparaison"
           className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🔭 Comparaison
+          Comparaison 🔭 
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🪐 Décimaux
+         Décimaux  🪐 
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparer_fraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🛰️ Fractions
+          Fractions 🛰️ 
         </a>
         <a
           href="/primaire/niveaux/niveau2/expression_equivalente"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🧪 Expressions équivalentes
+          Expressions équivalentes 🧪 
         </a>
       </div>
     </div>

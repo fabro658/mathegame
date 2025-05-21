@@ -41,31 +41,31 @@ export default function Niveau1() {
           href="/primaire/niveaux/niveau3/additionfraction"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➕ Addition de fractions 🍩
+          Addition de fractions 🍩
         </a>
         <a
           href="/primaire/niveaux/niveau3/soustractionfraction"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➖ Soustraction de fractions 🥧
+          Soustraction de fractions 🥧
         </a>
         <a
           href="/primaire/niveaux/niveau3/multiplicationfraction"
           className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ✖️ Multiplication de fractions 🍪
+          Multiplication de fractions 🍪
         </a>
         <a
           href="/primaire/niveaux/niveau3/divisionfraction"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ➗ Division de fractions 🍰
+          Division de fractions 🍰
         </a>
         <a
           href="/primaire/niveaux/niveau3/trouvefraction"
           className="bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🔍 Trouver la fraction 🍕
+          Trouver la fraction 🍕
         </a>
       </div>
     </div>

@@ -39,13 +39,13 @@ export default function Niveau1() {
           href="/primaire/niveaux/niveau5/exposant/n1"
           className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🥇 Premier niveau
+          Premier niveau 🥇 
         </a>
         <a
           href="/primaire/niveaux/niveau5/exposant/n2"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🥈 Deuxième niveau
+          Deuxième niveau 🥈 
         </a>
       </div>
     </div>
