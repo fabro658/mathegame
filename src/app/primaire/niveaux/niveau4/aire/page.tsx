@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type Cell = 0 | 1;
 
@@ -151,9 +152,60 @@ export default function AreaByCounting() {
   const startIndex = currentPage * questionsPerPage;
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
+  // Cercle de progression
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+  const completedAnswers = answers.filter((a) => a.trim() !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
   return (
     <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
-      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-32 space-y-12">
+
+      {/* Boutons fixes */}
+      <Link
+        href="/menu/apprendre/fraction"
+        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/secondaire/niveaux/niveau2"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Retour
+      </Link>
+
+      {/* Cercle de progression */}
+      <div className="fixed top-4 left-4 w-32 h-32 z-50">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#e5e5e5"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
+      </div>
+
+      {/* Contenu des questions */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-40 space-y-12">
         <h1 className="text-3xl font-bold text-center">Aire en comptant les carrés</h1>
 
         {currentQuestions.map((q, i) => {
@@ -200,12 +252,12 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Pagination en bas en dehors du scroll */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white py-4 border-t border-gray-300 flex justify-center gap-6 shadow-inner z-50">
+      {/* Pagination en bas */}
+      <div className="fixed bottom-4 right-4 bg-white border-t border-gray-300 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
-          className={`px-6 py-3 rounded font-bold ${
+          className={`px-6 py-2 rounded font-bold ${
             currentPage === 0
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
@@ -216,7 +268,7 @@ export default function AreaByCounting() {
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages - 1}
-          className={`px-6 py-3 rounded font-bold ${
+          className={`px-6 py-2 rounded font-bold ${
             currentPage === totalPages - 1
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
