@@ -1,313 +1,293 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-interface PerimeterQuestion {
+type Cell = 0 | 1;
+
+interface Question {
   id: number;
-  context: string;
-  width: number;
-  height: number;
-  unit: string;
-  correctAnswer: number;
+  grid: Cell[][];
+  correctAnswer: number; // Périmètre ici
 }
 
-const generateQuestions = (): PerimeterQuestion[] => {
-  return [
-    {
-      id: 1,
-      context: "Une piste cyclable en forme de L fait 30 m dans un sens et 20 m dans l'autre. Calcule la longueur totale à parcourir aller-retour.",
-      width: 30,
-      height: 20,
-      unit: "m",
-      correctAnswer: 100
-    },
-    {
-      id: 2,
-      context: "Une clôture entoure un terrain composé de deux rectangles accolés : un de 20 m × 10 m et un autre de 10 m × 10 m. Calcule la longueur totale de la clôture.",
-      width: 60,
-      height: 0,
-      unit: "m",
-      correctAnswer: 100
-    },
-    {
-      id: 3,
-      context: "Un sentier en forme de U mesure 15 m de long sur les côtés et 10 m en bas. Quelle est la distance totale si on longe tout le contour du U ?",
-      width: 15,
-      height: 10,
-      unit: "m",
-      correctAnswer: 40
-    },
-    {
-      id: 4,
-      context: "Une piste de course fait le tour d’un rectangle de 40 m sur 20 m, mais un des petits côtés est remplacé par une ligne droite de 30 m. Quel est le périmètre ?",
-      width: 40,
-      height: 20,
-      unit: "m",
-      correctAnswer: 130
-    },
-    {
-      id: 5,
-      context: "Un jardin en forme de T a une base de 20 m et une barre transversale de 30 m. Si chaque segment mesure 10 m de large, calcule le contour du T.",
-      width: 30,
-      height: 10,
-      unit: "m",
-      correctAnswer: 100
-    },
-    
-    {
-      id: 2,
-      context: "Une piscine rectangulaire doit être entourée d'une clôture. Quelle est la longueur totale nécessaire ?",
-      width: 12,
-      height: 8,
-      unit: "m",
-      correctAnswer: 40,
-    },
-    {
-      id: 3,
-      context: "Une maison carrée est décorée de guirlandes tout autour. Quelle est la longueur totale des guirlandes ?",
-      width: 9,
-      height: 9,
-      unit: "m",
-      correctAnswer: 36,
-    },
-    {
-      id: 4,
-      context: "Un petit jardin carré doit être bordé de pierres. Quelle est la longueur totale des bordures ?",
-      width: 5,
-      height: 5,
-      unit: "m",
-      correctAnswer: 20,
-    },
-    {
-      id: 5,
-      context: "Un terrain de basketball rectangulaire est peint. Quelle est la longueur du contour ?",
-      width: 28,
-      height: 15,
-      unit: "m",
-      correctAnswer: 86,
-    },
-    {
-      id: 6,
-      context: "Une piste d’athlétisme rectangulaire est mesurée pour une course. Quelle est sa circonférence ?",
-      width: 50,
-      height: 25,
-      unit: "m",
-      correctAnswer: 150,
-    },
-    {
-      id: 7,
-      context: "Une tente rectangulaire est installée. Quelle longueur de tissu faut-il pour en faire le tour ?",
-      width: 6,
-      height: 4,
-      unit: "m",
-      correctAnswer: 20,
-    },
-    {
-      id: 8,
-      context: "Une salle de classe rectangulaire doit être repeinte en bas de murs. Quelle est la longueur des murs ?",
-      width: 10,
-      height: 6,
-      unit: "m",
-      correctAnswer: 32,
-    },
-    {
-      id: 9,
-      context: "Une zone d'exposition rectangulaire est délimitée. Quelle est la longueur du ruban requis ?",
-      width: 18,
-      height: 9,
-      unit: "m",
-      correctAnswer: 54,
-    },
-    {
-      id: 10,
-      context: "Une mini-ferme rectangulaire est clôturée. Quelle est la longueur de clôture à installer ?",
-      width: 25,
-      height: 12,
-      unit: "m",
-      correctAnswer: 74,
-    },
-    {
-      id: 11,
-      context: "Un terrain de soccer mesure 100m de long et 60m de large. Calcule son périmètre.",
-      width: 100,
-      height: 60,
-      unit: "m",
-      correctAnswer: 320,
-    },
-    {
-      id: 12,
-      context: "Une aire de pique-nique est rectangulaire. Quelle est la longueur de son contour ?",
-      width: 16,
-      height: 10,
-      unit: "m",
-      correctAnswer: 52,
-    },
-    {
-      id: 13,
-      context: "Un enclos rectangulaire pour chèvres doit être clôturé. Quelle est la longueur totale ?",
-      width: 30,
-      height: 18,
-      unit: "m",
-      correctAnswer: 96,
-    },
-    {
-      id: 14,
-      context: "Une fontaine est placée au centre d’un carré pavé. Quelle est la longueur du contour pavé ?",
-      width: 7,
-      height: 7,
-      unit: "m",
-      correctAnswer: 28,
-    },
-    {
-      id: 15,
-      context: "Une cabane en bois a une base rectangulaire. Quelle est la longueur totale de sa base ?",
-      width: 4,
-      height: 3,
-      unit: "m",
-      correctAnswer: 14,
-    },
-    {
-      id: 16,
-      context: "Un potager rectangulaire est entouré d'une barrière. Quelle est la longueur totale de la barrière ?",
-      width: 10,
-      height: 5,
-      unit: "m",
-      correctAnswer: 30,
-    },
-    {
-      id: 17,
-      context: "Un tapis rectangulaire doit être bordé de franges. Quelle est la longueur de franges requise ?",
-      width: 6,
-      height: 2,
-      unit: "m",
-      correctAnswer: 16,
-    },
-    {
-      id: 18,
-      context: "Une scène rectangulaire est entourée de lumières. Quelle est la longueur totale de lumière ?",
-      width: 14,
-      height: 6,
-      unit: "m",
-      correctAnswer: 40,
-    },
-    {
-      id: 19,
-      context: "Un trampoline est posé dans un carré de sécurité. Calcule la longueur du carré.",
-      width: 8,
-      height: 8,
-      unit: "m",
-      correctAnswer: 32,
-    },
-    {
-      id: 20,
-      context: "Une zone d'atterrissage rectangulaire est mesurée pour les drones. Quelle est sa bordure ?",
-      width: 22,
-      height: 14,
-      unit: "m",
-      correctAnswer: 72,
+const gridSize = 10;
+const colors = ["#60a5fa", "#f87171", "#34d399", "#fbbf24", "#a78bfa"];
+
+// Calcule le périmètre : chaque bloc actif (val === 1) a 1, 2, 3 ou 4 côtés exposés.
+const calculatePerimeter = (grid: Cell[][]): number => {
+  let perimeter = 0;
+
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      if (grid[y][x] === 1) {
+        if (x === 0 || grid[y][x - 1] === 0) perimeter++; // gauche
+        if (x === gridSize - 1 || grid[y][x + 1] === 0) perimeter++; // droite
+        if (y === 0 || grid[y - 1][x] === 0) perimeter++; // haut
+        if (y === gridSize - 1 || grid[y + 1][x] === 0) perimeter++; // bas
+      }
     }
-  ];
+  }
+
+  return perimeter;
 };
 
-const TerrainIllustration = ({ width, height, unit }: { width: number; height: number; unit: string }) => (
-  <svg width="300" height="200">
-    <rect x="50" y="30" width="200" height="120" fill="#d1fae5" stroke="#059669" strokeWidth="4" />
-    <text x="150" y="25" fontSize="14" textAnchor="middle" fill="#059669">
-      {width} {unit}
-    </text>
-    <text
-      x="45"
-      y="90"
-      fontSize="14"
-      textAnchor="end"
-      transform="rotate(-90 45,90)"
-      fill="#059669"
-    >
-      {height} {unit}
-    </text>
-  </svg>
-);
+const generateConnectedShape = (maxBlocks = 20): Cell[][] => {
+  const grid: Cell[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
+  const stack: [number, number][] = [];
+  const visited = new Set<string>();
 
-export default function PerimetrePractice() {
-  const questions = generateQuestions();
-  const totalQuestions = questions.length;
+  const startX = Math.floor(Math.random() * gridSize);
+  const startY = Math.floor(Math.random() * gridSize);
+  stack.push([startX, startY]);
 
-  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
+  let blocks = 0;
+  while (stack.length > 0 && blocks < maxBlocks) {
+    const [x, y] = stack.pop()!;
+    const key = `${x},${y}`;
+    if (
+      x >= 0 &&
+      x < gridSize &&
+      y >= 0 &&
+      y < gridSize &&
+      !visited.has(key) &&
+      grid[y][x] === 0
+    ) {
+      grid[y][x] = 1;
+      visited.add(key);
+      blocks++;
+
+      const neighbors: [number, number][] = [
+        [x + 1, y],
+        [x - 1, y],
+        [x, y + 1],
+        [x, y - 1],
+      ];
+      neighbors.sort(() => Math.random() - 0.5);
+      stack.push(...neighbors);
+    }
+  }
+
+  return grid;
+};
+
+const generateQuestion = (id: number): Question => {
+  const shape = generateConnectedShape(15 + Math.floor(Math.random() * 10));
+  const correctAnswer = calculatePerimeter(shape);
+  return { id, grid: shape, correctAnswer };
+};
+
+export default function PerimetreByCounting() {
+  const totalQuestions = 20;
+  const questionsPerPage = 5;
+  const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [isValidated, setIsValidated] = useState(false);
 
-  const handleChange = (value: string) => {
+  useEffect(() => {
+    if (questions.length === 0) {
+      const qs = Array.from({ length: totalQuestions }, (_, i) => generateQuestion(i));
+      setQuestions(qs);
+      setAnswers(Array(totalQuestions).fill(""));
+      setFeedback(Array(totalQuestions).fill(""));
+    }
+  }, [questions]);
+
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[currentPage] = value.trim();
+    newAnswers[index] = value;
     setAnswers(newAnswers);
-    setFeedbackMessage("");
   };
 
-  const handleValidation = () => {
-    const currentAnswer = parseFloat(answers[currentPage].replace(',', '.'));
-    const correctAnswer = questions[currentPage].correctAnswer;
-
-    if (isNaN(currentAnswer)) {
-      setFeedbackMessage("Veuillez entrer une valeur numérique valide.");
-      return;
-    }
-
-    if (Math.abs(currentAnswer - correctAnswer) < 0.01) {
-      if (currentPage < totalQuestions - 1) {
-        setFeedbackMessage("Bonne réponse ! Passons à la suivante.");
-        setTimeout(() => setCurrentPage(currentPage + 1), 1500);
-      } else {
-        setIsValidated(true);
-        setFeedbackMessage("Bravo ! Vous avez terminé l'exercice.");
-      }
+  const validateOne = (index: number) => {
+    const val = parseInt(answers[index]);
+    if (isNaN(val)) {
+      updateFeedback(index, "Veuillez entrer un nombre");
+    } else if (val === questions[index].correctAnswer) {
+      updateFeedback(index, "Réponse correcte");
     } else {
-      setFeedbackMessage("Réponse incorrecte. Réessayez !");
+      updateFeedback(index, "Faux");
     }
   };
 
-  const currentQuestion = questions[currentPage];
+  const updateFeedback = (index: number, message: string) => {
+    const newFeedback = [...feedback];
+    newFeedback[index] = message;
+    setFeedback(newFeedback);
+  };
+
+  const renderSVG = (grid: Cell[][], color: string) => {
+    const cellSize = 30;
+    return (
+      <svg
+        width={gridSize * cellSize}
+        height={gridSize * cellSize}
+        style={{ border: "1px solid #ddd" }}
+      >
+        {grid.map((row, y) =>
+          row.map((_, x) => (
+            <rect
+              key={`bg-${x}-${y}`}
+              x={x * cellSize}
+              y={y * cellSize}
+              width={cellSize}
+              height={cellSize}
+              fill="#fff"
+              stroke="#ccc"
+            />
+          ))
+        )}
+        {grid.map((row, y) =>
+          row.map((val, x) =>
+            val === 1 ? (
+              <rect
+                key={`shape-${x}-${y}`}
+                x={x * cellSize}
+                y={y * cellSize}
+                width={cellSize}
+                height={cellSize}
+                fill={color}
+                stroke="#000"
+              />
+            ) : null
+          )
+        )}
+      </svg>
+    );
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+  };
+
+  const startIndex = currentPage * questionsPerPage;
+  const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
+
+  // Cercle de progression
+  const radius = 50;
+  const strokeWidth = 10;
+  const circumference = 2 * Math.PI * radius;
+  const completedAnswers = answers.filter((a) => a.trim() !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 text-black p-4">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
+
+      {/* Boutons fixes */}
       <Link
         href="/menu/apprendre/perimetre"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold"
+        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/secondaire/niveaux/niveau3"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
       </Link>
 
-      <h1 className="text-3xl font-bold mb-4">Calcul de Périmètre</h1>
-      <p className="text-lg mb-4 text-center max-w-xl">{currentQuestion.context}</p>
-      <TerrainIllustration width={currentQuestion.width} height={currentQuestion.height} unit={currentQuestion.unit} />
-
-      <div className="mt-6 flex flex-col items-center">
-        <label className="text-lg mb-2">Quel est le périmètre ? (en {currentQuestion.unit})</label>
-        <input
-          type="text"
-          value={answers[currentPage]}
-          onChange={(e) => handleChange(e.target.value)}
-          className="border border-gray-400 p-2 rounded w-32 text-center"
-        />
+      {/* Cercle de progression */}
+      <div className="fixed top-4 left-4 w-32 h-32 z-50">
+        <svg className="transform -rotate-90" width="100%" height="100%">
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        </div>
       </div>
 
-      {feedbackMessage && (
-        <p
-          className={`mt-4 text-xl font-bold ${feedbackMessage.includes("Bonne") || feedbackMessage.includes("Bravo") ? "text-green-600" : "text-red-500"}`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
+      {/* Contenu des questions */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-40 space-y-12">
+        <h1 className="text-3xl font-bold text-center">Périmètre en comptant les côtés</h1>
 
-      {!isValidated && (
+        {currentQuestions.map((q, i) => {
+          const globalIndex = startIndex + i;
+          return (
+            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md border">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
+                {feedback[globalIndex] && (
+                  <span
+                    className={`text-sm font-semibold ${
+                      feedback[globalIndex] === "Réponse correcte"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {feedback[globalIndex]}
+                  </span>
+                )}
+              </div>
+              <div className="flex justify-center mb-4">
+                {renderSVG(q.grid, colors[q.id % colors.length])}
+              </div>
+              <label className="block mb-2 font-semibold">
+                Quel est le périmètre de cette figure (en unités) ?
+              </label>
+              <div className="flex flex-col md:flex-row items-start gap-4">
+                <input
+                  type="text"
+                  placeholder="Réponse"
+                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
+                  value={answers[globalIndex]}
+                  onChange={(e) => handleChange(globalIndex, e.target.value)}
+                />
+                <button
+                  onClick={() => validateOne(globalIndex)}
+                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
+                >
+                  Valider la réponse
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Pagination */}
+      <div className="fixed bottom-4 right-4 bg-white border-t border-gray-300 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
-          onClick={handleValidation}
-          className="mt-6 bg-blue-600 text-white py-2 px-6 rounded font-bold"
+          onClick={handlePrevious}
+          disabled={currentPage === 0}
+          className={`px-6 py-2 rounded font-bold ${
+            currentPage === 0
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
         >
-          Valider
+          Page précédente
         </button>
-      )}
+        <button
+          onClick={handleNext}
+          disabled={currentPage === totalPages - 1}
+          className={`px-6 py-2 rounded font-bold ${
+            currentPage === totalPages - 1
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+        >
+          Page suivante
+        </button>
+      </div>
     </div>
   );
 }

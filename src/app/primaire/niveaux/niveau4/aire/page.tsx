@@ -164,13 +164,13 @@ export default function AreaByCounting() {
 
       {/* Boutons fixes */}
       <Link
-        href="/menu/apprendre/fraction"
+        href="/menu/apprendre/aire"
         className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
       >
         Apprendre
       </Link>
       <Link
-        href="/secondaire/niveaux/niveau2"
+        href="/secondaire/niveaux/niveau3"
         className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
@@ -235,14 +235,14 @@ export default function AreaByCounting() {
               <div className="flex flex-col md:flex-row items-start gap-4">
                 <input
                   type="text"
-                  placeholder="ex: 23"
+                  placeholder="Réponse"
                   className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
                   value={answers[globalIndex]}
                   onChange={(e) => handleChange(globalIndex, e.target.value)}
                 />
                 <button
                   onClick={() => validateOne(globalIndex)}
-                  className="text-red-600 font-bold border border-red-400 px-6 py-2 rounded hover:bg-red-100"
+                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
                 >
                   Valider la réponse
                 </button>
