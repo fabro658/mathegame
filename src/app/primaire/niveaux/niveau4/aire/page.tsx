@@ -59,10 +59,14 @@ const generateQuestion = (id: number): Question => {
 };
 
 export default function AreaByCounting() {
-  const totalQuestions = 10;
+  const totalQuestions = 20;
+  const questionsPerPage = 5;
+  const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     if (questions.length === 0) {
@@ -136,51 +140,90 @@ export default function AreaByCounting() {
     );
   };
 
+  const handlePrevious = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+  };
+
+  const startIndex = currentPage * questionsPerPage;
+  const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
+
   return (
-    <div className="h-screen overflow-y-auto bg-gray-100 text-black p-8">
+    <div className="min-h-screen overflow-y-auto bg-gray-100 text-black p-8">
       <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
 
       <div className="flex flex-col gap-10 max-w-3xl mx-auto">
-        {questions.map((q, i) => (
-          <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-lg font-bold">Question {i + 1} :</p>
-              {feedback[i] && (
-                <span
-                  className={`text-sm font-semibold ${
-                    feedback[i] === "Réponse correcte"
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
-                >
-                  {feedback[i]}
-                </span>
-              )}
-            </div>
+        {currentQuestions.map((q, i) => {
+          const globalIndex = startIndex + i;
 
-            <div className="flex justify-center mb-4">
-              {renderSVG(q.grid, colors[i % colors.length])}
+          return (
+            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
+                {feedback[globalIndex] && (
+                  <span
+                    className={`text-sm font-semibold ${
+                      feedback[globalIndex] === "Réponse correcte"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {feedback[globalIndex]}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-center mb-4">
+                {renderSVG(q.grid, colors[q.id % colors.length])}
+              </div>
+              <label className="block mb-2 font-semibold">
+                Quelle est l’aire de cette figure (en unités carrées) ?
+              </label>
+              <div className="flex flex-col md:flex-row items-start gap-4">
+                <input
+                  type="text"
+                  placeholder="Réponse"
+                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
+                  value={answers[globalIndex]}
+                  onChange={(e) => handleChange(globalIndex, e.target.value)}
+                />
+                <button
+                  onClick={() => validateOne(globalIndex)}
+                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
+                >
+                  Valider la réponse
+                </button>
+              </div>
             </div>
-            <label className="block mb-2 font-semibold">
-              Quelle est l’aire de cette figure (en unités carrées) ?
-            </label>
-            <div className="flex flex-col md:flex-row items-start gap-4">
-              <input
-                type="text"
-                placeholder="ex: 23"
-                className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
-                value={answers[i]}
-                onChange={(e) => handleChange(i, e.target.value)}
-              />
-              <button
-                onClick={() => validateOne(i)}
-                className="text-red-600 font-bold border border-red-400 px-6 py-2 rounded hover:bg-red-100"
-              >
-                Valider la réponse
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="mt-12 flex justify-center gap-8">
+        <button
+          onClick={handlePrevious}
+          disabled={currentPage === 0}
+          className={`px-6 py-3 rounded font-bold ${
+            currentPage === 0 ? "bg-gray-300 text-gray-600" : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+        >
+          Précédent
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={currentPage === totalPages - 1}
+          className={`px-6 py-3 rounded font-bold ${
+            currentPage === totalPages - 1
+              ? "bg-gray-300 text-gray-600"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+        >
+          Suivant
+        </button>
       </div>
     </div>
   );
