@@ -152,7 +152,7 @@ export default function AreaByCounting() {
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="min-h-screen overflow-y-auto bg-gray-100 text-black p-8">
+    <div className="min-h-screen bg-gray-100 text-black p-8 pb-32 relative">
       <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
 
       <div className="flex flex-col gap-10 max-w-3xl mx-auto">
@@ -185,14 +185,14 @@ export default function AreaByCounting() {
               <div className="flex flex-col md:flex-row items-start gap-4">
                 <input
                   type="text"
-                  placeholder="Réponse"
+                  placeholder="ex: 23"
                   className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
                   value={answers[globalIndex]}
                   onChange={(e) => handleChange(globalIndex, e.target.value)}
                 />
                 <button
                   onClick={() => validateOne(globalIndex)}
-                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
+                  className="text-red-600 font-bold border border-red-400 px-6 py-2 rounded hover:bg-red-100"
                 >
                   Valider la réponse
                 </button>
@@ -202,16 +202,18 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Pagination Controls */}
-      <div className="mt-12 flex justify-center gap-8">
+      {/* Sticky footer with pagination */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-inner py-4 flex justify-center gap-8 z-10">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
           className={`px-6 py-3 rounded font-bold ${
-            currentPage === 0 ? "bg-gray-300 text-gray-600" : "bg-blue-600 text-white hover:bg-blue-700"
+            currentPage === 0
+              ? "bg-gray-300 text-gray-600"
+              : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
-          Précédent
+          Page précédente
         </button>
         <button
           onClick={handleNext}
@@ -222,7 +224,7 @@ export default function AreaByCounting() {
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
-          Suivant
+          Page suivante
         </button>
       </div>
     </div>
