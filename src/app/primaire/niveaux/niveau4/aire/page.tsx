@@ -152,10 +152,10 @@ export default function AreaByCounting() {
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black pt-8 px-4 pb-40">
+    <div className="min-h-screen bg-gray-100 text-black pt-8 px-4 relative">
       <h1 className="text-3xl font-bold mb-8 text-center">Aire en comptant les carrés</h1>
 
-      <div className="flex flex-col gap-10 max-w-3xl mx-auto">
+      <div className="flex flex-col gap-10 max-w-3xl mx-auto pb-48">
         {currentQuestions.map((q, i) => {
           const globalIndex = startIndex + i;
           return (
@@ -200,8 +200,8 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Sticky footer with pagination */}
-      <div className="sticky bottom-0 left-0 right-0 bg-white shadow-inner py-4 mt-8 flex justify-center gap-8 z-20 border-t border-gray-200">
+      {/* Footer fixe avec navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-inner py-4 flex justify-center gap-8 z-20 border-t border-gray-200">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
