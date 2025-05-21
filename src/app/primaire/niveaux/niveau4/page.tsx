@@ -50,25 +50,25 @@ export default function Niveau1() {
         </p>
       </div>
 
-      {/* Boutons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10">
+      {/* Boutons en grille 2 lignes */}
+      <div className="grid grid-cols-2 gap-8 z-10 max-w-4xl">
         <a
           href="/primaire/niveaux/niveau4/perimetre2"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[280px] transition transform hover:scale-105"
         >
-          📏 Périmètre
+          Périmètre
         </a>
         <a
           href="/primaire/niveaux/niveau4/geometrie"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[280px] transition transform hover:scale-105"
         >
-          🔺 Géométrie
+          Géométrie
         </a>
         <a
           href="/primaire/niveaux/niveau4/aire"
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="col-span-2 justify-self-center bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[280px] transition transform hover:scale-105"
         >
-          🔲 Aire
+          Aire
         </a>
       </div>
     </div>
