@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Niveau2() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-[Nunito] bg-gradient-to-t from-[#770c75] to-[#090536]">
+    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-[Fredoka] bg-gradient-to-t from-[#770c75] to-[#090536]">
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
@@ -23,10 +23,10 @@ export default function Niveau2() {
 
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-        Mission Comparaison
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
+          Mission Comparaison
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
+        <p className="text-xl sm:text-2xl text-white font-medium">
           Explore les nombres dans l’univers mathématique 🚀
         </p>
       </div>
