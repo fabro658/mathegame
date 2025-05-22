@@ -1,21 +1,10 @@
 import Link from "next/link";
 
-export default function Niveau1() {
+export default function Niveau3() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-pink-100 text-black relative overflow-hidden">
-      {/* Arrière-plan motif cuisine/fruits */}
-      <div className="absolute inset-0 z-0 opacity-10">
-        <svg width="100%" height="100%" preserveAspectRatio="none">
-          <defs>
-            <pattern id="kitchenPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <circle cx="20" cy="20" r="8" fill="#f87171" /> {/* fraise */}
-              <circle cx="70" cy="40" r="10" fill="#fbbf24" /> {/* tranche d’orange */}
-              <circle cx="50" cy="80" r="6" fill="#34d399" /> {/* kiwi */}
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#kitchenPattern)" />
-        </svg>
-      </div>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-pink-100 text-black relative overflow-hidden font-[Nunito]">
+      {/* Sorcier décoratif */}
+      <div className="witch"></div>
 
       {/* Bouton Retour */}
       <Link
@@ -25,47 +14,47 @@ export default function Niveau1() {
         Retour
       </Link>
 
-      {/* Titre */}
+      {/* Titre magique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-red-600 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-          🧁 Chef des Fractions !
+        <h1 className="text-purple-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
+          Le Grimoire des Fractions ✨
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
-          Coupe, partage et calcule comme un vrai pâtissier 🍰
+        <p className="text-xl sm:text-2xl text-gray-700 font-medium max-w-xl">
+          Maîtrise l'art des fractions comme un véritable mage mathémagicien !
         </p>
       </div>
 
-      {/* Boutons */}
+      {/* Boutons magiques */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-purple-700 hover:bg-purple-900 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Addition de fractions 🍩
+          ⚗️ Addition de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/soustractionfraction"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Soustraction de fractions 🥧
+          🧪 Soustraction de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Multiplication de fractions 🍪
+          🧿 Multiplication de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Division de fractions 🍰
+          🪄 Division de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/trouvefraction"
-          className="bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Trouver la fraction 🍕
+          🔮 Trouver la fraction
         </a>
       </div>
     </div>
