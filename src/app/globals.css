@@ -286,16 +286,7 @@ body {
 }
 
 /* niveau 2 primaire */
-html, body {
-  height: 100%;
-  margin: 0;
-  background-image: linear-gradient(to top, #770c75 , #090536);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .moon {
   position: relative;
