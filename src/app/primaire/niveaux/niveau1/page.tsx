@@ -20,15 +20,20 @@ export default function Niveau1() {
       >
         Retour
       </Link>
-
-      <div className="absolute -left-[10vmin] top-1/2 -translate-y-1/2 flex items-center z-40">
+      {/* Avion + titre sur la même ligne */}
+<div className="flex items-center justify-start w-full px-8 mt-[6vmin] relative z-40">
+  {/* Avion */}
   <div className="airplane-fixed" />
-  <div className="airplane-banner">
-    <span>Arithmétique</span>
-    <span>Choisis ta destination mathématique !</span>
+
+  {/* Triangle de ficelle */}
+  <div className="airplane-triangle" />
+
+  {/* Texte du titre */}
+  <div className="airplane-title">
+    <h1>Arithmétique</h1>
+    <p>Choisis ta destination mathématique !</p>
   </div>
 </div>
-
 
       {/* Boutons missions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 mt-4 px-4">
