@@ -6,7 +6,7 @@ export default function Niveau2() {
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-30"
       >
         Retour
       </Link>
@@ -32,10 +32,10 @@ export default function Niveau2() {
       </div>
 
       {/* Boutons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 mt-4 px-4">
         <a
-          href="/primaire/niveaux/niveau2/comparaison"
-          className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          href="/primaire/niveaux/niveau1/addition"
+          className="bg-purple-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Comparaison
         </a>
