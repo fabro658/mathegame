@@ -2,18 +2,30 @@ import Link from "next/link";
 
 export default function Niveau1() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-200 text-black relative overflow-hidden">
-      {/* Arrière-plan motif éclairs SVG */}
-      <div className="absolute inset-0 z-0 opacity-10">
-        <svg width="100%" height="100%" preserveAspectRatio="none">
-          <defs>
-            <pattern id="lightningPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <polygon points="50,0 40,40 60,40 45,100 80,50 60,50 70,0" fill="#3b82f6" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#lightningPattern)" />
-        </svg>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-200 text-black relative overflow-hidden font-fredoka">
+      {/* Décor */}
+      <div className="left-mountain"></div>
+      <div className="back-mountain"></div>
+      <div className="sun"></div>
+      <div className="penguin">
+        <div className="penguin-head">
+          <div className="face left"></div>
+          <div className="face right"></div>
+          <div className="chin"></div>
+          <div className="eye left">
+            <div className="eye-lid"></div>
+          </div>
+          <div className="eye right">
+            <div className="eye-lid"></div>
+          </div>
+          <div className="blush left"></div>
+          <div className="blush right"></div>
+          <div className="beak top"></div>
+          <div className="beak bottom"></div>
+        </div>
+        <div className="penguin-body"></div>
       </div>
+      <div className="ground"></div>
 
       {/* Bouton Retour */}
       <Link
@@ -23,7 +35,7 @@ export default function Niveau1() {
         Retour
       </Link>
 
-      {/* Titre thématique */}
+      {/* Titre */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-blue-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
           ⚡ Super Puissances des Nombres
