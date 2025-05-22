@@ -9,19 +9,12 @@ export default function Niveau1() {
         <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
           {/* Nuage en haut à gauche */}
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-          
           {/* Nuage en haut-centre-droit */}
           <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-          
           {/* Nuage centré en hauteur à droite */}
           <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
         </div>
-        {/* Avion rouge animé */}
-{/* Avion décoratif immobile */}
-<div className="absolute top-[7vmin] left-[1vmin] z-10">
-  <div className="airplane-fixed" />
-</div>
-</div>
+      </div>
 
       {/* Bouton retour */}
       <Link
@@ -31,11 +24,18 @@ export default function Niveau1() {
         Retour
       </Link>
 
-      {/* Titre principal */}
-      <div className="flex flex-col items-center text-center mb-12 z-10 mt-12">
-        <h1 className="text-6xl md:text-7xl font-extrabold text-[#2d1e1e]">Arithmétique</h1>
+      {/* Titre principal AVEC avion aligné */}
+      <div className="relative flex flex-col items-center text-center mb-12 z-10 mt-12">
+        {/* Avion décoratif aligné à gauche du titre */}
+        <div className="absolute -left-[10vmin] top-1/2 -translate-y-1/2">
+          <div className="airplane-fixed" />
+        </div>
+
+        <h1 className="text-6xl md:text-7xl font-extrabold text-[#2d1e1e]">
+          Arithmétique
+        </h1>
         <p className="text-2xl mt-2 font-semibold text-[#2d1e1e]">
-          Choisis ta mission mathématique !
+          Choisis ta destination mathématique !
         </p>
       </div>
 
