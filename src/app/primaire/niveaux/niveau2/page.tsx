@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Niveau2() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden font-[Nunito] stars-wrapper">
+    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-[Nunito] bg-gradient-to-t from-[#770c75] to-[#090536]">
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
@@ -11,7 +11,7 @@ export default function Niveau2() {
         Retour
       </Link>
 
-      {/* Lune et étoiles */}
+      {/* Lune */}
       <div className="moon">
         <div className="crat crat1"></div>
         <div className="crat crat2"></div>
@@ -21,17 +21,12 @@ export default function Niveau2() {
         <div className="crat crat6"></div>
       </div>
 
-      <div className="star star1"></div>
-      <div className="star star2"></div>
-      <div className="star star3"></div>
-      <div className="star star4"></div>
-
       {/* Titre thématique */}
-      <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
+      <div className="flex flex-col items-center text-center mb-12 z-10 mt-24">
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
           Mission Comparaison
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
+        <p className="text-xl sm:text-2xl text-gray-300 font-medium">
           Explore les nombres dans l’univers mathématique 🚀
         </p>
       </div>

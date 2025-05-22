@@ -286,135 +286,78 @@ body {
 }
 
 /* niveau 2 primaire */
-html {
-  height: 100%;
-}
-body {
-display:flex;
-justify-content:center;
-aligh-items:center;
+html, body {
   height: 100%;
   margin: 0;
   background-image: linear-gradient(to top, #770c75 , #090536);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.moon{
-position:relative;
-  top:150px;
-  left:0px;
+.moon {
+  position: relative;
+  top: 150px;
+  left: 0px;
   width: 150px;
-  height: 150px;;
+  height: 150px;
   border-radius: 50%;
-  background: rgb(240,223,246);
   background: radial-gradient(circle, rgba(222, 213, 228, 0.887) 4%, rgb(248, 246, 246) 100%);
-  box-shadow: 0 0 70px 10px #f5e4e4ab,0 0 70px 20px #ca69b5dc,0 0 70px 30px #e772e1dc;
+  box-shadow: 0 0 70px 10px #f5e4e4ab, 0 0 70px 20px #ca69b5dc, 0 0 70px 30px #e772e1dc;
   animation: move 5s infinite;
 }
 
-@keyframes move{
-  50% {box-shadow: 0px 0px 70px 20px #f5e4e4dc ,0 0 70px 40px #ca69b5dc,0px 0px 70px 40px #e772e1dc;}
-}
- 
-.crat{
-  position: absolute;
-  top:80px;
-  left:70px;
-  width:30px;
-  height:30px;
-  border-radius: 50%;
-  box-shadow: inset 1px 4px 5px 1px rgb(185, 173, 185);
-  border:4px solid rgb(216, 205, 219);
- }
- .crat2{
-  position: absolute;
-  top:45px;
-  left:40px;
-  width:10px;
-  height:10px;
- }
- .crat3{
-  position: absolute;
-  top:25px;
-  left:50px;
-  width:20px;
-  height:20px;
- }
- .crat4{
-  position: absolute;
-  top:35px;
-  left:100px;
-  width:15px;
-  height:15px;
- }
- .crat5{
-  top:120px;
-  left:60px;
-  width:10px;
-  height:10px;
- }
- .crat6{
-  top:90px;
-  left:20px;
-  width:20px;
-  height:20px;
-  box-shadow: inset 1px 7px 7px 1px rgb(204, 183, 204);
- }
- .star{
-  position: absolute;
-  border-radius: 50%;
-  background-color: rgb(223, 189, 226);
-  box-shadow: 0px 0px 16px 2px rgb(233, 179, 215);
-  animation-duration: 3s;
-  animation-name: twinkle;
-  animation-iteration-count: infinite;
-}
-.star1{
-  top:200px;
-  left:200px;
-  height:5px;
-  width:5px;
-  animation-delay: 3s;
-}
-.star2{
-  top:250px;
-  left:250px;
-  height:3px;
-  width:3px;
-  animation-delay: 2s;
-}
-.star3{
-  top:100px;
-  left:300px;
-  height:2px;
-  width:2px;
-}
-.star4{
-  top:50px;
-  left:400px;
-  height:1px;
-  width:1px;
-  animation-delay:1s;
-
-}
-
-@keyframes twinkle{
-  50%{
-    transform: scale(0.5);
-    opacity: -1;
+@keyframes move {
+  50% {
+    box-shadow: 0px 0px 70px 20px #f5e4e4dc, 0 0 70px 40px #ca69b5dc, 0px 0px 70px 40px #e772e1dc;
   }
 }
 
-
-.shooting{
-  position:absolute;
-  top:50px;
-  left:1100px;
-  height:10px;
-  width: 10px;
+.crat {
+  position: absolute;
+  top: 80px;
+  left: 70px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background-color: hsla(316, 28%, 92%, 0.993);
-  box-shadow: 1px -1px 1px 2px rgb(238, 8, 108);
-  animation: space 4s linear infinite;
+  box-shadow: inset 1px 4px 5px 1px rgb(185, 173, 185);
+  border: 4px solid rgb(216, 205, 219);
+}
+
+.crat2 {
+  top: 45px;
+  left: 40px;
+  width: 10px;
+  height: 10px;
+}
+
+.crat3 {
+  top: 25px;
+  left: 50px;
+  width: 20px;
+  height: 20px;
+}
+
+.crat4 {
+  top: 35px;
+  left: 100px;
+  width: 15px;
+  height: 15px;
+}
+
+.crat5 {
+  top: 120px;
+  left: 60px;
+  width: 10px;
+  height: 10px;
+}
+
+.crat6 {
+  top: 90px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 1px 7px 7px 1px rgb(204, 183, 204);
 }
