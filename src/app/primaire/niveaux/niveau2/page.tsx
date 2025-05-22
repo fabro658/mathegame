@@ -22,11 +22,11 @@ export default function Niveau2() {
       </div>
 
       {/* Titre thématique */}
-      <div className="flex flex-col items-center text-center mb-12 z-10 mt-24">
-        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-          Mission Comparaison
+      <div className="flex flex-col items-center text-center mb-12 z-10">
+        <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
+        Mission Comparaison
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-300 font-medium">
+        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
           Explore les nombres dans l’univers mathématique 🚀
         </p>
       </div>
@@ -41,19 +41,19 @@ export default function Niveau2() {
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparaison_decimaux"
-          className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-green-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Décimaux
         </a>
         <a
           href="/primaire/niveaux/niveau2/comparer_fraction"
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Fractions
         </a>
         <a
           href="/primaire/niveaux/niveau2/expression_equivalente"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
+          className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Expressions équivalentes
         </a>
