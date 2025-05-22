@@ -4,28 +4,23 @@ export default function Niveau1() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-200 text-black relative overflow-hidden font-fredoka">
       {/* Décor */}
-      <div className="left-mountain"></div>
-      <div className="back-mountain"></div>
-      <div className="sun"></div>
-      <div className="penguin">
-        <div className="penguin-head">
-          <div className="face left"></div>
-          <div className="face right"></div>
-          <div className="chin"></div>
-          <div className="eye left">
-            <div className="eye-lid"></div>
-          </div>
-          <div className="eye right">
-            <div className="eye-lid"></div>
-          </div>
-          <div className="blush left"></div>
-          <div className="blush right"></div>
-          <div className="beak top"></div>
-          <div className="beak bottom"></div>
-        </div>
-        <div className="penguin-body"></div>
-      </div>
-      <div className="ground"></div>
+      <div className="penguin absolute left-0 bottom-0 ml-4 mb-4 z-10">
+  <div className="penguin-head">
+    <div className="face left"></div>
+    <div className="face right"></div>
+    <div className="eye left">
+      <div className="eye-lid"></div>
+    </div>
+    <div className="eye right">
+      <div className="eye-lid"></div>
+    </div>
+    <div className="blush left"></div>
+    <div className="blush right"></div>
+    <div className="beak top"></div>
+    <div className="beak bottom"></div>
+  </div>
+</div>
+
 
       {/* Bouton Retour */}
       <Link
