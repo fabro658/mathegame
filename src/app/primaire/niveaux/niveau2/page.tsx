@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Niveau2() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-[Fredoka] bg-gradient-to-t from-[#770c75] to-[#090536]">
+    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
