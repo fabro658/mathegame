@@ -238,8 +238,8 @@ body {
 }
 
 .airplane-fixed {
-  width: 40vmin;
-  height: 40vmin;
+  width: 30vmin;
+  height: 30vmin;
   position: absolute;
   left: -2vmin; /* Ajuste la position à gauche */
   top: 6vmin;   /* Ajuste pour qu’il soit à côté du titre */

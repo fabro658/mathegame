@@ -18,7 +18,9 @@ export default function Niveau1() {
         </div>
         {/* Avion rouge animé */}
 {/* Avion décoratif immobile */}
-<div className="airplane-fixed"></div>
+<div className="absolute top-[7vmin] left-[1vmin] z-10">
+  <div className="airplane-fixed" />
+</div>
 </div>
 
       {/* Bouton retour */}
