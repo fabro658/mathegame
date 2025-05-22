@@ -7,11 +7,8 @@ export default function Niveau1() {
       <div className="absolute inset-0 z-0">
         {/* Nuages CSS décoratifs */}
         <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          {/* Nuage en haut à gauche */}
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-          {/* Nuage en haut-centre-droit */}
           <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-          {/* Nuage centré en hauteur à droite */}
           <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
         </div>
       </div>
@@ -19,15 +16,14 @@ export default function Niveau1() {
       {/* Bouton retour */}
       <Link
         href="/primaire/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-20"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-30"
       >
         Retour
       </Link>
 
-      <div className="absolute -left-[10vmin] top-1/2 -translate-y-1/2 flex items-center">
+      <div className="absolute -left-[10vmin] top-1/2 -translate-y-1/2 flex items-center z-40">
   <div className="airplane-fixed" />
   <div className="airplane-banner">
-    <strong>Retour</strong>
     <span>Arithmétique</span>
     <span>Choisis ta destination mathématique !</span>
   </div>
