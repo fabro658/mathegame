@@ -285,54 +285,46 @@ body {
     radial-gradient(ellipse at 0% 0%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(9.5vmin)  / 5vmin 5vmin no-repeat;
 }
 .airplane-banner {
-  position: absolute;
-  left: calc(50vmin + 2vmin); /* attachée derrière l’avion */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 60vmin;
+  position: relative; /* on ne la positionne plus en absolu */
+  margin-left: 2vmin;
+  padding: 2vmin 4vmin;
   background-color: white;
   color: #000;
-  padding: 2vmin 3vmin;
-  border-radius: 0.5vmin;
+  border-radius: 1vmin;
   box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.2);
-  z-index: 10;
   font-family: "Fredoka", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  animation: wave 2s ease-in-out infinite alternate;
   gap: 0.5vmin;
+  animation: wave 2s ease-in-out infinite alternate;
+  z-index: 10;
 }
 
-/* Grand texte stylisé */
+/* Texte stylisé */
 .airplane-banner span {
-  font-size: 2.2vmin;
+  font-size: 2.4vmin;
   line-height: 1.4;
   font-weight: 500;
 }
 
 .airplane-banner span:first-child {
-  font-size: 2.8vmin;
+  font-size: 3vmin;
   font-weight: 700;
 }
 
-
-
-
-.airplane-banner::before {
-  content: "";
-  position: absolute;
-  left: -3vmin;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3vmin;
-  height: 1px;
-  background-color: #333;
-  box-shadow:
-    0 0 0.25vmin rgba(0, 0, 0, 0.2),
-    0 0 0.5vmin rgba(0, 0, 0, 0.1);
-  opacity: 0.8;
+/* Triangle en ficelle tirée par l’avion */
+.airplane-triangle {
+  width: 0;
+  height: 0;
+  border-top: 3vmin solid transparent;
+  border-bottom: 3vmin solid transparent;
+  border-left: 5vmin solid #333;
+  transform: rotate(15deg);
+  margin-left: -2vmin;
 }
+
+/* Animation flottante du panneau */
 @keyframes wave {
   0% {
     transform: translateY(0) rotateZ(0.3deg);
@@ -341,9 +333,6 @@ body {
     transform: translateY(0.3vmin) rotateZ(-0.3deg);
   }
 }
-
-
-
 
 
 
