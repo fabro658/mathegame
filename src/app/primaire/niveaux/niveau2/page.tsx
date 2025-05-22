@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import Link from "next/link";
 
@@ -27,12 +29,17 @@ export default function Niveau1() {
     const animationPatterns = [["0","1"],["1","1"],["2","2"],["3","5"],["8","9"],["3","6"],["9","10"],["10","10"],["3","7"],["6","7"]];
     const frameSize = 15;
 
-    function animateStar(target, start, end, speed) {
+    function animateStar(
+      target: HTMLElement,
+      start: string,
+      end: string,
+      speed: number
+    ): void {
       let i = parseInt(start);
       const max = parseInt(end);
       setInterval(() => {
         target.style.margin = `0px ${-(i * frameSize)}px`;
-        i = (i >= max) ? parseInt(start) : i + 1;
+        i = i >= max ? parseInt(start) : i + 1;
       }, speed);
     }
 
