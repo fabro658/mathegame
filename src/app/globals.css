@@ -229,6 +229,60 @@ body {
   opacity: 0.8;
 }
 
+.beach-scene {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.beach-scene::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0284c7; /* mer */
+  z-index: 1;
+}
+
+.beach-scene::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: radial-gradient(circle at 20% 70%, #fcd34d 30%, transparent 31%),
+              radial-gradient(circle at 40% 80%, #fcd34d 30%, transparent 31%),
+              radial-gradient(circle at 60% 75%, #fcd34d 30%, transparent 31%),
+              radial-gradient(circle at 80% 85%, #fcd34d 30%, transparent 31%),
+              linear-gradient(to top, #fcd34d 45%, transparent 46%);
+  mask-image: linear-gradient(to top, black 60%, transparent 100%);
+  z-index: 2;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Bord clair entre mer et sable */
+.wave-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 3;
+  background: radial-gradient(circle at 20% 65%, #a5f3fc 5%, transparent 6%),
+              radial-gradient(circle at 40% 75%, #a5f3fc 5%, transparent 6%),
+              radial-gradient(circle at 60% 70%, #a5f3fc 5%, transparent 6%),
+              radial-gradient(circle at 80% 80%, #a5f3fc 5%, transparent 6%);
+  pointer-events: none;
+}
+
 
 /* niveau 2 primaire */
 .star {
