@@ -284,6 +284,51 @@ body {
     radial-gradient(ellipse at 0% 100%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(0vmin)  / 5vmin 10vmin no-repeat,
     radial-gradient(ellipse at 0% 0%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(9.5vmin)  / 5vmin 5vmin no-repeat;
 }
+.airplane-banner {
+  position: absolute;
+  left: 50vmin; /* Positionné à droite de l'avion */
+  top: 10vmin;
+  width: 60vmin;
+  height: auto;
+  background-color: white;
+  color: #000;
+  font-size: 1.8vmin;
+  padding: 2vmin 3vmin;
+  border-radius: 0.5vmin;
+  box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.2);
+  z-index: 9;
+  font-family: "Fredoka", sans-serif;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: wave 2s ease-in-out infinite alternate;
+}
+
+/* Triangle de ficelle */
+.airplane-banner::before {
+  content: "";
+  position: absolute;
+  left: -3vmin;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 1vmin solid transparent;
+  border-bottom: 1vmin solid transparent;
+  border-right: 3vmin solid #444;
+  opacity: 0.6;
+}
+
+/* Animation de drapeau flottant */
+@keyframes wave {
+  0% {
+    transform: translateY(0) rotateZ(0.3deg);
+  }
+  100% {
+    transform: translateY(0.3vmin) rotateZ(-0.3deg);
+  }
+}
 
 
 
