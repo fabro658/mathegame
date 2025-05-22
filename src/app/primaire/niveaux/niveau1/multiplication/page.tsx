@@ -189,16 +189,6 @@ export default function Multiplication() {
           Suivant
         </button>
       </div>
-      {/* Palmier dans le coin bas gauche */}
-<div className="absolute bottom-8 right-4 z-0">
-  <svg width="100" height="120" viewBox="0 0 100 120">
-    <rect x="45" y="40" width="10" height="70" fill="#8b5e3c" />
-    <path d="M50,40 Q30,10 10,20 Q30,30 50,40" fill="#34d399" />
-    <path d="M50,40 Q70,10 90,20 Q70,30 50,40" fill="#34d399" />
-    <path d="M50,40 Q20,30 20,50 Q40,50 50,40" fill="#34d399" />
-    <path d="M50,40 Q80,30 80,50 Q60,50 50,40" fill="#34d399" />
-  </svg>
-</div>
-    </div>
+   </div>
   );
 }
