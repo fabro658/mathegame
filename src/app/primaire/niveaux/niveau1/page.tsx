@@ -17,9 +17,9 @@ export default function Niveau1() {
           <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
         </div>
         {/* Avion rouge animé */}
-<div className="airplane">
+{/* Avion décoratif immobile */}
+<div className="airplane-fixed"></div>
 </div>
-        </div>
 
       {/* Bouton retour */}
       <Link
