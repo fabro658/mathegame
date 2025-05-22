@@ -289,16 +289,18 @@ body {
 
 
 .moon {
-  position: relative;
-  top: 150px;
-  left: 0px;
+  position: absolute;
+  top: 30px;     /* distance depuis le haut de l'écran */
+  left: 30px;    /* distance depuis la gauche de l'écran */
   width: 150px;
   height: 150px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(222, 213, 228, 0.887) 4%, rgb(248, 246, 246) 100%);
   box-shadow: 0 0 70px 10px #f5e4e4ab, 0 0 70px 20px #ca69b5dc, 0 0 70px 30px #e772e1dc;
   animation: move 5s infinite;
+  z-index: 10;
 }
+
 
 @keyframes move {
   50% {
