@@ -16,9 +16,9 @@ export default function Niveau1() {
           {/* Nuage centré en hauteur à droite */}
           <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
         </div>
-
-        {/* Mer et sable */}
-        <div className="mer" />
+        {/* Avion rouge animé */}
+<div className="airplane">
+</div>
         </div>
 
       {/* Bouton retour */}
