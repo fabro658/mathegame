@@ -18,9 +18,8 @@ export default function Niveau1() {
         </div>
 
         {/* Mer et sable */}
-        <div className="beach-scene" />
-        <div className="wave-border" />
-      </div>
+        <div className="mer" />
+        </div>
 
       {/* Bouton retour */}
       <Link
