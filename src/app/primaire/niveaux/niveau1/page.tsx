@@ -13,6 +13,17 @@ export default function Niveau1() {
         </div>
       </div>
 
+      {/* Avion + Titre */}
+      <div className="flex items-center justify-start w-full px-8 mt-[6vmin] relative z-40">
+        <div className="airplane-fixed" />
+        <div className="wavy-banner">
+          <div className="wavy-banner-content">
+            <h1>Arithmétique</h1>
+            <p>Choisis ta destination mathématique !</p>
+          </div>
+        </div>
+      </div>
+
       {/* Bouton retour */}
       <Link
         href="/primaire/"
@@ -20,44 +31,30 @@ export default function Niveau1() {
       >
         Retour
       </Link>
-      {/* Avion + titre sur la même ligne */}
-<div className="flex items-center justify-start w-full px-8 mt-[6vmin] relative z-40">
-  {/* Avion */}
-  <div className="airplane-fixed" />
-
-  {/* Triangle de ficelle */}
-  <div className="airplane-triangle" />
-
-  {/* Texte du titre */}
-  <div className="airplane-title">
-    <h1>Arithmétique</h1>
-    <p>Choisis ta destination mathématique !</p>
-  </div>
-</div>
 
       {/* Boutons missions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 mt-4 px-4">
         <a
           href="/primaire/niveaux/niveau1/addition"
-          className="bg-purple-600 text-white font-bold font-fredoka text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-purple-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Addition
         </a>
         <a
           href="/primaire/niveaux/niveau1/soustraction"
-          className="bg-green-600 text-white font-bold font-fredoka text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-green-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Soustraction
         </a>
         <a
           href="/primaire/niveaux/niveau1/multiplication"
-          className="bg-yellow-400 text-white font-bold font-fredoka text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Multiplication
         </a>
         <a
           href="/primaire/niveaux/niveau1/division"
-          className="bg-red-500 text-white font-bold font-fredoka text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Division
         </a>

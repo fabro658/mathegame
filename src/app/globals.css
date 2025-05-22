@@ -284,55 +284,46 @@ body {
     radial-gradient(ellipse at 0% 100%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(0vmin)  / 5vmin 10vmin no-repeat,
     radial-gradient(ellipse at 0% 0%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(9.5vmin)  / 5vmin 5vmin no-repeat;
 }
-.airplane-banner {
-  position: relative; /* on ne la positionne plus en absolu */
-  margin-left: 2vmin;
-  padding: 2vmin 4vmin;
-  background-color: white;
-  color: #000;
-  border-radius: 1vmin;
-  box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.2);
-  font-family: "Fredoka", sans-serif;
+.wavy-banner {
+  width: 60vmin;
+  height: 20vmin;
+  background: white;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 0.5vmin;
-  animation: wave 2s ease-in-out infinite alternate;
+  border-radius: 8vmin / 4vmin; /* courbes horizontales */
+  box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.2);
+  animation: waveShape 2s ease-in-out infinite alternate;
   z-index: 10;
 }
 
-/* Texte stylisé */
-.airplane-banner span {
-  font-size: 2.4vmin;
-  line-height: 1.4;
-  font-weight: 500;
+.wavy-banner-content {
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
 }
 
-.airplane-banner span:first-child {
-  font-size: 3vmin;
-  font-weight: 700;
+.wavy-banner-content h1 {
+  font-size: 3.5vmin;
+  font-weight: bold;
+  margin: 0;
 }
 
-/* Triangle en ficelle tirée par l’avion */
-.airplane-triangle {
-  width: 0;
-  height: 0;
-  border-top: 3vmin solid transparent;
-  border-bottom: 3vmin solid transparent;
-  border-left: 5vmin solid #333;
-  transform: rotate(15deg);
-  margin-left: -2vmin;
+.wavy-banner-content p {
+  font-size: 2.2vmin;
+  margin: 0.5vmin 0 0;
 }
 
-/* Animation flottante du panneau */
-@keyframes wave {
+/* Ajoute un effet de vague subtile */
+@keyframes waveShape {
   0% {
-    transform: translateY(0) rotateZ(0.3deg);
+    border-radius: 8vmin / 4vmin;
   }
   100% {
-    transform: translateY(0.3vmin) rotateZ(-0.3deg);
+    border-radius: 9vmin / 5vmin;
   }
 }
+
 
 
 
