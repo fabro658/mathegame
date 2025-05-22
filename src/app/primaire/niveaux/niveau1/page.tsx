@@ -14,8 +14,8 @@ export default function Niveau1() {
   <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
   
   {/* Nuage en bas à droite */}
-  <div className="cloud absolute bottom-[30px] right-[30px] scale-[0.6]" />
-</div>
+  <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
+  </div>
 </div>
 
       {/* Bouton retour */}
