@@ -16,12 +16,6 @@ export default function Niveau1() {
       {/* Avion + Titre */}
       <div className="flex items-center justify-start w-full px-8 mt-[6vmin] relative z-40">
         <div className="airplane-fixed" />
-        <div className="wavy-banner">
-          <div className="wavy-banner-content">
-            <h1>Arithmétique</h1>
-            <p>Choisis ta destination mathématique !</p>
-          </div>
-        </div>
       </div>
 
       {/* Bouton retour */}
@@ -31,6 +25,14 @@ export default function Niveau1() {
       >
         Retour
       </Link>
+      <div className="flex flex-col items-center text-center mb-12 z-10">
+        <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
+        Arithmétique
+        </h1>
+        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
+        Choisis ta destination mathématique !
+        </p>
+      </div>
 
       {/* Boutons missions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 mt-4 px-4">
