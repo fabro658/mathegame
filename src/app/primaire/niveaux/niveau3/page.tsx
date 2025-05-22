@@ -20,8 +20,9 @@ export default function Niveau3() {
           Le Grimoire des Fractions ✨
         </h1>
         <p className="text-xl sm:text-2xl text-gray-700 font-medium max-w-xl">
-          Maîtrise l'art des fractions comme un véritable mage mathémagicien !
-        </p>
+  Maîtrise l&rsquo;art des fractions comme un véritable mage mathémagicien&nbsp;!
+</p>
+
       </div>
 
       {/* Boutons magiques */}
