@@ -22,7 +22,7 @@ export default function Home() {
     window.addEventListener("resize", checkDeviceType); // Re-vérifie si la taille change
 
     return () => {
-      window.removeEventListener("resize", checkDeviceType); // Nettoyer l'écouteur
+      window.removeEventListener("resize", checkDeviceType); 
     };
   }, []);
 
