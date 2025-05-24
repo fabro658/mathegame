@@ -1,5 +1,4 @@
 import Link from "next/link";
-import "./plantes.css"; // Assure-toi d'importer ton fichier CSS externe
 
 export default function Niveau3() {
   return (
