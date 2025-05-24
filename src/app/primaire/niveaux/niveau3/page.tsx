@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Niveau3() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
 
       {/* Bande de sable */}
       <div className="sable"></div>
@@ -56,20 +56,8 @@ export default function Niveau3() {
           Soustraction de fractions
         </a>
         <a
-          href="/primaire/niveaux/niveau3/multiplicationfraction"
-          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
-        >
-          Multiplication de fractions
-        </a>
-        <a
-          href="/primaire/niveaux/niveau3/divisionfraction"
-          className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
-        >
-          Division de fractions
-        </a>
-        <a
           href="/primaire/niveaux/niveau3/trouvefraction"
-          className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Trouver la fraction
         </a>
