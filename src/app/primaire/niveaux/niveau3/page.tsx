@@ -10,16 +10,34 @@ export default function Niveau3() {
         <div></div>
       </div>
 
-      {/* Lama décoratif en bas à gauche */}
       <div className="alpaca">
-        <div className="head">
-          <div className="ears">
-            <div></div>
-            <div></div>
-          </div>
+  <div className="head">
+    <div className="head__ears">
+      <div></div>
+      <div></div>
+    </div>
+    <div className="head__face-neck">
+      <div className="face">
+        <div className="eyes">
+          <div></div>
+          <div></div>
         </div>
-        <div className="body"></div>
+        <div className="cheeks">
+          <div></div>
+          <div></div>
+        </div>
+        <div className="snout">
+          <div className="nose"></div>
+          <div className="mouth"></div>
+        </div>
       </div>
+    </div>
+  </div>
+  <div className="body">
+    <div className="spots"></div>
+  </div>
+  <div className="tail"></div>
+</div>
 
       {/* Bande de sable */}
       <div className="sable"></div>

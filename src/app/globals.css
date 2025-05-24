@@ -563,7 +563,7 @@ body {
   );
 }
 
-/* === Nuages === */
+/* Nuages */
 .clouds {
   position: absolute;
   width: 100%;
@@ -636,7 +636,7 @@ body {
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-/* === Lama fixe === */
+/* Lama */
 .alpaca {
   position: absolute;
   bottom: 8rem;
@@ -648,39 +648,215 @@ body {
   flex-direction: column;
 }
 
-/* Corps basique */
-.alpaca .body {
-  background-color: #75c9b1;
+.alpaca .head {
+  width: 40%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.alpaca .head__ears {
   width: 100%;
-  height: 55%;
-  border-radius: 0 0 50% 50% / 0 0 60% 60%;
+  height: 28%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.alpaca .head__ears div {
+  background-color: #75c9b1;
+  width: 25%;
+  height: 100%;
   position: relative;
 }
 
-/* Tête simplifiée */
-.alpaca .head {
-  background-color: #75c9b1;
-  width: 60%;
-  height: 45%;
-  border-radius: 50% 50% 0 0;
+.alpaca .head__ears div::after {
+  content: "";
+  width: 62%;
+  height: 72%;
   position: absolute;
-  top: -35%;
-  left: 20%;
+  bottom: 5%;
+  background-color: #23646f;
 }
 
-/* Oreilles fixes */
-.alpaca .ears {
-  position: absolute;
-  top: -20%;
-  left: 5%;
+.alpaca .head__ears div:first-child,
+.alpaca .head__ears div:first-child::after {
+  border-radius: 100% 0 0 100% / 50% 0 0 50%;
+  right: 10%;
+}
+
+.alpaca .head__ears div:last-child,
+.alpaca .head__ears div:last-child::after {
+  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+  left: 10%;
+}
+
+.alpaca .head__face-neck {
+  width: 100%;
+  height: 75%;
+  background-color: #75c9b1;
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
   display: flex;
-  width: 90%;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.alpaca .ears div {
-  width: 20%;
+.alpaca .head__face-neck .face {
+  width: 100%;
   height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36%;
+  position: relative;
+}
+
+.alpaca .head__face-neck .face::before {
+  content: "";
+  width: 70%;
+  height: 100%;
+  background-color: #90dfc3;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.alpaca .eyes {
+  width: 76%;
+  height: 45%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5%;
+  z-index: 10;
+}
+
+.alpaca .eyes div {
+  width: 35%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.alpaca .eyes div::after {
+  content: "";
+  width: 45%;
+  height: 45%;
+  background-color: #23646f;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.alpaca .cheeks {
+  width: 90%;
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+  z-index: 10;
+}
+
+.alpaca .cheeks div {
+  width: 18%;
+  height: 100%;
+  background-color: #e87e70;
+  border-radius: 50%;
+}
+
+.alpaca .snout {
+  position: absolute;
+  width: 77%;
+  height: 70%;
+  bottom: -4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.alpaca .snout::before {
+  content: "";
+  width: 70%;
+  height: 100%;
+  background-color: #a4e2cb;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.alpaca .nose {
+  width: 20%;
+  height: 15%;
+  background-color: #23646f;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  margin-top: 5%;
+  z-index: 10;
+}
+
+.alpaca .mouth {
+  width: 50%;
+  height: 25%;
+  background-color: #23646f;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  margin-top: 5%;
+  z-index: 10;
+}
+
+.alpaca .tail {
+  width: 10%;
+  height: 30%;
+  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
   background-color: #75c9b1;
-  border-radius: 50% 50% 0 0;
+  align-self: flex-end;
+}
+
+.alpaca .body {
+  background-color: #75c9b1;
+  width: 90%;
+  height: 55%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0 0 50% 50% / 0 0 60% 60%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.alpaca .spots {
+  position: relative;
+  right: 16%;
+  bottom: 13%;
+  border-top: 6.5vmin solid #b3e9d4;
+  border-right: 2.5vmin solid transparent;
+  border-left: 2.5vmin solid transparent;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+}
+
+.alpaca .spots::before,
+.alpaca .spots::after {
+  content: "";
+  border-top: 5vmin solid #b3e9d4;
+  border-right: 2vmin solid transparent;
+  border-left: 2vmin solid transparent;
+  border-radius: 50%;
+  position: absolute;
+  transform-origin: 50% 0;
+}
+
+.alpaca .spots::before {
+  left: -130%;
+  transform: rotate(55deg) translateY(-90%);
+}
+
+.alpaca .spots::after {
+  right: -130%;
+  transform: rotate(-55deg) translateY(-90%);
 }
