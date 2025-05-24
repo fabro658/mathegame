@@ -379,7 +379,7 @@ body {
   box-sizing: inherit;
 }
 
-/* ✅ Bande de sable */
+/* Bande de sable */
 .sable {
   position: fixed;
   bottom: 0;
@@ -390,7 +390,7 @@ body {
   z-index: 1;
 }
 
-/* ✅ Plantes en bas de l'écran */
+/* Plantes en bas de l'écran */
 .plants {
   position: fixed;
   bottom: 0;
@@ -421,14 +421,14 @@ body {
   }
 }
 
-/* ✅ Feuilles de plante */
+/* Feuilles de plante */
 .leaves {
   position: absolute;
   background: var(--light-green);
   box-shadow: 0.8em 0 var(--wall-shadow);
 }
 
-/* 🌿 Plant 1 */
+/* Plant 1 */
 .leaves.plant-1 {
   width: 2.4em;
   height: 8.8em;
@@ -470,7 +470,7 @@ body {
   z-index: -1;
 }
 
-/* 🌵 Plant 2 */
+/* Plant 2 */
 .leaves.plant-2 {
   width: 5.6em;
   height: 5.6em;
@@ -489,7 +489,7 @@ body {
     );
 }
 
-/* 🌱 Plant 3 */
+/* Plant 3 */
 .leaves.plant-3 {
   width: 4em;
   height: 5.6em;
@@ -520,7 +520,7 @@ body {
   box-shadow: inherit;
 }
 
-/* 🌾 Plant 4 */
+/* Plant 4 */
 .leaves.plant-4 {
   width: 3.6em;
   height: 8.4em;
@@ -553,4 +553,126 @@ body {
     var(--dark-green) 1.1em,
     transparent 1.1em
   );
+}
+
+/* === Nuages === */
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.clouds div,
+.clouds div::before,
+.clouds div::after {
+  position: absolute;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  bottom: 0;
+  background-color: #fbb4a4;
+}
+
+.clouds div:first-child {
+  width: 20vmin;
+  height: 10vmin;
+  top: 5%;
+  left: 10%;
+}
+
+.clouds div:first-child::before {
+  content: "";
+  width: 50%;
+  height: 50%;
+  left: -20%;
+  position: absolute;
+  background-color: #fcc1b4;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.clouds div:first-child::after {
+  content: "";
+  width: 30%;
+  height: 30%;
+  right: -15%;
+  position: absolute;
+  background-color: #fdb8a8;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.clouds div:last-child {
+  width: 30vmin;
+  height: 15vmin;
+  top: 15%;
+  right: 15%;
+}
+
+.clouds div:last-child::before {
+  content: "";
+  width: 40%;
+  height: 40%;
+  left: -15%;
+  position: absolute;
+  background-color: #fdd0c1;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.clouds div:last-child::after {
+  content: "";
+  width: 70%;
+  height: 70%;
+  right: -25%;
+  position: absolute;
+  background-color: #fcb6a0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* === Lama fixe === */
+.alpaca {
+  position: absolute;
+  bottom: 8rem;
+  left: 2rem;
+  width: 150px;
+  height: 240px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Corps basique */
+.alpaca .body {
+  background-color: #75c9b1;
+  width: 100%;
+  height: 55%;
+  border-radius: 0 0 50% 50% / 0 0 60% 60%;
+  position: relative;
+}
+
+/* Tête simplifiée */
+.alpaca .head {
+  background-color: #75c9b1;
+  width: 60%;
+  height: 45%;
+  border-radius: 50% 50% 0 0;
+  position: absolute;
+  top: -35%;
+  left: 20%;
+}
+
+/* Oreilles fixes */
+.alpaca .ears {
+  position: absolute;
+  top: -20%;
+  left: 5%;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.alpaca .ears div {
+  width: 20%;
+  height: 40%;
+  background-color: #75c9b1;
+  border-radius: 50% 50% 0 0;
 }
