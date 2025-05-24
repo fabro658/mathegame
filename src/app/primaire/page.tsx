@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import "../globals.scss";
+import "../globals.css";
 import React, { useMemo } from "react";
 
 // Liste de positions fixes pour les arbres
