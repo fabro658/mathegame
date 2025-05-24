@@ -51,14 +51,14 @@ export default function Niveau3() {
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-          L’Oasis des Fractions
+          L’oasis des Fractions
         </h1>
         <p className="text-xl sm:text-2xl text-white font-medium max-w-xl">
           Explore le désert magique des nombres et découvre le pouvoir des fractions !
         </p>
       </div>
 
-      {/* Boutons magiques */}
+      {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl mb-6">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"

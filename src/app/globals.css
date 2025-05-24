@@ -379,16 +379,24 @@ body {
   box-sizing: inherit;
 }
 
-/* Bande de sable */
+body {
+  background: linear-gradient(to bottom, #fef2c0, #f6df9f 92%, #f5a38b 92%, #f07b67 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Ombre douce au-dessus de la bande */
 .sable {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 8rem;
-  background-color: #f5e1a4; /* beige sable */
+  background-color: #f07b67; /* teinte terre cuite */
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
+
 
 /* Plantes en bas de l'écran */
 .plants {
