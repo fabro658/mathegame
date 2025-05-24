@@ -1,10 +1,14 @@
 import Link from "next/link";
+import "./plantes.css"; // Assure-toi d'importer ton fichier CSS externe
 
 export default function Niveau3() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-pink-100 text-black relative overflow-hidden font-[Nunito]">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-green-200 text-black relative overflow-hidden font-[Nunito]">
 
-      {/* Plantes seulement */}
+      {/* Bande de sable */}
+      <div className="sable"></div>
+
+      {/* Plantes sur la bande de sable */}
       <div className="plants">
         <div className="plant">
           <div className="leaves plant-1"></div>
@@ -31,7 +35,7 @@ export default function Niveau3() {
       {/* Titre magique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-purple-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-          Le Grimoire des Fractions ✨
+          Le Grimoire des Fractions
         </h1>
         <p className="text-xl sm:text-2xl text-gray-700 font-medium max-w-xl">
           Maîtrise l&rsquo;art des fractions comme un véritable mage mathémagicien&nbsp;!

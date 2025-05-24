@@ -356,6 +356,50 @@ body {
 
 
 /* niveau 3 primaire : variables CSS */
+
+/* Bande de sable */
+.sable {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8rem;
+  background-color: #f5e1a4; /* beige sable */
+  z-index: 1;
+}
+
+/* Position des plantes */
+.plants {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 8rem;
+  width: 80em;
+  max-width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.plant {
+  position: relative;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+@media only screen and (max-width: 48em) {
+  .plant {
+    width: 50%;
+  }
+}
+
+
 :root {
   --dark-green: #4e7816;
   --light-green: #568515;
