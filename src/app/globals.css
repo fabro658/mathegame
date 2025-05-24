@@ -357,7 +357,29 @@ body {
 
 /* niveau 3 primaire : variables CSS */
 
-/* Bande de sable */
+:root {
+  --dark-green: #4e7816;
+  --light-green: #568515;
+  --lighter-green: #77aa2f;
+  --spike: #ebf9d6;
+  --spike-faded: #fdfefa;
+  --wall-shadow: #c4dbbe;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  content: "";
+  position: absolute;
+  box-sizing: inherit;
+}
+
+/* ✅ Bande de sable */
 .sable {
   position: fixed;
   bottom: 0;
@@ -368,7 +390,7 @@ body {
   z-index: 1;
 }
 
-/* Position des plantes */
+/* ✅ Plantes en bas de l'écran */
 .plants {
   position: fixed;
   bottom: 0;
@@ -399,61 +421,14 @@ body {
   }
 }
 
-
-:root {
-  --dark-green: #4e7816;
-  --light-green: #568515;
-  --lighter-green: #77aa2f;
-  --spike: #ebf9d6;
-  --spike-faded: #fdfefa;
-  --wall-shadow: #c4dbbe;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-*:before,
-*:after {
-  content: "";
-  position: absolute;
-  box-sizing: inherit;
-}
-
-.plants {
-  height: auto;
-  width: 80em;
-  max-width: 80%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.plant {
-  position: relative;
-  width: 25%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media only screen and (max-width: 48em) {
-  .plant {
-    width: 50%;
-  }
-}
-
+/* ✅ Feuilles de plante */
 .leaves {
   position: absolute;
   background: var(--light-green);
   box-shadow: 0.8em 0 var(--wall-shadow);
 }
 
-/* Plant 1 */
+/* 🌿 Plant 1 */
 .leaves.plant-1 {
   width: 2.4em;
   height: 8.8em;
@@ -495,7 +470,7 @@ body {
   z-index: -1;
 }
 
-/* Plant 2 */
+/* 🌵 Plant 2 */
 .leaves.plant-2 {
   width: 5.6em;
   height: 5.6em;
@@ -514,7 +489,7 @@ body {
     );
 }
 
-/* Plant 3 */
+/* 🌱 Plant 3 */
 .leaves.plant-3 {
   width: 4em;
   height: 5.6em;
@@ -545,7 +520,7 @@ body {
   box-shadow: inherit;
 }
 
-/* Plant 4 */
+/* 🌾 Plant 4 */
 .leaves.plant-4 {
   width: 3.6em;
   height: 8.4em;
