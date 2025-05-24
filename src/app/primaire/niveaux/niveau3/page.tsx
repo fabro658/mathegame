@@ -1,15 +1,13 @@
 import Link from "next/link";
-
 export default function Niveau3() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
 
-{/* Nuages en arrière-plan */}
-<div className="clouds"></div>
+      {/* Nuages en arrière-plan */}
+      <div className="clouds"></div>
 
-{/* Bande de sable */}
-<div className="sable"></div>
-
+      {/* Bande de sable */}
+      <div className="sable"></div>
 
       {/* Plantes sur la bande de sable */}
       <div className="plants">
