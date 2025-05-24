@@ -636,227 +636,295 @@ body {
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-/* Lama */
-.alpaca {
+
+
+
+
+
+
+/* niveau 4 primaire */
+
+/* Conteneur du poulet */
+.chicken {
   position: absolute;
-  bottom: 8rem;
-  left: 2rem;
-  width: 150px;
-  height: 240px;
+  bottom: 0;
+  right: 0;
+  transform: scale(0.7);
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Composants internes */
+
+.chicken * {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.chicken *::before,
+.chicken *::after {
+  content: "";
+  position: absolute;
+}
+
+/* Comb */
+.comb-1 {
   z-index: 3;
-  display: flex;
-  flex-direction: column;
+  width: 10.2vmin;
+  height: 10vmin;
+  background: #a10300;
+  top: -48.5vmin;
+  left: -26vmin;
+  transform: rotate(-25deg);
+  border-radius: 60% 50% 0 0;
+  box-shadow: 0 0 0 1vmin #000, inset 2.1vmin 1.3vmin 0 0.5vmin #d10f05;
+}
+.comb-1::before {
+  width: 3vmin;
+  height: 3vmin;
+  background: #a10300;
+  top: 6.7vmin;
+  left: 9vmin;
+  transform: rotate(35deg);
+}
+.comb-1::after {
+  width: 1.5vmin;
+  height: 1.6vmin;
+  background: #d10f05;
+  top: 5.5vmin;
+  left: 10.3vmin;
+  transform: rotate(-25deg);
+  border-radius: 0 0 0 100%;
 }
 
-.alpaca .head {
-  width: 40%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
+.comb-2 {
+  z-index: 2;
+  width: 9.2vmin;
+  height: 7.5vmin;
+  background: #a10300;
+  top: -50vmin;
+  left: -6.5vmin;
+  border-radius: 5vmin 5vmin 0 0;
+  box-shadow: 0 0 0 1vmin #000;
+  overflow: hidden;
+}
+.comb-2::before {
+  width: 2vmin;
+  height: 3.2vmin;
+  background: #d10f05;
+  left: 1.3vmin;
+  transform: rotate(50deg);
+}
+.comb-2::after {
+  width: 2vmin;
+  height: 4vmin;
+  background: #d10f05;
+  top: -1.8vmin;
+  left: 3.7vmin;
+  transform: rotate(70deg);
 }
 
-.alpaca .head__ears {
-  width: 100%;
-  height: 28%;
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  left: 0;
+.comb-3 {
+  z-index: 3;
+  width: 9vmin;
+  height: 10vmin;
+  background: #a10300;
+  top: -38vmin;
+  left: 8.8vmin;
+  border-radius: 5vmin 100% 0 0;
+  box-shadow: 0 0 0 1vmin #000;
+}
+.comb-3::before {
+  width: 4vmin;
+  height: 4vmin;
+  background: #a10300;
+  top: -1.2vmin;
+  left: -2.35vmin;
+  transform: rotate(-5deg);
+  border-radius: 0 0.5vmin 0 0;
 }
 
-.alpaca .head__ears div {
-  background-color: #75c9b1;
-  width: 25%;
-  height: 100%;
-  position: relative;
+/* Tail */
+.tail-1 {
+  z-index: 3;
+  width: 14vmin;
+  height: 7.5vmin;
+  background: #a10300;
+  top: 5.2vmin;
+  left: 36.4vmin;
+  border-radius: 0 3vmin 100% 0;
+  box-shadow: 0 0.1vmin 0 1.1vmin #000, inset -0.7vmin 1vmin 0 0.2vmin #d10f05;
 }
-
-.alpaca .head__ears div::after {
-  content: "";
-  width: 62%;
-  height: 72%;
-  position: absolute;
-  bottom: 5%;
-  background-color: #23646f;
+.tail-1::before {
+  width: 5vmin;
+  height: 2.5vmin;
+  background: #a10300;
+  top: 7.15vmin;
+  left: 3vmin;
+  transform: rotate(-5deg);
 }
-
-.alpaca .head__ears div:first-child,
-.alpaca .head__ears div:first-child::after {
-  border-radius: 100% 0 0 100% / 50% 0 0 50%;
-  right: 10%;
-}
-
-.alpaca .head__ears div:last-child,
-.alpaca .head__ears div:last-child::after {
-  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
-  left: 10%;
-}
-
-.alpaca .head__face-neck {
-  width: 100%;
-  height: 75%;
-  background-color: #75c9b1;
-  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.alpaca .head__face-neck .face {
-  width: 100%;
-  height: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 36%;
-  position: relative;
-}
-
-.alpaca .head__face-neck .face::before {
-  content: "";
-  width: 70%;
-  height: 100%;
-  background-color: #90dfc3;
+.tail-1::after {
+  width: 1.2vmin;
+  height: 1.2vmin;
+  background: #000;
+  top: 7.1vmin;
+  left: 7.4vmin;
   border-radius: 50%;
-  position: absolute;
+  box-shadow: 0.5vmin -0.15vmin 0 0.01vmin #000,
+              0.4vmin 0.9vmin 0 0.1vmin #d10f05;
 }
 
-.alpaca .eyes {
-  width: 76%;
-  height: 45%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: -5%;
-  z-index: 10;
+.tail-2 {
+  width: 20vmin;
+  height: 12vmin;
+  background: #a10300;
+  top: 25.5vmin;
+  left: 26.5vmin;
+  transform: rotate(-14deg);
+  border-radius: 0% 100% 100% 0% / 100% 30% 70% 0%;
+  box-shadow: 0 0 0 1.1vmin #000, inset -0.6vmin 0.8vmin 0 0.5vmin #d10f05;
 }
 
-.alpaca .eyes div {
-  width: 35%;
-  height: 100%;
-  background-color: #fff;
+/* Body */
+.body {
+  z-index: 3;
+  width: 39.4vmin;
+  height: 45.3vmin;
+  background: #fff;
+  top: 1.5vmin;
+  left: -10.7vmin;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 0 0 1vmin #000, inset -3.4vmin -2.3vmin 0 0.8vmin #d0d2d2;
+}
+
+/* Wing */
+.wing {
+  z-index: 3;
+  width: 15.4vmin;
+  height: 11.6vmin;
+  background: #fff;
+  top: 7.8vmin;
+  left: 7.5vmin;
+  transform: rotate(6deg) skewX(12deg) skewY(-5deg);
+  border-radius: 50% 50% 30% 70% / 0% 0% 100% 100%;
+  border: 1vmin solid #000;
+  border-top: 0;
+  box-shadow: 1.3vmin 1.7vmin 0 1vmin #d0d2d2;
+}
+.wing::before {
+  width: 1vmin;
+  height: 1vmin;
+  background: #000;
+  top: -0.5vmin;
+  left: -1vmin;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  box-shadow: 14.4vmin 0 0 0 #000;
 }
 
-.alpaca .eyes div::after {
-  content: "";
-  width: 45%;
-  height: 45%;
-  background-color: #23646f;
+/* Eyes */
+.eye-right,
+.eye-left {
   border-radius: 50%;
-  position: absolute;
+  background: #000;
+  z-index: 3;
+}
+.eye-right {
+  width: 4.5vmin;
+  height: 4.5vmin;
+  top: -17.8vmin;
+  left: -23.2vmin;
+}
+.eye-left {
+  z-index: 1;
+  width: 4vmin;
+  height: 4vmin;
+  top: -20.3vmin;
+  left: -44.4vmin;
 }
 
-.alpaca .cheeks {
-  width: 90%;
-  height: 25%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 3%;
-  z-index: 10;
+/* Beak */
+.beak {
+  z-index: 5;
+  width: 7.2vmin;
+  height: 4.2vmin;
+  background: #ffd916;
+  top: -8.9vmin;
+  left: -42.4vmin;
+  border-radius: 4.2vmin 4.2vmin 0 0;
+  box-shadow: 0 0 0 1vmin #000, inset 1.2vmin 0.5vmin 0 -0.2vmin #fff;
 }
-
-.alpaca .cheeks div {
-  width: 18%;
-  height: 100%;
-  background-color: #e87e70;
+.beak-bottom {
+  z-index: 4;
+  width: 4.6vmin;
+  height: 4.6vmin;
+  background: #f1a812;
+  top: -4.3vmin;
+  left: -40.3vmin;
   border-radius: 50%;
+  box-shadow: -0.3vmin 0 0 1vmin #000, 0.1vmin 0.1vmin 0 1vmin #000;
 }
 
-.alpaca .snout {
-  position: absolute;
-  width: 77%;
-  height: 70%;
-  bottom: -4%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.alpaca .snout::before {
-  content: "";
-  width: 70%;
-  height: 100%;
-  background-color: #a4e2cb;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.alpaca .nose {
-  width: 20%;
-  height: 15%;
-  background-color: #23646f;
-  border-radius: 0 0 50% 50% / 0 0 100% 100%;
-  margin-top: 5%;
-  z-index: 10;
-}
-
-.alpaca .mouth {
-  width: 50%;
-  height: 25%;
-  background-color: #23646f;
-  border-radius: 0 0 50% 50% / 0 0 100% 100%;
-  margin-top: 5%;
-  z-index: 10;
-}
-
-.alpaca .tail {
-  width: 10%;
-  height: 30%;
-  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
-  background-color: #75c9b1;
-  align-self: flex-end;
-}
-
-.alpaca .body {
-  background-color: #75c9b1;
-  width: 90%;
-  height: 55%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 0 0 50% 50% / 0 0 60% 60%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.alpaca .spots {
-  position: relative;
-  right: 16%;
-  bottom: 13%;
-  border-top: 6.5vmin solid #b3e9d4;
-  border-right: 2.5vmin solid transparent;
-  border-left: 2.5vmin solid transparent;
+/* Wattle */
+.wattle {
+  z-index: 3;
   width: 0;
   height: 0;
-  border-radius: 50%;
+  border-left: 4.2vmin solid transparent;
+  border-right: 2.4vmin solid transparent;
+  border-bottom: 5.5vmin solid #000;
+  left: -37vmin;
+  transform: rotate(20deg) skewX(-3deg);
 }
-
-.alpaca .spots::before,
-.alpaca .spots::after {
-  content: "";
-  border-top: 5vmin solid #b3e9d4;
-  border-right: 2vmin solid transparent;
+.wattle::before {
+  width: 4.8vmin;
+  height: 4.8vmin;
+  background: #a10300;
+  top: 4.6vmin;
+  left: -3.3vmin;
+  border-radius: 50%;
+  box-shadow: 0.1vmin 0 0 1.1vmin #000, -0.2vmin -0.1vmin 0 1vmin #000, inset 0.5vmin -0.55vmin 0 0.1vmin #d10f05;
+}
+.wattle::after {
+  width: 0;
+  height: 0;
   border-left: 2vmin solid transparent;
+  border-right: 2.4vmin solid transparent;
+  border-bottom: 4vmin solid #a10300;
+  top: 2vmin;
+  left: -2.8vmin;
+  transform: skewX(-5deg) rotate(2deg);
+}
+
+/* Feet */
+.foot-right {
+  z-index: 3;
+  width: 5.5vmin;
+  height: 9.8vmin;
+  background: #ffd916;
+  top: 46vmin;
+  left: -4.4vmin;
+  border-radius: 3vmin;
+  box-shadow: 0 0 0 1.1vmin #000, inset 0.9vmin 0 0 0.01vmin #fff;
+}
+.foot-left {
+  z-index: 1;
+  width: 5.5vmin;
+  height: 9.8vmin;
+  background: #f1a812;
+  top: 43.6vmin;
+  left: -23.8vmin;
+  border-radius: 3vmin;
+  box-shadow: 0 0 0 1.1vmin #000;
+}
+
+/* Shadow */
+.shadow {
+  width: 42vmin;
+  height: 6vmin;
+  background: #ca830b;
+  top: 54vmin;
+  left: -1vmin;
   border-radius: 50%;
-  position: absolute;
-  transform-origin: 50% 0;
-}
-
-.alpaca .spots::before {
-  left: -130%;
-  transform: rotate(55deg) translateY(-90%);
-}
-
-.alpaca .spots::after {
-  right: -130%;
-  transform: rotate(-55deg) translateY(-90%);
 }

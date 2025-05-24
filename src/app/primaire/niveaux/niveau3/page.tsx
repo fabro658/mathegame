@@ -40,7 +40,7 @@ export default function Niveau3() {
           L’oasis des Fractions
         </h1>
         <p className="text-xl sm:text-2xl text-[#5b3e1d] font-medium max-w-xl">
-          Explore le désert magique des nombres et découvre le pouvoir des fractions !
+          Explore le désert des fractions !
         </p>
       </div>
 
