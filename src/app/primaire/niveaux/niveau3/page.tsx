@@ -4,6 +4,23 @@ export default function Niveau3() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
 
+      {/* Nuages en arrière-plan */}
+      <div className="clouds">
+        <div></div>
+        <div></div>
+      </div>
+
+      {/* Lama décoratif en bas à gauche */}
+      <div className="alpaca">
+        <div className="head">
+          <div className="ears">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div className="body"></div>
+      </div>
+
       {/* Bande de sable */}
       <div className="sable"></div>
 
@@ -31,18 +48,18 @@ export default function Niveau3() {
         Retour
       </Link>
 
-      {/* Titre magique */}
+      {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-      <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-      Le Grimoire des Fractions
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
+          L’Oasis des Fractions
         </h1>
-        <p className="text-xl sm:text-2xl text-white font-medium">
-          Maîtrise l&rsquo;art des fractions comme un véritable mage mathémagicien&nbsp;!
+        <p className="text-xl sm:text-2xl text-white font-medium max-w-xl">
+          Explore le désert magique des nombres et découvre le pouvoir des fractions !
         </p>
       </div>
 
       {/* Boutons magiques */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl mb-6">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
           className="bg-purple-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
@@ -55,9 +72,13 @@ export default function Niveau3() {
         >
           Soustraction de fractions
         </a>
+      </div>
+
+      {/* Deuxième ligne avec bouton centré */}
+      <div className="z-10 mb-10">
         <a
           href="/primaire/niveaux/niveau3/trouvefraction"
-          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+          className="bg-yellow-400 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105 block mx-auto"
         >
           Trouver la fraction
         </a>
