@@ -3,8 +3,22 @@ import Link from "next/link";
 export default function Niveau3() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-pink-100 text-black relative overflow-hidden font-[Nunito]">
-      {/* Sorcier décoratif */}
-      <div className="witch"></div>
+
+      {/* Plantes seulement */}
+      <div className="plants">
+        <div className="plant">
+          <div className="leaves plant-1"></div>
+        </div>
+        <div className="plant">
+          <div className="leaves plant-2"></div>
+        </div>
+        <div className="plant">
+          <div className="leaves plant-3"></div>
+        </div>
+        <div className="plant">
+          <div className="leaves plant-4"></div>
+        </div>
+      </div>
 
       {/* Bouton Retour */}
       <Link
@@ -20,9 +34,8 @@ export default function Niveau3() {
           Le Grimoire des Fractions ✨
         </h1>
         <p className="text-xl sm:text-2xl text-gray-700 font-medium max-w-xl">
-  Maîtrise l&rsquo;art des fractions comme un véritable mage mathémagicien&nbsp;!
-</p>
-
+          Maîtrise l&rsquo;art des fractions comme un véritable mage mathémagicien&nbsp;!
+        </p>
       </div>
 
       {/* Boutons magiques */}
@@ -31,31 +44,31 @@ export default function Niveau3() {
           href="/primaire/niveaux/niveau3/additionfraction"
           className="bg-purple-700 hover:bg-purple-900 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          ⚗️ Addition de fractions
+          Addition de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/soustractionfraction"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🧪 Soustraction de fractions
+          Soustraction de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/multiplicationfraction"
           className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🧿 Multiplication de fractions
+          Multiplication de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/divisionfraction"
           className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🪄 Division de fractions
+          Division de fractions
         </a>
         <a
           href="/primaire/niveaux/niveau3/trouvefraction"
           className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          🔮 Trouver la fraction
+          Trouver la fraction
         </a>
       </div>
     </div>

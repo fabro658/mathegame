@@ -355,113 +355,183 @@ body {
 
 
 
-/* niveau 3 primaire */
-/* file: styles.css */
+/* niveau 3 primaire : variables CSS */
 :root {
-  --penguin-face: white;
+  --dark-green: #4e7816;
+  --light-green: #568515;
+  --lighter-green: #77aa2f;
+  --spike: #ebf9d6;
+  --spike-faded: #fdfefa;
+  --wall-shadow: #c4dbbe;
 }
 
-
-.penguin {
-  width: 300px;
-  height: 300px;
-  margin: auto;
-  margin-top: 75px;
-  z-index: 4;
-  position: relative;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.penguin * {
+*:before,
+*:after {
+  content: "";
   position: absolute;
+  box-sizing: inherit;
 }
 
-.penguin-head {
-  width: 50%;
-  height: 45%;
-  background: linear-gradient(
-    45deg,
-    gray,
-    rgb(239, 240, 228)
+.plants {
+  height: auto;
+  width: 80em;
+  max-width: 80%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.plant {
+  position: relative;
+  width: 25%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 48em) {
+  .plant {
+    width: 50%;
+  }
+}
+
+.leaves {
+  position: absolute;
+  background: var(--light-green);
+  box-shadow: 0.8em 0 var(--wall-shadow);
+}
+
+/* Plant 1 */
+.leaves.plant-1 {
+  width: 2.4em;
+  height: 8.8em;
+  top: -8.8em;
+  border-radius: 4em 4em 0 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--dark-green),
+    var(--dark-green) 0.3em,
+    transparent 0.3em,
+    transparent 0.6em
   );
-  border-radius: 70% 70% 65% 65%;
-  top: 10%;
-  left: 25%;
-  z-index: 1;
 }
 
-.face {
-  width: 60%;
-  height: 70%;
-  background-color: var(--penguin-face);
-  border-radius: 70% 70% 60% 60%;
-  top: 15%;
+.leaves.plant-1::before {
+  width: 2em;
+  height: 5.6em;
+  top: 1.6em;
+  left: -2.8em;
+  background: var(--light-green);
+  border-radius: 4em 4em 0 4em;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--dark-green),
+    var(--dark-green) 0.3em,
+    transparent 0.3em,
+    transparent 0.6em
+  );
+  box-shadow: 0.8em 0 var(--wall-shadow);
 }
 
-.face.left {
-  left: 5%;
+.leaves.plant-1::after {
+  width: 1em;
+  height: 2em;
+  top: 5.2em;
+  left: -1em;
+  background: var(--light-green);
+  z-index: -1;
 }
 
-.face.right {
-  right: 5%;
-}
-
-.eye {
-  width: 15%;
-  height: 17%;
-  background-color: black;
-  top: 45%;
+/* Plant 2 */
+.leaves.plant-2 {
+  width: 5.6em;
+  height: 5.6em;
+  top: -4.8em;
   border-radius: 50%;
+  background-size: 1.2em 1.2em, 1.2em 1.2em, 5.6em 5.6em;
+  background-image:
+    radial-gradient(1em 4.8em at center, var(--spike) 3%, transparent 3%),
+    radial-gradient(4.8em 1em at center, var(--spike) 3%, transparent 3%),
+    radial-gradient(
+      5.6em 15em at center,
+      transparent 18%,
+      var(--dark-green) 18%,
+      var(--dark-green) 40%,
+      transparent 40%
+    );
 }
 
-.eye.left {
-  left: 25%;
-}
-
-.eye.right {
-  right: 25%;
-}
-
-.eye-lid {
-  width: 150%;
-  height: 100%;
-  background-color: var(--penguin-face);
-  top: 25%;
-  left: -23%;
+/* Plant 3 */
+.leaves.plant-3 {
+  width: 4em;
+  height: 5.6em;
+  top: -4.8em;
   border-radius: 50%;
+  background-size: 0.8em 1em, 4em 4em;
+  background-image:
+    radial-gradient(var(--spike) 6%, var(--spike-faded) 6%, transparent 16%),
+    linear-gradient(to right, var(--dark-green) 2em, transparent 2em);
 }
 
-.blush {
-  width: 15%;
-  height: 10%;
-  background-color: pink;
-  top: 65%;
-  border-radius: 50%;
+.leaves.plant-3::before {
+  width: 4em;
+  height: 5.6em;
+  background: inherit;
+  border-radius: inherit;
+  transform: translate(80%, -25%) rotate(45deg) scale(0.75);
+  box-shadow: inherit;
 }
 
-.blush.left {
-  left: 15%;
+.leaves.plant-3::after {
+  width: 4em;
+  height: 5.6em;
+  background: inherit;
+  border-radius: inherit;
+  transform: translate(90%, -75%) rotate(16deg) scale(0.45);
+  z-index: -1;
+  box-shadow: inherit;
 }
 
-.blush.right {
-  right: 15%;
+/* Plant 4 */
+.leaves.plant-4 {
+  width: 3.6em;
+  height: 8.4em;
+  top: -8.4em;
+  border-radius: 50% 50% 0 0;
+  background: var(--light-green);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 0.8em,
+    var(--dark-green) 0.8em,
+    var(--dark-green) 1.1em,
+    transparent 1.1em
+  );
 }
 
-.beak {
-  height: 10%;
-  background-color: orange;
-  border-radius: 50%;
-}
-
-
-/* User Editable Region */
-
-.beak.top {
-  width: 20%;
-  top: 60%;
-  left: 40%;
-}
-.beak.bottom {
-   width: 4%;
-  top: 5%;
-  left: 2%;
+.leaves.plant-4::after {
+  width: 2.8em;
+  height: 4.8em;
+  bottom: 0;
+  left: -0.8em;
+  border-radius: 48% 48% 0 0;
+  background: var(--lighter-green);
+  box-shadow: 0.4em 0 1.2em var(--dark-green);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 0.8em,
+    var(--dark-green) 0.8em,
+    var(--dark-green) 1.1em,
+    transparent 1.1em
+  );
 }
