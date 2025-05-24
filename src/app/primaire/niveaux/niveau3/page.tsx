@@ -4,43 +4,12 @@ export default function Niveau3() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
 
-      {/* Nuages en arrière-plan */}
-      <div className="clouds">
-        <div></div>
-        <div></div>
-      </div>
+{/* Nuages en arrière-plan */}
+<div className="clouds"></div>
 
-      <div className="alpaca">
-  <div className="head">
-    <div className="head__ears">
-      <div></div>
-      <div></div>
-    </div>
-    <div className="head__face-neck">
-      <div className="face">
-        <div className="eyes">
-          <div></div>
-          <div></div>
-        </div>
-        <div className="cheeks">
-          <div></div>
-          <div></div>
-        </div>
-        <div className="snout">
-          <div className="nose"></div>
-          <div className="mouth"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div className="body">
-    <div className="spots"></div>
-  </div>
-  <div className="tail"></div>
-</div>
+{/* Bande de sable */}
+<div className="sable"></div>
 
-      {/* Bande de sable */}
-      <div className="sable"></div>
 
       {/* Plantes sur la bande de sable */}
       <div className="plants">
