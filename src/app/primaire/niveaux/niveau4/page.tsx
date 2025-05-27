@@ -4,23 +4,6 @@ export default function Niveau4() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
 
-      {/* Mascotte */}
-      <div className="comb-1"></div>
-      <div className="comb-2"></div>
-      <div className="comb-3"></div>
-      <div className="tail-1"></div>
-      <div className="tail-2"></div>
-      <div className="body"></div>
-      <div className="wing"></div>
-      <div className="eye-right"></div>
-      <div className="eye-left"></div>
-      <div className="beak"></div>
-      <div className="beak-bottom"></div>
-      <div className="wattle"></div>
-      <div className="foot-right"></div>
-      <div className="foot-left"></div>
-      <div className="shadow"></div>
-
       {/* Bouton Retour */}
       <Link
         href="/primaire/"

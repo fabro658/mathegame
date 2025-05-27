@@ -22,7 +22,7 @@ export default function Niveau3() {
           <div className="leaves plant-3"></div>
         </div>
         <div className="plant">
-          <div className="leaves plant-4"></div>
+          <div className="leaves plant-1"></div>
         </div>
       </div>
 
