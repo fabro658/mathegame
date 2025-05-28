@@ -43,7 +43,9 @@ export default function Niveau4() {
           Aire
         </a>
       </div>
-      <div id="toucan"></div>
+      <div id="candy">
+  <div id="candy-loader"></div>
+</div>
     </div>
   );
 }
