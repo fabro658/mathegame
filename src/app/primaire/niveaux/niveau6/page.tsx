@@ -39,9 +39,7 @@ export default function Niveau1() {
     <div id='side1'></div>
     <div id='side2'></div>
     <div id='shadow'></div>
-    <div id='sun-container'>
       <div id='sun'></div>
-    </div>
   </div>
 </div>
     </div>
