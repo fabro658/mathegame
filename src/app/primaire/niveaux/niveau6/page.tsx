@@ -6,7 +6,7 @@ export default function Niveau6() {
 <div
   className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden"
   style={{
-    background: 'linear-gradient(to bottom, #7DDFFC 70%, #F0DE75 30%)',
+    background: 'linear-gradient(to bottom, #7DDFFC 85%, #F0DE75 15%)',
   }}
 >
 
