@@ -34,7 +34,6 @@ export default function Niveau6() {
 <div id="sun"></div>
 <div id="container">
   <div id="frame">
-    <div id="sky"></div>
     <div id="sand"></div>
     <div id="shadow"></div>
     <div id="side1"></div>
