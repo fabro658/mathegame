@@ -1,9 +1,14 @@
 'use client';
 import Link from "next/link";
 
-export default function Niveau1() {
+export default function Niveau6() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-indigo-100 text-black relative overflow-hidden">
+<div
+  className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden"
+  style={{
+    background: 'linear-gradient(to bottom, #7DDFFC 70%, #F0DE75 30%)',
+  }}
+>
 
       {/* Bouton Retour */}
       <Link
