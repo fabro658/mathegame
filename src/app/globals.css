@@ -353,9 +353,7 @@ body {
   box-shadow: inset 1px 7px 7px 1px rgb(204, 183, 204);
 }
 
-
-
-/* niveau 3 primaire : variables CSS */
+/* niveau 3 primaire*/
 
 :root {
   --dark-green: #4e7816;

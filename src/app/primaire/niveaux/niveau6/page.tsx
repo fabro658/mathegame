@@ -32,6 +32,18 @@ export default function Niveau1() {
           Priorité d&apos;opération
         </a>
       </div>
+      <div id='container'>
+  <div id='frame'>
+    <div id='sky'></div>
+    <div id='sand'></div>
+    <div id='side1'></div>
+    <div id='side2'></div>
+    <div id='shadow'></div>
+    <div id='sun-container'>
+      <div id='sun'></div>
+    </div>
+  </div>
+</div>
     </div>
   );
 }
