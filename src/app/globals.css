@@ -655,23 +655,6 @@ body {
   overflow-x: hidden;
 }
 
-#container {
-  width: 350px;
-  height: 350px;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#frame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  overflow: hidden;
-}
-
 #sand {
   position: absolute;
   width: 100%;
