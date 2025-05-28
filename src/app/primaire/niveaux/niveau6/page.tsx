@@ -32,16 +32,10 @@ export default function Niveau6() {
           Priorité d&apos;opération
         </a>
 <div id="sun"></div>
-<div id="container">
-  <div id="frame">
-    <div id="sand"></div>
-    <div id="shadow"></div>
-    <div id="side1"></div>
-    <div id="side2"></div>
-  </div>
-</div>
-
-</div>
+<div id="sand"></div>
+<div id="side1"></div>
+<div id="side2"></div>
+    </div>
     </div>
   );
 }
