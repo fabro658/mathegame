@@ -1,9 +1,11 @@
+"use client";
+
 import Link from "next/link";
 
 export default function Niveau4() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
-
+      
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
@@ -43,9 +45,12 @@ export default function Niveau4() {
           Aire
         </a>
       </div>
+
+      {/* Canne de Noël */}
       <div id="candy">
-  <div id="candy-loader"></div>
-</div>
+        <div className="hook"></div>
+        <div id="candy-loader"></div>
+      </div>
     </div>
   );
 }

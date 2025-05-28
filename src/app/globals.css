@@ -642,39 +642,30 @@ body {
 
 /* niveau 4 primaire */
 body {
-  background-color: #FAFAFA;
+  background-color: #DDE8FA;
   margin: 0;
   height: 100vh;
   overflow: hidden;
   position: relative;
 }
 
-/* Canne positionnée en bas à droite */
+/* Conteneur principal */
 #candy {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   width: 100px;
   height: 300px;
-  overflow: hidden;
   display: flex;
-  border-radius: 100px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  background-color: #FAFAFA;
-  box-shadow: 20px 10px 15px -20px rgba(255, 0, 0, 0.1);
-  transform: rotate(0deg); /* plus de rotation */
+  flex-direction: column;
+  align-items: center;
   z-index: 100;
 }
 
-/* Remplissage rayé */
+/* Partie droite et longue (le bâton droit) */
 #candy-loader {
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  align-self: flex-end;
+  width: 100px;
+  height: 230px;
   background: repeating-linear-gradient(
     45deg,
     #FFFFEE,
@@ -682,7 +673,31 @@ body {
     #D33144 15px,
     #D33144 30px
   );
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
+
+/* Crochet supérieur */
+.hook {
+  width: 100px;
+  height: 100px;
+  background: repeating-linear-gradient(
+    45deg,
+    #FFFFEE,
+    #FFFFEE 15px,
+    #D33144 15px,
+    #D33144 30px
+  );
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 0;
+  transform: translateY(0) rotate(45deg);
+  margin-bottom: -30px;
+}
+
 
 
 /* primaire 6 */
