@@ -31,10 +31,11 @@ export default function Niveau6() {
         >
           Priorité d&apos;opération
         </a>
-<div id="sun"></div>
 <div id="sand"></div>
-<div id="side1"></div>
-<div id="side2"></div>
+<div className="pyramid">
+  <div className="face-left"></div>
+  <div className="face-right"></div>
+</div>
     </div>
     </div>
   );
