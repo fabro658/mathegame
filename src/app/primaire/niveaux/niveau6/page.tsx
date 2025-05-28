@@ -32,9 +32,15 @@ export default function Niveau6() {
           Priorité d&apos;opération
         </a>
 <div id="sand"></div>
-<div className="pyramid">
-  <div className="face-left"></div>
-  <div className="face-right"></div>
+<div className="pyramids-wrapper">
+  <div className="pyramid">
+    <div className="face-front"></div>
+    <div className="face-side"></div>
+  </div>
+  <div className="pyramid" style={{ transform: "scale(0.85) translateY(10px)" }}>
+    <div className="face-front"></div>
+    <div className="face-side"></div>
+  </div>
 </div>
     </div>
     </div>

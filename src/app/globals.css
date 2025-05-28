@@ -660,34 +660,43 @@ body {
   background-color: #F0DE75;
   z-index: 0;
 }
-
-.pyramid {
-  position: absolute;
-  bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
+.pyramids-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #F0DE75; /* sable */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
 }
 
-.pyramid .face-left {
+.pyramid {
+  position: relative;
+  width: 0;
+  height: 0;
+  margin: 0 20px;
+}
+
+.pyramid .face-front {
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-  border-bottom: 180px solid #e0b55b; /* côté éclairé */
-  transform: translateX(-100px);
+  border-left: 80px solid transparent;
+  border-right: 80px solid transparent;
+  border-bottom: 140px solid #E5B860; /* face éclairée */
   z-index: 2;
 }
 
-.pyramid .face-right {
+.pyramid .face-side {
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-  border-bottom: 180px solid #c48a3a; /* côté ombré */
-  transform: translateX(0);
+  border-left: 0 solid transparent;
+  border-right: 80px solid transparent;
+  border-bottom: 140px solid #C98B3B; /* face ombrée */
+  left: 80px;
   z-index: 1;
 }
+
+
