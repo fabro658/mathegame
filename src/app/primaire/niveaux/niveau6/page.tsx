@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Niveau6() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
 
       {/* Bouton Retour */}
       <Link
