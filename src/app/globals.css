@@ -930,14 +930,6 @@ body {
 
 
 /* primaire 6 */
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #7DDFFC; /* ciel par défaut */
-  margin: 0;
-  height: 100vh;
-}
 
 #container {
   width: 350px;
