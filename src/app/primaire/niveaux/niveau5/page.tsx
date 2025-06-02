@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Niveau5() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#216aa8] font-fredoka">
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#143d5c] font-fredoka">
       {/* Neige vague en bas */}
       <div className="neige-wave">
         <div className="neige-top-layer" />
@@ -19,11 +19,11 @@ export default function Niveau5() {
 
       {/* Titre */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-blue-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-          Super Puissances des Nombres
+        <h1 className="text-white-100 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
+          Puissances des Nombres
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-800 font-medium">
-          Découvre les pouvoirs magiques des exposants
+        <p className="text-xl sm:text-2xl text-white-200 font-medium">
+          Découvre les cadeaux des exposants
         </p>
       </div>
 
