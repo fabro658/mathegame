@@ -701,6 +701,17 @@ body {
 
 
 /* primaire 6 */
+body {
+  margin: 0;
+  background-color: #216aa8; /* fond bleu foncé */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  overflow: hidden;
+  position: relative;
+}
+
 .scene {
   position: relative;
   width: 100%;
@@ -708,7 +719,7 @@ body {
   overflow: hidden;
 }
 
-/* Neige en bas (deux couches) */
+/* NEIGE BAS */
 .neige-wave {
   position: absolute;
   bottom: 0;
@@ -718,7 +729,6 @@ body {
   overflow: hidden;
 }
 
-/* couche supérieure (blanc bleuté) */
 .neige-top-layer {
   position: absolute;
   bottom: 40px;
@@ -728,7 +738,6 @@ body {
   border-radius: 100% 100% 0 0 / 50% 50% 0 0;
 }
 
-/* couche inférieure (bleu clair) */
 .neige-bottom-layer {
   position: absolute;
   bottom: 0;
@@ -738,38 +747,43 @@ body {
   border-radius: 100% 100% 0 0 / 40% 40% 0 0;
 }
 
-
-/* Cheminée */
+/* CHEMINÉE - positionnement */
 .chimney {
   position: absolute;
-  bottom: 140px;
+  bottom: 150px; /* pile au-dessus des vagues */
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
-  height: 180px;
-  background-color: #b22222;
+  z-index: 5;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  z-index: 2;
 }
 
-/* Neige sur la cheminée */
-.snow-cap {
+/* Partie supérieure */
+.chimney-top {
   width: 140px;
   height: 40px;
+  background-color: #a52a2a;
+  border-radius: 8px;
+  position: relative;
+  z-index: 6;
+}
+
+.snow-cap {
+  width: 140px;
+  height: 30px;
   background-color: #e7f1fc;
-  border-radius: 20px 20px 10px 10px;
-  margin-top: -20px;
-  z-index: 3;
+  border-radius: 50% 50% 20% 20%;
+  position: absolute;
+  top: -10px;
+  left: 0;
   box-shadow: 0 4px 0 #cbdcea;
 }
 
-/* Briques (simulées avec gradient) */
-.bricks {
-  width: 100%;
-  height: 100%;
+/* Partie inférieure en briques */
+.chimney-base {
+  width: 100px;
+  height: 160px;
   background-image: repeating-linear-gradient(
       to right,
       #8b0000,
@@ -784,4 +798,6 @@ body {
       #ccc 24px,
       #ccc 26px
     );
+  background-color: #b22222;
+  border: 2px solid #a52a2a;
 }
