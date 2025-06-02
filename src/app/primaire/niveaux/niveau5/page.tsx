@@ -10,7 +10,11 @@ export default function Niveau5() {
           <div className="chimney-top">
             <div className="snow-cap"></div>
           </div>
-          <div className="chimney-base"></div>
+<div className="chimney-base">
+  {Array.from({ length: 18 }).map((_, i) => (
+    <div key={i}></div>
+  ))}
+</div>
         </div>
         <div className="neige-wave">
           <div className="neige-top-layer"></div>
