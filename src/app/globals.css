@@ -701,17 +701,6 @@ body {
 
 
 /* primaire 6 */
-body {
-  margin: 0;
-  background-color: #216aa8; /* fond bleu foncé */
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  overflow: hidden;
-  position: relative;
-}
-
 .scene {
   position: relative;
   width: 100%;
