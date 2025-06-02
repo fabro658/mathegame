@@ -216,7 +216,7 @@ body {
   bottom: 0;
   width: 100vw;
   height: 40px;
-  z-index: 2; /* S'assure que l'herbe est au-dessus des arbres, si voulu */
+  z-index: 2;
 }
 
 /* nuage niveau1 primaire */
@@ -701,55 +701,75 @@ body {
 
 
 /* primaire 6 */
-.house {
+.scene {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Neige en bas (deux couches) */
+.snow-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  background-color: #cce2f8;
+  border-radius: 100% 100% 0 0 / 60% 60% 0 0;
+}
+
+.snow-top {
+  position: absolute;
+  bottom: 120px;
+  width: 100%;
+  height: 60px;
+  background-color: #e7f1fc;
+  border-radius: 100% 100% 0 0 / 60% 60% 0 0;
+}
+
+/* Cheminée */
+.chimney {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 180px;
+  background-color: #b22222;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 2rem; /* Ajuste la distance du bas */
-  background: none; /* Aucun fond */
+  z-index: 2;
 }
 
-.roof {
-  width: 0;
-  height: 0;
-  border-left: 110px solid transparent;
-  border-right: 110px solid transparent;
-  border-bottom: 80px solid #e74c3c;
+/* Neige sur la cheminée */
+.snow-cap {
+  width: 140px;
+  height: 40px;
+  background-color: #e7f1fc;
+  border-radius: 20px 20px 10px 10px;
+  margin-top: -20px;
+  z-index: 3;
+  box-shadow: 0 4px 0 #cbdcea;
 }
 
-.walls {
-  width: 180px;
-  height: 120px;
-  background: repeating-linear-gradient(
-    0deg,
-    #d9a066,
-    #d9a066 20px,
-    #c97e45 20px,
-    #c97e45 22px
-  );
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding-bottom: 10px;
-  border: 2px solid #8b5e3c;
+/* Briques (simulées avec gradient) */
+.bricks {
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+      to right,
+      #8b0000,
+      #8b0000 30px,
+      #b22222 30px,
+      #b22222 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 24px,
+      #ccc 24px,
+      #ccc 26px
+    );
 }
-
-.window {
-  width: 30px;
-  height: 30px;
-  background: #aee9f7;
-  border: 4px solid #5d4037;
-  box-shadow: inset -2px -2px 0px #ffffff;
-}
-
-.door {
-  width: 40px;
-  height: 60px;
-  background: #6d4c41;
-  border: 4px solid #5d4037;
-}
-
