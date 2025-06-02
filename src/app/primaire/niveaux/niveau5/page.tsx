@@ -13,6 +13,15 @@ export default function Niveau5() {
         </div>
       </div>
 
+      {/* Maison en brique */}
+      <div className="house z-10 mt-12">
+        <div className="roof"></div>
+        <div className="walls">
+          <div className="window left"></div>
+          <div className="door"></div>
+          <div className="window right"></div>
+        </div>
+      </div>
 
       {/* Bouton Retour */}
       <Link
@@ -25,7 +34,7 @@ export default function Niveau5() {
       {/* Titre */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-blue-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-        Super Puissances des Nombres
+          Super Puissances des Nombres
         </h1>
         <p className="text-xl sm:text-2xl text-gray-800 font-medium">
           Découvre les pouvoirs magiques des exposants

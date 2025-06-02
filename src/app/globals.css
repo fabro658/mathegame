@@ -702,58 +702,71 @@ body {
 
 /* primaire 6 */
 body {
-  margin: 0;
-  background-color: #7DDFFC; /* ciel */
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-}
-
-#sand {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 30%;
-  background-color: #F0DE75;
-  z-index: 0;
-}
-.pyramids-wrapper {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background-color: #F0DE75; /* sable */
+  background: #fff;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  overflow: hidden;
+  align-items: center;
+  height: 100vh;
 }
 
-.pyramid {
+.house {
   position: relative;
-  width: 0;
-  height: 0;
-  margin: 0 20px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.pyramid .face-front {
-  position: absolute;
+/* Toit */
+.roof {
   width: 0;
   height: 0;
-  border-left: 80px solid transparent;
-  border-right: 80px solid transparent;
-  border-bottom: 140px solid #E5B860; /* face éclairée */
-  z-index: 2;
+  border-left: 110px solid transparent;
+  border-right: 110px solid transparent;
+  border-bottom: 80px solid #e74c3c; /* rouge toit */
 }
 
-.pyramid .face-side {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 0 solid transparent;
-  border-right: 80px solid transparent;
-  border-bottom: 140px solid #C98B3B; /* face ombrée */
-  left: 80px;
-  z-index: 1;
+/* Murs avec effet briques */
+.walls {
+  width: 180px;
+  height: 120px;
+  background: repeating-linear-gradient(
+    0deg,
+    #d9a066,
+    #d9a066 20px,
+    #c97e45 20px,
+    #c97e45 22px
+  );
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  border: 2px solid #8b5e3c;
 }
 
+/* Fenêtres */
+.window {
+  width: 30px;
+  height: 30px;
+  background: #aee9f7;
+  border: 4px solid #5d4037;
+  box-shadow: inset -2px -2px 0px #ffffff;
+}
 
+.window.left {
+  margin-left: 10px;
+}
+
+.window.right {
+  margin-right: 10px;
+}
+
+/* Porte */
+.door {
+  width: 40px;
+  height: 60px;
+  background: #6d4c41;
+  border: 4px solid #5d4037;
+}
