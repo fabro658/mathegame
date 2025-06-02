@@ -25,10 +25,10 @@ export default function Niveau5() {
       {/* Titre */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-blue-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-          ⚡ Super Puissances des Nombres
+        Super Puissances des Nombres
         </h1>
         <p className="text-xl sm:text-2xl text-gray-800 font-medium">
-          Découvre les pouvoirs magiques des exposants 💥
+          Découvre les pouvoirs magiques des exposants
         </p>
       </div>
 
@@ -38,13 +38,13 @@ export default function Niveau5() {
           href="/primaire/niveaux/niveau5/exposant/n1"
           className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Premier niveau 🥇 
+          Premier niveau
         </a>
         <a
           href="/primaire/niveaux/niveau5/exposant/n2"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
         >
-          Deuxième niveau 🥈 
+          Deuxième niveau
         </a>
       </div>
     </div>
