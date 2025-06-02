@@ -741,26 +741,27 @@ body {
 .chimney {
   position: absolute;
   bottom: 120px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 30px; /* Placement à gauche */
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Haut de la cheminée - élargi */
 .chimney-top {
-  width: 140px;
-  height: 40px;
+  width: 180px; /* plus large */
+  height: 36px;
   background-color: #a52a2a;
-  border-radius: 8px;
+  border-radius: 6px;
   position: relative;
   z-index: 6;
 }
 
+/* Neige sur le haut */
 .snow-cap {
-  width: 140px;
-  height: 30px;
+  width: 180px;
+  height: 26px;
   background-color: #e7f1fc;
   border-radius: 50% 50% 20% 20%;
   position: absolute;
@@ -769,8 +770,9 @@ body {
   box-shadow: 0 4px 0 #cbdcea;
 }
 
+/* Base de cheminée avec briques en grille */
 .chimney-base {
-  width: 130px;
+  width: 140px;
   height: 120px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -782,13 +784,12 @@ body {
   box-sizing: border-box;
 }
 
-/* Chaque brique */
-.chimney-base::before,
+/* Briques */
 .chimney-base div {
   background-color: #b22222;
+  border-radius: 2px;
 }
 
-/* Générer des briques */
 .chimney-base div:nth-child(odd) {
   background-color: #a72828;
 }
