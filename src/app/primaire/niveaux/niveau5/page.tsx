@@ -1,25 +1,17 @@
 import Link from "next/link";
 
-export default function Niveau1() {
+export default function Niveau5() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-200 text-black relative overflow-hidden font-fredoka">
-      {/* Décor */}
-      <div className="penguin absolute left-0 bottom-0 ml-4 mb-4 z-10">
-  <div className="penguin-head">
-    <div className="face left"></div>
-    <div className="face right"></div>
-    <div className="eye left">
-      <div className="eye-lid"></div>
-    </div>
-    <div className="eye right">
-      <div className="eye-lid"></div>
-    </div>
-    <div className="blush left"></div>
-    <div className="blush right"></div>
-    <div className="beak top"></div>
-    <div className="beak bottom"></div>
-  </div>
-</div>
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
+      {/* Décor ciel */}
+      <div className="absolute inset-0 z-0">
+        {/* Nuages CSS décoratifs */}
+        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
+        </div>
+      </div>
 
 
       {/* Bouton Retour */}
