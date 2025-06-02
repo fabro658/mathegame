@@ -20,6 +20,12 @@ export default function Niveau5() {
           <div className="neige-top-layer"></div>
           <div className="neige-bottom-layer"></div>
         </div>
+        <div className="gifts">
+  <div className="gift red"></div>
+  <div className="gift green"></div>
+  <div className="gift blue"></div>
+</div>
+
       </div>
 
       {/* Bouton Retour */}

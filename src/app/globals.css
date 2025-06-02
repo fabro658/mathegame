@@ -793,3 +793,59 @@ body {
 .chimney-base div:nth-child(odd) {
   background-color: #a72828;
 }
+
+.gifts {
+  position: absolute;
+  bottom: 150px; /* Même hauteur que .chimney */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Styles de base */
+.gift {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Nœud du ruban */
+.gift::before,
+.gift::after {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  border-radius: 1px;
+}
+
+.gift::before {
+  width: 6px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.gift::after {
+  width: 100%;
+  height: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Couleurs personnalisées */
+.gift.red {
+  background-color: #e74c3c;
+}
+
+.gift.green {
+  background-color: #27ae60;
+}
+
+.gift.blue {
+  background-color: #3498db;
+}
