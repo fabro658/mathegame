@@ -3,10 +3,19 @@ import Link from "next/link";
 export default function Niveau5() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
-      {/* Neige vague en bas */}
-      <div className="neige-wave">
-        <div className="neige-top-layer" />
-        <div className="neige-bottom-layer" />
+      
+      {/* Décor : cheminée + neige */}
+      <div className="scene">
+        <div className="chimney">
+          <div className="chimney-top">
+            <div className="snow-cap"></div>
+          </div>
+          <div className="chimney-base"></div>
+        </div>
+        <div className="neige-wave">
+          <div className="neige-top-layer"></div>
+          <div className="neige-bottom-layer"></div>
+        </div>
       </div>
 
       {/* Bouton Retour */}
