@@ -3,37 +3,81 @@ import Link from "next/link";
 export default function Niveau5() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
-      
       {/* Décor : cheminée + neige */}
       <div className="scene">
         <div className="chimney">
-  <div className="chimney-top">
-    <div className="snow-cap"></div>
-  </div>
-  <div className="chimney-base">
-    {Array.from({ length: 18 }).map((_, i) => (
-      <div key={i}></div>
-    ))}
-  </div>
-</div>
+          <div className="chimney-top">
+            <div className="snow-cap"></div>
+          </div>
+          <div className="chimney-base">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <div key={i}></div>
+            ))}
+          </div>
+        </div>
+
         <div className="neige-wave">
           <div className="neige-top-layer"></div>
           <div className="neige-bottom-layer"></div>
         </div>
-<div className="gifts">
-  <div className="gift-pyramid">
-    <div className="gift red" />
-    <div className="gift green" />
-    <div className="gift yellow top" />
-  </div>
-  <div className="gift blue side" />
-</div>
 
-<div className="snowflakes">
-  {Array.from({ length: 30 }).map((_, i) => (
-    <div key={i} className="snowflake" />
-  ))}
-</div>
+        {/* Cadeaux en pyramide */}
+        <div className="gifts">
+          <div className="gift-pyramid">
+            <div className="gift red base-left" />
+            <div className="gift green base-right" />
+            <div className="gift yellow top" />
+          </div>
+          <div className="gift blue side" />
+        </div>
+
+        {/* Bonhomme de neige */}
+        <div className="snowman">
+          <div className="wind">
+            <div className="hat-1"></div>
+            <div className="hat-2"></div>
+            <div className="hat-3"></div>
+          </div>
+          <div className="snowman-mouth-1"></div>
+          <div className="snowman-mouth-2"></div>
+          <div className="snowman-mouth-3"></div>
+          <div className="snowman-mouth-4"></div>
+          <div className="snowman-mouth-5"></div>
+          <div className="snowman-button-1"></div>
+          <div className="snowman-button-2"></div>
+          <div className="snowman-button-3"></div>
+          <div className="snowman-button-4"></div>
+          <div className="head"></div>
+          <div className="bottom"></div>
+          <div className="right-eye"></div>
+          <div className="left-eye">
+            <div className="nose"></div>
+          </div>
+          <div className="left-arm"></div>
+          <div className="left-mitten-1"></div>
+          <div className="left-mitten-2"></div>
+          <div className="right-arm"></div>
+          <div className="right-mitten-1"></div>
+          <div className="right-mitten-2"></div>
+          <div className="wind">
+            <div className="scarf-1"></div>
+            <div className="scarf-2"></div>
+            <div className="scarf-3"></div>
+          </div>
+        </div>
+
+        {/* Étoiles */}
+        <div className="star-1 stars"></div>
+        <div className="star-2 stars"></div>
+        <div className="star-3 stars"></div>
+        <div className="star-4 stars"></div>
+
+        {/* Flocons */}
+        <div className="snowflakes">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <div key={i} className="snowflake" />
+          ))}
+        </div>
       </div>
 
       {/* Bouton Retour */}
