@@ -796,25 +796,23 @@ body {
 
 .gifts {
   position: absolute;
-  bottom: 150px; /* Même hauteur que .chimney */
+  bottom: 150px; /* correspond à la neige */
   width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
+  height: 0;
   z-index: 5;
   pointer-events: none;
 }
 
-/* Styles de base */
+/* Cadeau générique */
 .gift {
-  width: 30px;
-  height: 30px;
-  position: relative;
+  width: 50px;
+  height: 50px;
+  position: absolute;
   border-radius: 4px;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  transform-origin: center;
 }
 
-/* Nœud du ruban */
 .gift::before,
 .gift::after {
   content: "";
@@ -824,7 +822,7 @@ body {
 }
 
 .gift::before {
-  width: 6px;
+  width: 8px;
   height: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -832,12 +830,12 @@ body {
 
 .gift::after {
   width: 100%;
-  height: 6px;
+  height: 8px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* Couleurs personnalisées */
+/* Couleurs */
 .gift.red {
   background-color: #e74c3c;
 }
@@ -848,4 +846,37 @@ body {
 
 .gift.blue {
   background-color: #3498db;
+}
+
+.gift.yellow {
+  background-color: #f1c40f;
+}
+
+/* Position spécifique des cadeaux */
+.gift-red {
+  left: 80px;
+  bottom: 0;
+  z-index: 5;
+}
+
+.gift-green {
+  left: 110px;
+  bottom: 10px;
+  transform: rotate(-45deg);
+  z-index: 6;
+}
+
+/* Deux cadeaux éloignés */
+.gift-blue {
+  left: 60%;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.gift-yellow {
+  left: 75%;
+  bottom: 0;
+  width: 45px;
+  height: 45px;
 }
