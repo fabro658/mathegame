@@ -1026,18 +1026,17 @@ body {
   left: 95px;
 }
 
-.btn-candy {
-  background: repeating-linear-gradient(
+.btn-candy-border {
+  border: 6px solid transparent;
+  border-image: repeating-linear-gradient(
     45deg,
     red 0px,
-    red 12px,
-    #fdf5e6 12px,
-    #fdf5e6 24px
-  );
-  color: white; 
+    red 10px,
+    #fdf5e6 10px,
+    #fdf5e6 20px
+  ) 10;
+  border-radius: 1rem;
 }
-.btn-candy:hover {
-  filter: brightness(0.95);
-}
+
 
 
