@@ -881,22 +881,22 @@ body {
 
 .snowman {
   position: absolute;
-  bottom: 20px; /* espace avec la neige */
-  right: 20px;  /* espace avec le bord droit */
+  bottom: 20px;
+  right: 20px;
   transform: scale(0.6);
   transform-origin: bottom right;
-  width: 200px;
-  height: 300px; /* hauteur pour contenir tête + corps */
+  width: 220px;
+  height: 320px;
   z-index: 5;
 }
 
 /* Tête */
 .head {
-  top: 0%;
-  left: 6%;
+  top: 0;
+  left: 25px;
+  width: 150px;
+  height: 150px;
   background: white;
-  width: 88%;
-  height: 88%;
   border-radius: 50%;
   z-index: 1;
 }
@@ -952,12 +952,13 @@ body {
 .snowman-mouth-5 { top: 74%; left: 62%; }
 
 .corps {
-  top: 95%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
+  top: 140px;
+  left: 15px;
+  width: 170px;
+  height: 170px;
   background: white;
   border-radius: 50%;
-  z-index: -1;
+  z-index: 0;
 }
+
 
