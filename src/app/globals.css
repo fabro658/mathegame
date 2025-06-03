@@ -966,7 +966,7 @@ body {
   z-index: 1;
 }.hat-1 {
   top: -28px;
-  left: 62px; /* encore un peu plus à droite */
+  left: 65px; /* encore un peu plus à droite */
   width: 80px; /* plus large */
   height: 22px;
   background: #1e1ba1;
@@ -977,7 +977,7 @@ body {
 
 .hat-2 {
   top: -54px;
-  left: 82px;
+  left: 83px;
   width: 28px;
   height: 36px;
   background: navy;
@@ -988,7 +988,7 @@ body {
 
 .hat-3 {
   top: -54px;
-  left: 92px;
+  left: 90px;
   width: 5px;
   height: 36px;
   background: #791919;
