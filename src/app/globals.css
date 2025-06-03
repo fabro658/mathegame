@@ -966,7 +966,7 @@ body {
   z-index: 1;
 }.hat-1 {
   top: -28px;
-  left: 65px; /* encore un peu plus à droite */
+  left: 62px; /* encore un peu plus à droite */
   width: 80px; /* plus large */
   height: 22px;
   background: #1e1ba1;
@@ -977,7 +977,7 @@ body {
 
 .hat-2 {
   top: -54px;
-  left: 85px;
+  left: 82px;
   width: 28px;
   height: 36px;
   background: navy;
@@ -988,7 +988,7 @@ body {
 
 .hat-3 {
   top: -54px;
-  left: 95px;
+  left: 92px;
   width: 5px;
   height: 36px;
   background: #791919;
@@ -996,3 +996,25 @@ body {
   z-index: 8;
 }
 
+.bouton-1,
+.bouton-2,
+.bouton-3 {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+.bouton-1 {
+  top: 180px;
+  left: 105px;
+}
+.bouton-2 {
+  top: 210px;
+  left: 105px;
+}
+.bouton-3 {
+  top: 240px;
+  left: 105px;
+}
