@@ -31,28 +31,35 @@ export default function Niveau5() {
           <div className="gift blue side" />
         </div>
 
-        {/* Bonhomme de neige positionné en bas à droite */}
-        <div className="snowman" style={{ position: 'absolute', bottom: '0', right: '0', width: '200px', height: '400px' }}>
-          {/* Base */}
-          <div style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', height: '40%', background: 'white', borderRadius: '50%' }}></div>
-
-          {/* Corps */}
-          <div style={{ position: 'absolute', bottom: '35%', left: '10%', width: '80%', height: '35%', background: 'white', borderRadius: '50%' }}></div>
-
-          {/* Tête complète avec éléments décoratifs */}
-          <div className="head">
-            <div className="right-eye"></div>
-            <div className="left-eye">
-              <div className="nose"></div>
-            </div>
-            <div className="snowman-mouth-1"></div>
-            <div className="snowman-mouth-2"></div>
-            <div className="snowman-mouth-3"></div>
-            <div className="snowman-mouth-4"></div>
-            <div className="snowman-mouth-5"></div>
+      {/* Bonhomme de neige */}
+        <div className="snowman">
+          <div className="wind">
             <div className="hat-1"></div>
             <div className="hat-2"></div>
             <div className="hat-3"></div>
+          </div>
+          <div className="snowman-mouth-1"></div>
+          <div className="snowman-mouth-2"></div>
+          <div className="snowman-mouth-3"></div>
+          <div className="snowman-mouth-4"></div>
+          <div className="snowman-mouth-5"></div>
+          <div className="snowman-button-1"></div>
+          <div className="snowman-button-2"></div>
+          <div className="snowman-button-3"></div>
+          <div className="snowman-button-4"></div>
+          <div className="head"></div>
+          <div className="bottom"></div>
+          <div className="right-eye"></div>
+          <div className="left-eye">
+            <div className="nose"></div>
+          </div>
+          <div className="left-arm"></div>
+          <div className="left-mitten-1"></div>
+          <div className="left-mitten-2"></div>
+          <div className="right-arm"></div>
+          <div className="right-mitten-1"></div>
+          <div className="right-mitten-2"></div>
+          <div className="wind">
             <div className="scarf-1"></div>
             <div className="scarf-2"></div>
             <div className="scarf-3"></div>
