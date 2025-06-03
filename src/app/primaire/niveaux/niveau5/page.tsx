@@ -21,16 +21,17 @@ export default function Niveau5() {
           <div className="neige-bottom-layer"></div>
         </div>
 <div className="gifts">
-  {/* Cadeau rouge – posé sur la neige */}
-  <div className="gift red gift-red" />
+  {/* Groupe central (rouge + vert) */}
+  <div className="gift-pair">
+    <div className="gift red" />
+    <div className="gift green tilted" />
+  </div>
 
-  {/* Cadeau vert – penché à 45°, appuyé sur le rouge */}
-  <div className="gift green gift-green" />
-
-  {/* Deux autres cadeaux – plus petits, posés à droite */}
+  {/* Cadeaux éloignés */}
   <div className="gift blue gift-blue" />
   <div className="gift yellow gift-yellow" />
 </div>
+
 
 
       </div>

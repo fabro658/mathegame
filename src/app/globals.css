@@ -796,23 +796,32 @@ body {
 
 .gifts {
   position: absolute;
-  bottom: 150px; /* correspond à la neige */
+  bottom: 150px;
   width: 100%;
-  height: 0;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
   z-index: 5;
   pointer-events: none;
+}
+
+/* Bloc central collé */
+.gift-pair {
+  display: flex;
+  gap: 0px; /* coller les cadeaux */
+  align-items: flex-end;
 }
 
 /* Cadeau générique */
 .gift {
   width: 50px;
   height: 50px;
-  position: absolute;
+  position: relative;
   border-radius: 4px;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-  transform-origin: center;
 }
 
+/* Rubans */
 .gift::before,
 .gift::after {
   content: "";
@@ -836,38 +845,22 @@ body {
 }
 
 /* Couleurs */
-.gift.red {
-  background-color: #e74c3c;
-}
+.gift.red { background-color: #e74c3c; }
+.gift.green { background-color: #27ae60; }
+.gift.blue { background-color: #3498db; }
+.gift.yellow { background-color: #f1c40f; }
 
-.gift.green {
-  background-color: #27ae60;
-}
-
-.gift.blue {
-  background-color: #3498db;
-}
-
-.gift.yellow {
-  background-color: #f1c40f;
-}
-
-/* Position spécifique des cadeaux */
-.gift-red {
-  left: 80px;
-  bottom: 0;
-  z-index: 5;
-}
-
-.gift-green {
-  left: 110px;
-  bottom: 10px;
+/* Inclinaison du cadeau vert */
+.tilted {
   transform: rotate(-45deg);
-  z-index: 6;
+  transform-origin: bottom left;
+  margin-left: -10px; /* pour qu’il touche le rouge */
+  z-index: 1;
 }
 
-/* Deux cadeaux éloignés */
+/* Cadeaux plus loin */
 .gift-blue {
+  position: absolute;
   left: 60%;
   bottom: 0;
   width: 40px;
@@ -875,6 +868,7 @@ body {
 }
 
 .gift-yellow {
+  position: absolute;
   left: 75%;
   bottom: 0;
   width: 45px;
