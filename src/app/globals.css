@@ -855,24 +855,24 @@ body {
 
 /* Positions relatives au centre */
 .gift.top {
-  left: 0px;       /* centre exact (0) */
-  bottom: 60px;    /* posé sur les deux autres */
+  left: 0px;       
+  bottom: 60px;  
   z-index: 2;
 }
 
 .base-left {
-  left: -30px;     /* -5 unités de 6px = -30px */
+  left: -30px;    
   bottom: 0;
 }
 
 .base-right {
-  left: 30px;      /* +5 unités de 6px = +30px */
+  left: 30px;     
   bottom: 0;
 }
 
 /* Cadeau éloigné */
 .gift.side {
-  left: 70%;
+  left: 80%;
   bottom: 0;
   width: 45px;
   height: 45px;
