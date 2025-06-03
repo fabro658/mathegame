@@ -885,7 +885,7 @@ body {
 .snowman {
   position: absolute;
   bottom: 20px;
-  right: 20px;
+  right: 180px;
   transform: scale(0.6);
   transform-origin: bottom right;
   width: 220px;
