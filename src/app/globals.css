@@ -995,7 +995,6 @@ body {
   transform: rotate(-3deg);
   z-index: 8;
 }
-
 .bouton-1,
 .bouton-2,
 .bouton-3 {
@@ -1006,15 +1005,16 @@ body {
   z-index: 6;
 }
 
+/* Décalés vers la gauche et descendus */
 .bouton-1 {
-  top: 180px;
-  left: 105px;
+  top: 200px;  /* ↓ légèrement plus bas */
+  left: 95px;  /* ⇦ vers la gauche */
 }
 .bouton-2 {
-  top: 210px;
-  left: 105px;
+  top: 230px;
+  left: 95px;
 }
 .bouton-3 {
-  top: 240px;
-  left: 105px;
+  top: 260px;
+  left: 95px;
 }
