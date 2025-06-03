@@ -48,7 +48,8 @@ export default function Niveau5() {
           <div className="snowman-button-3"></div>
           <div className="snowman-button-4"></div>
           <div className="head"></div>
-          <div className="bottom"></div>
+          <div className="body"></div> {/* anciennement 'bottom' pour le ventre */}
+          <div className="base"></div> {/* base ajoutée pour la troisième boule */}
           <div className="right-eye"></div>
           <div className="left-eye">
             <div className="nose"></div>
