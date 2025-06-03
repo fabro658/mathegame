@@ -879,12 +879,16 @@ body {
   position: absolute;
 }
 .snowman {
-  position: relative;
-  margin: auto;
-  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: scale(0.6);
+  transform-origin: bottom right;
   width: 200px;
   height: 200px;
+  z-index: 5;
 }
+
 
 .head {
   top: 15%;
