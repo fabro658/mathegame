@@ -34,10 +34,10 @@ export default function Niveau5() {
       {/* Bonhomme de neige */}
 <div className="snowman">
   <div className="corps"></div>
-  <div className="head"></div>
-  <div className="right-eye"></div>
-  <div className="left-eye"></div>
-  <div className="nose"></div>
+  <div className="tete"></div>
+  <div className="yeuxD"></div>
+  <div className="yeuxG"></div>
+  <div className="nez"></div>
   <div className="snowman-mouth-1"></div>
   <div className="snowman-mouth-2"></div>
   <div className="snowman-mouth-3"></div>
