@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Niveau5() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
-      
+
       <div className="scene">
         <div className="neige-wave">
           <div className="neige-top-layer"></div>
@@ -60,9 +60,6 @@ export default function Niveau5() {
         <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
           Super Puissances des Nombres
         </h1>
-        <p className="text-xl sm:text-2xl text-white font-medium">
-          Découvre les pouvoirs magiques des exposants
-        </p>
       </div>
 
       {/* Boutons */}
