@@ -32,13 +32,30 @@ export default function Niveau5() {
         </div>
 
         {/* Bonhomme de neige positionné en bas à droite */}
-        <div className="snowman" style={{ position: 'absolute', bottom: '0', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div className="base" style={{ width: '140px', height: '140px', background: 'white', borderRadius: '50%' }}></div>
-          <div className="body" style={{ width: '100px', height: '100px', background: 'white', borderRadius: '50%', marginBottom: '-20px' }}></div>
-          <div className="head" style={{ width: '70px', height: '70px', background: 'white', borderRadius: '50%', position: 'relative' }}>
-            <div className="right-eye" style={{ width: '10px', height: '10px', background: 'black', borderRadius: '50%', position: 'absolute', top: '20px', left: '15px' }}></div>
-            <div className="left-eye" style={{ width: '10px', height: '10px', background: 'black', borderRadius: '50%', position: 'absolute', top: '20px', right: '15px' }}></div>
-            <div className="nose" style={{ width: '0', height: '0', borderLeft: '20px solid orange', borderTop: '8px solid transparent', borderBottom: '8px solid transparent', position: 'absolute', left: '-15px', top: '30px' }}></div>
+        <div className="snowman" style={{ position: 'absolute', bottom: '0', right: '0', width: '200px', height: '400px' }}>
+          {/* Base */}
+          <div style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', height: '40%', background: 'white', borderRadius: '50%' }}></div>
+
+          {/* Corps */}
+          <div style={{ position: 'absolute', bottom: '35%', left: '10%', width: '80%', height: '35%', background: 'white', borderRadius: '50%' }}></div>
+
+          {/* Tête complète avec éléments décoratifs */}
+          <div className="head">
+            <div className="right-eye"></div>
+            <div className="left-eye">
+              <div className="nose"></div>
+            </div>
+            <div className="snowman-mouth-1"></div>
+            <div className="snowman-mouth-2"></div>
+            <div className="snowman-mouth-3"></div>
+            <div className="snowman-mouth-4"></div>
+            <div className="snowman-mouth-5"></div>
+            <div className="hat-1"></div>
+            <div className="hat-2"></div>
+            <div className="hat-3"></div>
+            <div className="scarf-1"></div>
+            <div className="scarf-2"></div>
+            <div className="scarf-3"></div>
           </div>
         </div>
 
