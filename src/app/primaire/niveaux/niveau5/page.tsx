@@ -32,41 +32,24 @@ export default function Niveau5() {
         </div>
 
       {/* Bonhomme de neige */}
-        <div className="snowman">
-          <div className="corps"></div>
-          <div className="wind">
-            <div className="hat-1"></div>
-            <div className="hat-2"></div>
-            <div className="hat-3"></div>
-          </div>
-          <div className="snowman-mouth-1"></div>
-          <div className="snowman-mouth-2"></div>
-          <div className="snowman-mouth-3"></div>
-          <div className="snowman-mouth-4"></div>
-          <div className="snowman-mouth-5"></div>
-          <div className="snowman-button-1"></div>
-          <div className="snowman-button-2"></div>
-          <div className="snowman-button-3"></div>
-          <div className="snowman-button-4"></div>
-          <div className="head"></div>
-          <div className="bottom"></div>
-          <div className="right-eye"></div>
-          <div className="left-eye">
-            <div className="nose"></div>
-          </div>
-          <div className="left-arm"></div>
-          <div className="left-mitten-1"></div>
-          <div className="left-mitten-2"></div>
-          <div className="right-arm"></div>
-          <div className="right-mitten-1"></div>
-          <div className="right-mitten-2"></div>
-          <div className="wind">
-            <div className="scarf-1"></div>
-            <div className="scarf-2"></div>
-            <div className="scarf-3"></div>
-          </div>
-        </div>
-
+<div className="snowman">
+  <div className="corps"></div>
+  <div className="head"></div>
+  <div className="right-eye"></div>
+  <div className="left-eye"></div>
+  <div className="nose"></div>
+  <div className="snowman-mouth-1"></div>
+  <div className="snowman-mouth-2"></div>
+  <div className="snowman-mouth-3"></div>
+  <div className="snowman-mouth-4"></div>
+  <div className="snowman-mouth-5"></div>
+  <div className="hat-1"></div>
+  <div className="hat-2"></div>
+  <div className="hat-3"></div>
+  <div className="scarf-1"></div>
+  <div className="scarf-2"></div>
+  <div className="scarf-3"></div>
+</div>
         {/* Étoiles */}
         <div className="star-1 stars"></div>
         <div className="star-2 stars"></div>
