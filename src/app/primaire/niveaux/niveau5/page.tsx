@@ -66,14 +66,12 @@ export default function Niveau5() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10">
         <a
   href="/primaire/niveaux/niveau5/exposant/n1"
-  className="btn-candy text-blue font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
->
+className="btn-candy text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
   Premier niveau
 </a>
 <a
   href="/primaire/niveaux/niveau5/exposant/n2"
-  className="btn-candy text-blue font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105"
->
+className="btn-candy text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
   Deuxième niveau
 </a>
 

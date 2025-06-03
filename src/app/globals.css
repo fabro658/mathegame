@@ -1031,11 +1031,13 @@ body {
     45deg,
     red 0px,
     red 12px,
-    white 12px,
-    white 24px
+    #fdf5e6 12px,
+    #fdf5e6 24px
   );
+  color: white; 
 }
 .btn-candy:hover {
-  filter: brightness(0.9);
+  filter: brightness(0.95);
 }
+
 
