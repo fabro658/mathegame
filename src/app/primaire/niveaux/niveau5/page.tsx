@@ -44,11 +44,7 @@ export default function Niveau5() {
   <div className="snowman-mouth-4"></div>
   <div className="snowman-mouth-5"></div>
 </div>
-        {/* Étoiles */}
-        <div className="star-1 stars"></div>
-        <div className="star-2 stars"></div>
-        <div className="star-3 stars"></div>
-        <div className="star-4 stars"></div>
+
 
         {/* Flocons */}
         <div className="snowflakes">

@@ -898,7 +898,7 @@ body {
   height: 150px;
   background: white;
   border-radius: 50%;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Yeux */
@@ -907,6 +907,9 @@ body {
   left: 45px;
   width: 20px;
   height: 20px;
+  background: black;
+  border-radius: 50%;
+  z-index: 3;
 }
 
 .yeuxD {
@@ -914,28 +917,24 @@ body {
   left: 90px;
   width: 20px;
   height: 20px;
+  background: black;
+  border-radius: 50%;
+  z-index: 3;
 }
-
 
 /* Nez */
 .nez {
   top: 70px;
-  left: 70px;
+  left: 72px;
   width: 0;
   height: 0;
   clip-path: polygon(70% 50%, 70% 72%, 0 60%);
   border-right: 30px solid #d73d00;
   background: transparent;
-  z-index: 3;
+  z-index: 4;
 }
 
 /* Bouche */
-.snowman-mouth-1 { top: 100px; left: 42px; }
-.snowman-mouth-2 { top: 105px; left: 55px; }
-.snowman-mouth-3 { top: 108px; left: 70px; }
-.snowman-mouth-4 { top: 105px; left: 85px; }
-.snowman-mouth-5 { top: 100px; left: 98px; }
-
 .snowman-mouth-1,
 .snowman-mouth-2,
 .snowman-mouth-3,
@@ -945,17 +944,22 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  z-index: 2;
+  z-index: 3;
 }
 
+.snowman-mouth-1 { top: 100px; left: 42px; }
+.snowman-mouth-2 { top: 105px; left: 55px; }
+.snowman-mouth-3 { top: 108px; left: 70px; }
+.snowman-mouth-4 { top: 105px; left: 85px; }
+.snowman-mouth-5 { top: 100px; left: 98px; }
+
+/* Corps */
 .corps {
   top: 140px;
-  left: 15px;
-  width: 170px;
-  height: 170px;
+  left: 0px;
+  width: 200px;
+  height: 200px;
   background: white;
   border-radius: 50%;
-  z-index: 0;
+  z-index: 1;
 }
-
-
