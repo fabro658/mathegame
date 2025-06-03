@@ -4,6 +4,13 @@ export default function Niveau5() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
 
+      <div className="snowflakes">
+  {Array.from({ length: 40 }).map((_, i) => (
+    <div key={i} className="snowflake"></div>
+  ))}
+</div>
+
+
       <div className="scene">
         <div className="neige-wave">
           <div className="neige-top-layer"></div>
@@ -50,8 +57,7 @@ export default function Niveau5() {
       {/* Bouton Retour */}
       <Link
         href="/primaire/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
-      >
+  className="btn-candy-border bg-purple-600 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
         Retour
       </Link>
 

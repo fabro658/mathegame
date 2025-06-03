@@ -1039,4 +1039,31 @@ body {
 }
 
 
+.snowflakes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: calc(5s + 5s * random()); /* aléatoire en JS possible */
+  left: calc(100% * var(--x)); /* supporté avec CSS variables en JS */
+}
+
+
 
