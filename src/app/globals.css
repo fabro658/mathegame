@@ -967,7 +967,7 @@ body {
 }
 .hat-1 {
   top: -25px;
-  left: 45px; /* centré horizontalement sur 150px */
+  left: 55px; /* +10px plus à droite */
   width: 60px;
   height: 20px;
   background: #1e1ba1;
@@ -978,7 +978,7 @@ body {
 
 .hat-2 {
   top: -50px;
-  left: 63px;
+  left: 73px; /* +10px */
   width: 24px;
   height: 30px;
   background: navy;
@@ -989,7 +989,7 @@ body {
 
 .hat-3 {
   top: -50px;
-  left: 70px;
+  left: 80px; /* +10px */
   width: 4px;
   height: 30px;
   background: #791919;
