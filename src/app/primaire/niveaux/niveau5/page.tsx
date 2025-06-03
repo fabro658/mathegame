@@ -33,6 +33,7 @@ export default function Niveau5() {
 
       {/* Bonhomme de neige */}
         <div className="snowman">
+          <div className="body"></div>
           <div className="wind">
             <div className="hat-1"></div>
             <div className="hat-2"></div>

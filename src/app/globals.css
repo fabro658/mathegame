@@ -989,3 +989,12 @@ body {
   height: 28%;
   border-radius: 10%;
 }
+.coprs {
+  top: 95%;
+  left: 0%;
+  background: white;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: -1;
+}
