@@ -924,15 +924,17 @@ body {
 
 /* Nez */
 .nez {
-  top: 70px;
+  top: 72px;
   left: 72px;
   width: 0;
   height: 0;
-  clip-path: polygon(70% 50%, 70% 72%, 0 60%);
   border-right: 30px solid #d73d00;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
   background: transparent;
-  z-index: 4;
+  z-index: 5;
 }
+
 
 /* Bouche */
 .snowman-mouth-1,
