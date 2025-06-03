@@ -43,9 +43,7 @@ export default function Niveau5() {
   <div className="snowman-mouth-3"></div>
   <div className="snowman-mouth-4"></div>
   <div className="snowman-mouth-5"></div>
-  <div className="hat-1"></div>
-<div className="hat-2"></div>
-<div className="hat-3"></div>
+
 <div className="bouton-1"></div>
 <div className="bouton-2"></div>
 <div className="bouton-3"></div>
