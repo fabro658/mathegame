@@ -21,19 +21,19 @@ export default function Niveau5() {
           <div className="neige-bottom-layer"></div>
         </div>
 <div className="gifts">
-  {/* Groupe central (rouge + vert) */}
-  <div className="gift-pair">
+  <div className="gift-pyramid">
     <div className="gift red" />
-    <div className="gift green tilted" />
+    <div className="gift green" />
+    <div className="gift yellow top" />
   </div>
-
-  {/* Cadeaux éloignés */}
-  <div className="gift blue gift-blue" />
-  <div className="gift yellow gift-yellow" />
+  <div className="gift blue side" />
 </div>
 
-
-
+<div className="snowflakes">
+  {Array.from({ length: 30 }).map((_, i) => (
+    <div key={i} className="snowflake" />
+  ))}
+</div>
       </div>
 
       {/* Bouton Retour */}
