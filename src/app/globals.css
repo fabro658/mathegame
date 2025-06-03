@@ -855,7 +855,7 @@ body {
 
 /* Positions relatives au centre */
 .gift.top {
-  left: 0px;       
+  left: 0px;       /* centre exact (0) */
   bottom: 60px;  
   z-index: 2;
 }
@@ -884,8 +884,8 @@ body {
 
 .snowman {
   position: absolute;
-  bottom: 20px;
-  right: 180px;
+  bottom: 150px;
+  right: 20px;
   transform: scale(0.6);
   transform-origin: bottom right;
   width: 220px;

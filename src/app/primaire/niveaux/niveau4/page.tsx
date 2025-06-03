@@ -45,17 +45,7 @@ export default function Niveau4() {
           Aire
         </a>
       </div>
-      {/* Décor : cheminée + neige */}
-        <div className="chimney">
-          <div className="chimney-top">
-            <div className="snow-cap"></div>
-          </div>
-          <div className="chimney-base">
-            {Array.from({ length: 18 }).map((_, i) => (
-              <div key={i}></div>
-            ))}
-          </div>
-        </div>
+
     </div>
   );
 }
