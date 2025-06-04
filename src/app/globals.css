@@ -810,6 +810,27 @@ body {
   top: 6.2em;
   transform: rotate(-15deg);
 }
+.hand-l,
+.hand-r {
+  position: absolute;
+  height: 1.62em;
+  width: 4.68em;
+  background-color: #e2e9f4;
+  border-radius: 2.5em;
+  top: 6.5em;
+}
+
+.hand-l {
+  left: -1.87em;  /* Avant : -4em */
+  top: 6.2em;
+  transform: rotate(90deg);
+}
+
+.hand-r {
+  right: -1.87em;  /* Avant : -4em */
+  top: 6.2em;
+  transform: rotate(-90deg);
+}
 
 
 /* Jambes */
