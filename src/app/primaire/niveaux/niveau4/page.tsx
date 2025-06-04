@@ -9,6 +9,9 @@ export default function Niveau4() {
       {/* Planète et astronaute */}
       <div className="container">
         <div className="planet">
+          <div className="yeuxG"></div>
+          <div className="yeuxD"></div>
+          <div className="bouche"></div>
         </div>
 
         <div className="astronaut">

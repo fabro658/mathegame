@@ -669,7 +669,7 @@ body {
   width: 12.5em;
   background-color: #f5d201;
   border-radius: 50%;
-  position: absolute;
+  position: relative; 
   top: 10%;
   left: 10%;
 }
@@ -688,7 +688,6 @@ body {
    -1.25em 4.75em 0 0.12em #fcec8e;
 }
 
-
 .planet::after {
   position: absolute;
   content: "";
@@ -702,6 +701,35 @@ body {
     -1.25em 3.75em 0 0.37em #edb514,
      4.06em 8.43em 0 0.12em #edb514;
 }
+
+.yeuxD, .yeuxG {
+  position: absolute;
+  height: 1em;
+  width: 1em;
+  background-color: black;
+  border-radius: 50%;
+  top: 3em;
+}
+
+.yeuxD {
+  left: 8em;
+}
+
+.yeuxG {
+  left: 3em;
+}
+
+.bouche {
+  position: absolute;
+  height: 0.3em;
+  width: 2em;
+  border: 3px solid #161646;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  top: 6em;
+  left: 5em;
+}
+
 
 .astronaut {
   position: absolute;
