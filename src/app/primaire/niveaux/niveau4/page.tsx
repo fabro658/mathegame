@@ -35,10 +35,10 @@ export default function Niveau4() {
 
       {/* Titre */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-2">
+        <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-2">
           Mission Géométrie
         </h1>
-        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
+        <p className="text-xl sm:text-2xl text-white font-medium">
           Choisis ta mission mathématique !
         </p>
       </div>
