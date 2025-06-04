@@ -18,6 +18,8 @@ export default function Niveau4() {
           <div className="buttons center"></div>
           <div className="hand-l"></div>
           <div className="hand-r"></div>
+          <div className="hand2-l"></div>
+          <div className="hand2-r"></div>
           <div className="leg-l"></div>
           <div className="leg-r"></div>
           <div className="buttons">
