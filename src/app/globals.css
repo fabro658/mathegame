@@ -670,8 +670,8 @@ body {
   background-color: #f5d201;
   border-radius: 50%;
   position: absolute;
-  top: 2.81em;
-  left: 13.75em;
+  top: 10%;
+  left: 10%;
 }
 
 .planet::before {

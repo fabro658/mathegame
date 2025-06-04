@@ -20,6 +20,24 @@ export default function Niveau2() {
         <div className="crat crat5"></div>
         <div className="crat crat6"></div>
       </div>
+            {/* Planète et astronaute */}
+      <div className="container">
+        <div className="planet">
+          <div className="shadow"></div>
+        </div>
+
+        <div className="astronaut">
+          <div className="tank center"></div>
+          <div className="suit center"></div>
+          <div className="helmet center"></div>
+          <div className="buttons center"></div>
+          <div className="hand-l"></div>
+          <div className="hand-r"></div>
+          <div className="leg-l"></div>
+          <div className="leg-r"></div>
+          <div className="pipe"></div>
+        </div>
+      </div>
 
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
