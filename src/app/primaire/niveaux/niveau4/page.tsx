@@ -49,9 +49,6 @@ export default function Niveau4() {
         <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-2">
           Mission Géométrie
         </h1>
-        <p className="text-xl sm:text-2xl text-white font-medium">
-          Choisis ta mission mathématique !
-        </p>
       </div>
 
       {/* Grille des missions */}
