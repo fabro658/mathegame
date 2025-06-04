@@ -788,7 +788,7 @@ body {
   height: 6.5em;
   width: 6.25em;
   position: absolute;
-  bottom: 11.5em;
+  bottom: 13.5em;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 45%;
@@ -863,7 +863,7 @@ body {
 }
 
 .hand-r {
-  right: 0.5em;  /* Avant : -4em */
+  right: 0.5em;
   top: 6.2em;
   transform: rotate(-15deg);
 }
@@ -878,13 +878,13 @@ body {
 }
 
 .hand2-l {
-  left: -1.5em;
+  left: -1em;
   top: 3.8em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
-  right: -1.5em;
+  right: -1em;
   top: 3.8em;
   transform: rotate(-90deg);
 }
@@ -895,7 +895,7 @@ body {
 .leg-l,
 .leg-r {
   position: absolute;
-  height: 6.25em;
+  height: 7.25em;
   width: 2.5em;
   background-color: #e2e9f4;
   top: 11.5em;
