@@ -788,7 +788,7 @@ body {
   height: 6.5em;
   width: 6.25em;
   position: absolute;
-  bottom: 13.5em;
+  bottom: 12.5em;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 45%;
@@ -895,19 +895,19 @@ body {
 .leg-l,
 .leg-r {
   position: absolute;
-  height: 7.25em;
+  height: 6.25em;
   width: 2.5em;
   background-color: #e2e9f4;
-  top: 11.5em;
+  top: 12.5em;
 }
 
 .leg-l {
-  left: 5em;  /* Avant : 3.2em */
+  left: 5em;
   transform: rotate(5deg);
 }
 
 .leg-r {
-  right: 5em;  /* Avant : 3.2em */
+  right: 5em;
   transform: rotate(-5deg);
 }
 
