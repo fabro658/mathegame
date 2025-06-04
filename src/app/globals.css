@@ -857,13 +857,13 @@ body {
 }
 
 .hand-l {
-  left: -0em;  /* Avant : -4em */
+  left: 0.5em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(15deg);
 }
 
 .hand-r {
-  right: -0em;  /* Avant : -4em */
+  right: 0.5em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(-15deg);
 }
@@ -878,13 +878,13 @@ body {
 }
 
 .hand2-l {
-  left: -2em;
+  left: -1.5em;
   top: 3.8em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
-  right: -2em;
+  right: -1.5em;
   top: 3.8em;
   transform: rotate(-90deg);
 }
