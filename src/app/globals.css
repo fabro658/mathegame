@@ -722,13 +722,13 @@ body {
 }
 .bouche {
   position: absolute;
-  width: 4em;
-  height: 1em; 
+  width: 2em;
+  height: 1em;
   border-bottom: 3px solid #161646;
   border-radius: 0 0 100% 100%;
   background: transparent;
   top: 6em;
-  left: 4.25em;
+  left: 5em;
 }
 
 
@@ -745,7 +745,6 @@ body {
   z-index: 5;
 }
 
-/* Corps */
 .suit {
   position: absolute;
   background-color: #e2e9f4;
@@ -757,7 +756,6 @@ body {
   transform: translateX(-50%);
 }
 
-/* Casque rapproché */
 .helmet {
   background-color: #e2e9f4;
   height: 5.5em;
@@ -886,8 +884,6 @@ body {
 }
 
 
-/* Réduction de la rotation des bras et jambes pour moins de décalage */
-
 .leg-l:before,
 .leg-r:before {
   content: "";
@@ -912,6 +908,48 @@ body {
   left: -0.15em;
 }
 
+.fusee {
+  background-color: #c3c8bb;
+  height: 50px;
+  width: 25px;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+  left: -11px;
+  top: 115px;
+}
+
+.fusee:before {
+  position: absolute;
+  content: "";
+  background-color: #39beff;
+  height: 20px;
+  width: 55px;
+  z-index: -1;
+  border-radius: 50% 50% 0 0;
+  right: -15px;
+  bottom: 0;
+}
+.fusee:after {
+  position: absolute;
+  content: "";
+  background-color: #39beff;
+  height: 4px;
+  width: 15px;
+  border-radius: 0 0 2px 2px;
+  bottom: -4px;
+  left: 4.3px;
+}
+
+.window {
+  height: 10px;
+  width: 10px;
+  background-color: #151845;
+  border: 2px solid #b8d2ec;
+  border-radius: 50%;
+  position: relative;
+  top: 17px;
+  left: 5px;
+}
 
 
 

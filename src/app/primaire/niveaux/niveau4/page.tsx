@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Niveau4() {
   return (
-<div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
 
       {/* Planète et astronaute */}
       <div className="container">
@@ -18,18 +18,26 @@ export default function Niveau4() {
           <div className="tank center"></div>
           <div className="suit center"></div>
           <div className="helmet center"></div>
-          <div className="buttons center"></div>
+
+          {/* Boutons */}
+          <div className="buttons center">
+            <div className="btn btn-red"></div>
+            <div className="btn btn-blue"></div>
+            <div className="btn btn-yellow"></div>
+          </div>
+
+          {/* Mains et jambes */}
           <div className="hand-l"></div>
           <div className="hand-r"></div>
           <div className="hand2-l"></div>
           <div className="hand2-r"></div>
           <div className="leg-l"></div>
           <div className="leg-r"></div>
-          <div className="buttons">
-          <div className="btn btn-red"></div>
-          <div className="btn btn-blue"></div>
-          <div className="btn btn-yellow"></div>
-        </div>
+
+          {/* Fusée */}
+          <div className="fusee">
+            <div className="fenetre"></div>
+          </div>
         </div>
       </div>
 
@@ -72,7 +80,6 @@ export default function Niveau4() {
           Aire
         </a>
       </div>
-
     </div>
   );
 }
