@@ -723,15 +723,14 @@ body {
 .bouche {
   position: absolute;
   width: 4em;
-  height: 2em;
-  border-bottom: 5px solid #161646;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-radius: 0 0 50% 50%;
+  height: 1em; 
+  border-bottom: 3px solid #161646;
+  border-radius: 0 0 100% 100%;
+  background: transparent;
   top: 6em;
   left: 4.25em;
 }
+
 
 
 
