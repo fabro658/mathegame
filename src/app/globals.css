@@ -749,7 +749,7 @@ body {
 .suit {
   position: absolute;
   background-color: #e2e9f4;
-  height: 6.25em;
+  height: 7.25em;
   width: 6.25em;
   border-radius: 10%;
   bottom: 6.25em;
@@ -794,7 +794,7 @@ body {
 /* Boutons visibles et bien placés */
 .buttons {
   position: absolute;
-  bottom: 7.5em;
+  bottom: 8.5em;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -845,7 +845,7 @@ body {
 .hand2-l,
 .hand2-r {
   position: absolute;
-  height: 1.62em;
+  height: 3.62em;
   width: 4.68em;
   background-color: #e2e9f4;
   border-radius: 2.5em;
