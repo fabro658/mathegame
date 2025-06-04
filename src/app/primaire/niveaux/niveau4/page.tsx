@@ -5,7 +5,26 @@ import Link from "next/link";
 export default function Niveau4() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
-      
+
+      {/* Planète et astronaute */}
+      <div className="container">
+        <div className="planet">
+          <div className="shadow"></div>
+        </div>
+
+        <div className="astronaut">
+          <div className="tank center"></div>
+          <div className="suit center"></div>
+          <div className="helmet center"></div>
+          <div className="buttons center"></div>
+          <div className="hand-l"></div>
+          <div className="hand-r"></div>
+          <div className="leg-l"></div>
+          <div className="leg-r"></div>
+          <div className="pipe"></div>
+        </div>
+      </div>
+
       {/* Bouton Retour */}
       <Link
         href="/primaire/"

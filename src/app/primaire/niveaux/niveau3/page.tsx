@@ -37,11 +37,8 @@ export default function Niveau3() {
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-[#2e1c0c] text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-          L’oasis des Fractions
+          Explore le déserts des Fractions
         </h1>
-        <p className="text-xl sm:text-2xl text-[#5b3e1d] font-medium max-w-xl">
-          Explore le désert des fractions !
-        </p>
       </div>
 
       {/* Boutons */}
