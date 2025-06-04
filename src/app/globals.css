@@ -702,16 +702,7 @@ body {
     -1.25em 3.75em 0 0.37em #edb514,
      4.06em 8.43em 0 0.12em #edb514;
 }
-.shadow {
-  position: absolute;
-  background-color: transparent;
-  box-shadow: 0.93em 0.93em rgba(134, 123, 5, 0.3);
-  height: 12.5em;
-  width: 12.5em;
-  border-radius: 50%;
-  bottom: 0.93em;
-  right: 0.93em;
-}
+
 .astronaut {
   position: absolute;
   height: 17.5em;
