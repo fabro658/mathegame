@@ -716,20 +716,6 @@ body {
   right: 70%;            
 }
 
-.planet::before {
-  position: absolute;
-  content: "";
-  background-color: #0e8807;
-  height: 1.25em;
-  width: 6.87em;
-  border-radius: 0.62em;
-  top: 3em;
-  left: 4.25em;
-  box-shadow:
-    1.42em 3.65em 0 -0.25em #659658,
-   -1.25em 4.75em 0 0.12em #9dfc8e;
-}
-
 .planet::after {
   position: absolute;
   content: "";
@@ -892,16 +878,17 @@ body {
 }
 
 .hand2-l {
-  left: -4em;  /* Avant : -4em */
-  top: 6.2em;
+  left: -2.5em;
+  top: 4.8em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
-  right: -4em;  /* Avant : -4em */
-  top: 6.2em;
+  right: -2.5em;
+  top: 4.8em;
   transform: rotate(-90deg);
 }
+
 
 
 /* Jambes */
