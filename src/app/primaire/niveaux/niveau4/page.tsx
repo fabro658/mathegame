@@ -21,6 +21,7 @@ export default function Niveau4() {
 
           {/* Boutons */}
           <div className="buttons center">
+            <div className="belt"></div>
             <div className="btn btn-red"></div>
             <div className="btn btn-blue"></div>
             <div className="btn btn-yellow"></div>
@@ -49,6 +50,7 @@ export default function Niveau4() {
         <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-2">
           Mission Géométrie
         </h1>
+
       </div>
 
       {/* Grille des missions */}

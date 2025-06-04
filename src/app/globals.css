@@ -712,50 +712,49 @@ body {
   background-color: #0ebc23;
   border-radius: 50%;
   position: absolute;
-  top: 2em;           
-  right: 70%;            
+  top: 2em;
+  right: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.planet::after {
-  position: absolute;
-  content: "";
-  background-color: #edb514;
-  height: 0.75em;
-  width: 2.5em;
-  border-radius: 0.46em;
-  top: 1.87em;
-  left: 3em;
-  box-shadow:
-    -1.25em 3.75em 0 0.37em #edb514,
-     4.06em 8.43em 0 0.12em #edb514;
+/* Conteneur du visage */
+.face {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
+/* Yeux */
 .yeuxG, .yeuxD {
   position: absolute;
   height: 1em;
   width: 1em;
   background-color: black;
   border-radius: 50%;
-  top: 3.5em;
+  top: 4em;
 }
 
 .yeuxG {
-  left: 4.25em;
+  left: 4em;
 }
 
 .yeuxD {
-  left: 7.25em;
+  right: 4em;
 }
+
+/* Bouche en trait */
 .bouche {
   position: absolute;
   width: 2em;
-  height: 1em;
+  height: 0;
   border-bottom: 3px solid #161646;
-  border-radius: 0 0 100% 100%;
-  background: transparent;
   top: 6em;
-  left: 5.25em;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
 
 
 
@@ -774,7 +773,7 @@ body {
 
 .suit {
   position: absolute;
-  background-color: #e2e9f4;
+  background-color: #adb4be;
   height: 7.25em;
   width: 6.25em;
   border-radius: 10%;
@@ -843,6 +842,18 @@ body {
 .btn-yellow {
   background-color: #fbd31f;
 }
+.belt {
+  position: absolute;
+  bottom: 8.4em; /* Aligne avec les boutons */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5.5em;
+  height: 1.2em;
+  background-color: #c4cde0; /* Ou une teinte plus foncée */
+  border-radius: 0.5em;
+  z-index: 5; /* Derrière les boutons */
+}
+
 
 
 /* Bras repositionnés sur les côtés */
