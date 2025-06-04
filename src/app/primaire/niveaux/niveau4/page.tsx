@@ -25,8 +25,6 @@ export default function Niveau4() {
           <div className="btn btn-blue"></div>
           <div className="btn btn-yellow"></div>
         </div>
-
-          <div className="pipe"></div>
         </div>
       </div>
 

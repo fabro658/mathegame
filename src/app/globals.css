@@ -800,14 +800,17 @@ body {
 }
 
 .hand-l {
-  left: -4em;
-  transform: rotate(30deg);
+  left: -1.5em;  /* Avant : -4em */
+  top: 6.2em;
+  transform: rotate(15deg);
 }
 
 .hand-r {
-  right: -4em;
-  transform: rotate(-30deg);
+  right: -1.5em;  /* Avant : -4em */
+  top: 6.2em;
+  transform: rotate(-15deg);
 }
+
 
 /* Jambes rapprochées et centrées sous le corps */
 .leg-l,
@@ -820,14 +823,15 @@ body {
 }
 
 .leg-l {
-  left: 3.2em;
-  transform: rotate(10deg);
+  left: 1.5em;  /* Avant : 3.2em */
+  transform: rotate(5deg);
 }
 
 .leg-r {
-  right: 3.2em;
-  transform: rotate(-10deg);
+  right: 1.5em;  /* Avant : 3.2em */
+  transform: rotate(-5deg);
 }
+
 
 /* Réduction de la rotation des bras et jambes pour moins de décalage */
 
@@ -853,32 +857,6 @@ body {
   border-radius: 1em;
   bottom: -0.09em;
   left: -0.15em;
-}
-
-.pipe {
-  position: absolute;
-  background-color: transparent;
-  height: 2.5em;
-  width: 6.25em;
-  border: 0.62em solid #3cb9f0;
-  border-top: none;
-  border-radius: 0 0 3.75em 1.87em;
-  left: 2.81em;
-  top: 4.5em;
-}
-
-.pipe:before {
-  position: absolute;
-  content: "";
-  background-color: transparent;
-  height: 2.5em;
-  width: 2.81em;
-  border: 0.62em solid #3cb9f0;
-  border-left: none;
-  border-bottom: none;
-  top: -3.1em;
-  left: 3.42em;
-  border-radius: 0 2.5em 0 0;
 }
 
 
