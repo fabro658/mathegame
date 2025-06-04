@@ -671,7 +671,7 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 2em;           
-  right: 10%;            
+  right: 90%;            
 }
 
 /* Anneaux décoratifs */
@@ -720,18 +720,19 @@ body {
 .yeuxD {
   left: 8em;
 }
-
-/* Bouche */
 .bouche {
   position: absolute;
-  height: 0.3em;
-  width: 2em;
-  border: 3px solid #161646;
+  width: 4em;
+  height: 2em;
+  border-bottom: 5px solid #161646;
+  border-left: none;
+  border-right: none;
   border-top: none;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 50% 50%;
   top: 6em;
-  left: 5em;
+  left: 4.25em;
 }
+
 
 
 
@@ -739,8 +740,8 @@ body {
   position: absolute;
   height: 17.5em;
   width: 15.62em;
-  bottom: 2em;         /* position en bas */
-  right: 2em;          /* position à droite */
+  bottom: 2em;
+  right: 2em;
   transform: rotate(-10deg);
   z-index: 5;
 }
