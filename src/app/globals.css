@@ -800,19 +800,19 @@ body {
 }
 
 .hand-l {
-  left: -1.5em;  /* Avant : -4em */
+  left: -6em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(15deg);
 }
 
 .hand-r {
-  right: -1.5em;  /* Avant : -4em */
+  right: -6em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(-15deg);
 }
 
 
-/* Jambes rapprochées et centrées sous le corps */
+/* Jambes */
 .leg-l,
 .leg-r {
   position: absolute;
