@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Niveau4() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
+<div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
 
       {/* Planète et astronaute */}
       <div className="container">
