@@ -669,11 +669,12 @@ body {
   width: 12.5em;
   background-color: #f5d201;
   border-radius: 50%;
-  position: relative; 
-  top: 10%;
-  left: 10%;
+  position: absolute;
+  top: 2em;           
+  right: 2em;            
 }
 
+/* Anneaux décoratifs */
 .planet::before {
   position: absolute;
   content: "";
@@ -702,23 +703,25 @@ body {
      4.06em 8.43em 0 0.12em #edb514;
 }
 
-.yeuxD, .yeuxG {
+/* Yeux (gauche et droite) */
+.yeuxG, .yeuxD {
   position: absolute;
   height: 1em;
   width: 1em;
   background-color: black;
   border-radius: 50%;
-  top: 3em;
-}
-
-.yeuxD {
-  left: 8em;
+  top: 3.5em;
 }
 
 .yeuxG {
   left: 3em;
 }
 
+.yeuxD {
+  left: 8em;
+}
+
+/* Bouche */
 .bouche {
   position: absolute;
   height: 0.3em;
@@ -729,6 +732,7 @@ body {
   top: 6em;
   left: 5em;
 }
+
 
 
 .astronaut {
