@@ -19,6 +19,10 @@ export default function Niveau2() {
         <div className="crat crat4"></div>
         <div className="crat crat5"></div>
         <div className="crat crat6"></div>
+        {/* Fusée */}
+          <div className="fusee">
+            <div className="fenetre"></div>
+          </div>
       </div>
 
       {/* Titre thématique */}

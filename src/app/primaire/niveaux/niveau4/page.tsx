@@ -33,11 +33,6 @@ export default function Niveau4() {
           <div className="hand2-r"></div>
           <div className="leg-l"></div>
           <div className="leg-r"></div>
-
-          {/* Fusée */}
-          <div className="fusee">
-            <div className="fenetre"></div>
-          </div>
         </div>
       </div>
 
