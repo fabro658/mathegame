@@ -20,11 +20,11 @@ export default function Niveau1() {
 
       {/* Bouton retour */}
       <Link
-        href="/primaire/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-30"
-      >
+       href="/primaire/"
+       className="cloud-button absolute top-4 right-4 z-30">
         Retour
-      </Link>
+    </Link>
+
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
         Arithmétique
