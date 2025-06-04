@@ -823,12 +823,12 @@ body {
 }
 
 .leg-l {
-  left: 3.2em;  /* Avant : 3.2em */
+  left: 5em;  /* Avant : 3.2em */
   transform: rotate(5deg);
 }
 
 .leg-r {
-  right: 3.2em;  /* Avant : 3.2em */
+  right: 5em;  /* Avant : 3.2em */
   transform: rotate(-5deg);
 }
 
