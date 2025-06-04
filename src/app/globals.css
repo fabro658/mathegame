@@ -671,7 +671,7 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 2em;           
-  right: 2em;            
+  right: 10%;            
 }
 
 /* Anneaux décoratifs */
@@ -703,7 +703,7 @@ body {
      4.06em 8.43em 0 0.12em #edb514;
 }
 
-/* Yeux (gauche et droite) */
+/* Yeux */
 .yeuxG, .yeuxD {
   position: absolute;
   height: 1em;
@@ -845,7 +845,7 @@ body {
 .hand2-l,
 .hand2-r {
   position: absolute;
-  height: 3.62em;
+  height: 1.62em;
   width: 4.68em;
   background-color: #e2e9f4;
   border-radius: 2.5em;
@@ -853,13 +853,13 @@ body {
 }
 
 .hand2-l {
-  left: -1.87em;  /* Avant : -4em */
+  left: -4em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
-  right: -1.87em;  /* Avant : -4em */
+  right: -4em;  /* Avant : -4em */
   top: 6.2em;
   transform: rotate(-90deg);
 }
