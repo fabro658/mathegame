@@ -844,7 +844,7 @@ body {
 }
 .belt {
   position: absolute;
-  bottom: 0.25em;
+  bottom: 0em;
   left: 50%;
   transform: translateX(-50%);
   width: 5.5em;
