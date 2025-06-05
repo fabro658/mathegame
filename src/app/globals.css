@@ -901,15 +901,16 @@ body {
 }
 .main {
   position: absolute;
-  top: -0.7em;
+  top: -0.9em; /* plus haut au-dessus de la main */
   left: 50%;
-  transform: translateX(-50%) rotate(90deg);
-  width: 0.6em;
-  height: 0.3em;
+  transform: translateX(-50%) rotate(0deg); /* AUCUNE rotation pour une ligne verticale */
+  width: 0.3em; /* minceur horizontale */
+  height: 0.6em; /* longueur verticale */
   background-color: #ee0c2b;
   border-radius: 0.2em;
   z-index: 8;
 }
+
 
 
 
