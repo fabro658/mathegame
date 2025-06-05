@@ -33,8 +33,12 @@ export default function Niveau4() {
           {/* Mains et jambes */}
           <div className="hand-l"></div>
           <div className="hand-r"></div>
-          <div className="hand2-l"></div>
-          <div className="hand2-r"></div>
+<div className="hand2-l">
+  <div className="finger"></div>
+</div>
+<div className="hand2-r">
+  <div className="finger"></div>
+</div>
           <div className="leg-l"></div>
           <div className="leg-r"></div>
         </div>

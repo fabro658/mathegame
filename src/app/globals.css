@@ -844,14 +844,14 @@ body {
 
 .belt {
   position: absolute;
-  bottom: 8.5em; /* même que les boutons */
+  bottom: 8.5em;
   left: 50%;
   transform: translateX(-50%);
-  width: 5.5em;
-  height: 1.2em;
+  width: 6em;
+  height: 1.5em;
   background-color: #c4cde0; 
   border-radius: 0.5em;
-  z-index: 6; /* Derrière les boutons */
+  z-index: 6;
 }
 
 
@@ -898,6 +898,29 @@ body {
   right: -1em;
   top: 3.8em;
   transform: rotate(-90deg);
+}
+.main {
+  position: absolute;
+  top: -0.5em; /* légèrement au-dessus */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.3em;
+  height: 0.6em;
+  background-color: #e2e9f4;
+  border-radius: 0.2em;
+  z-index: 7;
+}
+
+.main2 {
+  position: absolute;
+  bottom: 8.5em;
+  left: 50%;
+  transform: rotate(-90deg);
+  width: 3em;
+  height: 0.5em;
+  background-color: #ee0c2b; 
+  border-radius: 0.5em;
+  z-index: 6;
 }
 
 
