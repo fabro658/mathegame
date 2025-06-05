@@ -773,7 +773,7 @@ body {
 
 .suit {
   position: absolute;
-  background-color: #adb4be;
+  background-color: #e2e9f4;
   height: 7.25em;
   width: 6.25em;
   border-radius: 10%;
@@ -844,14 +844,14 @@ body {
 }
 .belt {
   position: absolute;
-  bottom: 8.4em; /* Aligne avec les boutons */
+  bottom: 8.5em;
   left: 50%;
   transform: translateX(-50%);
   width: 5.5em;
   height: 1.2em;
-  background-color: #c4cde0; /* Ou une teinte plus foncée */
+  background-color: #c4cde0; 
   border-radius: 0.5em;
-  z-index: 5; /* Derrière les boutons */
+  z-index: 6;
 }
 
 
