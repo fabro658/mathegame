@@ -906,21 +906,9 @@ body {
   transform: translateX(-50%);
   width: 0.3em;
   height: 0.6em;
-  background-color: #e2e9f4;
+  background-color: #ee0c2b;
   border-radius: 0.2em;
   z-index: 7;
-}
-
-.main2 {
-  position: absolute;
-  bottom: 8.5em;
-  left: 50%;
-  transform: rotate(-90deg);
-  width: 3em;
-  height: 0.5em;
-  background-color: #ee0c2b; 
-  border-radius: 0.5em;
-  z-index: 6;
 }
 
 
