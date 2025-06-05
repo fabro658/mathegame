@@ -20,13 +20,12 @@ export default function Niveau4() {
           <div className="helmet center"></div>
 
           {/* Boutons */}
-<div className="belt"></div>
-<div className="buttons center">
-  <div className="btn btn-red"></div>
-  <div className="btn btn-blue"></div>
-  <div className="btn btn-yellow"></div>
-</div>
-
+          <div className="buttons center">
+            <div className="belt"></div>
+            <div className="btn btn-red"></div>
+            <div className="btn btn-blue"></div>
+            <div className="btn btn-yellow"></div>
+          </div>
 
           {/* Mains et jambes */}
           <div className="hand-l"></div>
