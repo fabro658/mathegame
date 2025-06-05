@@ -823,7 +823,7 @@ body {
   transform: translateX(-50%);
   display: flex;
   gap: 0.5em;
-  z-index: 10;
+  z-index: 10; /* Les boutons sont au premier plan */
 }
 
 .buttons .btn {
@@ -832,7 +832,6 @@ body {
   border-radius: 50%;
 }
 
-/* Couleurs */
 .btn-red {
   background-color: #e62c1b;
 }
@@ -842,16 +841,17 @@ body {
 .btn-yellow {
   background-color: #fbd31f;
 }
+
 .belt {
   position: absolute;
-  bottom: 0.1em;
+  bottom: 8.5em; /* même que les boutons */
   left: 50%;
   transform: translateX(-50%);
   width: 5.5em;
   height: 1.2em;
   background-color: #c4cde0; 
   border-radius: 0.5em;
-  z-index: 6;
+  z-index: 6; /* Derrière les boutons */
 }
 
 
