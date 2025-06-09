@@ -899,16 +899,24 @@ body {
   top: 3.8em;
   transform: rotate(-90deg);
 }
-.main {
+.main-left, .main-right {
   position: absolute;
   top: 3.8em;
-  left: 1.4em;
   transform: rotate(90deg);
   width: 0.3em;
   height: 1.6em;
   background-color: #ee0c2b;
   border-radius: 0.2em;
-  z-index: 8;
+  z-index: 10;
+}
+
+.main-left {
+  left: 1.34em;
+}
+
+.main-right {
+  right: 1.34em;
+  transform: rotate(-90deg);
 }
 
 

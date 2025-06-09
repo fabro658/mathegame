@@ -34,10 +34,10 @@ export default function Niveau4() {
           <div className="hand-l"></div>
           <div className="hand-r"></div>
 <div className="hand2-l">
-  <div className="main"></div>
+<div className="main-left"></div>
 </div>
 <div className="hand2-r">
-  <div className="main"></div>
+<div className="main-right"></div>
 </div>
           <div className="leg-l"></div>
           <div className="leg-r"></div>
