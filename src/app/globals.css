@@ -901,7 +901,7 @@ body {
 }
 .main {
   position: absolute;
-  top: -0.9em; 
+  top: 2.5em; 
   left: 50%;
   transform: rotate(90deg); /* AUCUNE rotation pour une ligne verticale */
   width: 0.3em; /* minceur horizontale */
