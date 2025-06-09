@@ -901,8 +901,8 @@ body {
 }
 .main {
   position: absolute;
-  top: 3.8em; /* même niveau que les bras */
-  left: 2.4em; /* position horizontale ajustée manuellement */
+  top: 3.8em;
+  left: 1.4em;
   transform: rotate(90deg);
   width: 0.3em;
   height: 1.6em;
