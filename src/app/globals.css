@@ -901,11 +901,11 @@ body {
 }
 .main {
   position: absolute;
-  top: 2.5em; 
-  left: 50%;
-  transform: rotate(90deg); /* AUCUNE rotation pour une ligne verticale */
-  width: 0.3em; /* minceur horizontale */
-  height: 0.6em; /* longueur verticale */
+  top: 1.5em; 
+  left: 45%;
+  transform: rotate(90deg);
+  width: 0.3em;
+  height: 1.6em;
   background-color: #ee0c2b;
   border-radius: 0.2em;
   z-index: 8;
