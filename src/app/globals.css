@@ -901,9 +901,9 @@ body {
 }
 .main {
   position: absolute;
-  top: -0.9em; /* plus haut au-dessus de la main */
+  top: -0.9em; 
   left: 50%;
-  transform: translateX(-50%) rotate(0deg); /* AUCUNE rotation pour une ligne verticale */
+  transform: rotate(90deg); /* AUCUNE rotation pour une ligne verticale */
   width: 0.3em; /* minceur horizontale */
   height: 0.6em; /* longueur verticale */
   background-color: #ee0c2b;
