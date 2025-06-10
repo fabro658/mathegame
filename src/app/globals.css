@@ -329,7 +329,6 @@ body {
     box-shadow: 0px 0px 70px 20px #f5e4e4dc, 0 0 70px 40px #ca69b5dc, 0px 0px 70px 40px #e772e1dc;
   }
 }
-
 .fusee {
   background-color: #85aec2;
   height: 50px;
@@ -339,9 +338,19 @@ body {
   left: 0;
   top: 0;
   cursor: pointer;
-  transition: rotate(90deg);
+  transform: rotate(90deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 14px;
+  padding: 10px 0;
 }
 
+/* Flamme arrière */
 .fusee:before {
   position: absolute;
   content: "";
@@ -352,8 +361,11 @@ body {
   border-radius: 50% 50% 0 0;
   right: -15px;
   bottom: 0;
+  transform: rotate(-90deg); /* On ajuste la flamme aussi */
+  transform-origin: center;
 }
 
+/* Petit propulseur */
 .fusee:after {
   position: absolute;
   content: "";
@@ -363,7 +375,10 @@ body {
   border-radius: 0 0 2px 2px;
   bottom: -4px;
   left: 4.3px;
+  transform: rotate(-90deg); /* Idem ici */
+  transform-origin: center;
 }
+
 
 .crat {
   position: absolute;

@@ -9,9 +9,10 @@ export default function Niveau2() {
   className="absolute top-4 right-4 z-30 group"
 >
   <div className="fusee group-hover:scale-110 transition-transform">
-    <div className="fenetre"></div>
+    Retour
   </div>
 </Link>
+
 
 
       {/* Lune */}
