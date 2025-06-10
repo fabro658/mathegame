@@ -339,7 +339,19 @@ body {
   left: 0;
   top: 0;
   cursor: pointer;
-  transition: rotate(90deg);
+  transform: rotate(90deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+/* Pour afficher le texte à l'horizontale malgré la rotation */
+.fusee span {
+  transform: rotate(-90deg);
+  display: inline-block;
+  font-size: 12px;
 }
 
 .fusee:before {
@@ -352,8 +364,11 @@ body {
   border-radius: 50% 50% 0 0;
   right: -15px;
   bottom: 0;
+  transform: rotate(-90deg);
+  transform-origin: center;
 }
 
+/* Petit propulseur */
 .fusee:after {
   position: absolute;
   content: "";
@@ -363,7 +378,10 @@ body {
   border-radius: 0 0 2px 2px;
   bottom: -4px;
   left: 4.3px;
+  transform: rotate(-90deg); /* même chose ici */
+  transform-origin: center;
 }
+
 
 
 
