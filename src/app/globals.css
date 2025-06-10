@@ -885,43 +885,39 @@ body {
   width: 4.68em;
   background-color: #e2e9f4;
   border-radius: 2.5em;
-  top: 3.8em;
+  top: 6.5em;
 }
 
 .hand2-l {
   left: -1em;
+  top: 3.8em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
   right: -1em;
+  top: 3.8em;
   transform: rotate(-90deg);
 }
-
-.main-left,
-.main-right {
+.main-left, .main-right {
   position: absolute;
+  top: 3.8em;
+  transform: rotate(90deg);
   width: 0.3em;
   height: 1.6em;
   background-color: #ee0c2b;
   border-radius: 0.2em;
-  z-index: 12; /* bien au-dessus */
+  z-index: 10;
 }
 
-/* Superposition exacte */
 .main-left {
-  top: 3.8em;
-  left: -1em;
-  transform: rotate(90deg);
+  left: .34em;
 }
 
 .main-right {
-  top: 3.8em;
-  right: -1em;
+  right: 1.34em;
   transform: rotate(-90deg);
 }
-
-
 
 
 
