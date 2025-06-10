@@ -4,14 +4,12 @@ export default function Niveau2() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
       {/* Bouton Retour */}
-<Link
-  href="/primaire/"
-  className="absolute top-4 right-4 z-30 group"
->
-  <div className="fusee absolute top-4 right-4 z-30">
-    Retour
+<Link href="/primaire/" className="absolute top-4 right-4 z-30">
+  <div className="fusee">
+    <span>Retour</span>
   </div>
 </Link>
+
 
 
 
