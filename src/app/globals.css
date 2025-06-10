@@ -330,15 +330,12 @@ body {
   }
 
 }
-
 .fusee {
   background-color: #85aec2;
-  height: 50px;
-  width: 25px;
+  height: 100px; /* augmenté */
+  width: 50px;   /* augmenté */
   border-radius: 50% 50% 0 0;
   position: relative;
-  left: 0;
-  top: 0;
   cursor: pointer;
   transform: rotate(90deg);
   display: flex;
@@ -346,40 +343,45 @@ body {
   justify-content: center;
   font-weight: bold;
   color: white;
+  font-size: 16px; /* un peu plus gros */
 }
 
-/* Pour afficher le texte à l'horizontale malgré la rotation */
+/* Texte bien horizontal malgré la rotation */
 .fusee span {
   transform: rotate(-90deg);
   display: inline-block;
-  font-size: 12px;
+  font-size: 16px;
 }
 
+/* Flamme arrière : bien orientée et agrandie */
 .fusee:before {
   position: absolute;
   content: "";
   background-color: #e41313;
-  height: 20px;
-  width: 55px;
+  height: 40px;  /* augmenté */
+  width: 100px;  /* augmenté */
   z-index: -1;
   border-radius: 50% 50% 0 0;
-  right: -15px;
+  right: -30px;  /* adapté à la nouvelle taille */
   bottom: 0;
+  transform: rotate(-90deg);
   transform-origin: center;
 }
 
-/* Petit propulseur */
+/* Propulseur du bas : agrandi et tourné */
 .fusee:after {
   position: absolute;
   content: "";
   background-color: #e41313;
-  height: 4px;
-  width: 15px;
-  border-radius: 0 0 2px 2px;
-  bottom: -4px;
-  left: 4.3px;
+  height: 8px;   /* augmenté */
+  width: 30px;   /* augmenté */
+  border-radius: 0 0 4px 4px;
+  bottom: -8px;
+  left: 8.5px;   /* ajusté */
+  transform: rotate(-90deg);
   transform-origin: center;
 }
+
 
 
 
