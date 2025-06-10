@@ -8,7 +8,7 @@ export default function Niveau2() {
   href="/primaire/"
   className="absolute top-4 right-4 z-30 group"
 >
-  <div className="fusee group-hover:scale-110 transition-transform">
+  <div className="fusee absolute top-4 right-4 z-30">
     Retour
   </div>
 </Link>

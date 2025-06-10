@@ -328,30 +328,20 @@ body {
   50% {
     box-shadow: 0px 0px 70px 20px #f5e4e4dc, 0 0 70px 40px #ca69b5dc, 0px 0px 70px 40px #e772e1dc;
   }
+
 }
 .fusee {
   background-color: #85aec2;
   height: 50px;
-  width: 120px;
-  border-radius: 25px 25px 0 0;
+  width: 25px;
+  border-radius: 50% 50% 0 0;
   position: relative;
+  left: 0;
+  top: 0;
   cursor: pointer;
-  transform: rotate(90deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
+  transition: rotate(90deg);
 }
 
-/* Conteneur texte pour contrer la rotation */
-.fusee span {
-  transform: rotate(-90deg); /* Ramène le texte à l'horizontale */
-  display: inline-block;
-}
-
-/* Flamme arrière */
 .fusee:before {
   position: absolute;
   content: "";
@@ -362,11 +352,8 @@ body {
   border-radius: 50% 50% 0 0;
   right: -15px;
   bottom: 0;
-  transform: rotate(-90deg);
-  transform-origin: center;
 }
 
-/* Petit propulseur */
 .fusee:after {
   position: absolute;
   content: "";
@@ -376,8 +363,6 @@ body {
   border-radius: 0 0 2px 2px;
   bottom: -4px;
   left: 4.3px;
-  transform: rotate(-90deg);
-  transform-origin: center;
 }
 
 
