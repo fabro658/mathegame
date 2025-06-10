@@ -901,8 +901,7 @@ body {
 }
 .main-left, .main-right {
   position: absolute;
-  top: 3.8em;
-  transform: rotate(90deg);
+  top: 4.3em;
   width: 0.3em;
   height: 1.6em;
   background-color: #ee0c2b;
@@ -911,11 +910,12 @@ body {
 }
 
 .main-left {
-  left: 2.34em;
+  left: 1.3em; /* plus proche du centre du bras gauche */
+  transform: rotate(90deg);
 }
 
 .main-right {
-  right: 1.34em;
+  right: 0.7em; /* plus proche du centre du bras droit */
   transform: rotate(-90deg);
 }
 
