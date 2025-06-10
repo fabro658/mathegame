@@ -331,19 +331,21 @@ body {
 }
 
 .fusee {
-  background-color: #c3c8bb;
+  background-color: #85aec2;
   height: 50px;
   width: 25px;
   border-radius: 50% 50% 0 0;
   position: relative;
-  left: -11px;
-  top: 115px;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .fusee:before {
   position: absolute;
   content: "";
-  background-color: #39beff;
+  background-color: #e41313;
   height: 20px;
   width: 55px;
   z-index: -1;
@@ -351,10 +353,11 @@ body {
   right: -15px;
   bottom: 0;
 }
+
 .fusee:after {
   position: absolute;
   content: "";
-  background-color: #39beff;
+  background-color: #e41313;
   height: 4px;
   width: 15px;
   border-radius: 0 0 2px 2px;
@@ -362,7 +365,7 @@ body {
   left: 4.3px;
 }
 
-.window {
+.fenetre {
   height: 10px;
   width: 10px;
   background-color: #151845;
@@ -372,6 +375,7 @@ body {
   top: 17px;
   left: 5px;
 }
+
 .crat {
   position: absolute;
   top: 80px;
