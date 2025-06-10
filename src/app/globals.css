@@ -332,11 +332,9 @@ body {
 .fusee {
   background-color: #85aec2;
   height: 50px;
-  width: 25px;
-  border-radius: 50% 50% 0 0;
+  width: 120px;
+  border-radius: 25px 25px 0 0;
   position: relative;
-  left: 0;
-  top: 0;
   cursor: pointer;
   transform: rotate(90deg);
   display: flex;
@@ -344,10 +342,13 @@ body {
   justify-content: center;
   color: white;
   font-weight: bold;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
   font-size: 14px;
-  padding: 10px 0;
+}
+
+/* Conteneur texte pour contrer la rotation */
+.fusee span {
+  transform: rotate(-90deg); /* Ramène le texte à l'horizontale */
+  display: inline-block;
 }
 
 /* Flamme arrière */
@@ -361,7 +362,7 @@ body {
   border-radius: 50% 50% 0 0;
   right: -15px;
   bottom: 0;
-  transform: rotate(-90deg); /* On ajuste la flamme aussi */
+  transform: rotate(-90deg);
   transform-origin: center;
 }
 
@@ -375,9 +376,10 @@ body {
   border-radius: 0 0 2px 2px;
   bottom: -4px;
   left: 4.3px;
-  transform: rotate(-90deg); /* Idem ici */
+  transform: rotate(-90deg);
   transform-origin: center;
 }
+
 
 
 .crat {
