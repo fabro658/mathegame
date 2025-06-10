@@ -30,7 +30,7 @@ export default function Niveau2() {
           Mission Comparaison
         </h1>
         <p className="text-xl sm:text-2xl text-white font-medium">
-          Explore les nombres dans l’univers mathématique 🚀
+          Explore les nombres dans l’univers mathématique
         </p>
       </div>
 

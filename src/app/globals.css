@@ -339,7 +339,7 @@ body {
   left: 0;
   top: 0;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: rotate(90deg);
 }
 
 .fusee:before {
