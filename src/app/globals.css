@@ -330,6 +330,7 @@ body {
   }
 
 }
+
 .fusee {
   background-color: #85aec2;
   height: 50px;
@@ -364,7 +365,6 @@ body {
   border-radius: 50% 50% 0 0;
   right: -15px;
   bottom: 0;
-  transform: rotate(-90deg);
   transform-origin: center;
 }
 
@@ -378,7 +378,6 @@ body {
   border-radius: 0 0 2px 2px;
   bottom: -4px;
   left: 4.3px;
-  transform: rotate(-90deg); /* même chose ici */
   transform-origin: center;
 }
 
