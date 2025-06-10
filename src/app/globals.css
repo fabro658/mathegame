@@ -905,7 +905,7 @@ body {
   height: 1.6em;
   background-color: #ee0c2b;
   border-radius: 0.2em;
-  z-index: 10;
+  z-index: 12; /* bien au-dessus */
 }
 
 /* Superposition exacte */
@@ -920,6 +920,7 @@ body {
   right: -1em;
   transform: rotate(-90deg);
 }
+
 
 
 
