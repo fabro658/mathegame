@@ -343,7 +343,7 @@ body {
   justify-content: center;
   font-weight: bold;
   color: white;
-  font-size: 16px; /* un peu plus gros */
+  font-size: 16px;
 }
 
 /* Texte bien horizontal malgré la rotation */
@@ -358,11 +358,11 @@ body {
   position: absolute;
   content: "";
   background-color: #e41313;
-  height: 40px;  /* augmenté */
-  width: 100px;  /* augmenté */
+  height: 40px;
+  width: 100px;
   z-index: -1;
   border-radius: 50% 50% 0 0;
-  right: -30px;  /* adapté à la nouvelle taille */
+  right: -30px;
   bottom: 0;
   transform: rotate(-90deg);
   transform-origin: center;
@@ -373,12 +373,12 @@ body {
   position: absolute;
   content: "";
   background-color: #e41313;
-  height: 8px;   /* augmenté */
-  width: 30px;   /* augmenté */
+  height: 8px;
+  width: 30px;
   border-radius: 0 0 4px 4px;
   bottom: -8px;
-  left: 8.5px;   /* ajusté */
-  transform: rotate(-90deg);
+  left: 8.5px;
+  transform: rotate(180deg);
   transform-origin: center;
 }
 
