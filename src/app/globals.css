@@ -885,23 +885,22 @@ body {
   width: 4.68em;
   background-color: #e2e9f4;
   border-radius: 2.5em;
-  top: 6.5em;
+  top: 3.8em;
 }
 
 .hand2-l {
   left: -1em;
-  top: 3.8em;
   transform: rotate(90deg);
 }
 
 .hand2-r {
   right: -1em;
-  top: 3.8em;
   transform: rotate(-90deg);
 }
-.main-left, .main-right {
+
+.main-left,
+.main-right {
   position: absolute;
-  top: 4.3em;
   width: 0.3em;
   height: 1.6em;
   background-color: #ee0c2b;
@@ -909,15 +908,19 @@ body {
   z-index: 10;
 }
 
+/* Superposition exacte */
 .main-left {
-  left: 1.3em; /* plus proche du centre du bras gauche */
+  top: 3.8em;
+  left: -1em;
   transform: rotate(90deg);
 }
 
 .main-right {
-  right: 0.7em; /* plus proche du centre du bras droit */
+  top: 3.8em;
+  right: -1em;
   transform: rotate(-90deg);
 }
+
 
 
 
