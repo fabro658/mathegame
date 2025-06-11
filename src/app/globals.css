@@ -331,8 +331,9 @@ body {
 
 }
 .fusee-container {
-  position: relative;
-  margin-left: -40px;
+  position: absolute;
+  top: 30px;
+  right: 30px; 
   width: max-content;
   height: 100px;
 }
