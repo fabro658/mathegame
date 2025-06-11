@@ -4,15 +4,14 @@ export default function Niveau2() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
       {/* Bouton Retour */}
-<Link href="/primaire/" className="absolute top-4 right-4 z-30">
-  <div className="fusee">
-    <span>Retour</span>
+      <Link href="/primaire/" className="absolute top-4 right-4 z-30">
+  <div className="fusee-container">
+    <div className="flamme"></div>
+    <div className="fusee">
+      <span>Retour</span>
+    </div>
   </div>
 </Link>
-
-
-
-
       {/* Lune */}
       <div className="moon">
         <div className="crat crat1"></div>
