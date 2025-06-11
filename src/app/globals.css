@@ -364,7 +364,7 @@ body {
   border-radius: 50% 50% 0 0;
   right: -30px;
   bottom: 0;
-  transform: rotate(90deg);
+  transform: rotate(0deg);
   transform-origin: center;
 }
 
