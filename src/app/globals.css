@@ -337,7 +337,7 @@ body {
   border-radius: 50% 50% 0 0;
   position: relative;
   cursor: pointer;
-  transform: rotate(90deg);
+  transform: rotate(deg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -364,7 +364,7 @@ body {
   border-radius: 50% 50% 0 0;
   right: -30px;
   bottom: 0;
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
   transform-origin: center;
 }
 
