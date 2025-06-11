@@ -338,7 +338,7 @@ body {
   height: 100px;
 }
 
-/* Corps de la fusée */
+/* Corps de la fusée (gris) — encore plus vers la gauche */
 .fusee {
   background-color: #85aec2;
   height: 100px;
@@ -354,9 +354,8 @@ body {
   position: relative;
   z-index: 1;
   cursor: pointer;
-  margin-left: -10px;
+  margin-left: -20px; /* déplacé davantage vers la gauche */
 }
-
 
 /* Texte horizontal malgré la rotation */
 .fusee span {
@@ -364,46 +363,19 @@ body {
   display: inline-block;
 }
 
-/* Flamme rouge */
-.fusee-container {
-  position: absolute;
-  top: 20px;
-  right: 30px; 
-  width: max-content;
-  height: 100px;
-}
-
-/* Corps de la fusée */
-.fusee {
-  background-color: #85aec2;
-  height: 100px;
-  width: 50px;
-  border-radius: 50% 50% 0 0;
-  transform: rotate(270deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: white;
-  font-size: 16px;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  margin-left: -10px;
-}
-
-/* Flamme rouge */
+/* Flamme rouge repositionnée à la base réelle */
 .flamme {
   position: absolute;
   background-color: #e41313;
   height: 40px;
   width: 100px;
   border-radius: 50% 50% 0 0;
-  transform: rotate(-90deg); /* flamme tournée séparément */
+  transform: rotate(-90deg);
   top: 30px;
-  left: -25px;
+  left: 45px; /* ajusté pour coller à la base après rotation */
   z-index: 0;
 }
+
 
 
 
