@@ -361,21 +361,22 @@ body {
   position: relative;
   z-index: 1;
   cursor: pointer;
-  margin-left: -10px;
+  left: 25px; /* centre par rapport aux ailes */
 }
 
-/* ailes */
+/* Ailes */
 .flamme {
   position: absolute;
   background-color: #e41313;
   height: 50px;
   width: 100px;
   border-radius: 50% 50% 0 0;
-  transform: rotate(-90deg); /* aile tournée séparément */
-  top: 50px; /* ajusté vers 1/3 bas du corps */
+  transform: rotate(-90deg);
+  top: 50px;
   left: -25px;
   z-index: 0;
 }
+
 
 
 
