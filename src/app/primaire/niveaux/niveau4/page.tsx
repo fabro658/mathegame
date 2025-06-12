@@ -7,12 +7,13 @@ export default function Niveau4() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
 
       {/* Planète et astronaute */}
-      <div className="container">
-        <div className="planet">
-          <div className="yeuxG"></div>
-          <div className="yeuxD"></div>
-          <div className="bouche"></div>
-        </div>
+<div className="planet">
+  <div className="face">
+    <div className="yeuxG"></div>
+    <div className="yeuxD"></div>
+    <div className="bouche"></div>
+  </div>
+
 
         <div className="astronaut">
           <div className="tank center"></div>
