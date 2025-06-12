@@ -334,7 +334,7 @@ body {
 .fusee-container {
   position: absolute;
   top: 20px;
-  right: 30px; 
+  right: 40px; 
   width: max-content;
   height: 100px;
 }
@@ -364,18 +364,19 @@ body {
   margin-left: -10px;
 }
 
-/* Flamme rouge */
+/* ailes */
 .flamme {
   position: absolute;
   background-color: #e41313;
   height: 40px;
   width: 100px;
   border-radius: 50% 50% 0 0;
-  transform: rotate(-90deg); /* flamme tournée séparément */
-  top: 30px;
+  transform: rotate(-90deg); /* aile tournée séparément */
+  top: 50px; /* ajusté vers 1/3 bas du corps */
   left: -25px;
   z-index: 0;
 }
+
 
 
 
