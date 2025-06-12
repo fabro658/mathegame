@@ -9,7 +9,6 @@ export default function Niveau2() {
     <div className="flamme"></div>
     <div className="fusee">
       <span>Retour</span>
-        <div className="carre-rouge"></div>
     </div>
   </div>
 </Link>
