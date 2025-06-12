@@ -725,13 +725,13 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 2em;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 2em; /* met la planète proche du coin gauche */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
 }
+
 
 .planet::before {
   position: absolute;
