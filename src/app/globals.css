@@ -339,39 +339,10 @@ body {
   height: 100px;
 }
 
-/* Corps de la fusée */
-.fusee {
-  background-color: #85aec2;
-  height: 100px;
-  width: 50px;
-  border-radius: 50% 50% 0 0;
-  transform: rotate(270deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: white;
-  font-size: 16px;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  margin-left: -10px;
-}
-
-
 /* Texte horizontal malgré la rotation */
 .fusee span {
   transform: rotate(90deg);
   display: inline-block;
-}
-
-/* Flamme rouge */
-.fusee-container {
-  position: absolute;
-  top: 20px;
-  right: 30px; 
-  width: max-content;
-  height: 100px;
 }
 
 /* Corps de la fusée */
