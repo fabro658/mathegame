@@ -381,8 +381,8 @@ body {
   width: 12px;
   height: 12px;
   background-color: #e41313;
-  top: 0px;          /* base visuelle à cause de la rotation */
-  left: 50%;
+  top: 0px; 
+  left: 20px;
   transform: translateX(-50%);
   z-index: 2;
 }
