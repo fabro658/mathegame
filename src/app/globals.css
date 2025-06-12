@@ -348,7 +348,7 @@ body {
 /* Corps de la fusée */
 .fusee {
   background-color: #85aec2;
-  height: 130px;
+  height: 120px;
   width: 50px;
   border-radius: 50% 50% 0 0;
   transform: rotate(270deg);
@@ -368,7 +368,7 @@ body {
 .flamme {
   position: absolute;
   background-color: #e41313;
-  height: 40px;
+  height: 50px;
   width: 100px;
   border-radius: 50% 50% 0 0;
   transform: rotate(-90deg); /* aile tournée séparément */
