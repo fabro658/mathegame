@@ -725,12 +725,12 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 2em;
-  left: 50%;               /* centrer horizontalement */
-  transform: translateX(-50%); /* centrer précisément */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;             /* pour être en avant-plan */
+  z-index: 10;
 }
 
 .planet::before {
