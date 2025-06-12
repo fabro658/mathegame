@@ -512,8 +512,7 @@ body {
   box-shadow: 0.8em 0 var(--wall-shadow);
 }
 
-/* Plant 1 - Grossie davantage */
-/* Plante 1 - Taille réduite et rayures harmonisées */
+/* Plant 1  */
 .leaves.plant-1 {
   width: 3.6em; /* réduit par rapport à 4.3em */
   height: 13.2em; /* réduit aussi */
@@ -561,7 +560,7 @@ body {
   left: -1.5em;
   background: var(--light-green);
   z-index: -1;
-  box-shadow: none; /* au cas où */
+  box-shadow: none;
 }
 
 
