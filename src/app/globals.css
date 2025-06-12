@@ -369,11 +369,11 @@ body {
   position: absolute;
   background-color: #e41313;
   height: 50px;
-  width: 100px;
+  width: 110px;
   border-radius: 50% 50% 0 0;
   transform: rotate(-90deg);
-  top: 50px;
-  left: -25px;
+  top: 45px;
+  left: 25px;
   z-index: 0;
 }
 
