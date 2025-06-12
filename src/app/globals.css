@@ -376,6 +376,16 @@ body {
   left: 25px;
   z-index: 0;
 }
+.carre-rouge {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #e41313;
+  top: 0px;          /* base visuelle à cause de la rotation */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
 
 
 
