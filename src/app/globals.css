@@ -514,8 +514,8 @@ body {
 
 /* Plant 1 - Grossie davantage */
 .leaves.plant-1 {
-  width: 4.3em; /* avant 3.6em */
-  height: 15.8em; /* avant 13.2em */
+  width: 3.6em; /* avant 3.6em */
+  height: 13.2em; /* avant 13.2em */
   top: -15.8em;
   border-radius: 7.2em 7.2em 0 0;
   background-image: repeating-linear-gradient(
@@ -528,8 +528,8 @@ body {
 }
 
 .leaves.plant-1::before {
-  width: 3.6em; /* avant 3em */
-  height: 10em; /* avant 8.4em */
+  width: 3em; /* avant 3em */
+  height: 8.4em; /* avant 8.4em */
   top: 2.8em;
   left: -5em;
   background: var(--light-green);
@@ -546,9 +546,9 @@ body {
 }
 
 .leaves.plant-1::after {
-  width: 1.8em; /* avant 1.5em */
-  height: 3.6em; /* avant 3em */
-  top: 9.3em; /* avant 7.8em */
+  width: 1.5em; /* avant 1.5em */
+  height: 3m; /* avant 3em */
+  top: 7.8em; /* avant 7.8em */
   left: -1.8em;
   background: var(--light-green);
   z-index: -1;
@@ -786,7 +786,7 @@ body {
 /* Œil gauche - décalé vers la gauche */
 .yeuxG {
   left: 50%;
-  transform: translateX(-1.5em);
+  transform: translateX(-0.5em);
 }
 
 .yeuxD {
