@@ -532,10 +532,10 @@ body {
 .leaves.plant-1::before {
   content: "";
   position: absolute;
-  width: 3.6em;
-  height: 10.8em;
-  top: 2.4em;
-  left: -3.6em;
+  width: 3em;
+  height: 8.4em;
+  top: 2.8em;
+  left: -4.2em;
   background: var(--light-green);
   border-radius: 7.2em 7.2em 0 7.2em;
   background-image: repeating-linear-gradient(
@@ -549,7 +549,6 @@ body {
   box-shadow: none;
   z-index: -1;
 }
-
 
 /* Petite branche droite toujours présente si désiré */
 .leaves.plant-1::after {
