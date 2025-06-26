@@ -1460,24 +1460,116 @@ body {
 
 
 /* dernier niveau */
-.pirate-waves {
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  &:before, &:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+
+
+.circle {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    /* Petites vagues pâles */
-    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.3) 3%, transparent 3.1%) repeat-x,
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 2.5%, transparent 2.6%) repeat-x,
-    /* Deux couches d'océan */
-    linear-gradient(to bottom, #56aee7 0%, #1d77c0 100%);
-  background-size:
-    40px 20px,   /* petites vagues 1 */
-    60px 30px,   /* petites vagues 2 */
-    100% 100%;   /* couche océan */
-  background-position:
-    0 15%,  /* vague 1 */
-    20px 25%, /* vague 2 */
-    0 0;
-  background-repeat: repeat-x;
+  background: #b2d8dd;
+  background-image: radial-gradient(circle at 50% 40%, #fff7e7 0%, #b2d8dd 55%);
+  border-radius: 0; /* plus de cercle */
   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.sun {
+  position: absolute;
+  top: 7rem;
+  left: 10.5rem;
+  width: 5rem;
+  height: 5rem;
+  background: #ffe5b7;
+  background-image: -webkit-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
+  background-image: -o-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
+  background-image: radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
+  border-radius: 100%;
+  -webkit-box-shadow: 0 0 3rem 0.5rem #fff;
+  box-shadow: 0 0 3rem 0.5rem #fff;
+}
+
+.cloud {
+  &:nth-child(1) {
+    left: 3.5rem;
+  }
+  &:nth-child(2) {
+    top: 2.5rem;
+    left: -0.5rem;
+  }
+  position: absolute;
+  background: #fffff4;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#e6e8ed), to(#fffff4));
+  background-image: -webkit-linear-gradient(bottom, #e6e8ed 0%, #fffff4 100%);
+  background-image: -o-linear-gradient(bottom, #e6e8ed 0%, #fffff4 100%);
+  background-image: linear-gradient(to top, #e6e8ed 0%, #fffff4 100%);
+  border-radius: 3rem;
+  &:before, &:after {
+    position: absolute;
+    content: '';
+    z-index: -1;
+    background: #fffff4;
+    border-radius: 100%;
+  }
+  &.small {
+    top: 2.5rem;
+    width: 5rem;
+    height: 1rem;
+    &:before {
+      top: -0.5rem;
+      left: 0.5rem;
+      width: 2rem;
+      height: 1.5rem;
+    }
+    &:after {
+      top: -1rem;
+      left: 2rem;
+      width: 2.5rem;
+      height: 2rem;
+    }
+  }
+}
+
+.boat {
+  position: absolute;
+  &.sail-left {
+    top: 7.5rem;
+    left: 3rem;
+    border-left: 1.75rem solid transparent;
+    border-bottom: 2rem solid #fffff4;
+  }
+  &.sail-right {
+    top: 8rem;
+    left: 5rem;
+    border-right: 1.5rem solid transparent;
+    border-bottom: 1.5rem solid #fffff4;
+  }
+  &.bottom {
+    top: 9.5rem;
+    left: 3rem;
+    width: 3.5rem;
+    border-top: 0.5rem solid #71788f;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+  }
+}
+
+.water {
+  position: absolute;
+  top: 10rem;
+  width: 100%;
+  height: 10rem;
+  background: #9ebcd5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#9c9bbf), color-stop(60%, #9ebcd5));
+  background-image: -webkit-linear-gradient(top, #9c9bbf 0%, #9ebcd5 60%);
+  background-image: -o-linear-gradient(top, #9c9bbf 0%, #9ebcd5 60%);
+  background-image: linear-gradient(to bottom, #9c9bbf 0%, #9ebcd5 60%);
 }
