@@ -1565,7 +1565,7 @@ body {
 
 /* Coque plus large et haute */
 .boat.bottom {
-  bottom: 9.5rem;
+  bottom: 10rem;
   left: 3rem;
   width: 5rem;
   border-top: 0.8rem solid #71788f;
