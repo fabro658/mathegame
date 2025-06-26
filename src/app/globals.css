@@ -1564,7 +1564,7 @@ body {
 
 .water {
   position: absolute;
-  top: 10%;
+  bottom: 0;
   width: 100%;
   height: 10rem;
   background: #9ebcd5;
