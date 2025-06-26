@@ -6,24 +6,26 @@ export default function Niveau6() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
 
       {/* Fond statique */}
-  <div className="circle">
-    <div className="ocean">
-      <div className="cloud">
-        <div className="cloud small"></div>
-      </div>
-      <div className="cloud">
-        <div className="cloud small"></div>
-      </div>
-      <div className="sun"></div>
-      <div className="boat">
-        <div className="boat sail-left"></div>
-        <div className="boat sail-right"></div>
-        <div className="boat bottom"></div>
-      </div>
-      <div className="water"></div>
-    </div>
-  </div>        <div>
-      </div>
+<div className="circle">
+  <div className="ocean">
+
+    {/* Nuages séparés */}
+    <div className="cloud small cloud-1"></div>
+    <div className="cloud small cloud-2"></div>
+
+    {/* Soleil */}
+    <div className="sun"></div>
+
+    {/* Bateau */}
+    <div className="boat sail-left"></div>
+    <div className="boat sail-right"></div>
+    <div className="boat bottom"></div>
+
+    {/* Mer */}
+    <div className="water"></div>
+  </div>
+</div>
+
 
       {/* Bouton Retour */}
       <Link

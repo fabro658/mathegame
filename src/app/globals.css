@@ -1484,8 +1484,8 @@ body {
 
 .sun {
   position: absolute;
-  bottom: 10rem;
-  left: 10.5rem;
+  bottom: 9rem;
+  right: 10.5rem;
   width: 5rem;
   height: 5rem;
   background: #ffe5b7;
@@ -1498,44 +1498,49 @@ body {
 }
 
 .cloud {
-  &:nth-child(1) {
-    left: 3.5rem;
-  }
-  &:nth-child(2) {
-    top: 2.5rem;
-    left: -0.5rem;
-  }
+  position: absolute;
+  background: linear-gradient(to top, #e6e8ed 0%, #fffff4 100%);
+  border-radius: 3rem;
+  z-index: 2;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
   position: absolute;
   background: #fffff4;
-  background-image: -webkit-gradient(linear, left bottom, left top, from(#e6e8ed), to(#fffff4));
-  background-image: -webkit-linear-gradient(bottom, #e6e8ed 0%, #fffff4 100%);
-  background-image: -o-linear-gradient(bottom, #e6e8ed 0%, #fffff4 100%);
-  background-image: linear-gradient(to top, #e6e8ed 0%, #fffff4 100%);
-  border-radius: 3rem;
-  &:before, &:after {
-    position: absolute;
-    content: '';
-    z-index: -1;
-    background: #fffff4;
-    border-radius: 100%;
-  }
-  &.small {
-    top: 2.5rem;
-    width: 5rem;
-    height: 1rem;
-    &:before {
-      top: -0.5rem;
-      left: 0.5rem;
-      width: 2rem;
-      height: 1.5rem;
-    }
-    &:after {
-      top: -1rem;
-      left: 2rem;
-      width: 2.5rem;
-      height: 2rem;
-    }
-  }
+  border-radius: 100%;
+  z-index: -1;
+}
+
+.cloud.small {
+  width: 5rem;
+  height: 1rem;
+}
+
+.cloud.small::before {
+  top: -0.5rem;
+  left: 0.5rem;
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.cloud.small::after {
+  top: -1rem;
+  left: 2rem;
+  width: 2.5rem;
+  height: 2rem;
+}
+
+/* Position des nuages */
+.cloud-1 {
+  top: 2rem;
+  left: 2rem;
+}
+
+.cloud-2 {
+  top: 3.5rem;
+  left: 22rem;
 }
 
 .boat {
