@@ -1525,8 +1525,8 @@ body {
   @apply text-white font-bold text-xl px-10 py-4 text-center transition;
   background: radial-gradient(circle at center, #ffe680 0%, #ffc84a 100%);
   border-radius: 50%;
-  width: 6rem;
-  height: 6rem;
+  width:8rem;
+  height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1539,4 +1539,13 @@ body {
 .sun-button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
+}
+
+.green-ring {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 1.2rem solid #4caf50; /* vert intense */
+  box-sizing: border-box;
+  background: transparent;
 }
