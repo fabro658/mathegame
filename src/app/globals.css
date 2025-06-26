@@ -1542,6 +1542,11 @@ body {
 }
 
 .green-ring {
+  position: absolute;
+  bottom: 10rem; /* aligné avec la mer (à ajuster selon ton .water) */
+  left: 50%;
+  transform: translateX(-50%);
+  
   width: 8rem;
   height: 4rem;
   border: 1rem solid #4caf50;
@@ -1550,4 +1555,5 @@ body {
   background: transparent;
   box-sizing: border-box;
 }
+
 
