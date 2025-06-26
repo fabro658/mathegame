@@ -35,12 +35,11 @@ export default function Niveau6() {
         Retour
       </Link>
 
-      {/* Titre thématique */}
-      <div className="flex flex-col items-center text-center mb-12 z-10">
-
-        <p className="text-xl sm:text-2xl text-gray-700 font-medium">
-          Entre dans le temple des règles mathématiques sacrées
-        </p>
+      {/* Titre */}
+  <div className="flex flex-col items-center text-center mb-12 z-10">
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
+          Puissances des Nombres
+        </h1>
       </div>
 
       {/* Bouton unique */}
