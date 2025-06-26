@@ -1541,7 +1541,7 @@ body {
 .boat {
   position: absolute;
   &.sail-left {
-    top: 7.5rem;
+    bottom: 10rem;
     left: 3rem;
     border-left: 1.75rem solid transparent;
     border-bottom: 2rem solid #fffff4;
