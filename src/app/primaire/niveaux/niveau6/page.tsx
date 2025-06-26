@@ -5,9 +5,9 @@ export default function Niveau6() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
 
-      {/* Fond LEGO statique */}
-      <div className="absolute inset-0 z-0 lego-bg">
-        <div></div>
+      {/* Fond statique */}
+<div className="pirate-waves"></div>
+        <div>
       </div>
 
       {/* Bouton Retour */}
@@ -20,9 +20,7 @@ export default function Niveau6() {
 
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
-        <h1 className="text-indigo-800 text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2 drop-shadow-lg">
-          Ordre Magique des Opérations
-        </h1>
+
         <p className="text-xl sm:text-2xl text-gray-700 font-medium">
           Entre dans le temple des règles mathématiques sacrées
         </p>
