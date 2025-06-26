@@ -1484,7 +1484,7 @@ body {
 
 .sun {
   position: absolute;
-  bottom: 9rem;
+  bottom: 7rem;
   right: 10.5rem;
   width: 12rem;
   height: 12rem;
@@ -1549,7 +1549,7 @@ body {
 
 /* Voile gauche (plus large et haute) */
 .boat.sail-left {
-  bottom: 10rem;
+  bottom: 11rem;
   left: 3rem;
   border-left: 2.5rem solid transparent;
   border-bottom: 3.5rem solid #fffff4;
@@ -1557,7 +1557,7 @@ body {
 
 /* Voile droite (agrandie aussi) */
 .boat.sail-right {
-  bottom: 10rem;
+  bottom: 11rem;
   left: 6rem;
   border-right: 2rem solid transparent;
   border-bottom: 2.5rem solid #fffff4;
@@ -1565,7 +1565,7 @@ body {
 
 /* Coque plus large et haute */
 .boat.bottom {
-  bottom: 8.5rem;
+  bottom: 9.5rem;
   left: 3rem;
   width: 5rem;
   border-top: 0.8rem solid #71788f;
