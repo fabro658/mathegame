@@ -32,11 +32,10 @@ export default function Niveau6() {
 
       {/* Bouton Retour */}
       <Link
-        href="/primaire/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
-      >
+       href="/primaire/"
+       className="cloud-button absolute top-4 right-4 z-30">
         Retour
-      </Link>
+    </Link>
 
       {/* Titre */}
   <div className="flex flex-col items-center text-center mb-12 z-10">
@@ -49,7 +48,7 @@ export default function Niveau6() {
       <div className="flex flex-col items-center justify-center gap-8 z-10">
         <a
           href="/primaire/niveaux/niveau6/priooperation"
-          className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-xl flex items-center justify-center min-w-[300px] max-w-[500px] transition transform hover:scale-105"
+          className="bg-purple-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Priorité d&apos;opération
         </a>
