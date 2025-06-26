@@ -1513,7 +1513,7 @@ body {
 /* Voile droite (plus grande) */
 .boat.sail-right {
   bottom: 11.2rem;
-  left: 6.5rem;
+  left: 7rem;
   border-right: 2.8rem solid transparent;
   border-bottom: 4rem solid #fffff4;
 }
