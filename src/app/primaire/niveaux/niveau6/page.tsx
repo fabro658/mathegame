@@ -1,9 +1,15 @@
 'use client';
 import Link from "next/link";
+import "./lego.css"; // Assure-toi que ce fichier contient le CSS LEGO converti plus tôt
 
 export default function Niveau6() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black relative overflow-hidden font-fredoka">
+
+      {/* Fond LEGO statique */}
+      <div className="absolute inset-0 z-0 lego-bg">
+        <div></div>
+      </div>
 
       {/* Bouton Retour */}
       <Link
@@ -31,18 +37,7 @@ export default function Niveau6() {
         >
           Priorité d&apos;opération
         </a>
-<div id="sand"></div>
-<div className="pyramids-wrapper">
-  <div className="pyramid">
-    <div className="face-front"></div>
-    <div className="face-side"></div>
-  </div>
-  <div className="pyramid" style={{ transform: "scale(0.85) translateY(10px)" }}>
-    <div className="face-front"></div>
-    <div className="face-side"></div>
-  </div>
-</div>
-    </div>
+      </div>
     </div>
   );
 }
