@@ -1562,24 +1562,6 @@ body {
   overflow: hidden;
 }
 
-/* Écailles intégrées dans la bordure */
-.green-ring::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(#3b8b3d 0.3rem, transparent 0.31rem);
-  background-size: 1rem 1rem;
-  background-repeat: repeat;
-  mask: radial-gradient(ellipse at center, black 60%, transparent 100%);
-  -webkit-mask: radial-gradient(ellipse at center, black 60%, transparent 100%);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 1;
-}
-
 
 /* Petit anneau */
 .green-ring.small {
