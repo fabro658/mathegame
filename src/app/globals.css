@@ -1484,7 +1484,7 @@ body {
 
 .sun {
   position: absolute;
-  top: 7rem;
+  bottom: 10rem;
   left: 10.5rem;
   width: 5rem;
   height: 5rem;
