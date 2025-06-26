@@ -1482,22 +1482,6 @@ body {
   height: 100vh;
 }
 
-
-.sun {
-  position: absolute;
-  bottom: 7rem;
-  right: 10.5rem;
-  width: 12rem;
-  height: 12rem;
-  background: #ffe5b7;
-  background-image: -webkit-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
-  background-image: -o-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
-  background-image: radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
-  border-radius: 100%;
-  -webkit-box-shadow: 0 0 3rem 0.5rem #fff;
-  box-shadow: 0 0 3rem 0.5rem #fff;
-}
-
 .boat {
   position: absolute;
   z-index: 3;
@@ -1529,12 +1513,30 @@ body {
   border-right: 1rem solid transparent;
 }
 
-
-
 .water {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 10rem;
   background: linear-gradient(to top, #4b91c0 0%, #6ea7cf 100%);
+}
+
+.sun-button {
+  @apply text-white font-bold text-xl px-10 py-4 text-center transition;
+  background: radial-gradient(circle at center, #ffe680 0%, #ffc84a 100%);
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2rem 0.3rem rgba(255, 223, 100, 0.8);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sun-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }

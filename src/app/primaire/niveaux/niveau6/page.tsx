@@ -33,7 +33,7 @@ export default function Niveau6() {
       {/* Bouton Retour */}
       <Link
        href="/primaire/"
-       className="cloud-button absolute top-4 right-4 z-30">
+       className="sun-button absolute top-4 right-4 z-30">
         Retour
     </Link>
 
