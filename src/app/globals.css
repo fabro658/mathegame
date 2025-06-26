@@ -1486,8 +1486,8 @@ body {
   position: absolute;
   bottom: 9rem;
   right: 10.5rem;
-  width: 15rem;
-  height: 15rem;
+  width: 12rem;
+  height: 12rem;
   background: #ffe5b7;
   background-image: -webkit-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
   background-image: -o-radial-gradient(circle, #ffe5b7 0%, #ffcfbc 100%);
@@ -1546,13 +1546,13 @@ body {
 .boat {
   position: absolute;
   &.sail-left {
-    bottom: 12rem;
+    bottom: 10rem;
     left: 3rem;
     border-left: 1.75rem solid transparent;
     border-bottom: 2rem solid #fffff4;
   }
   &.sail-right {
-    bottom: 12rem;
+    bottom: 10rem;
     left: 5rem;
     border-right: 1.5rem solid transparent;
     border-bottom: 1.5rem solid #fffff4;
