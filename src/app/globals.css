@@ -1546,7 +1546,7 @@ body {
   width: 30vmin;
   height: 10vmin;
   position: absolute;
-  top: 50%;
+  bottom: 10rem;
   left: 50%;
   transform: translate(-50%, -50%);
 }
