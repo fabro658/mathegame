@@ -9,7 +9,7 @@ export default function Niveau6() {
 <div className="circle">
   <div className="ocean">
     <div className="green-ring"></div>
-
+        <div className="green-ring"></div>
 
     {/* Nuages séparés */}
        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
