@@ -1541,9 +1541,17 @@ body {
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }
 
-.green-ring {
+.sea-serpent {
   position: absolute;
-  bottom: 10rem; /* aligné avec l’eau */
+  bottom: 10rem; /* à la même hauteur que l’eau */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem; /* espace entre les deux anneaux */
+  z-index: 2;
+}
+
+.green-ring {
   background: transparent;
   box-sizing: border-box;
   border: 1rem solid #4caf50;
@@ -1551,22 +1559,17 @@ body {
   border-radius: 100rem 100rem 0 0;
 }
 
-/* Petit anneau - à gauche du centre */
+/* Petit anneau */
 .green-ring.small {
   width: 6rem;
   height: 3rem;
-  left: calc(50% - 5rem); /* un peu à gauche du centre */
-  transform: translateX(-50%);
-  z-index: 2;
 }
 
-/* Grand anneau - à droite du centre */
+/* Grand anneau */
 .green-ring.large {
   width: 8rem;
   height: 4rem;
-  left: calc(50% + 5rem); /* un peu à droite du centre */
-  transform: translateX(-50%);
-  z-index: 1;
 }
+
 
 
