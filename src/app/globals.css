@@ -1551,20 +1551,20 @@ body {
   border-radius: 100rem 100rem 0 0;
 }
 
-/* Petit anneau */
+/* Petit anneau - à gauche du centre */
 .green-ring.small {
   width: 6rem;
   height: 3rem;
-  left: 45%;
+  left: calc(50% - 5rem); /* un peu à gauche du centre */
   transform: translateX(-50%);
   z-index: 2;
 }
 
-/* Grand anneau */
+/* Grand anneau - à droite du centre */
 .green-ring.large {
   width: 8rem;
   height: 4rem;
-  left: 55%;
+  left: calc(50% + 5rem); /* un peu à droite du centre */
   transform: translateX(-50%);
   z-index: 1;
 }
