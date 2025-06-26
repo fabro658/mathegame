@@ -10,8 +10,11 @@ export default function Niveau6() {
   <div className="ocean">
 
     {/* Nuages séparés */}
-    <div className="cloud small cloud-1"></div>
-    <div className="cloud small cloud-2"></div>
+       <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
+        </div>
 
     {/* Soleil */}
     <div className="sun"></div>
