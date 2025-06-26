@@ -1545,33 +1545,35 @@ body {
 
 .boat {
   position: absolute;
+  z-index: 3;
 }
 
-/* Voile gauche (plus large et haute) */
+/* Voile gauche (plus grande) */
 .boat.sail-left {
-  bottom: 11rem;
+  bottom: 13rem;
   left: 3rem;
-  border-left: 2.5rem solid transparent;
-  border-bottom: 3.5rem solid #fffff4;
+  border-left: 3.5rem solid transparent;
+  border-bottom: 5rem solid #fffff4;
 }
 
-/* Voile droite (agrandie aussi) */
+/* Voile droite (plus grande) */
 .boat.sail-right {
-  bottom: 11rem;
-  left: 6rem;
-  border-right: 2rem solid transparent;
-  border-bottom: 2.5rem solid #fffff4;
+  bottom: 13rem;
+  left: 7.5rem;
+  border-right: 2.8rem solid transparent;
+  border-bottom: 4rem solid #fffff4;
 }
 
-/* Coque plus large et haute */
+/* Coque plus grande */
 .boat.bottom {
-  bottom: 10rem;
+  bottom: 10.5rem;
   left: 3rem;
-  width: 5rem;
-  border-top: 0.8rem solid #71788f;
-  border-left: 0.8rem solid transparent;
-  border-right: 0.8rem solid transparent;
+  width: 7rem;
+  border-top: 1.2rem solid #71788f;
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
 }
+
 
 
 .water {
