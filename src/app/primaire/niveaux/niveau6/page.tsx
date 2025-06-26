@@ -1,6 +1,5 @@
 'use client';
 import Link from "next/link";
-import "./lego.css"; // Assure-toi que ce fichier contient le CSS LEGO converti plus tôt
 
 export default function Niveau6() {
   return (
