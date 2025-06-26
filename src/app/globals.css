@@ -1543,11 +1543,12 @@ body {
 
 .sea-serpent {
   position: absolute;
-  bottom: 10rem; /* à la même hauteur que l’eau */
+  bottom: 10rem; /* base commune pour les deux */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.5rem; /* espace entre les deux anneaux */
+  align-items: flex-end; /* aligne les bases */
+  gap: 0.5rem;
   z-index: 2;
 }
 
@@ -1558,10 +1559,10 @@ body {
   border: 1rem solid #4caf50;
   border-bottom: none;
   border-radius: 100rem 100rem 0 0;
-  overflow: hidden; /* pour contenir les écailles */
+  overflow: hidden;
 }
 
-/* Écailles */
+/* Écailles (même code que plus haut) */
 .green-ring::before {
   content: "";
   position: absolute;
@@ -1589,6 +1590,3 @@ body {
   width: 8rem;
   height: 4rem;
 }
-
-
-
