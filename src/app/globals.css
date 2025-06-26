@@ -1550,7 +1550,7 @@ body {
 
 /* Voile gauche (plus grande) */
 .boat.sail-left {
-  bottom: 13rem;
+  bottom: 11rem;
   left: 3rem;
   border-left: 3.5rem solid transparent;
   border-bottom: 5rem solid #fffff4;
@@ -1558,7 +1558,7 @@ body {
 
 /* Voile droite (plus grande) */
 .boat.sail-right {
-  bottom: 13rem;
+  bottom: 12rem;
   left: 7.5rem;
   border-right: 2.8rem solid transparent;
   border-bottom: 4rem solid #fffff4;
@@ -1566,7 +1566,7 @@ body {
 
 /* Coque plus grande */
 .boat.bottom {
-  bottom: 10.5rem;
+  bottom: 10rem;
   left: 3rem;
   width: 7rem;
   border-top: 1.2rem solid #71788f;
