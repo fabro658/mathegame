@@ -1540,34 +1540,27 @@ body {
 
 .boat {
   position: absolute;
+  &.sail-left {
+    bottom: 10rem;
+    left: 3rem;
+    border-left: 1.75rem solid transparent;
+    border-bottom: 2rem solid #fffff4;
+  }
+  &.sail-right {
+    top: 8rem;
+    left: 5rem;
+    border-right: 1.5rem solid transparent;
+    border-bottom: 1.5rem solid #fffff4;
+  }
+  &.bottom {
+    top: 8rem;
+    left: 3rem;
+    width: 3.5rem;
+    border-top: 0.5rem solid #71788f;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+  }
 }
-
-/* Voile gauche */
-.boat.sail-left {
-  bottom: 10rem; /* égale à la hauteur de l’eau */
-  left: 3rem;
-  border-left: 1.75rem solid transparent;
-  border-bottom: 2rem solid #fffff4;
-}
-
-/* Voile droite */
-.boat.sail-right {
-  bottom: 10rem;
-  left: 5rem;
-  border-right: 1.5rem solid transparent;
-  border-bottom: 1.5rem solid #fffff4;
-}
-
-/* Coque */
-.boat.bottom {
-  bottom: 8rem; /* légèrement enfoncée dans l'eau */
-  left: 3rem;
-  width: 3.5rem;
-  border-top: 0.5rem solid #71788f;
-  border-left: 0.5rem solid transparent;
-  border-right: 0.5rem solid transparent;
-}
-
 
 .water {
   position: absolute;
