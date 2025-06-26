@@ -1558,6 +1558,6 @@ body {
   border-radius: 50%;
   top: -1vmin;
   transform: translate(-130%, -3vmin) rotate(10deg);
-  box-shadow: 5vmin 0vmin #aaa;
+  box-shadow: 5vmin 1vmin #aaa;
   left: 15vmin;
 }
