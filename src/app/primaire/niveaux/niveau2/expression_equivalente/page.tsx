@@ -123,7 +123,7 @@ export default function EquationsEquivalentes() {
 
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // 🌌 Étoiles fixes
+  // 🌌 Étoiles fixes avec useMemo
   const stars = useMemo(() => {
     return Array.from({ length: 120 }).map((_, i) => {
       const size = Math.random() < 0.5 ? 2 : 3;
@@ -191,11 +191,11 @@ export default function EquationsEquivalentes() {
           </div>
         </div>
 
-        <h1 className="text-4xl font-bold mb-6 text-center">Équations équivalentes</h1>
+        <h1 className="text-4xl font-bold mb-10 text-center">Équations équivalentes</h1>
 
         {feedbackMessage && (
           <p
-            className={`text-xl mb-4 text-center ${
+            className={`text-xl mb-6 text-center ${
               feedbackMessage.includes("incorrectes") || feedbackMessage.includes("Veuillez répondre")
                 ? "text-red-400"
                 : "text-green-400"
@@ -205,15 +205,15 @@ export default function EquationsEquivalentes() {
           </p>
         )}
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-2 gap-8 mb-8">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
             return (
-              <div key={questionIndex} className="bg-white text-black p-4 rounded shadow-md text-center">
-                <p className="text-lg font-bold mb-4">
+              <div key={questionIndex} className="text-center">
+                <p className="text-xl font-bold mb-4 text-white">
                   {equationLeft} = {equationRight}
                 </p>
-                <div className="flex gap-4 justify-center">
+                <div className="flex gap-4 justify-center mb-4">
                   <button
                     onClick={() => {
                       setFeedbackMessage(null);
@@ -250,7 +250,7 @@ export default function EquationsEquivalentes() {
           })}
         </div>
 
-        {/* Boutons de navigation */}
+        {/* Navigation */}
         <div className="mt-6 flex gap-4 justify-center">
           <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
           <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
