@@ -94,13 +94,15 @@ export default function Niveau1() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/primaire/niveaux/niveau5" className="absolute top-4 right-4 bg-red-500 text-white py-3 px-8 rounded font-bold">
-        Retour
-      </Link>
+   <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
+<Link href="/menu/apprendre"
+  className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50">
+  Apprendre
+</Link>
+<Link href="/primaire/niveaux/niveau5"
+  className="absolute top-4 right-4 bg-red-500 text-white py-3 px-8 rounded font-bold z-50">
+  Retour
+</Link>
 
       <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
