@@ -114,7 +114,7 @@ export default function ExponentsPractice() {
 </Link>
 
 <Link href="/primaire/niveaux/niveau5"
-  className="absolute top-4 right-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105 z-50"
+  className="absolute top-4 right-4 btn-candy-border bg-blue-200 text-white font-bold py-3 px-8 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105 z-50"
 >
   Retour
 </Link>
