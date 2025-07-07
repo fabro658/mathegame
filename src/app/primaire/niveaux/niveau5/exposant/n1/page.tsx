@@ -98,7 +98,7 @@ export default function Niveau1() {
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau5" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/primaire/niveaux/niveau5" className="absolute top-4 right-4 bg-red-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -157,7 +157,7 @@ export default function Niveau1() {
           );
         })}
       </div>
-      
+
       {/* Flocons */}
       <div className="snowflakes">
         {Array.from({ length: 40 }).map((_, i) => {
@@ -190,9 +190,9 @@ export default function Niveau1() {
 
       {/* Boutons navigation */}
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handlePreviousPage} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
