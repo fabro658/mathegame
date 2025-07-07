@@ -94,7 +94,7 @@ export default function Niveau1() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
@@ -157,6 +157,7 @@ export default function Niveau1() {
           );
         })}
       </div>
+      
       {/* Flocons */}
       <div className="snowflakes">
         {Array.from({ length: 40 }).map((_, i) => {

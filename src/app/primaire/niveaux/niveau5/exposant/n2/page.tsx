@@ -106,13 +106,11 @@ export default function ExponentsPractice() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" 
-      className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+   <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
+      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
         Apprendre
       </Link>
-      <Link href="/primaire/niveaux/niveau5" 
-      className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+      <Link href="/primaire/niveaux/niveau5" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
         Retour
       </Link>
 
@@ -173,6 +171,38 @@ export default function ExponentsPractice() {
             );
           })}
       </div>
+
+{/* Flocons */}
+      <div className="snowflakes">
+        {Array.from({ length: 40 }).map((_, i) => {
+          const snowflakeStyle = {
+            left: `${Math.random() * 100}%`,
+            animationDuration: `${5 + Math.random() * 5}s`,
+            animationDelay: `${Math.random() * 5}s`,
+            width: `${4 + Math.random() * 4}px`,
+            height: `${4 + Math.random() * 4}px`,
+          } as React.CSSProperties;
+
+          return (
+            <div
+              key={i}
+              className="snowflake"
+              style={snowflakeStyle}
+            />
+          );
+        })}
+      </div>
+
+      {/* Scène */}
+      <div className="scene">
+        {/* Neige */}
+        <div className="neige-wave">
+          <div className="neige-top-layer"></div>
+          <div className="neige-bottom-layer"></div>
+        </div>
+      </div>
+
+      {/* Boutons navigation */}
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
@@ -181,3 +211,4 @@ export default function ExponentsPractice() {
     </div>
   );
 }
+
