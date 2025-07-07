@@ -108,11 +108,11 @@ export default function ExponentsPractice() {
   return (
    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
 <Link href="/menu/apprendre"
-  className="btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
+  className="fixed bottom-4 left-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
   Apprendre
 </Link>
 <Link href="/primaire/niveaux/niveau5"
-  className="btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
+  className="absolute top-4 right-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
   Retour
 </Link>
 
