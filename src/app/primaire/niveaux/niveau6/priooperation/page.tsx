@@ -113,18 +113,23 @@ export default function PrioOperation() {
   return (
     <div className="relative min-h-screen font-fredoka overflow-hidden bg-blue-100">
       
-      {/* Nuages */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-        <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-        <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-        <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
-      </div>
+<div className="circle">
+  <div className="ocean">
+
+    {/* Nuages séparés */}
+       <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
+        </div>
 
       {/* Île */}
       <div className="island" />
 
-      {/* Mer */}
-      <div className="water"></div>
+    {/* Mer */}
+    <div className="water"></div>
+  </div>
+</div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-32">
         {/* Liens */}
