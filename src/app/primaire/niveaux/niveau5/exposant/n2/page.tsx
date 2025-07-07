@@ -208,7 +208,7 @@ export default function ExponentsPractice() {
       {/* Boutons navigation */}
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-red-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-red-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleValidation} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
         <button onClick={handleNextPage} className="bg-red-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>

@@ -143,7 +143,7 @@ export default function Niveau1() {
           const questionIndex = currentPage * questionsPerPage + idx;
           return (
             <div key={questionIndex} className="flex items-center gap-4">
-              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+              <div className="bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                 {questionText}
               </div>
               <input
@@ -192,9 +192,9 @@ export default function Niveau1() {
 
       {/* Boutons navigation */}
       <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handlePreviousPage} className="bg-red-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handleNextPage} className="bg-green-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <button onClick={handleNextPage} className="bg-red-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
