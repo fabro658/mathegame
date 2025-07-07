@@ -16,6 +16,8 @@ export default function Niveau4() {
   </div>
 </div>
 
+
+
 {/* Astronaute — à l’extérieur de la planète maintenant */}
 <div className="astronaut">
   <div className="tank center"></div>

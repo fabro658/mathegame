@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from "react";
 import Link from 'next/link';
 
 const allShapes = [
@@ -151,9 +151,38 @@ const ShapesPracticePage = () => {
   const radiusCircle = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radiusCircle;
+  // ⭐️ Générer les étoiles une seule fois
+  const stars = useMemo(() => {
+    return Array.from({ length: 120 }).map((_, i) => {
+      const size = Math.random() < 0.5 ? 2 : 3;
+      const color = Math.random() < 0.5 ? "white" : "yellow";
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      return { id: i, size, color, top, left };
+    });
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#0b0c2a] text-white relative px-4">
+
+     {/* 🌟 Fond étoilé - statique */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {stars.map(({ id, size, color, top, left }) => (
+          <div
+            key={id}
+            className="absolute rounded-full"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: color,
+              opacity: 0.8,
+            }}
+          />
+        ))}
+      </div>
+
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">Apprendre</Link>
       <Link href="/primaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
 
