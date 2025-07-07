@@ -96,13 +96,17 @@ export default function Niveau1() {
   return (
    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
 <Link href="/menu/apprendre"
-  className="fixed bottom-4 left-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
+  className="fixed bottom-4 left-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105 z-50"
+>
   Apprendre
 </Link>
+
 <Link href="/primaire/niveaux/niveau5"
-  className="absolute top-4 right-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105">
+  className="absolute top-4 right-4 btn-candy-border bg-blue-200 text-white font-bold py-6 px-12 rounded-xl text-3xl shadow-xl text-center flex items-center justify-center min-w-[300px] transition transform hover:scale-105 z-50"
+>
   Retour
 </Link>
+
 
       <div className="absolute top-4 left-4 w-32 h-32 sm:block hidden">
         <svg className="transform -rotate-90" width="100%" height="100%">
