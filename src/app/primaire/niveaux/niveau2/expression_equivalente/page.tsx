@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 
 export default function EquationsEquivalentes() {
@@ -48,7 +48,6 @@ export default function EquationsEquivalentes() {
       return Array.from({ length: totalQuestions }, (_, index) => {
         const level = Math.ceil(((index + 1) / totalQuestions) * levels);
         const leftEquation = generateEquation(level);
-
         const isEquivalent = Math.random() > 0.5;
         let rightEquation;
 
@@ -124,104 +123,139 @@ export default function EquationsEquivalentes() {
 
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
+  // 🌌 Étoiles fixes
+  const stars = useMemo(() => {
+    return Array.from({ length: 120 }).map((_, i) => {
+      const size = Math.random() < 0.5 ? 2 : 3;
+      const color = Math.random() < 0.5 ? "white" : "yellow";
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      return { id: i, size, color, top, left };
+    });
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre/opérations arithmétiques" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/primaire/niveaux/niveau2" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
-        Retour
-      </Link>
+    <div className="min-h-screen flex flex-col items-center justify-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
 
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
+      {/* ⭐ Fond étoilé */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {stars.map(({ id, size, color, top, left }) => (
+          <div
+            key={id}
+            className="absolute rounded-full"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: color,
+              opacity: 0.8,
+            }}
           />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+        ))}
       </div>
 
-      <h1 className="text-4xl font-bold mb-6">Équations équivalentes</h1>
-
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 text-center ${
-            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("Veuillez répondre")
-              ? "text-red-500"
-              : "text-green-500"
-          }`}
+      {/* Contenu principal */}
+      <div className="z-10 w-full max-w-5xl px-6 py-12">
+        <Link
+          href="/menu/apprendre/opérations arithmétiques"
+          className="absolute bottom-4 left-4 z-20 bg-black text-white py-3 px-8 rounded font-bold"
         >
-          {feedbackMessage}
-        </p>
-      )}
+          Apprendre
+        </Link>
+        <Link
+          href="/primaire/niveaux/niveau2"
+          className="absolute top-4 right-4 z-20 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Retour
+        </Link>
 
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
-          const questionIndex = currentPage * questionsPerPage + index;
-          return (
-            <div key={questionIndex} className="bg-white p-4 rounded shadow-md text-center">
-              <p className="text-lg font-bold mb-4">
-                {equationLeft} = {equationRight}
-              </p>
-              <div className="flex gap-4 justify-center">
-                <button
-                  onClick={() => {
-                    setFeedbackMessage(null);
-                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
-                  }}
-                  className={`w-32 py-2 px-4 rounded font-bold ${
-                    selectedButtons[questionIndex] === "true"
-                      ? incorrectAnswers.includes(questionIndex)
-                        ? "bg-red-500"
-                        : "bg-orange-500"
-                      : "bg-blue-500"
-                  } text-white`}
-                >
-                  Vrai
-                </button>
-                <button
-                  onClick={() => {
-                    setFeedbackMessage(null);
-                    setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
-                  }}
-                  className={`w-32 py-2 px-4 rounded font-bold ${
-                    selectedButtons[questionIndex] === "false"
-                      ? incorrectAnswers.includes(questionIndex)
-                        ? "bg-red-500"
-                        : "bg-orange-500"
-                      : "bg-blue-500"
-                  } text-white`}
-                >
-                  Faux
-                </button>
+        {/* Progression */}
+        <div className="absolute top-4 left-4 w-32 h-32 z-20">
+          <svg className="transform -rotate-90" width="100%" height="100%">
+            <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+            <circle
+              cx="50%"
+              cy="50%"
+              r={radius}
+              fill="none"
+              stroke="#3b82f6"
+              strokeWidth={strokeWidth}
+              strokeDasharray={circumference}
+              strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+              className="transition-all duration-500"
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          </div>
+        </div>
+
+        <h1 className="text-4xl font-bold mb-6 text-center">Équations équivalentes</h1>
+
+        {feedbackMessage && (
+          <p
+            className={`text-xl mb-4 text-center ${
+              feedbackMessage.includes("incorrectes") || feedbackMessage.includes("Veuillez répondre")
+                ? "text-red-400"
+                : "text-green-400"
+            }`}
+          >
+            {feedbackMessage}
+          </p>
+        )}
+
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
+            const questionIndex = currentPage * questionsPerPage + index;
+            return (
+              <div key={questionIndex} className="bg-white text-black p-4 rounded shadow-md text-center">
+                <p className="text-lg font-bold mb-4">
+                  {equationLeft} = {equationRight}
+                </p>
+                <div className="flex gap-4 justify-center">
+                  <button
+                    onClick={() => {
+                      setFeedbackMessage(null);
+                      setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "true" : val)));
+                    }}
+                    className={`w-32 py-2 px-4 rounded font-bold ${
+                      selectedButtons[questionIndex] === "true"
+                        ? incorrectAnswers.includes(questionIndex)
+                          ? "bg-red-500"
+                          : "bg-orange-500"
+                        : "bg-blue-500"
+                    } text-white`}
+                  >
+                    Vrai
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFeedbackMessage(null);
+                      setSelectedButtons((prev) => prev.map((val, i) => (i === questionIndex ? "false" : val)));
+                    }}
+                    className={`w-32 py-2 px-4 rounded font-bold ${
+                      selectedButtons[questionIndex] === "false"
+                        ? incorrectAnswers.includes(questionIndex)
+                          ? "bg-red-500"
+                          : "bg-orange-500"
+                        : "bg-blue-500"
+                    } text-white`}
+                  >
+                    Faux
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
-          Précédent
-        </button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Valider
-        </button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Suivant
-        </button>
+        {/* Boutons de navigation */}
+        <div className="mt-6 flex gap-4 justify-center">
+          <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+          <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
+          <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        </div>
       </div>
     </div>
   );
