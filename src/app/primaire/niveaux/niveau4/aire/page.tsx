@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 
 type Cell = 0 | 1;
@@ -157,23 +157,41 @@ export default function AreaByCounting() {
   const circumference = 2 * Math.PI * radius;
   const completedAnswers = answers.filter((a) => a.trim() !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+    // Générer les étoiles une seule fois
+    const stars = useMemo(() => {
+      return Array.from({ length: 120 }).map((_, i) => {
+        const size = Math.random() < 0.5 ? 2 : 3;
+        const color = Math.random() < 0.5 ? "white" : "yellow";
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        return { id: i, size, color, top, left };
+      });
+    }, []);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0b0c2a] text-white relative px-4">
 
-      {/* Boutons fixes */}
-      <Link
-        href="/menu/apprendre/aire"
-        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/primaire/niveaux/niveau4"
-        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
-      >
-        Retour
-      </Link>
+     {/* Fond étoilé - statique */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {stars.map(({ id, size, color, top, left }) => (
+          <div
+            key={id}
+            className="absolute rounded-full"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: color,
+              opacity: 0.8,
+            }}
+          />
+        ))}
+      </div>
+
+      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">Apprendre</Link>
+      <Link href="/primaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
+
 
       {/* Cercle de progression */}
       <div className="fixed top-4 left-4 w-32 h-32 z-50">

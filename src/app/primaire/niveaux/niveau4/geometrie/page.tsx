@@ -151,21 +151,22 @@ const ShapesPracticePage = () => {
   const radiusCircle = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radiusCircle;
-  // ⭐️ Générer les étoiles une seule fois
-  const stars = useMemo(() => {
-    return Array.from({ length: 120 }).map((_, i) => {
-      const size = Math.random() < 0.5 ? 2 : 3;
-      const color = Math.random() < 0.5 ? "white" : "yellow";
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      return { id: i, size, color, top, left };
-    });
-  }, []);
+
+      // Générer les étoiles une seule fois
+    const stars = useMemo(() => {
+      return Array.from({ length: 120 }).map((_, i) => {
+        const size = Math.random() < 0.5 ? 2 : 3;
+        const color = Math.random() < 0.5 ? "white" : "yellow";
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        return { id: i, size, color, top, left };
+      });
+    }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#0b0c2a] text-white relative px-4">
 
-     {/* 🌟 Fond étoilé - statique */}
+     {/* Fond étoilé - statique */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {stars.map(({ id, size, color, top, left }) => (
           <div
