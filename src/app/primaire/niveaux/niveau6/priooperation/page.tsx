@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import "./style.css"; // 👈 assure-toi que ce fichier contient les styles plus bas
 
 export default function PrioOperation() {
   const totalQuestions = 36;
