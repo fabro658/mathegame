@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 
 type Question = {
@@ -88,34 +88,39 @@ export default function ComparerEntiers() {
   const answeredCount = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
 
+  // ⭐️ Générer les étoiles une seule fois
+  const stars = useMemo(() => {
+    return Array.from({ length: 120 }).map((_, i) => {
+      const size = Math.random() < 0.5 ? 2 : 3;
+      const color = Math.random() < 0.5 ? "white" : "yellow";
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      return { id: i, size, color, top, left };
+    });
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden font-fredoka bg-gradient-to-t from-[#770c75] to-[#090536]">
 
-      {/* 🌟 Fond étoilé */}
+      {/* 🌟 Fond étoilé - statique */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {Array.from({ length: 120 }).map((_, i) => {
-          const size = Math.random() < 0.5 ? 2 : 3;
-          const color = Math.random() < 0.5 ? "white" : "yellow";
-          const top = Math.random() * 100;
-          const left = Math.random() * 100;
-          return (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                top: `${top}%`,
-                left: `${left}%`,
-                width: `${size}px`,
-                height: `${size}px`,
-                backgroundColor: color,
-                opacity: 0.8,
-              }}
-            />
-          );
-        })}
+        {stars.map(({ id, size, color, top, left }) => (
+          <div
+            key={id}
+            className="absolute rounded-full"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              backgroundColor: color,
+              opacity: 0.8,
+            }}
+          />
+        ))}
       </div>
 
-      {/* CONTENU */}
+      {/* CONTENU PRINCIPAL */}
       <div className="z-10 w-full max-w-4xl px-6 py-12">
         <Link
           href="/menu/apprendre"
@@ -130,6 +135,7 @@ export default function ComparerEntiers() {
           Retour
         </Link>
 
+        {/* Progression */}
         <div className="absolute top-4 left-4 w-32 h-32 z-20">
           <svg className="transform -rotate-90" width="100%" height="100%">
             <circle
@@ -171,6 +177,7 @@ export default function ComparerEntiers() {
           </p>
         )}
 
+        {/* Questions */}
         <div className="grid grid-cols-2 gap-6">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ numbers }, index) => (
             <div key={index} className="flex items-center gap-4">
@@ -191,6 +198,7 @@ export default function ComparerEntiers() {
           ))}
         </div>
 
+        {/* Boutons */}
         <div className="mt-6 flex gap-4 justify-center">
           <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
           <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
