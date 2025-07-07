@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -152,15 +152,15 @@ export default function AreaByCounting() {
   const startIndex = currentPage * questionsPerPage;
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
-  // Cercle de progression
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
   const completedAnswers = answers.filter((a) => a.trim() !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
- return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
+  return (
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+
       {/* Boutons fixes */}
       <Link
         href="/menu/apprendre/aire"
@@ -183,7 +183,7 @@ export default function AreaByCounting() {
             cy="50%"
             r={radius}
             fill="none"
-            stroke="#e5e5e5"
+            stroke="#444"
             strokeWidth={strokeWidth}
           />
           <circle
@@ -191,7 +191,7 @@ export default function AreaByCounting() {
             cy="50%"
             r={radius}
             fill="none"
-            stroke="#3b82f6"
+            stroke="#60a5fa"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
@@ -199,26 +199,26 @@ export default function AreaByCounting() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-400">{completionPercentage}%</span>
         </div>
       </div>
 
       {/* Contenu des questions */}
-      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-40 space-y-12">
+      <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-40 space-y-12">
         <h1 className="text-3xl font-bold text-center">Aire en comptant les carrés</h1>
 
         {currentQuestions.map((q, i) => {
           const globalIndex = startIndex + i;
           return (
-            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md border">
+            <div key={q.id} className="bg-[#2a2c50] p-6 rounded-lg shadow-md border border-gray-600">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
                 {feedback[globalIndex] && (
                   <span
                     className={`text-2xl font-semibold ${
                       feedback[globalIndex] === "Réponse correcte"
-                        ? "text-green-600"
-                        : "text-red-600"
+                        ? "text-green-400"
+                        : "text-red-400"
                     }`}
                   >
                     {feedback[globalIndex]}
@@ -235,13 +235,13 @@ export default function AreaByCounting() {
                 <input
                   type="text"
                   placeholder="Réponse"
-                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
+                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full text-black"
                   value={answers[globalIndex]}
                   onChange={(e) => handleChange(globalIndex, e.target.value)}
                 />
                 <button
                   onClick={() => validateOne(globalIndex)}
-                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
+                  className="text-blue-300 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-800"
                 >
                   Valider la réponse
                 </button>
@@ -251,14 +251,14 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Pagination en bas */}
-      <div className="fixed bottom-4 right-4 bg-white border-t border-gray-300 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
+      {/* Pagination */}
+      <div className="fixed bottom-4 right-4 bg-[#1e1f3d] border-t border-gray-700 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
           className={`px-6 py-2 rounded font-bold ${
             currentPage === 0
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              ? "bg-gray-600 text-gray-300 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
@@ -269,7 +269,7 @@ export default function AreaByCounting() {
           disabled={currentPage === totalPages - 1}
           className={`px-6 py-2 rounded font-bold ${
             currentPage === totalPages - 1
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              ? "bg-gray-600 text-gray-300 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
