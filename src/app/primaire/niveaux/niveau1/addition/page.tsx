@@ -104,16 +104,27 @@ export default function Addition() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
+      
+      {/* Décor ciel et nuages */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
+        </div>
+      </div>
+
+      {/* Boutons de navigation */}
       <Link
         href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        className="absolute bottom-4 left-4 z-10 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 z-10 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
       </Link>
@@ -175,18 +186,6 @@ export default function Addition() {
             );
           })}
       </div>
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
-      {/* Décor ciel */}
-      <div className="absolute inset-0 z-0">
-        {/* Nuages CSS décoratifs */}
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
-        </div>
-      </div>
-      </div>
-
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>

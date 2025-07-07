@@ -100,7 +100,7 @@ export default function Soustraction() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
       
-      {/* 🌤️ Décor ciel et nuages */}
+      {/* Décor ciel et nuages */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
