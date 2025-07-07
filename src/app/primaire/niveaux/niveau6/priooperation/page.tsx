@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import "./style.css"; // 👈 assure-toi que ce fichier contient les styles plus bas
 
 export default function PrioOperation() {
   const totalQuestions = 36;
@@ -21,41 +22,37 @@ export default function PrioOperation() {
       return Array.from({ length: totalQuestions }, (_, index) => {
         let questionText = "", correctAnswer = "";
 
-        // Priorité d'opération - Niveau 1 (index < 10)
         if (index < 10) {
           const questionType = index % 5;
           switch (questionType) {
             case 0:
               questionText = "Que vaut 2 + 3 × 4 ?";
-              correctAnswer = (2 + 3 * 4).toString(); // 14
+              correctAnswer = (2 + 3 * 4).toString();
               break;
             case 1:
               questionText = "Que vaut (2 + 3) × 4 ?";
-              correctAnswer = ((2 + 3) * 4).toString(); // 20
+              correctAnswer = ((2 + 3) * 4).toString();
               break;
             case 2:
               questionText = "Que vaut 2 × 3 + 4 ?";
-              correctAnswer = (2 * 3 + 4).toString(); // 10
+              correctAnswer = (2 * 3 + 4).toString();
               break;
             case 3:
               questionText = "Que vaut 6 - 2 × 3 ?";
-              correctAnswer = (6 - 2 * 3).toString(); // 0
+              correctAnswer = (6 - 2 * 3).toString();
               break;
             case 4:
               questionText = "Que vaut (6 - 2) × 3 ?";
-              correctAnswer = ((6 - 2) * 3).toString(); // 12
+              correctAnswer = ((6 - 2) * 3).toString();
               break;
           }
         } else {
-          // Questions plus avancées
           if (index < 20) {
-            // Sans exposants
             const a = Math.floor(Math.random() * 10) + 1;
             const b = Math.floor(Math.random() * 10) + 1;
             questionText = `Que vaut ${a} + ${b} × 2 ?`;
             correctAnswer = (a + b * 2).toString();
           } else {
-            // Avec exposants
             const base = Math.floor(Math.random() * 6) + 2;
             const exponent = Math.floor(Math.random() * 3) + 1;
             questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
@@ -76,7 +73,6 @@ export default function PrioOperation() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des changements de réponse
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
     newAnswers[index] = value.trim();
@@ -84,7 +80,6 @@ export default function PrioOperation() {
     setFeedbackMessage(null);
   };
 
-  // Validation des réponses
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
@@ -121,7 +116,7 @@ export default function PrioOperation() {
       } else {
         setAnswers(Array(totalQuestions).fill(null));
         setIncorrectAnswers([]);
-        setFeedbackMessage(" Félicitations ! Vous avez complété toutes les questions !");
+        setFeedbackMessage("🎉 Félicitations ! Vous avez complété toutes les questions !");
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
@@ -144,69 +139,90 @@ export default function PrioOperation() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/primaire/niveaux/niveau6" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
-        Retour
-      </Link>
-
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
+    <div className="ocean">
+      {/* 🌥️ Nuages */}
+      <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+        <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+        <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Priorités des Opérations</h1>
+      {/* 🏝️ Île en bas à gauche */}
+      <div className="island"></div>
 
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
+      <div className="flex flex-col items-center justify-center min-h-screen text-black relative z-10">
+        <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
+          Apprendre
+        </Link>
+        <Link href="/primaire/niveaux/niveau6" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+          Retour
+        </Link>
+
+        {/* Progress bar */}
+        <div className="absolute top-4 left-4 w-32 h-32">
+          <svg className="transform -rotate-90" width="100%" height="100%">
+            <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+            <circle
+              cx="50%"
+              cy="50%"
+              r={radius}
+              fill="none"
+              stroke="#3b82f6"
+              strokeWidth={strokeWidth}
+              strokeDasharray={circumference}
+              strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+              className="transition-all duration-500"
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          </div>
+        </div>
+
+        <h1 className="text-3xl font-bold mb-6">Priorités des Opérations</h1>
+
+        {feedbackMessage && (
+          <p className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
               ? "text-red-500"
               : "text-green-500"
-          } text-center`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
+          }`}>
+            {feedbackMessage}
+          </p>
+        )}
 
-      <div className="grid grid-cols-3 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
-          const questionIndex = currentPage * questionsPerPage + index;
-          return (
-            <div key={questionIndex} className="flex items-center gap-4">
-              <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>{question.questionText}</button>
-              <input
-                type="text"
-                className={`border p-4 rounded w-32 text-center text-lg ${incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""}`}
-                value={answers[questionIndex] || ""}
-                onChange={(e) => handleChange(questionIndex, e.target.value)}
-              />
-            </div>
-          );
-        })}
-      </div>
+        <div className="grid grid-cols-3 gap-6">
+          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, index) => {
+            const questionIndex = currentPage * questionsPerPage + index;
+            return (
+              <div key={questionIndex} className="flex items-center gap-4">
+                <button className="bg-blue-500 text-white font-bold py-4 px-6 rounded w-full" disabled>
+                  {question.questionText}
+                </button>
+                <input
+                  type="text"
+                  className={`border p-4 rounded w-32 text-center text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] || ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+        <div className="mt-6 flex gap-4">
+          <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
+            Précédent
+          </button>
+          <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+            Valider les réponses
+          </button>
+          <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+            Suivant
+          </button>
+        </div>
       </div>
     </div>
   );
