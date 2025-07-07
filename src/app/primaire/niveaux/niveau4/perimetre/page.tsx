@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -8,27 +8,24 @@ type Cell = 0 | 1;
 interface Question {
   id: number;
   grid: Cell[][];
-  correctAnswer: number; // Périmètre ici
+  correctAnswer: number;
 }
 
 const gridSize = 10;
 const colors = ["#60a5fa", "#f87171", "#34d399", "#fbbf24", "#a78bfa"];
 
-// Calcule le périmètre : chaque bloc actif (val === 1) a 1, 2, 3 ou 4 côtés exposés.
 const calculatePerimeter = (grid: Cell[][]): number => {
   let perimeter = 0;
-
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       if (grid[y][x] === 1) {
-        if (x === 0 || grid[y][x - 1] === 0) perimeter++; // gauche
-        if (x === gridSize - 1 || grid[y][x + 1] === 0) perimeter++; // droite
-        if (y === 0 || grid[y - 1][x] === 0) perimeter++; // haut
-        if (y === gridSize - 1 || grid[y + 1][x] === 0) perimeter++; // bas
+        if (x === 0 || grid[y][x - 1] === 0) perimeter++;
+        if (x === gridSize - 1 || grid[y][x + 1] === 0) perimeter++;
+        if (y === 0 || grid[y - 1][x] === 0) perimeter++;
+        if (y === gridSize - 1 || grid[y + 1][x] === 0) perimeter++;
       }
     }
   }
-
   return perimeter;
 };
 
@@ -125,7 +122,7 @@ export default function PerimetreByCounting() {
       <svg
         width={gridSize * cellSize}
         height={gridSize * cellSize}
-        style={{ border: "1px solid #ddd" }}
+        style={{ backgroundColor: '#1e1f3d', border: "1px solid #333" }}
       >
         {grid.map((row, y) =>
           row.map((_, x) => (
@@ -135,8 +132,8 @@ export default function PerimetreByCounting() {
               y={y * cellSize}
               width={cellSize}
               height={cellSize}
-              fill="#fff"
-              stroke="#ccc"
+              fill="#2e2f4d"
+              stroke="#555"
             />
           ))
         )}
@@ -170,7 +167,6 @@ export default function PerimetreByCounting() {
   const startIndex = currentPage * questionsPerPage;
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
-  // Cercle de progression
   const radius = 50;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
@@ -178,9 +174,8 @@ export default function PerimetreByCounting() {
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
 
-      {/* Boutons fixes */}
       <Link
         href="/menu/apprendre/perimetre"
         className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
@@ -194,16 +189,15 @@ export default function PerimetreByCounting() {
         Retour
       </Link>
 
-      {/* Cercle de progression */}
       <div className="fixed top-4 left-4 w-32 h-32 z-50">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#444" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
             r={radius}
             fill="none"
-            stroke="#3b82f6"
+            stroke="#60a5fa"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
@@ -211,26 +205,25 @@ export default function PerimetreByCounting() {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+          <span className="text-xl font-bold text-blue-400">{completionPercentage}%</span>
         </div>
       </div>
 
-      {/* Contenu des questions */}
-      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-40 space-y-12">
-        <h1 className="text-3xl font-bold text-center">Périmètre en comptant les côtés</h1>
+      <div className="max-w-4xl w-full bg-[#1c1d3a] p-6 rounded-lg shadow-lg pb-40 space-y-12">
+        <h1 className="text-3xl font-bold text-center text-white">Périmètre en comptant les côtés</h1>
 
         {currentQuestions.map((q, i) => {
           const globalIndex = startIndex + i;
           return (
-            <div key={q.id} className="bg-white p-6 rounded-lg shadow-md border">
+            <div key={q.id} className="bg-[#2c2e50] p-6 rounded-lg shadow-md border border-gray-600">
               <div className="flex items-center justify-between mb-4">
-                <p className="text-lg font-bold">Question {globalIndex + 1} :</p>
+                <p className="text-lg font-bold text-white">Question {globalIndex + 1} :</p>
                 {feedback[globalIndex] && (
                   <span
-                    className={`text-2xl font-semibold ${
+                    className={`text-xl font-semibold ${
                       feedback[globalIndex] === "Réponse correcte"
-                        ? "text-green-600"
-                        : "text-red-600"
+                        ? "text-green-400"
+                        : "text-red-400"
                     }`}
                   >
                     {feedback[globalIndex]}
@@ -240,20 +233,20 @@ export default function PerimetreByCounting() {
               <div className="flex justify-center mb-4">
                 {renderSVG(q.grid, colors[q.id % colors.length])}
               </div>
-              <label className="block mb-2 font-semibold">
+              <label className="block mb-2 font-semibold text-white">
                 Quel est le périmètre de cette figure (en unités) ?
               </label>
               <div className="flex flex-col md:flex-row items-start gap-4">
                 <input
                   type="text"
                   placeholder="Réponse"
-                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full"
+                  className="flex-1 border border-gray-400 p-3 text-lg rounded w-full text-black"
                   value={answers[globalIndex]}
                   onChange={(e) => handleChange(globalIndex, e.target.value)}
                 />
                 <button
                   onClick={() => validateOne(globalIndex)}
-                  className="text-blue-600 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-100"
+                  className="text-blue-400 font-bold border border-blue-400 px-6 py-2 rounded hover:bg-blue-800"
                 >
                   Valider la réponse
                 </button>
@@ -263,14 +256,13 @@ export default function PerimetreByCounting() {
         })}
       </div>
 
-      {/* Pagination */}
-      <div className="fixed bottom-4 right-4 bg-white border-t border-gray-300 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
+      <div className="fixed bottom-4 right-4 bg-[#1c1d3a] border-t border-gray-600 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
           className={`px-6 py-2 rounded font-bold ${
             currentPage === 0
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              ? "bg-gray-500 text-gray-300 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
@@ -281,7 +273,7 @@ export default function PerimetreByCounting() {
           disabled={currentPage === totalPages - 1}
           className={`px-6 py-2 rounded font-bold ${
             currentPage === totalPages - 1
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              ? "bg-gray-500 text-gray-300 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >

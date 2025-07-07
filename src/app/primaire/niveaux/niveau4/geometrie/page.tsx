@@ -78,7 +78,6 @@ const ShapesPracticePage = () => {
     }
 
     if (errors.length === 0) {
-      // ✅ Toutes les réponses sont bonnes
       for (let i = start; i < end; i++) {
         updatedAnswers[i] = null;
       }
@@ -96,7 +95,6 @@ const ShapesPracticePage = () => {
         setFeedbackMessage(null);
       }
     } else {
-      // ❌ Mauvaises réponses
       errors.forEach((i) => {
         if (updatedAnswers[i] === shapes[i].name) {
           setProgress((prev) => prev - 100 / totalQuestions);
@@ -155,20 +153,20 @@ const ShapesPracticePage = () => {
   const circumference = 2 * Math.PI * radiusCircle;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0b0c2a] text-white relative px-4">
       <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">Apprendre</Link>
       <Link href="/primaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
 
       {/* Progress Circle */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radiusCircle} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+          <circle cx="50%" cy="50%" r={radiusCircle} fill="none" stroke="#444" strokeWidth={strokeWidth} />
           <circle
             cx="50%"
             cy="50%"
             r={radiusCircle}
             fill="none"
-            stroke="#3b82f6"
+            stroke="#60a5fa"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={circumference - (circumference * progress) / 100}
@@ -176,7 +174,7 @@ const ShapesPracticePage = () => {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{Math.round(progress)}%</span>
+          <span className="text-xl font-bold text-blue-400">{Math.round(progress)}%</span>
         </div>
       </div>
 
@@ -185,15 +183,15 @@ const ShapesPracticePage = () => {
       {feedbackMessage && (
         <p className={`text-xl mb-4 text-center ${
           /remplir toutes les réponses|incorrectes/i.test(feedbackMessage)
-            ? 'text-red-500'
-            : 'text-green-500'
+            ? 'text-red-400'
+            : 'text-green-400'
         }`}>
           {feedbackMessage}
         </p>
       )}
 
       {isComplete ? (
-        <div className="text-2xl font-bold text-green-600 mt-10">
+        <div className="text-2xl font-bold text-green-400 mt-10">
           🎉 Félicitations ! Vous avez complété toutes les séries !
         </div>
       ) : (
@@ -205,8 +203,8 @@ const ShapesPracticePage = () => {
               return (
                 <div
                   key={idx}
-                  className={`w-32 h-32 border-2 ${
-                    errorIndices.includes(globalIndex) ? 'border-red-500' : 'border-gray-500'
+                  className={`w-32 h-32 bg-[#1e1f3d] border-2 rounded ${
+                    errorIndices.includes(globalIndex) ? 'border-red-500' : 'border-gray-300'
                   } flex flex-col items-center justify-center`}
                   onDrop={(e) => {
                     e.preventDefault();
@@ -217,21 +215,21 @@ const ShapesPracticePage = () => {
                   <svg width="100" height="100" viewBox="0 0 100 100">
                     {drawShape(shape.sides, shape.name)}
                   </svg>
-                  <div>{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
+                  <div className="mt-1 text-sm">{shape.sides === 0 ? "Cercle" : `${shape.sides} côtés`}</div>
                   {answers[globalIndex] && (
-                    <div className="mt-2 text-sm font-bold text-blue-500">{answers[globalIndex]}</div>
+                    <div className="mt-2 text-sm font-bold text-blue-300">{answers[globalIndex]}</div>
                   )}
                 </div>
               );
             })}
           </div>
 
-          {/* Réponses glissables */}
+          {/* Réponses */}
           <div className="grid grid-cols-5 gap-4 mb-12">
             {allShapes.map((shape, idx) => (
               <div
                 key={idx}
-                className="p-2 border border-blue-500 cursor-pointer text-center bg-white"
+                className="p-2 border border-blue-400 cursor-pointer text-center bg-white text-black rounded"
                 draggable
                 onDragStart={(e) => e.dataTransfer.setData("name", shape.name)}
               >
@@ -242,15 +240,23 @@ const ShapesPracticePage = () => {
 
           {/* Navigation */}
           <div className="flex gap-4 mt-8">
-            <button onClick={handlePrevious} className="bg-gray-400 text-white py-2 px-6 rounded font-bold" disabled={currentPage === 0}>
+            <button
+              onClick={handlePrevious}
+              className="bg-gray-600 text-white py-2 px-6 rounded font-bold disabled:opacity-50"
+              disabled={currentPage === 0}
+            >
               Précédent
             </button>
             <button onClick={handleValidation} className="bg-blue-500 text-white py-2 px-6 rounded font-bold">
               Valider les réponses
             </button>
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}>
-          Suivant
-        </button>
+            <button
+              onClick={handleValidation}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold"
+              disabled={currentPage === Math.floor(totalQuestions / questionsPerPage) - 1}
+            >
+              Suivant
+            </button>
           </div>
         </>
       )}
