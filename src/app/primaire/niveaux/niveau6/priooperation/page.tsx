@@ -121,10 +121,6 @@ export default function PrioOperation() {
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
           <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
         </div>
-
-      {/* Île */}
-      <div className="island" />
-
     {/* Mer */}
     <div className="water"></div>
   </div>
