@@ -158,6 +158,31 @@ export default function Niveau1() {
         })}
       </div>
 
+      {/* Flocons */}
+      <div className="snowflakes">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div
+            key={i}
+            className="snowflake"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${5 + Math.random() * 5}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              width: `${4 + Math.random() * 4}px`,
+              height: `${4 + Math.random() * 4}px`
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Scène */}
+      <div className="scene">
+        {/* Neige */}
+        <div className="neige-wave">
+          <div className="neige-top-layer"></div>
+          <div className="neige-bottom-layer"></div>
+        </div>
+
       <div className="mt-6 flex gap-4">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>

@@ -58,7 +58,7 @@ export default function Niveau4() {
       {/* Grille des missions */}
       <div className="grid grid-cols-2 gap-8 z-10 max-w-4xl">
         <a
-          href="/primaire/niveaux/niveau4/perimetre2"
+          href="/primaire/niveaux/niveau4/perimetre"
           className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-6 px-12 rounded-2xl text-3xl shadow-lg text-center flex items-center justify-center min-w-[280px] transition transform hover:scale-105"
         >
           Périmètre
