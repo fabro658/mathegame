@@ -159,9 +159,8 @@ export default function AreaByCounting() {
   const completedAnswers = answers.filter((a) => a.trim() !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-gray-900 p-4 relative">
-
+ return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0b0c2a] text-white relative overflow-hidden font-fredoka">
       {/* Boutons fixes */}
       <Link
         href="/menu/apprendre/aire"
