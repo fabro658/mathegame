@@ -37,7 +37,7 @@ export default function Niveau3() {
       {/* Titre thématique */}
       <div className="flex flex-col items-center text-center mb-12 z-10">
         <h1 className="text-[#2e1c0c] text-5xl sm:text-6xl md:text-7xl font-extrabold mb-3 drop-shadow">
-          Explore le déserts des Fractions
+         Le désert des Fractions
         </h1>
       </div>
 
@@ -45,7 +45,7 @@ export default function Niveau3() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10 max-w-4xl mb-6">
         <a
           href="/primaire/niveaux/niveau3/additionfraction"
-          className="bg-[#f4d58d] text-black font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105 shadow-md"
+          className="bg-[#f4d58d] text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105 shadow-md"
         >
           Addition de fractions
         </a>

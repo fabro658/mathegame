@@ -35,7 +35,7 @@ export default function Niveau2() {
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 z-10 mt-4 px-4">
         <a
-          href="/primaire/niveaux/niveau1/addition"
+          href="/primaire/niveaux/niveau2/comparaison"
           className="bg-purple-600 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
         >
           Comparaison
