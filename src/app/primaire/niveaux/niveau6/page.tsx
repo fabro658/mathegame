@@ -8,10 +8,6 @@ export default function Niveau6() {
       {/* Fond statique */}
 <div className="circle">
   <div className="ocean">
-<div id="shark">
-  <div className="fin"></div>
-
-</div>
 
     {/* Nuages séparés */}
        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">

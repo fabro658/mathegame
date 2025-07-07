@@ -46,9 +46,6 @@ export default function Niveau5() {
           <div className="yeuxG"></div>
           <div className="yeuxD"></div>
           <div className="nez"></div>
-          <div className="hat-1"></div>
-          <div className="hat-2"></div>
-          <div className="hat-3"></div>
           <div className="snowman-mouth-1"></div>
           <div className="snowman-mouth-2"></div>
           <div className="snowman-mouth-3"></div>
