@@ -181,21 +181,22 @@ export default function SoustractionFractions() {
     )}
 
 
-      {/* Questions et réponses */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} - {fraction2}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-              value={answers[currentPage * questionsPerPage + index]}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-       />
+      {/* Questions */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 z-10">
+      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
+        <div key={index} className="flex items-center gap-4">
+          <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{fraction1} - {fraction2}</div>
+          <input
+            type="text"
+            inputMode="numeric"
+            className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+            value={answers[currentPage * questionsPerPage + index]}
+            onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+          />
         </div>
       ))}
     </div>
+
 
     {/* Boutons de page */}
     <div className="mt-6 flex gap-4 z-10">
