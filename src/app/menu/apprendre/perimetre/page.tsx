@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
@@ -26,7 +26,7 @@ const RectangleIllustration = () => (
       <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
       <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 15 + 8 + 15 + = 46 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 15 + 8 + 15 + 8 = 46 cm</p>
   </div>
 );
 
@@ -91,14 +91,14 @@ export default function PerimetreLearning() {
       name: "Cercle",
       description: "Le périmètre (ou circonférence) d'un cercle est 2 fois pi multiplié par le rayon.",
       formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 6 cm, le périmètre est : 2 × π × 10 = 62.8 cm",
+      example: "Si le rayon est 10 cm, le périmètre est : 2 × π × 10 = 62.8 cm",
       imageComponent: <CercleIllustration />
     }
   ];
 
   return (
-    <main className="flex min-h-screen bg-gray-100 text-black">
-      <div className="w-1/4 bg-white p-6 shadow-lg">
+    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black">
+      <div className="w-1/4 bg-white p-6 shadow-lg relative">
         <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
         <h1 className="text-3xl font-bold mb-6 text-center">Formes géométriques</h1>
         <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son périmètre :</p>
@@ -115,7 +115,7 @@ export default function PerimetreLearning() {
         </div>
       </div>
 
-      <div className="w-3/4 p-10 flex flex-col items-center">
+      <div className="w-3/4 p-10 flex flex-col items-center overflow-y-auto">
         {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
             <h2 className="text-3xl font-bold mb-6">{selectedShape.name}</h2>
