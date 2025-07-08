@@ -136,7 +136,7 @@ return (
 
     {/* Plantes sur la bande de sable */}
     <div className="plants">
-      <div className="plant"><div className="leaves plant-2"></div></div> 
+      <div className="plant"><div className="leaves plant-3"></div></div> 
       </div>
 
     {/* Boutons navigation */}

@@ -131,11 +131,6 @@ export default function FractionIdentification() {
     {/* Bande de sable */}
     <div className="sable"></div>
 
-    {/* Plantes sur la bande de sable */}
-    <div className="plants">
-      <div className="plant"><div className="leaves plant-2"></div></div> 
-      </div>
-      
       {/* Bande de sable */}
       <div className="sable"></div>
        <Link href="/menu/apprendre/fraction"
