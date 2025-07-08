@@ -4,9 +4,6 @@ export default function Niveau3() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
 
-      {/* Nuages (à styliser avec CSS si nécessaire) */}
-      <div className="clouds"></div>
-
       {/* Bande de sable */}
       <div className="sable"></div>
 
