@@ -97,9 +97,17 @@ export default function PerimetreLearning() {
   ];
 
   return (
-    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black">
-      <div className="w-1/4 bg-white p-6 shadow-lg relative">
-        <Link href="/menu/apprendre" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">Retour</Link>
+    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
+      {/* Bouton Retour en haut à droite de l’écran */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-10"
+      >
+        Retour
+      </Link>
+
+      {/* Colonne gauche avec les boutons */}
+      <div className="w-1/4 bg-white p-6 shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center">Formes géométriques</h1>
         <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son périmètre :</p>
         <div className="flex flex-col gap-4">
@@ -115,6 +123,7 @@ export default function PerimetreLearning() {
         </div>
       </div>
 
+      {/* Colonne droite avec le contenu */}
       <div className="w-3/4 p-10 flex flex-col items-center overflow-y-auto">
         {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
