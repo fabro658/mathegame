@@ -128,11 +128,8 @@ export default function FractionIdentification() {
 
   return (
   <div className="flex flex-col items-center justify-center min-h-screen text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
-    {/* Bande de sable */}
-    <div className="sable"></div>
 
-      {/* Bande de sable */}
-      <div className="sable"></div>
+
        <Link href="/menu/apprendre/fraction"
         className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
