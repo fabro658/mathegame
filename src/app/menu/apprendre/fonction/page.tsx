@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
@@ -11,7 +11,7 @@ interface FunctionConcept {
   visual: React.ReactNode;
 }
 
-// Composant réutilisable pour les axes
+// Axes XY
 const Axes = () => (
   <>
     <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" strokeWidth="0.05" />
@@ -19,19 +19,11 @@ const Axes = () => (
   </>
 );
 
-//Fonctions visuelles
-
+// Fonctions visuelles
 const LinearFunctionVisual = () => (
   <svg width="300" height="300" viewBox="-10 -10 20 20">
     <Axes />
-    <line
-      x1="-5"
-      y1={-(2 * -5 + 1)}
-      x2="5"
-      y2={-(2 * 5 + 1)}
-      stroke="blue"
-      strokeWidth="0.2"
-    />
+    <line x1="-5" y1={-(2 * -5 + 1)} x2="5" y2={-(2 * 5 + 1)} stroke="blue" strokeWidth="0.2" />
   </svg>
 );
 
@@ -44,12 +36,7 @@ const QuadraticFunctionVisual = () => {
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
       <Axes />
-      <polyline
-        fill="none"
-        stroke="green"
-        strokeWidth="0.2"
-        points={points}
-      />
+      <polyline fill="none" stroke="green" strokeWidth="0.2" points={points} />
     </svg>
   );
 };
@@ -63,12 +50,7 @@ const AbsoluteFunctionVisual = () => {
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
       <Axes />
-      <polyline
-        fill="none"
-        stroke="orange"
-        strokeWidth="0.2"
-        points={points}
-      />
+      <polyline fill="none" stroke="orange" strokeWidth="0.2" points={points} />
     </svg>
   );
 };
@@ -82,12 +64,7 @@ const ExponentialFunctionVisual = () => {
   return (
     <svg width="300" height="300" viewBox="-10 -10 20 20">
       <Axes />
-      <polyline
-        fill="none"
-        stroke="red"
-        strokeWidth="0.2"
-        points={points}
-      />
+      <polyline fill="none" stroke="red" strokeWidth="0.2" points={points} />
     </svg>
   );
 };
@@ -95,36 +72,12 @@ const ExponentialFunctionVisual = () => {
 const StepFunctionVisual = () => {
   const steps = Array.from({ length: 20 }, (_, i) => {
     const x = i - 10;
-    const y = -Math.floor(x); // l’axe Y est inversé dans le SVG
+    const y = -Math.floor(x);
     return (
       <g key={i}>
-        {/* Marche horizontale */}
-        <line
-          x1={x}
-          y1={y}
-          x2={x + 1}
-          y2={y}
-          stroke="purple"
-          strokeWidth="0.2"
-        />
-
-        {/* Point fermé à gauche (inclusif) */}
-        <circle
-          cx={x}
-          cy={y}
-          r={0.15}
-          fill="black"
-        />
-
-        {/* Point ouvert à droite (exclusif) */}
-        <circle
-          cx={x + 1}
-          cy={y}
-          r={0.15}
-          fill="white"
-          stroke="black"
-          strokeWidth="0.1"
-        />
+        <line x1={x} y1={y} x2={x + 1} y2={y} stroke="purple" strokeWidth="0.2" />
+        <circle cx={x} cy={y} r={0.15} fill="black" />
+        <circle cx={x + 1} cy={y} r={0.15} fill="white" stroke="black" strokeWidth="0.1" />
       </g>
     );
   });
@@ -144,69 +97,62 @@ const functionConcepts: FunctionConcept[] = [
       <>
         <p>Une fonction linéaire est une fonction dont le graphique est une droite.</p>
         <p className="mt-2">
-          Elle s&rsquo;écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l&apos;endroit où la droite coupe l&rsquo;axe vertical.
-          Plus <strong>a</strong> est grand, plus la pente est raide.
+          Elle s’écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l’endroit où la droite coupe l’axe vertical.
         </p>
       </>
     ),
     formula: "f(x) = 2x + 1",
     example: "f(4) = 2(4) + 1 = 9",
     visual: <LinearFunctionVisual />,
-  },  
+  },
   {
     name: "Fonction quadratique",
-    description:
-      "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas.",
+    description: "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas.",
     formula: "f(x) = x²",
     example: "f(3) = 3² = 9",
     visual: <QuadraticFunctionVisual />,
   },
   {
     name: "Fonction valeur absolue",
-    description:
-      "La fonction valeur absolue donne toujours un résultat positif ou nul.",
+    description: "La fonction valeur absolue donne toujours un résultat positif ou nul.",
     formula: "f(x) = |x|",
     example: "f(-5) = |-5| = 5",
     visual: <AbsoluteFunctionVisual />,
   },
   {
     name: "Fonction exponentielle",
-    description:
-      "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement.",
+    description: "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement.",
     formula: "f(x) = 2ˣ",
     example: "f(3) = 2³ = 8",
     visual: <ExponentialFunctionVisual />,
   },
   {
     name: "Fonction en escalier (partie entière)",
-    description:
-      "La fonction en escalier, ou fonction partie entière, associe à chaque nombre le plus grand entier inférieur ou égal à ce nombre. Par exemple, f(3.7) = 3. Son graphique ressemble à des marches, d'où le nom « fonction en escalier ».",
+    description: "La fonction en escalier, ou fonction partie entière, associe à chaque nombre le plus grand entier inférieur ou égal à ce nombre. Son graphique ressemble à des marches.",
     formula: "f(x) = ⌊x⌋",
     example: "f(3.7) = 3",
     visual: <StepFunctionVisual />,
-  }
+  },
 ];
-// Composant principal
 
+// Composant principal
 export default function FonctionLearning() {
   const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
 
   return (
-    <main className="flex min-h-screen bg-gray-100 text-black">
-      {/* Barre latérale */}
+    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
+      {/* Bouton retour en haut à droite */}
+      <Link
+        href="/menu/apprendre"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-10"
+      >
+        Retour
+      </Link>
+
+      {/* Colonne gauche */}
       <div className="w-1/4 bg-white p-6 shadow-lg">
-        <Link
-          href="/menu/apprendre"
-          className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-        >
-          Retour
-        </Link>
-
         <h1 className="text-3xl font-bold mb-6">Les Fonctions</h1>
-        <p className="text-lg mb-6">
-          Sélectionne un concept pour en apprendre davantage :
-        </p>
-
+        <p className="text-lg mb-6">Sélectionne un concept pour en apprendre davantage :</p>
         <div className="flex flex-col gap-4">
           {functionConcepts.map((concept, index) => (
             <button
@@ -220,20 +166,17 @@ export default function FonctionLearning() {
         </div>
       </div>
 
-      {/* Section centrale */}
-      <div className="w-3/4 p-10 flex flex-col items-center">
+      {/* Colonne droite */}
+      <div className="w-3/4 p-10 flex flex-col items-center overflow-y-auto">
         {selectedConcept && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
             <h2 className="text-3xl font-bold mb-6">{selectedConcept.name}</h2>
-            <p className="text-lg mb-6">{selectedConcept.description}</p>
+            <div className="text-lg mb-6">{selectedConcept.description}</div>
             <p className="text-2xl font-bold mb-4">Formule :</p>
             <p className="text-lg mb-6">{selectedConcept.formula}</p>
             <p className="text-2xl font-bold mb-4">Exemple :</p>
             <p className="text-lg mb-6">{selectedConcept.example}</p>
-
-            <div className="mt-8 flex justify-center">
-              {selectedConcept.visual}
-            </div>
+            <div className="mt-8 flex justify-center">{selectedConcept.visual}</div>
           </div>
         )}
       </div>
