@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// Fonction pour calculer le PGDC (Plus Grand Diviseur Commun)
 const gcd = (a: number, b: number): number => {
   if (b === 0) return a;
   return gcd(b, a % b);
@@ -39,7 +38,6 @@ export default function AdditionFractions() {
 
         const denominatorResult = b1 * b2;
         const numeratorResult = (a1 * b2) + (a2 * b1);
-
         const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
         const correctAnswer = simplifiedDenominator === 1
           ? `${simplifiedNumerator}`
@@ -116,12 +114,9 @@ export default function AdditionFractions() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-[#f8e9b8] to-[#eddca3] text-black font-fredoka">
+    <div className="min-h-screen w-full bg-[#f8e9b8] text-black font-fredoka flex flex-col items-center py-16 px-4 relative">
 
-      {/* Bande de sable décorative */}
-      <div className="absolute bottom-0 w-full h-28 bg-[#f4ce79] z-0 rounded-t-[10%] shadow-inner pointer-events-none" />
-
-      {/* Boutons fixes */}
+      {/* Liens fixes */}
       <Link
         href="/menu/apprendre/fraction"
         className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-20"
@@ -156,55 +151,56 @@ export default function AdditionFractions() {
         </div>
       </div>
 
-      {/* Contenu principal */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl px-4 mx-auto py-16">
+      {/* Titre */}
+      <h1 className="text-4xl font-bold mb-6 text-center">Addition de Fractions</h1>
 
-        <h1 className="text-4xl font-bold mb-6 text-center">Addition de Fractions</h1>
+      {/* Feedback */}
+      {feedbackMessage && (
+        <p
+          className={`text-xl mb-4 text-center ${
+            feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+              ? "text-red-600"
+              : "text-green-600"
+          }`}
+        >
+          {feedbackMessage}
+        </p>
+      )}
 
-        {feedbackMessage && (
-          <p
-            className={`text-xl mb-4 text-center ${
-              feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
-                ? "text-red-500"
-                : "text-green-600"
-            }`}
-          >
-            {feedbackMessage}
-          </p>
-        )}
-
-        {/* Grille des questions */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-          {questions
-            .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
-            .map(({ fraction1, fraction2 }, index) => (
-              <div key={index} className="flex items-center gap-4 bg-white bg-opacity-60 p-4 rounded-lg shadow">
-                <div className="bg-blue-500 text-white py-3 px-5 rounded-lg font-bold text-lg whitespace-nowrap">
-                  {fraction1} + {fraction2}
-                </div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className="border border-gray-400 p-3 rounded w-32 text-center text-black text-lg"
-                  value={answers[currentPage * questionsPerPage + index]}
-                  onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-                />
+      {/* Questions */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
+        {questions
+          .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ fraction1, fraction2 }, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-4 bg-[#f4e3a1] py-4 px-5 rounded-lg shadow text-lg"
+            >
+              <div className="bg-blue-500 text-white py-2 px-4 rounded font-bold">
+                {fraction1} + {fraction2}
               </div>
-            ))}
-        </div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-3 rounded w-32 text-center text-black"
+                value={answers[currentPage * questionsPerPage + index]}
+                onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+              />
+            </div>
+          ))}
+      </div>
 
-        {/* Navigation */}
-        <div className="mt-8 flex flex-wrap gap-4 justify-center">
-          <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
-            Précédent
-          </button>
-          <button onClick={handleValidation} className="bg-blue-600 text-white py-3 px-6 rounded font-bold">
-            Valider les réponses
-          </button>
-          <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-            Suivant
-          </button>
-        </div>
+      {/* Boutons de navigation */}
+      <div className="mt-10 flex gap-4 flex-wrap justify-center">
+        <button onClick={handlePreviousPage} className="bg-gray-600 text-white py-3 px-6 rounded font-bold">
+          Précédent
+        </button>
+        <button onClick={handleValidation} className="bg-blue-600 text-white py-3 px-6 rounded font-bold">
+          Valider les réponses
+        </button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
+          Suivant
+        </button>
       </div>
     </div>
   );
