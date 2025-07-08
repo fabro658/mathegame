@@ -136,11 +136,8 @@ return (
 
     {/* Plantes sur la bande de sable */}
     <div className="plants">
-      <div className="plant"><div className="leaves plant-1"></div></div>
-      <div className="plant"><div className="leaves plant-2"></div></div>
-      <div className="plant"><div className="leaves plant-3"></div></div>
-      <div className="plant"><div className="leaves plant-1"></div></div>
-    </div>
+      <div className="plant"><div className="leaves plant-2"></div></div> 
+      </div>
 
     {/* Boutons navigation */}
     <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-30">

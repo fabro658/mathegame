@@ -130,7 +130,14 @@ export default function SoustractionFractions() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
+  <div className="flex flex-col items-center justify-center min-h-screen text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
+    {/* Bande de sable */}
+    <div className="sable"></div>
+
+    {/* Plantes sur la bande de sable */}
+    <div className="plants">
+      <div className="plant"><div className="leaves plant-2"></div></div>
+  </div>
 
       {/* Bande de sable */}
       <div className="sable"></div>      {/* Boutons de navigation */}
