@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Cell = 0 | 1;
@@ -157,16 +157,6 @@ export default function AreaByCounting() {
   const circumference = 2 * Math.PI * radius;
   const completedAnswers = answers.filter((a) => a.trim() !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-    // Générer les étoiles une seule fois
-    const stars = useMemo(() => {
-      return Array.from({ length: 120 }).map((_, i) => {
-        const size = Math.random() < 0.5 ? 2 : 3;
-        const color = Math.random() < 0.5 ? "white" : "yellow";
-        const top = Math.random() * 100;
-        const left = Math.random() * 100;
-        return { id: i, size, color, top, left };
-      });
-    }, []);
 
   return (
     <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
