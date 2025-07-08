@@ -144,41 +144,41 @@ export default function SoustractionFractions() {
         Retour
       </Link>
 
-      {/* Cercle de progression en haut à gauche */}
-<div className="absolute top-4 left-4 w-32 h-32">
-  <svg className="transform -rotate-90" width="100%" height="100%">
-    <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-    <circle
-      cx="50%"
-      cy="50%"
-      r={radius}
-      fill="none"
-      stroke="#3b82f6"
-      strokeWidth={strokeWidth}
-      strokeDasharray={circumference}
-      strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-      className="transition-all duration-500"
-    />
-  </svg>
-  <div className="absolute inset-0 flex items-center justify-center">
-    <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-  </div>
-</div>
-<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <h1 className="text-4xl font-bold mb-6">Soustraction de Fractions</h1>
 
-{/* Feedback */}
-{feedbackMessage && (
-  <p
-    className={`text-xl mb-4 text-center ${
-      feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
-        ? "text-red-500" //  Messages d'erreur en rouge
-        : "text-green-500" // Messages de succès en vert
-    }`}
-  >
-    {feedbackMessage}
-  </p>
-)}
+    {/* Cercle de progression */}
+    <div className="absolute top-4 left-4 w-32 h-32 z-30">
+      <svg className="transform -rotate-90" width="100%" height="100%">
+        <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
+        <circle
+          cx="50%"
+          cy="50%"
+          r={radius}
+          fill="none"
+          stroke="#3b82f6"
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
+          className="transition-all duration-500"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+      </div>
+    </div>
+
+    {/* Titre */}
+    <h1 className="text-4xl font-bold mb-6 z-10">Soustraction de Fractions</h1>
+
+    {/* Feedback */}
+    {feedbackMessage && (
+      <p className={`text-xl mb-4 text-center z-10 ${
+        feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+          ? "text-red-500"
+          : "text-green-500"
+      }`}>
+        {feedbackMessage}
+      </p>
+    )}
 
 
       {/* Questions et réponses */}
@@ -192,17 +192,17 @@ export default function SoustractionFractions() {
               className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index]}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
+       />
+        </div>
+      ))}
+    </div>
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
-      </div>
+    {/* Boutons de page */}
+    <div className="mt-6 flex gap-4 z-10">
+      <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
+      <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+      <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
     </div>
-    </div>
-  );
+  </div>
+);
 }
