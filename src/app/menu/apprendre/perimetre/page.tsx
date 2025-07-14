@@ -36,9 +36,9 @@ const TriangleIllustration = () => (
       <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
       <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
       <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
-      <text x="160" y="70" textAnchor="middle" fontSize="14" transform="rotate(45 160,70)">9 cm</text>
+      <text x="160" y="70" textAnchor="middle" fontSize="14" transform="rotate(45 160,70)">8 cm</text>
     </svg>
-    <p className="mt-4 font-bold text-center">Périmètre = 10 + 8 + 9 = 27 cm</p>
+    <p className="mt-4 font-bold text-center">Périmètre = 10 + 8 + 8 = 26 cm</p>
   </div>
 );
 
@@ -84,7 +84,7 @@ export default function PerimetreLearning() {
       name: "Triangle",
       description: "Le périmètre d'un triangle est la somme de ses trois côtés.",
       formula: "Périmètre = côté1 + côté2 + côté3",
-      example: "Si les côtés mesurent 10 cm, 8 cm et 9 cm, le périmètre est : 10 + 8 + 9 = 27 cm",
+      example: "Si les côtés mesurent 10 cm, 8 cm et 8 cm, le périmètre est : 10 + 8 + 8 = 26 cm",
       imageComponent: <TriangleIllustration />
     },
     {
