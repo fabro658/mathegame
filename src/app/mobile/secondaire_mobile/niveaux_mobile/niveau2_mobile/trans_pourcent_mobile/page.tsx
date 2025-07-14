@@ -126,6 +126,7 @@ export default function ConversionDecimale() {
             </button>
             <input
               type="text"
+              inputMode="numeric"
               className="border border-gray-400 p-4 rounded-lg w-1/3 text-center text-lg"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}

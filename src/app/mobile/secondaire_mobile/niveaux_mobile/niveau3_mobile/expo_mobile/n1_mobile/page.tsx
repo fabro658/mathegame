@@ -91,7 +91,9 @@ export default function ExponentsPractice() {
         </Link>
       </div>
       <div className="absolute top-4 right-4">
-        <Link href="/mobile/secondaire_mobile/niveau3_mobile/expo_mobile" className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
+        <Link 
+        href="/mobile/secondaire_mobile/niveau3_mobile/niveau3_mobile/expo_mobile" 
+        className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
           Retour
         </Link>
       </div>
