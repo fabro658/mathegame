@@ -105,35 +105,23 @@ export default function FractionIdentification() {
     }
   };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black px-4 pt-20 pb-10 w-full overflow-y-auto">
-      {/* Navigation */}
-      <Link
-        href="/menu/apprendre"
-        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
-      >
-        Menu
-      </Link>
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
-        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
-      >
-        Retour
-      </Link>
+      {/* Navigation en haut */}
+      <div className="fixed top-4 w-full px-4 flex justify-between z-10">
+        <Link
+          href="/menu/apprendre"
+          className="bg-black text-white py-3 px-8 rounded font-bold"
+        >
+          Menu
+        </Link>
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
+          className="bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        >
+          Retour
+        </Link>
+      </div>
 
       <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center">Complète la fraction</h1>
 
@@ -143,9 +131,9 @@ export default function FractionIdentification() {
         </p>
       )}
 
-      {/* Questions en colonne */}
+      {/* Questions */}
       <div className="flex flex-col items-center min-h-screen bg-gray-100 text-black py-6 px-4">
-      {denominators
+        {denominators
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
           .map((den, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
@@ -168,11 +156,14 @@ export default function FractionIdentification() {
           })}
       </div>
 
-      {/* Boutons */}
-      <div className="mt-10 flex gap-4 justify-center w-full px-4 pb-10">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-5 rounded font-bold">Précédent</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Valider</button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-5 rounded font-bold">Suivant</button>
+      {/* Bouton Valider */}
+      <div className="mt-10 w-full flex justify-center px-4 pb-10">
+        <button
+          onClick={handleValidation}
+          className="bg-blue-600 text-white py-4 px-10 rounded font-bold w-full max-w-sm text-xl"
+        >
+          Valider les réponses
+        </button>
       </div>
     </div>
   );
