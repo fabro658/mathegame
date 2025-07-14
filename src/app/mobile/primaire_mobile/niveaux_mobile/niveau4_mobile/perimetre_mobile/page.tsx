@@ -105,49 +105,49 @@ export default function Perimetre() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile/perimetre_mobile"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
-      >
-        Apprendre
-      </Link>
-      <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
-      >
-        Retour
-      </Link>
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
+  <Link
+    href="/mobile/menu_mobile/apprendre_mobile/perimetre_mobile"
+    className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+  >
+    Apprendre
+  </Link>
+  <Link
+    href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
+    className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+  >
+    Retour
+  </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
+  <h1 className="text-3xl font-bold mb-6">Questions sur le périmètre</h1>
 
-      {feedbackMessage && (
-        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
-          {feedbackMessage}
-        </p>
-      )}
+  {feedbackMessage && (
+    <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
+      {feedbackMessage}
+    </p>
+  )}
 
-      {/* Affichage des questions */}
-      <div className="flex flex-col gap-4">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-            <div className="font-bold text-black">{questionText}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
-        ))}
+  {/* Affichage des questions */}
+  <div className="flex flex-col gap-4">
+    {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+      <div key={index} className="flex flex-col items-center gap-2">
+        <div className="font-bold text-black text-center">{questionText}</div>
+        <input
+          type="text"
+          inputMode="numeric"
+          className="border border-gray-400 p-4 rounded w-64 h-12 text-center text-black text-lg mx-auto"
+          value={answers[currentPage * questionsPerPage + index] || ""}
+          onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
+        />
       </div>
+    ))}
+  </div>
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
-          Valider les réponses
-        </button>
-      </div>
-    </div>
+  <div className="mt-6 flex gap-4">
+    <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-8 rounded font-bold">
+      Valider les réponses
+    </button>
+  </div>
+</div>
   );
 }

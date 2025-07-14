@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Aire() {
-  const totalQuestions = 36; // 36 questions au total
+  const totalQuestions = 30; // 30 questions au total
   const questionsPerPage = 3; // 3 questions par vague
 
   const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string }[]>([]); // Typage explicite
@@ -101,16 +101,16 @@ export default function Aire() {
     }
   };
 
- return (
+  return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
       <Link
-        href="/mobile/menu_mobile/apprendre_mobile/perimetre_mobile"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
+        href="/mobile/menu_mobile/apprendre_mobile/aire_mobile"
+        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold"
       >
         Apprendre
       </Link>
       <Link
-        href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
+    href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
         className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold"
       >
         Retour
@@ -125,14 +125,14 @@ export default function Aire() {
       )}
 
       {/* Affichage des questions */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
-          <div key={index} className="flex flex-col items-start gap-2">
-            <div className="font-bold text-black">{questionText}</div>
+          <div key={index} className="flex flex-col items-center gap-2">
+            <div className="font-bold text-black text-center">{questionText}</div>
             <input
               type="text"
               inputMode="numeric"
-              className="border border-gray-400 p-6 rounded w-96 h-16 text-center text-black text-lg mx-auto"
+              className="border border-gray-400 p-4 rounded w-64 h-12 text-center text-black text-lg"
               value={answers[currentPage * questionsPerPage + index] || ""}
               onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
             />
