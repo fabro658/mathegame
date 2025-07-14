@@ -18,17 +18,17 @@ export default function Page() {
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile">
-          <div className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center">
+          <div className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-2xl shadow-md text-center">
             Périmètre
           </div>
         </Link>
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile">
-          <div className="bg-red-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center">
+          <div className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-2xl shadow-md text-center">
             Géométrie
           </div>
         </Link>
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile">
-          <div className="bg-green-500 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg text-2xl shadow-md text-center">
+          <div className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-2xl shadow-md text-center">
             Aire
           </div>
         </Link>
