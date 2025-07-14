@@ -20,12 +20,62 @@ const Axes = () => (
 );
 
 // Fonctions visuelles
-const LinearFunctionVisual = () => (
-  <svg width="300" height="300" viewBox="-10 -10 20 20">
-    <Axes />
-    <line x1="-5" y1={-(2 * -5 + 1)} x2="5" y2={-(2 * 5 + 1)} stroke="blue" strokeWidth="0.2" />
-  </svg>
-);
+const LinearFunctionVisual = () => {
+  const [a, setA] = useState(2); // pente
+  const [b, setB] = useState(1); // ordonnée à l'origine
+  const [showParams, setShowParams] = useState(false);
+
+  const x1 = -5;
+  const y1 = a * x1 + b;
+  const x2 = 5;
+  const y2 = a * x2 + b;
+
+  return (
+    <div className="flex flex-col items-center">
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <line x1={x1} y1={-y1} x2={x2} y2={-y2} stroke="blue" strokeWidth="0.2" />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a (pente) = {a}</label>
+            <input
+              type="range"
+              min={-5}
+              max={5}
+              step={0.1}
+              value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b (ordonnée à l’origine) = {b}</label>
+            <input
+              type="range"
+              min={-10}
+              max={10}
+              step={0.1}
+              value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 const QuadraticFunctionVisual = () => {
   const [a, setA] = useState(-1);
