@@ -39,17 +39,9 @@ const QuadraticFunctionVisual = () => {
     return `${x},${-y}`;
   }).join(" ");
 
-  // Choisir le fond en fonction de "a"
-  const backgroundColor = a > 0 ? "#cceeff" : a < 0 ? "#fff9cc" : "#eeeeee";
-
   return (
     <div className="flex flex-col items-center">
-      <svg
-        width="300"
-        height="300"
-        viewBox="-10 -10 20 20"
-        style={{ backgroundColor }}
-      >
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
         <Axes />
         <polyline fill="none" stroke="green" strokeWidth="0.2" points={points} />
       </svg>
@@ -104,7 +96,6 @@ const QuadraticFunctionVisual = () => {
     </div>
   );
 };
-
 
 const AbsoluteFunctionVisual = () => {
   const points = Array.from({ length: 201 }, (_, i) => {
