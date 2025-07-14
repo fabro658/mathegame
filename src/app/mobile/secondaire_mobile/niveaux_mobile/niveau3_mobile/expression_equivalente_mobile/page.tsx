@@ -121,7 +121,7 @@ export default function EquationsEquivalentes() {
         <Link href="/menu/apprendre">
           <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile">
           <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">Retour</div>
         </Link>
       </div>

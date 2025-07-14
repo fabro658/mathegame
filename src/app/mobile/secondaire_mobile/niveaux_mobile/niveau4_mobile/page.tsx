@@ -33,11 +33,6 @@ export default function Niveau4() {
           className="w-64 sm:w-80 md:w-96 h-16 sm:h-20 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
           Volume
         </Link>
-        <Link
-          href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
-          className="w-64 sm:w-80 md:w-96 h-16 sm:h-20 rounded-full border border-transparent transition-colors flex items-center justify-center bg-white text-black gap-2 hover:bg-gray-200 text-lg sm:text-xl font-bold">
-          Géométrie
-        </Link>
       </div>
     </div>
   );
