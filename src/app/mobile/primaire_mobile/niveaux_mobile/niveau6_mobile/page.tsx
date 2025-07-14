@@ -20,7 +20,7 @@ export default function Page() {
         {/* Le bouton centré */}
         <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile/priooperation_mobile"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-2xl shadow-md text-center">
+         className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]">
           Priorité d&#39;opération
         </a>
       </div>
