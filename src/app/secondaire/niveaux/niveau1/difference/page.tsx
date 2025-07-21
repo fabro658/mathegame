@@ -14,30 +14,27 @@ export default function Addition() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); // Pour garder une trace des questions incorrectes
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
-  // Générer les questions une seule fois lors du montage du composant
   useEffect(() => {
     const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
       if (index < 12) {
-        // 12 premières questions : 2 chiffres (10-99)
         return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
       } else if (index < 24) {
-        // 12 suivantes : 3 chiffres (100-999)
-        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
-      } else {
-        // Dernières : 4 chiffres (1000-9999)
         return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+      } else {
+        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
       }
     });
+    setQuestions(generatedQuestions);
+  }, []);
 
-   setQuestions(generatedQuestions);
-  }, []);  const handleChange = (index: number, value: string) => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     const parsedValue = parseInt(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(null); // Réinitialiser les messages de feedback
+    setFeedbackMessage(null);
   };
 
   const handleValidation = () => {
@@ -49,25 +46,23 @@ export default function Addition() {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
-  
-
 
     let hasError = false;
     const newAnswers = [...answers];
-    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [a, b] = questions[globalIndex];
-      if (answer !== a + b) {
-        newAnswers[globalIndex] = null; // Réinitialiser seulement les mauvaises réponses
+      if (answer !== Math.floor(a / b)) {
+        newAnswers[globalIndex] = null;
         incorrect.push(globalIndex);
         hasError = true;
       }
     });
 
     setAnswers(newAnswers);
-        setIncorrectAnswers(incorrect); // Garder trace des réponses incorrectes
+    setIncorrectAnswers(incorrect);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
@@ -82,20 +77,19 @@ export default function Addition() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
   const completedAnswers = answers.filter((answer) => answer !== null).length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
@@ -123,6 +117,7 @@ export default function Addition() {
         Retour
       </Link>
 
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -158,21 +153,32 @@ export default function Addition() {
         </p>
       )}
 
-      {/* Questions et réponses */}
+      {/* Questions */}
       <div className="grid grid-cols-3 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{numerator} ÷ {denominator}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
-        ))}
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([numerator, denominator], index) => {
+          const globalIndex = currentPage * questionsPerPage + index;
+          const isIncorrect = incorrectAnswers.includes(globalIndex);
+
+          return (
+            <div key={index} className="flex items-center gap-4">
+              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                {numerator} ÷ {denominator}
+              </div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className={`border p-4 rounded w-32 text-center text-black text-lg ${
+                  isIncorrect ? "border-red-500" : "border-gray-400"
+                }`}
+                value={answers[globalIndex] ?? ""}
+                onChange={(e) => handleChange(globalIndex, e.target.value)}
+              />
+            </div>
+          );
+        })}
       </div>
+
+      {/* Navigation */}
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
@@ -181,4 +187,3 @@ export default function Addition() {
     </div>
   );
 }
-
