@@ -55,7 +55,7 @@ export default function Primaire() {
   </Link>
   <Link href="/secondaire/niveaux/niveau3">
     <div className="w-72 rounded-lg bg-red-500 text-white hover:bg-red-600 text-xl font-semibold py-4 px-6 text-center shadow-lg">
-      Probabilités
+      Notions
     </div>
   </Link>
   <Link href="/secondaire/niveaux/niveau4">

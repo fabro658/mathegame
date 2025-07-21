@@ -93,15 +93,6 @@ export default function Addition() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
-      
-      {/* Décor ciel et nuages */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
-        </div>
-      </div>
 
       {/* Boutons de navigation */}
       <Link
@@ -138,7 +129,7 @@ export default function Addition() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Division</h1>
+      <h1 className="text-3xl font-bold mb-6">Différence</h1>
 
       {/* Feedback */}
       {feedbackMessage && (

@@ -41,11 +41,6 @@ export default function Niveau1() {
           Soustraction de fraction
         </Link>
         <Link
-          href="/secondaire/niveaux/niveau2/trans_pourcent"
-          className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
-          Transformation de nombres
-        </Link>
-        <Link
           href="/secondaire/niveaux/niveau2/fractionreduite"
           className="w-full rounded-lg bg-white text-black hover:bg-gray-200 text-xl font-semibold py-4 px-6 text-center shadow-md">
           Fraction réduite
