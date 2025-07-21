@@ -2,24 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import React from 'react';
 
-// Représentation d'une question avec SVG, bonne réponse et identifiant
 interface AireQuestion {
   id: number;
   name: string;
   correctAnswer: number;
-  Illustration: () => JSX.Element;
+  Illustration: React.FC;
 }
 
-// Illustrations SVG
-const Carre = () => (
+// Composants SVG pour les formes
+const Carre: React.FC = () => (
   <svg width="120" height="120">
     <rect x="20" y="20" width="80" height="80" stroke="black" fill="none" strokeWidth="2" />
     <text x="60" y="15" textAnchor="middle">4 cm</text>
     <text x="105" y="60" textAnchor="middle" transform="rotate(90, 105, 60)">4 cm</text>
   </svg>
 );
-const Rectangle = () => (
+
+const Rectangle: React.FC = () => (
   <svg width="160" height="100">
     <rect x="20" y="20" width="120" height="60" stroke="black" fill="none" strokeWidth="2" />
     <text x="80" y="15" textAnchor="middle">12 cm</text>
@@ -27,21 +28,31 @@ const Rectangle = () => (
   </svg>
 );
 
-// Génération de questions fixes avec leurs SVG et bonnes réponses
-const generateAireQuestions = (): AireQuestion[] => [
-  { id: 0, name: "Carré", correctAnswer: 16, Illustration: Carre },
-  { id: 1, name: "Rectangle", correctAnswer: 72, Illustration: Rectangle },
-  // tu peux en ajouter d'autres ici (triangle, cercle, trapèze)
-];
+// Génère dynamiquement les questions
+const generateAireQuestions = (): AireQuestion[] => {
+  const formes: AireQuestion[] = [
+    { id: 0, name: 'Carré', correctAnswer: 16, Illustration: Carre },
+    { id: 1, name: 'Rectangle', correctAnswer: 72, Illustration: Rectangle },
+    // Tu peux ajouter d'autres formes ici
+  ];
+  return formes.sort(() => Math.random() - 0.5); // Mélange les questions
+};
 
 export default function AireAvecSVG() {
   const questionsPerPage = 2;
-  const questions = generateAireQuestions();
-  const totalPages = Math.ceil(questions.length / questionsPerPage);
-
+  const [questions, setQuestions] = useState<AireQuestion[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(""));
-  const [feedback, setFeedback] = useState<string[]>(Array(questions.length).fill(""));
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (questions.length === 0) {
+      const qs = generateAireQuestions();
+      setQuestions(qs);
+      setAnswers(Array(qs.length).fill(''));
+      setFeedback(Array(qs.length).fill(''));
+    }
+  }, [questions]);
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -52,15 +63,16 @@ export default function AireAvecSVG() {
   const validateAnswer = (index: number) => {
     const val = parseFloat(answers[index]);
     if (isNaN(val)) {
-      feedback[index] = "Veuillez entrer un nombre";
+      feedback[index] = 'Veuillez entrer un nombre';
     } else if (Math.abs(val - questions[index].correctAnswer) < 0.01) {
-      feedback[index] = "Réponse correcte";
+      feedback[index] = 'Réponse correcte';
     } else {
-      feedback[index] = "Réponse erronée";
+      feedback[index] = 'Réponse erronée';
     }
     setFeedback([...feedback]);
   };
 
+  const totalPages = Math.ceil(questions.length / questionsPerPage);
   const start = currentPage * questionsPerPage;
   const currentQuestions = questions.slice(start, start + questionsPerPage);
 
@@ -98,7 +110,7 @@ export default function AireAvecSVG() {
                 Valider
               </button>
               {feedback[globalIndex] && (
-                <span className={`font-bold ${feedback[globalIndex] === "Réponse correcte" ? "text-green-400" : "text-red-400"}`}>
+                <span className={`font-bold ${feedback[globalIndex] === 'Réponse correcte' ? 'text-green-400' : 'text-red-400'}`}>
                   {feedback[globalIndex]}
                 </span>
               )}
@@ -107,13 +119,12 @@ export default function AireAvecSVG() {
         );
       })}
 
-      {/* Pagination */}
       <div className="flex justify-between mt-10">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
           disabled={currentPage === 0}
           className={`px-6 py-2 rounded font-bold ${
-            currentPage === 0 ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            currentPage === 0 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Page précédente
@@ -122,7 +133,7 @@ export default function AireAvecSVG() {
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages - 1))}
           disabled={currentPage === totalPages - 1}
           className={`px-6 py-2 rounded font-bold ${
-            currentPage === totalPages - 1 ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            currentPage === totalPages - 1 ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Page suivante
