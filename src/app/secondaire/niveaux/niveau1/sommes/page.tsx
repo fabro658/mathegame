@@ -25,10 +25,10 @@ export default function Addition() {
         return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
       } else if (index < 24) {
         // 12 suivantes : 3 chiffres (100-999)
-        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
+        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
       } else {
         // Dernières : 4 chiffres (1000-9999)
-        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
       }
     });
     setQuestions(generatedQuestions);
