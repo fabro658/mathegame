@@ -1,207 +1,131 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
-const CubeIllustration = ({ side }: { side: number }) => (
+// Représentation d'une question avec SVG, bonne réponse et identifiant
+interface AireQuestion {
+  id: number;
+  name: string;
+  correctAnswer: number;
+  Illustration: () => JSX.Element;
+}
+
+// Illustrations SVG
+const Carre = () => (
   <svg width="120" height="120">
-    <rect x="20" y="20" width="60" height="60" fill="#cce5ff" stroke="black" />
-    <text x="50" y="15" textAnchor="middle" fontSize="12">{side} cm</text>
-    <text x="90" y="50" fontSize="12" transform="rotate(90 90,50)">{side} cm</text>
+    <rect x="20" y="20" width="80" height="80" stroke="black" fill="none" strokeWidth="2" />
+    <text x="60" y="15" textAnchor="middle">4 cm</text>
+    <text x="105" y="60" textAnchor="middle" transform="rotate(90, 105, 60)">4 cm</text>
+  </svg>
+);
+const Rectangle = () => (
+  <svg width="160" height="100">
+    <rect x="20" y="20" width="120" height="60" stroke="black" fill="none" strokeWidth="2" />
+    <text x="80" y="15" textAnchor="middle">12 cm</text>
+    <text x="10" y="50" textAnchor="middle" transform="rotate(-90, 10, 50)">6 cm</text>
   </svg>
 );
 
-const PavéIllustration = ({ l, L, h }: { l: number; L: number; h: number }) => (
-  <svg width="200" height="120">
-    <rect x="40" y="40" width="100" height="60" fill="#ccf2d6" stroke="black" />
-    <text x="90" y="30" textAnchor="middle" fontSize="12">{L} cm</text>
-    <text x="30" y="70" textAnchor="middle" fontSize="12" transform="rotate(-90 30,70)">{l} cm</text>
-    <text x="90" y="115" fontSize="12">h = {h} cm</text>
-  </svg>
-);
+// Génération de questions fixes avec leurs SVG et bonnes réponses
+const generateAireQuestions = (): AireQuestion[] => [
+  { id: 0, name: "Carré", correctAnswer: 16, Illustration: Carre },
+  { id: 1, name: "Rectangle", correctAnswer: 72, Illustration: Rectangle },
+  // tu peux en ajouter d'autres ici (triangle, cercle, trapèze)
+];
 
-const CylindreIllustration = ({ r, h }: { r: number; h: number }) => (
-  <svg width="120" height="150">
-    <ellipse cx="60" cy="40" rx={r * 3} ry="10" fill="#ffe0b3" stroke="black" />
-    <rect x={60 - r * 3} y="40" width={r * 6} height="80" fill="none" stroke="black" />
-    <text x="60" y="25" textAnchor="middle" fontSize="12">r = {r} cm</text>
-    <text x="60" y="135" textAnchor="middle" fontSize="12">h = {h} cm</text>
-  </svg>
-);
-
-// (ajoute de la même façon les illustrations : PrismeTriangulaireIllustration, PyramideIllustration, ConeIllustration…)
-
-export default function Volume() {
-  const totalQuestions = 30;
+export default function AireAvecSVG() {
   const questionsPerPage = 2;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+  const questions = generateAireQuestions();
+  const totalPages = Math.ceil(questions.length / questionsPerPage);
 
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [questions, setQuestions] = useState<{ questionText: string; correctAnswer: string; svg: React.ReactNode }[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-
-  const randomFloat = (min: number, max: number, decimals: number = 1) =>
-    parseFloat((Math.random() * (max - min) + min).toFixed(decimals));
-
-  const generateQuestions = () =>
-    Array.from({ length: totalQuestions }, () => {
-      const shapeType = Math.floor(Math.random() * 3); // limité à 3 formes pour commencer (ajustable)
-      let questionText = "";
-      let correctAnswer = 0;
-      let svg: React.ReactNode = null;
-
-      if (shapeType === 0) {
-        const side = randomFloat(2, 10);
-        questionText = `Calcule le volume d'un cube dont le côté mesure ${side} cm.`;
-        correctAnswer = side ** 3;
-        svg = <CubeIllustration side={side} />;
-      } else if (shapeType === 1) {
-        const length = randomFloat(5, 15);
-        const width = randomFloat(3, 10);
-        const height = randomFloat(2, 10);
-        questionText = `Un pavé droit mesure ${length} cm de long, ${width} cm de large et ${height} cm de haut.`;
-        correctAnswer = length * width * height;
-        svg = <PavéIllustration L={length} l={width} h={height} />;
-      } else {
-        const radius = randomFloat(2, 5);
-        const height = randomFloat(5, 12);
-        questionText = `Calcule le volume d'un cylindre de rayon ${radius} cm et de hauteur ${height} cm.`;
-        correctAnswer = 3.14 * radius ** 2 * height;
-        svg = <CylindreIllustration r={radius} h={height} />;
-      }
-
-      return {
-        questionText,
-        correctAnswer: correctAnswer.toFixed(2),
-        svg,
-      };
-    });
-
-  useEffect(() => {
-    setQuestions(generateQuestions());
-  }, []);
-
-  const completionPercentage = Math.round(
-    (answers.filter((a) => a !== null && a !== "").length / totalQuestions) * 100
-  );
+  const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(""));
+  const [feedback, setFeedback] = useState<string[]>(Array(questions.length).fill(""));
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value.trim() !== "" ? value : null;
+    newAnswers[index] = value;
     setAnswers(newAnswers);
-    setFeedbackMessage(null);
   };
 
-  const handleValidation = () => {
-    const start = currentPage * questionsPerPage;
-    const end = start + questionsPerPage;
-    const pageAnswers = answers.slice(start, end);
-    const corrects = questions.slice(start, end).map((q) => parseFloat(q.correctAnswer));
-    const updated = [...answers];
-
-    let allCorrect = true;
-    pageAnswers.forEach((answer, i) => {
-      if (parseFloat(answer || "0").toFixed(2) !== corrects[i].toFixed(2)) {
-        updated[start + i] = null;
-        allCorrect = false;
-      }
-    });
-
-    setAnswers(updated);
-    setFeedbackMessage(
-      allCorrect
-        ? currentPage < totalQuestions / questionsPerPage - 1
-          ? "Toutes les réponses sont correctes !"
-          : "Bravo ! Vous avez terminé toutes les questions."
-        : "Certaines réponses sont incorrectes."
-    );
-
-    if (allCorrect && currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage((prev) => prev + 1);
+  const validateAnswer = (index: number) => {
+    const val = parseFloat(answers[index]);
+    if (isNaN(val)) {
+      feedback[index] = "Veuillez entrer un nombre";
+    } else if (Math.abs(val - questions[index].correctAnswer) < 0.01) {
+      feedback[index] = "Réponse correcte";
+    } else {
+      feedback[index] = "Réponse erronée";
     }
+    setFeedback([...feedback]);
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
-      setFeedbackMessage(null);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) {
-      setCurrentPage((prev) => prev + 1);
-      setFeedbackMessage(null);
-    }
-  };
+  const start = currentPage * questionsPerPage;
+  const currentQuestions = questions.slice(start, start + questionsPerPage);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white text-black relative px-4 py-8">
-      <Link href="/menu/apprendre" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold">
-        Apprendre
-      </Link>
-      <Link href="/secondaire/niveaux/niveau4" className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold">
+    <div className="min-h-screen bg-[#0b0c2a] text-white p-6 space-y-10">
+      <Link href="/menu/apprendre" className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold">
         Retour
       </Link>
 
-      {/* Progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
-        </div>
-      </div>
+      <h1 className="text-3xl font-bold text-center">Calcul d’aire - Questions</h1>
 
-      <h1 className="text-3xl font-bold mb-6">Volume – Formes 3D illustrées</h1>
-
-      {feedbackMessage && (
-        <p className={`text-xl mb-4 text-center ${feedbackMessage.includes("incorrectes") ? "text-red-500" : "text-green-600"}`}>
-          {feedbackMessage}
-        </p>
-      )}
-
-      {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((q, i) => {
-        const index = currentPage * questionsPerPage + i;
+      {currentQuestions.map((q, idx) => {
+        const globalIndex = start + idx;
         return (
-          <div key={index} className="mb-8 w-full max-w-lg bg-gray-100 p-4 rounded shadow">
-            <div className="flex justify-center mb-4">{q.svg}</div>
-            <p className="text-lg font-semibold mb-2">{q.questionText}</p>
-            <input
-              type="text"
-              value={answers[index] || ""}
-              onChange={(e) => handleChange(index, e.target.value)}
-              className="border p-2 w-full rounded"
-              placeholder="Réponse en cm³"
-            />
+          <div key={q.id} className="bg-[#1e1f3d] p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold mb-2">Question {globalIndex + 1} : {q.name}</h2>
+            <div className="flex justify-center mb-4">
+              <q.Illustration />
+            </div>
+            <label htmlFor={`answer-${q.id}`} className="block mb-2">
+              Donne l’aire de cette forme (en cm²) :
+            </label>
+            <div className="flex flex-col md:flex-row gap-4 items-start">
+              <input
+                id={`answer-${q.id}`}
+                type="text"
+                className="text-black p-2 rounded border border-gray-400"
+                value={answers[globalIndex]}
+                onChange={(e) => handleChange(globalIndex, e.target.value)}
+              />
+              <button
+                onClick={() => validateAnswer(globalIndex)}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Valider
+              </button>
+              {feedback[globalIndex] && (
+                <span className={`font-bold ${feedback[globalIndex] === "Réponse correcte" ? "text-green-400" : "text-red-400"}`}>
+                  {feedback[globalIndex]}
+                </span>
+              )}
+            </div>
           </div>
         );
       })}
 
-      <div className="mt-6 flex gap-4">
-        <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage === 0}>
-          Précédent
+      {/* Pagination */}
+      <div className="flex justify-between mt-10">
+        <button
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
+          disabled={currentPage === 0}
+          className={`px-6 py-2 rounded font-bold ${
+            currentPage === 0 ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          }`}
+        >
+          Page précédente
         </button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-          Valider
-        </button>
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold" disabled={currentPage >= Math.floor(totalQuestions / questionsPerPage) - 1}>
-          Suivant
+        <button
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages - 1))}
+          disabled={currentPage === totalPages - 1}
+          className={`px-6 py-2 rounded font-bold ${
+            currentPage === totalPages - 1 ? "bg-gray-600 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          }`}
+        >
+          Page suivante
         </button>
       </div>
     </div>
