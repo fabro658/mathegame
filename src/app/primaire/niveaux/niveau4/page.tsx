@@ -57,21 +57,27 @@ export default function Niveau4() {
 
       </div>
 
-      {/* Grille des missions */}
-      <div className="grid grid-cols-2 gap-8 z-10 max-w-4xl">
-        <a
-          href="/primaire/niveaux/niveau4/perimetre"
-          className="bg-yellow-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105">          Périmètre
-        </a>
-        <a
-          href="/primaire/niveaux/niveau4/geometrie"
-          className="bg-green-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105">          Géométrie
-        </a>
-        <a
-          href="/primaire/niveaux/niveau4/aire"
-          className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105">          Aire
-        </a>
-      </div>
+{/* Grille des missions */}
+<div className="grid grid-cols-2 gap-8 z-10 max-w-4xl">
+  <a
+    href="/primaire/niveaux/niveau4/perimetre"
+    className="bg-yellow-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+  >
+    Périmètre
+  </a>
+  <a
+    href="/primaire/niveaux/niveau4/geometrie"
+    className="bg-green-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105"
+  >
+    Géométrie
+  </a>
+  <a
+    href="/primaire/niveaux/niveau4/aire"
+    className="bg-red-500 text-white font-bold text-3xl px-12 py-6 rounded-full text-center transition transform hover:scale-105 col-span-2 justify-self-center"
+  >
+    Aire
+  </a>
+</div>
     </div>
   );
 }
