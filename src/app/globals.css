@@ -1540,14 +1540,76 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }
-.island {
+
+.body{
+  top: 30px;
+  width: 150px;
+  height: 70px;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle at top left, #fcd34d, #fbbf24); /* sable */
-  border-top-right-radius: 300px;
-  z-index: 1; /* <- derrière l'eau */
-  overflow: hidden;
+  background: #fff;
+  border-radius: 0% 50% 50% 50%;
+  left: 15px;
+}
+
+.wing{
+  position: absolute;
+left: 30px;
+top: -4px;
+width: 125px;
+  height: 60px;
+  background: #aaaaa9;
+  border-radius: 25% 75% 9% 91% / 64% 78% 22% 36%  ;   
+overflow: hidden;
+}
+
+.tail{
+position: absolute;
+background: #575556;
+width:120px;
+top : 20px;
+height: 30px;
+right: -40px;
+transform: rotate(20deg);
+border-radius: 0% 50% 0%;
+}
+
+.neck{
+position: absolute;
+top:20px;
+left: 20px;
+width: 30px;
+height: 30px;
+background: #fff;
+border-radius: 50% 50% 0 0;
+}
+
+.head{
+position: absolute;
+width: 50px;
+height: 50px;
+background: #fff;
+border-radius: 50% 50% 0% 50%;
+}
+
+.head::before{
+  content: "";
+   top: 10px;
+  left: 10px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #000;
+  border-radius: 50%;
+  border: 2px solid #f0c756;
+}
+
+.bec{
+  position: absolute;
+  top: 30px;
+  transform : translateY(-50%);
+  left: -26px;
+  width: 30px;
+  height: 15px;
+  background: #f0c756;
+  border-radius: 91% 9% 9% 91% / 100% 40% 60% 0%;
 }

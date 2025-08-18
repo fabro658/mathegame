@@ -17,43 +17,43 @@ export default function PrioOperation() {
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const generateQuestions = () => {
-      return Array.from({ length: totalQuestions }, (_, index) => {
-        let questionText = "", correctAnswer = "";
+  const generateQuestions = () => {
+    return Array.from({ length: totalQuestions }, (_, index) => {
+      let questionText = "", correctAnswer = "";
 
-        if (index < 10) {
-          const questionType = index % 5;
-          switch (questionType) {
-            case 0: questionText = " 2 + 3 × 4 ?"; correctAnswer = "14"; break;
-            case 1: questionText = "(2 + 3) × 4 ?"; correctAnswer = "20"; break;
-            case 2: questionText = "2 × 3 + 4 ?"; correctAnswer = "10"; break;
-            case 3: questionText = "6 - 2 × 3 ?"; correctAnswer = "0"; break;
-            case 4: questionText = "(6 - 2) × 3 ?"; correctAnswer = "12"; break;
-          }
-        } else if (index < 20) {
-          const a = Math.floor(Math.random() * 10) + 1;
-          const b = Math.floor(Math.random() * 10) + 1;
-          questionText = `${a} + ${b} × 2 ?`;
-          correctAnswer = (a + b * 2).toString();
-        } else {
-          const base = Math.floor(Math.random() * 6) + 2;
-          const exponent = Math.floor(Math.random() * 3) + 1;
-          questionText = `${base}ⁿ avec n = ${exponent} ?`;
-          correctAnswer = Math.pow(base, exponent).toString();
-
-          if (Math.random() > 0.5) {
-            const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `(${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
-            correctAnswer = Math.pow(baseAlt, exponent).toString();
-          }
+      if (index < 10) {
+        const questionType = Math.floor(Math.random() * 5); // 0 à 4
+        switch (questionType) {
+          case 0: questionText = "2 + 3 × 4 ?"; correctAnswer = "14"; break;
+          case 1: questionText = "(2 + 3) × 4 ?"; correctAnswer = "20"; break;
+          case 2: questionText = "2 × 3 + 4 ?"; correctAnswer = "10"; break;
+          case 3: questionText = "6 - 2 × 3 ?"; correctAnswer = "0"; break;
+          case 4: questionText = "(6 - 2) × 3 ?"; correctAnswer = "12"; break;
         }
+      } else if (index < 20) {
+        const a = Math.floor(Math.random() * 10) + 1;
+        const b = Math.floor(Math.random() * 10) + 1;
+        questionText = `${a} + ${b} × 2 ?`;
+        correctAnswer = (a + b * 2).toString();
+      } else {
+        const base = Math.floor(Math.random() * 6) + 2;
+        const exponent = Math.floor(Math.random() * 3) + 1;
+        questionText = `${base}ⁿ avec n = ${exponent} ?`;
+        correctAnswer = Math.pow(base, exponent).toString();
 
-        return { questionText, correctAnswer };
-      });
-    };
+        if (Math.random() > 0.5) {
+          const baseAlt = base + Math.floor(Math.random() * 4) + 1;
+          questionText = `(${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+          correctAnswer = Math.pow(baseAlt, exponent).toString();
+        }
+      }
 
-    setQuestions(generateQuestions());
-  }, []);
+      return { questionText, correctAnswer };
+    });
+  };
+
+  setQuestions(generateQuestions());
+}, []);
 
   const handleChange = (index: number, value: string): void => {
     const newAnswers = [...answers];
@@ -123,6 +123,14 @@ export default function PrioOperation() {
         </div>
     {/* Mer */}
     <div className="water"></div>
+  </div>
+  <div className="body">
+    <div className="wing">
+      <div className="tail"></div>
+      <div className="neck"></div>
+      <div className="head"></div>
+      <div className="bec"></div>
+    </div>
   </div>
 </div>
 
