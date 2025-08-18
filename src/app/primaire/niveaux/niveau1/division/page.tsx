@@ -21,17 +21,17 @@ export default function Division() {
         let denominator: number, quotient: number;
 
         if (index < 10) {
-          denominator = Math.floor(Math.random() * 10) + 1; // 1 à 10
-          quotient = Math.floor(Math.random() * 10) + 1;     // 1 à 10
+          denominator = Math.floor(Math.random() * 10) + 1;
+          quotient = Math.floor(Math.random() * 10) + 1;
         } else if (index < 20) {
-          denominator = Math.floor(Math.random() * 10) + 1;  // 1 à 10
-          quotient = Math.floor(Math.random() * 20) + 1;     // 1 à 20
+          denominator = Math.floor(Math.random() * 10) + 1;
+          quotient = Math.floor(Math.random() * 20) + 1;
         } else if (index < 30) {
-          denominator = Math.floor(Math.random() * 20) + 1;  // 1 à 20
-          quotient = Math.floor(Math.random() * 10) + 1;     // 1 à 10
+          denominator = Math.floor(Math.random() * 20) + 1;
+          quotient = Math.floor(Math.random() * 10) + 1;
         } else {
-          denominator = Math.floor(Math.random() * 50) + 1;  // 1 à 50
-          quotient = Math.floor(Math.random() * 5) + 1;      // 1 à 5
+          denominator = Math.floor(Math.random() * 50) + 1;
+          quotient = Math.floor(Math.random() * 5) + 1;
         }
 
         const numerator = denominator * quotient;
@@ -52,7 +52,7 @@ export default function Division() {
     const parsedValue = parseFloat(value);
     newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
     setAnswers(newAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback
+    setFeedbackMessage("");
   };
 
   const handleValidation = () => {
@@ -91,14 +91,14 @@ export default function Division() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(""); // Réinitialiser le message de feedback
+      setFeedbackMessage("");
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(""); // Réinitialiser le message de feedback
+      setFeedbackMessage("");
     }
   };
 
@@ -116,18 +116,19 @@ export default function Division() {
 
       {/* Boutons de navigation */}
       <Link
-        href="/menu/apprendre/opérations arithmétiques"
-        className="absolute bottom-4 left-4 z-10 bg-black text-white py-3 px-8 rounded font-bold"
+        href="/menu/apprendre/operations-arithmetiques"
+        className="absolute bottom-4 left-4 z-10 bg-black text-white py-3 px-6 rounded font-bold"
       >
-        Apprendre
+        Menu
       </Link>
       <Link
         href="/primaire/niveaux/niveau1"
-        className="absolute top-4 right-4 z-10 bg-orange-500 text-white py-3 px-8 rounded font-bold"
+        className="absolute top-4 right-4 z-10 bg-orange-500 text-white py-3 px-6 rounded font-bold"
       >
         Retour
       </Link>
 
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -178,12 +179,13 @@ export default function Division() {
           </div>
         ))}
       </div>
+
+      {/* Boutons de navigation */}
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider</button>
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
       </div>
     </div>
   );
 }
-

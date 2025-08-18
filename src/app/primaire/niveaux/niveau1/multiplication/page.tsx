@@ -5,17 +5,17 @@ import Link from "next/link";
 
 export default function Multiplication() {
   const totalQuestions = 36;
-  const questionsPerPage = 6; // 3 colonnes x 2 lignes
-  const radius = 50; // Rayon du cercle
-  const strokeWidth = 10; // Largeur du cercle
+  const questionsPerPage = 6;
+  const radius = 50;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+  const [answers, setAnswers] = useState<string[]>(Array(totalQuestions).fill(""));
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
-  // Générer les questions avec une difficulté progressive
+  // Génération des questions
   useEffect(() => {
     const generateQuestions = (): [number, number][] => {
       return Array.from({ length: totalQuestions }, (_, index) => {
@@ -39,25 +39,25 @@ export default function Multiplication() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Calcul du pourcentage de progression
-  const completedAnswers = answers.filter((answer) => answer !== null).length;
+  // Progression
+  const completedAnswers = answers.filter((answer) => answer !== "").length;
   const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
-  // Gestion des réponses
+  // Gestion du changement de réponse
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    newAnswers[index] = value;
     setAnswers(newAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback
+    setFeedbackMessage("");
   };
 
+  // Validation
   const handleValidation = () => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
     const pageAnswers = answers.slice(startIndex, endIndex);
 
-    if (pageAnswers.includes(null)) {
+    if (pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
       return;
     }
@@ -68,8 +68,8 @@ export default function Multiplication() {
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
       const [factor1, factor2] = questions[globalIndex];
-      if (answer !== factor1 * factor2) {
-        newAnswers[globalIndex] = null;
+      if (parseInt(answer) !== factor1 * factor2) {
+        newAnswers[globalIndex] = "";
         hasErrors = true;
       }
     });
@@ -90,12 +90,14 @@ export default function Multiplication() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
+      setFeedbackMessage("");
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setFeedbackMessage("");
     }
   };
 
@@ -161,21 +163,28 @@ export default function Multiplication() {
         </p>
       )}
 
-      {/* Questions et réponses */}
+      {/* Questions */}
       <div className="grid grid-cols-3 gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">{factor1} × {factor2}</div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-              value={answers[currentPage * questionsPerPage + index] || ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
-          </div>
-        ))}
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => {
+          const questionIndex = currentPage * questionsPerPage + index;
+          return (
+            <div key={questionIndex} className="flex items-center gap-4">
+              <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
+                {factor1} × {factor2}
+              </div>
+              <input
+                type="text"
+                inputMode="numeric"
+                className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
+                value={answers[questionIndex]}
+                onChange={(e) => handleChange(questionIndex, e.target.value)}
+              />
             </div>
+          );
+        })}
+      </div>
+
+      {/* Boutons */}
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
