@@ -13,7 +13,7 @@ export default function Addition() {
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]); 
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
   useEffect(() => {
     const generateQuestions = (): [number, number][] => {
@@ -61,7 +61,7 @@ export default function Addition() {
 
     let hasError = false;
     const newAnswers = [...answers];
-    const incorrect: number[] = []; // Déclaration explicite du type de incorrect
+    const incorrect: number[] = [];
 
     pageAnswers.forEach((answer, index) => {
       const globalIndex = startIndex + index;
@@ -74,7 +74,7 @@ export default function Addition() {
     });
 
     setAnswers(newAnswers);
-    setIncorrectAnswers(incorrect); // Garder trace des réponses incorrectes
+    setIncorrectAnswers(incorrect);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
@@ -89,14 +89,14 @@ export default function Addition() {
   const handleNextPage = () => {
     if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
       setCurrentPage(currentPage + 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      setFeedbackMessage(null); // Réinitialiser le message de feedback
+      setFeedbackMessage(null);
     }
   };
 
@@ -106,9 +106,9 @@ export default function Addition() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
       
-      {/* Décor ciel et nuages */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+      {/* Décor ciel et nuages (désactivé pour bloquer les clics) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full z-0">
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
           <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
           <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
@@ -129,6 +129,7 @@ export default function Addition() {
         Retour
       </Link>
 
+      {/* Cercle de progression */}
       <div className="absolute top-4 left-4 w-32 h-32">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
@@ -163,6 +164,7 @@ export default function Addition() {
         </p>
       )}
 
+      {/* Questions */}
       <div className="grid grid-cols-3 gap-6">
         {questions
           .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
@@ -173,21 +175,21 @@ export default function Addition() {
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {a} + {b}
                 </div>
-<input
-  type="text"
-  inputMode="numeric"
-  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
-    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
-  }`}
-  value={answers[questionIndex] ?? ""}
-  onChange={(e) => handleChange(questionIndex, e.target.value)}
-/>
-
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+                  }`}
+                  value={answers[questionIndex] ?? ""}
+                  onChange={(e) => handleChange(questionIndex, e.target.value)}
+                />
               </div>
             );
           })}
       </div>
       
+      {/* Navigation */}
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
