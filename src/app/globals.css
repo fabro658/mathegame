@@ -1589,8 +1589,8 @@ body {
 
 .head {
   position: absolute;
-    top: -20px;   
-  left: -10px; 
+    top: 20px;   
+  left: 10px; 
   width: 50px;
   height: 50px;
   background: #fff;
