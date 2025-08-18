@@ -172,8 +172,8 @@ export default function Multiplication() {
                 {factor1} × {factor2}
               </div>
               <input
-                type="number"
-                min="0"
+                type="text"
+                inputMode="numeric"
                 className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
                 value={answers[questionIndex] || ""}
                 onChange={(e) => handleChange(questionIndex, e.target.value)}
