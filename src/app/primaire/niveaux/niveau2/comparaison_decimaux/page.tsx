@@ -173,7 +173,7 @@ export default function ComparerDecimaux() {
           </div>
         </div>
 
-        <h1 className="text-4xl font-bold mb-6 text-center">Comparaison de Nombres Décimaux</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center">Compararer des Nombres Décimaux</h1>
 
         {/* Feedback */}
         {feedbackMessage && (

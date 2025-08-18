@@ -131,6 +131,15 @@ export default function AdditionFractions() {
 
 return (
   <div className="flex flex-col items-center justify-center min-h-screen text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
+          {/* Bande de sable */}
+      <div className="sable"></div>
+
+      {/* Plantes sur la bande de sable */}
+      <div className="plants">
+        <div className="plant">
+          <div className="leaves plant-1"></div>
+        </div>
+        </div>
 
     {/* Boutons navigation */}
     <Link href="/menu/apprendre/fraction" className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-30">
