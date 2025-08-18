@@ -39,12 +39,9 @@ export default function Multiplication() {
     setQuestions(generateQuestions());
   }, []);
 
-  // Progression
-  const completedAnswers = answers.filter((answer) => answer !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   // Gestion du changement de réponse
   const handleChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return; // n’accepte que les chiffres
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
@@ -101,16 +98,18 @@ export default function Multiplication() {
     }
   };
 
+  // Progression
+  const completedAnswers = answers.filter((answer) => answer !== "").length;
+  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka">
-      
-      {/* Décor ciel et nuages */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
-          <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
-          <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
-        </div>
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden bg-[#71c6f7] font-fredoka p-6">
+
+      {/* Nuages décoratifs (pointer-events-none pour ne pas bloquer les clics) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
+        <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
+        <div className="cloud absolute top-1/2 right-[30px] -translate-y-1/2 scale-[0.6]" />
       </div>
 
       {/* Boutons de navigation */}
@@ -128,7 +127,7 @@ export default function Multiplication() {
       </Link>
 
       {/* Cercle de progression */}
-      <div className="absolute top-4 left-4 w-32 h-32">
+      <div className="absolute top-4 left-4 w-32 h-32 z-10">
         <svg className="transform -rotate-90" width="100%" height="100%">
           <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
           <circle
@@ -148,12 +147,12 @@ export default function Multiplication() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Multiplication</h1>
+      <h1 className="text-3xl font-bold mb-6 z-10">Multiplication</h1>
 
       {/* Feedback */}
       {feedbackMessage && (
         <p
-          className={`text-xl mb-4 ${
+          className={`text-xl mb-4 z-10 ${
             feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
               ? "text-red-500"
               : "text-green-500"
@@ -164,7 +163,7 @@ export default function Multiplication() {
       )}
 
       {/* Questions */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 z-10">
         {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([factor1, factor2], index) => {
           const questionIndex = currentPage * questionsPerPage + index;
           return (
@@ -173,10 +172,10 @@ export default function Multiplication() {
                 {factor1} × {factor2}
               </div>
               <input
-                type="text"
-                inputMode="numeric"
+                type="number"
+                min="0"
                 className="border border-gray-400 p-4 rounded w-32 text-center text-black text-lg"
-                value={answers[questionIndex]}
+                value={answers[questionIndex] || ""}
                 onChange={(e) => handleChange(questionIndex, e.target.value)}
               />
             </div>
@@ -185,10 +184,10 @@ export default function Multiplication() {
       </div>
 
       {/* Boutons */}
-      <div className="mt-6 flex gap-4">
-        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+      <div className="mt-6 flex gap-4 z-10">
         <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">Précédent</button>
+        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
+        <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
       </div>
     </div>
   );
