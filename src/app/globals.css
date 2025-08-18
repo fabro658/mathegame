@@ -1541,6 +1541,24 @@ body {
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }
 
+.box{
+  position:relative;
+  margin:auto;
+  display:block;
+  margin-top: 15%;
+  width: 200px;
+  height: 200px;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 100px;
+  background: bg-blue-100;
+bottom:0;
+left: -50px;
+  border-radius: 30% 70% 23% 77% / 53% 30% 70% 47%;
+}
 
 .body {
   bottom: 150px; 
@@ -1589,8 +1607,6 @@ body {
 
 .head {
   position: absolute;
-    top: 20px;   
-  left: 10px; 
   width: 50px;
   height: 50px;
   background: #fff;
