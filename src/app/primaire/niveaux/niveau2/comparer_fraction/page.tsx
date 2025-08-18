@@ -189,7 +189,7 @@ export default function ComparerFractions() {
         )}
 
         {/* Questions */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-3">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fractions }, index) => (
             <div key={index} className="flex items-center gap-4">
               <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">

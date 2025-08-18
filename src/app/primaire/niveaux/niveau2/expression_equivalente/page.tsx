@@ -205,7 +205,7 @@ export default function EquationsEquivalentes() {
           </p>
         )}
 
-        <div className="grid grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-2 gap-3 mb-8">
           {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ equationLeft, equationRight }, index) => {
             const questionIndex = currentPage * questionsPerPage + index;
             return (
