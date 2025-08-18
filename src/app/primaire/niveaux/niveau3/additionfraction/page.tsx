@@ -137,7 +137,7 @@ return (
       {/* Plantes sur la bande de sable */}
       <div className="plants">
         <div className="plant">
-          <div className="leaves plant-1"></div>
+          <div className="leaves plant-2"></div>
         </div>
         </div>
 
