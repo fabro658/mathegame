@@ -1602,14 +1602,14 @@ body {
 
 .head::before {
   content: "";
-  top: 8px;
-  left: 8px;
+  top: 10px;
+  left: 10px;
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8 px;
   background: #000;
   border-radius: 50%;
-  border: 1.5px solid #f0c756;
+  border: 2px solid #f0c756;
 }
 
 /* Bec aligné avec la tête */
