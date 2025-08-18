@@ -45,7 +45,7 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
           <p className="text-lg">
-            Bienvenue sur <strong>ExplorMath</strong> ! Notre mission est de rendre les mathématiques 
+            Bienvenue sur <strong>ExploreMath</strong> ! Notre mission est de rendre les mathématiques 
             plus accessibles et captivantes pour tous. Nous croyons que les mathématiques sont 
             un outil puissant pour comprendre le monde et résoudre des problèmes.
           </p>

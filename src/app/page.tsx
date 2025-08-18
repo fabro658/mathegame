@@ -18,22 +18,21 @@ export default function Home() {
       }
     };
 
-    checkDeviceType(); // Vérifie le type d'appareil au chargement de la page
-    window.addEventListener("resize", checkDeviceType); // Re-vérifie si la taille change
+    checkDeviceType();
+    window.addEventListener("resize", checkDeviceType);
 
     return () => {
-      window.removeEventListener("resize", checkDeviceType); // Nettoyer l'écouteur
+      window.removeEventListener("resize", checkDeviceType);
     };
   }, []);
 
   useEffect(() => {
     if (isMobile) {
-      // Redirige vers la version mobile
+      
       router.push("/mobile");
     }
   }, [isMobile, router]);
 
-  // Si mobile, l'utilisateur est déjà redirigé vers "/mobile"
   return (
     <div
       className="relative flex flex-col items-center justify-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]"
@@ -60,7 +59,7 @@ export default function Home() {
       </header>
 
       <div className="flex flex-col items-center text-center mb-16">
-        <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">Mathgame</h1>
+        <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">ExploreMath</h1>
         <div className="w-32 sm:w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
         <h2 className="text-white text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">Mathématique</h2>
       </div>
