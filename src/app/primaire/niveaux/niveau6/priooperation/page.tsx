@@ -24,21 +24,21 @@ export default function PrioOperation() {
         if (index < 10) {
           const questionType = index % 5;
           switch (questionType) {
-            case 0: questionText = "Que vaut 2 + 3 × 4 ?"; correctAnswer = "14"; break;
-            case 1: questionText = "Que vaut (2 + 3) × 4 ?"; correctAnswer = "20"; break;
-            case 2: questionText = "Que vaut 2 × 3 + 4 ?"; correctAnswer = "10"; break;
-            case 3: questionText = "Que vaut 6 - 2 × 3 ?"; correctAnswer = "0"; break;
-            case 4: questionText = "Que vaut (6 - 2) × 3 ?"; correctAnswer = "12"; break;
+            case 0: questionText = " 2 + 3 × 4 ?"; correctAnswer = "14"; break;
+            case 1: questionText = "(2 + 3) × 4 ?"; correctAnswer = "20"; break;
+            case 2: questionText = "2 × 3 + 4 ?"; correctAnswer = "10"; break;
+            case 3: questionText = "6 - 2 × 3 ?"; correctAnswer = "0"; break;
+            case 4: questionText = "(6 - 2) × 3 ?"; correctAnswer = "12"; break;
           }
         } else if (index < 20) {
           const a = Math.floor(Math.random() * 10) + 1;
           const b = Math.floor(Math.random() * 10) + 1;
-          questionText = `Que vaut ${a} + ${b} × 2 ?`;
+          questionText = `${a} + ${b} × 2 ?`;
           correctAnswer = (a + b * 2).toString();
         } else {
           const base = Math.floor(Math.random() * 6) + 2;
           const exponent = Math.floor(Math.random() * 3) + 1;
-          questionText = `Que vaut ${base}ⁿ avec n = ${exponent} ?`;
+          questionText = `${base}ⁿ avec n = ${exponent} ?`;
           correctAnswer = Math.pow(base, exponent).toString();
 
           if (Math.random() > 0.5) {
