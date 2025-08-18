@@ -29,7 +29,7 @@ export default function MobileHome() {
 
       {/* Section Titre */}
       <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-white text-2xl font-bold mb-2">Mathgame</h1>
+        <h1 className="text-white text-2xl font-bold mb-2">ExploreMath</h1>
         <div className="w-24 h-1 bg-black mb-2"></div>
         <h2 className="text-white text-lg font-semibold">Mathématique</h2>
       </div>

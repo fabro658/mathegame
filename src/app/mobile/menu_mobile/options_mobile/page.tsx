@@ -24,7 +24,7 @@ export default function Option() {
   const handleMailto = () => {
     const subject = `${formData.nom} - ${formData.objet}`;
     const body = `${formData.message}`;
-    const mailtoLink = `mailto:gestionmathegame@gmail.com?subject=${encodeURIComponent(
+    const mailtoLink = `mailto:exploremathgestion@gmail.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
@@ -54,7 +54,7 @@ export default function Option() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">À propos de notre site</h2>
           <p className="text-lg">
-            Bienvenue sur <strong>MathGame</strong> ! Notre mission est de rendre les mathématiques 
+            Bienvenue sur <strong>ExploreMath</strong> ! Notre mission est de rendre les mathématiques 
             plus accessibles et captivantes pour tous. Nous croyons que les mathématiques sont 
             un outil puissant pour comprendre le monde et résoudre des problèmes.
           </p>
