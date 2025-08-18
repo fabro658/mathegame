@@ -43,7 +43,7 @@ export default function PrioOperation() {
 
           if (Math.random() > 0.5) {
             const baseAlt = base + Math.floor(Math.random() * 4) + 1;
-            questionText = `Que vaut (${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
+            questionText = `(${base} + ${baseAlt - base})ⁿ avec n = ${exponent} ?`;
             correctAnswer = Math.pow(baseAlt, exponent).toString();
           }
         }
