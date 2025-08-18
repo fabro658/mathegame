@@ -1590,8 +1590,8 @@ body {
 .head {
   position: absolute;
   width: 50px;
-  height: 50px;
-  left:-15px;
+  height: 20px;
+  left:-25px;
   background: #fff;
   border-radius: 50% 50% 0% 50%;
   z-index: 4;
