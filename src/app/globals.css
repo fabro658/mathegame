@@ -1542,73 +1542,75 @@ body {
 }
 
 .body {
-  bottom: 30px;
-  right: 30px; 
-  width: 150px;
-  height: 70px;
+  bottom: 50px; /* un peu au-dessus du bas, sur "l'eau" */
+  right: 50px;  /* à droite */
+  width: 100px;  /* réduit */
+  height: 50px;  /* réduit */
   position: absolute;
   background: #fff;
   border-radius: 0% 50% 50% 50%;
 }
-.wing{
+
+.wing {
   position: absolute;
-left: 30px;
-top: -4px;
-width: 125px;
-  height: 60px;
+  left: 15px;
+  top: 5px;
+  width: 80px;
+  height: 40px;
   background: #aaaaa9;
-  border-radius: 25% 75% 9% 91% / 64% 78% 22% 36%  ;   
-overflow: hidden;
+  border-radius: 25% 75% 9% 91% / 64% 78% 22% 36%;   
+  overflow: hidden;
 }
 
-.tail{
-position: absolute;
-background: #575556;
-width:120px;
-top : 20px;
-height: 30px;
-right: -40px;
-transform: rotate(20deg);
-border-radius: 0% 50% 0%;
-}
-
-.neck{
-position: absolute;
-top:20px;
-left: 20px;
-width: 30px;
-height: 30px;
-background: #fff;
-border-radius: 50% 50% 0 0;
-}
-
-.head{
-position: absolute;
-width: 50px;
-height: 50px;
-background: #fff;
-border-radius: 50% 50% 0% 50%;
-}
-
-.head::before{
-  content: "";
-   top: 10px;
-  left: 10px;
+.tail {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  background: #575556;
+  width: 60px;
+  height: 20px;
+  top: 15px;
+  right: -20px;
+  transform: rotate(20deg);
+  border-radius: 0% 50% 0%;
+}
+
+.neck {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+}
+
+.head {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 0px;
+  left: 0px;
+  background: #fff;
+  border-radius: 50% 50% 0% 50%;
+}
+
+.head::before {
+  content: "";
+  top: 8px;
+  left: 8px;
+  position: absolute;
+  width: 5px;
+  height: 5px;
   background: #000;
   border-radius: 50%;
-  border: 2px solid #f0c756;
+  border: 1.5px solid #f0c756;
 }
 
-.bec{
+.bec {
   position: absolute;
-  top: 30px;
-  transform : translateY(-50%);
-  left: -26px;
-  width: 30px;
-  height: 15px;
+  top: 17px;
+  left: -18px;
+  width: 18px;
+  height: 10px;
   background: #f0c756;
   border-radius: 91% 9% 9% 91% / 100% 40% 60% 0%;
 }
