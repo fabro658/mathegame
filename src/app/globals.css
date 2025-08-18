@@ -1543,10 +1543,10 @@ body {
 
 
 .body {
-  bottom: 100px; 
+  bottom: 150px; 
   right: 50px; 
   width: 100px; 
-  height: 100px;  
+  height: 70px;  
   position: absolute;
   background: #fff;
   border-radius: 0% 50% 50% 50%;
@@ -1591,6 +1591,7 @@ body {
   position: absolute;
   width: 50px;
   height: 50px;
+  left:-15px;
   background: #fff;
   border-radius: 50% 50% 0% 50%;
   z-index: 4;
