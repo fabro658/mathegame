@@ -1541,16 +1541,15 @@ body {
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }
 
-.body{
-  top: 30px;
+.body {
+  bottom: 30px;
+  right: 30px; 
   width: 150px;
   height: 70px;
   position: absolute;
   background: #fff;
   border-radius: 0% 50% 50% 50%;
-  left: 15px;
 }
-
 .wing{
   position: absolute;
 left: 30px;
