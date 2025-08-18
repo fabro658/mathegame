@@ -1589,11 +1589,12 @@ body {
 
 .head {
   position: absolute;
+    top: -20px;   
+  left: -10px; 
   width: 50px;
   height: 50px;
   background: #fff;
   border-radius: 50% 50% 0% 50%;
-  z-index: 4;
 }
 
 .head::before {
@@ -1602,7 +1603,7 @@ body {
   left: 10px;
   position: absolute;
   width: 8px;
-  height: 8 px;
+  height: 8px;
   background: #000;
   border-radius: 50%;
   border: 2px solid #f0c756;
