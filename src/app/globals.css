@@ -1540,28 +1540,30 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 2.5rem 0.5rem rgba(255, 200, 50, 0.9);
 }
-
 .body {
   bottom: 100px; 
-  right: 50px;  /* à droite */
-  width: 100px;  /* réduit */
-  height: 50px;  /* réduit */
+  right: 50px; 
+  width: 100px; 
+  height: 50px;  
   position: absolute;
   background: #fff;
   border-radius: 0% 50% 50% 50%;
 }
 
+/* L’aile passe par-dessus le corps */
 .wing {
   position: absolute;
   left: 15px;
-  top: 5px;
+  top: 0px;
   width: 80px;
   height: 40px;
   background: #aaaaa9;
   border-radius: 25% 75% 9% 91% / 64% 78% 22% 36%;   
   overflow: hidden;
+  z-index: 2; /* 👈 aile au-dessus */
 }
 
+/* Queue reste derrière */
 .tail {
   position: absolute;
   background: #575556;
@@ -1571,26 +1573,31 @@ body {
   right: -20px;
   transform: rotate(20deg);
   border-radius: 0% 50% 0%;
+  z-index: 0; /* 👈 derrière */
 }
 
+/* Cou plus à gauche */
 .neck {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: -10px; /* remonte un peu */
+  left: -5px; /* 👈 déplacé vers la gauche */
   width: 20px;
   height: 25px;
   background: #fff;
   border-radius: 50% 50% 0 0;
+  z-index: 3; /* au-dessus du body */
 }
 
+/* Tête au-dessus du corps */
 .head {
   position: absolute;
   width: 35px;
   height: 35px;
-  top: 0px;
-  left: 0px;
+  top: -30px; /* 👈 plus haut que le body */
+  left: -10px;
   background: #fff;
   border-radius: 50% 50% 0% 50%;
+  z-index: 4; /* 👈 toujours au-dessus */
 }
 
 .head::before {
@@ -1605,12 +1612,14 @@ body {
   border: 1.5px solid #f0c756;
 }
 
+/* Bec aligné avec la tête */
 .bec {
   position: absolute;
-  top: 17px;
-  left: -18px;
+  top: -15px; /* 👈 aligné à la tête */
+  left: -25px;
   width: 18px;
   height: 10px;
   background: #f0c756;
   border-radius: 91% 9% 9% 91% / 100% 40% 60% 0%;
+  z-index: 5;
 }
