@@ -173,19 +173,21 @@ export default function Addition() {
                 <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl">
                   {a} + {b}
                 </div>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
-                    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
-                  }`}
-                  value={answers[questionIndex] || ""}
-                  onChange={(e) => handleChange(questionIndex, e.target.value)}
-                />
+<input
+  type="text"
+  inputMode="numeric"
+  className={`border border-gray-400 p-4 rounded w-32 text-center text-black text-lg ${
+    incorrectAnswers.includes(questionIndex) ? "border-red-500" : ""
+  }`}
+  value={answers[questionIndex] ?? ""}
+  onChange={(e) => handleChange(questionIndex, e.target.value)}
+/>
+
               </div>
             );
           })}
       </div>
+      
       <div className="mt-6 flex gap-4">
         <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Suivant</button>
         <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">Valider les réponses</button>
