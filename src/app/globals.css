@@ -1542,7 +1542,7 @@ body {
 }
 
 .body {
-  bottom: 50px; /* un peu au-dessus du bas, sur "l'eau" */
+  bottom: 100px; 
   right: 50px;  /* à droite */
   width: 100px;  /* réduit */
   height: 50px;  /* réduit */
