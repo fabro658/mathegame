@@ -146,34 +146,133 @@ const QuadraticFunctionVisual = () => {
     </div>
   );
 };
-
 const AbsoluteFunctionVisual = () => {
+  const [a, setA] = useState(1); // coefficient devant |x|
+  const [b, setB] = useState(0); // translation verticale
+  const [showParams, setShowParams] = useState(false);
+
   const points = Array.from({ length: 201 }, (_, i) => {
     const x = (i - 100) / 10;
-    const y = -Math.abs(x);
-    return `${x},${y}`;
+    const y = a * Math.abs(x) + b;
+    return `${x},${-y}`;
   }).join(" ");
+
   return (
-    <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <Axes />
-      <polyline fill="none" stroke="orange" strokeWidth="0.2" points={points} />
-    </svg>
+    <div className="flex flex-col items-center">
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <polyline fill="none" stroke="orange" strokeWidth="0.2" points={points} />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-orange-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a = {a}</label>
+            <input
+              type="range"
+              min={-5}
+              max={5}
+              step={0.1}
+              value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b = {b}</label>
+            <input
+              type="range"
+              min={-10}
+              max={10}
+              step={0.1}
+              value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
 const ExponentialFunctionVisual = () => {
-  const points = Array.from({ length: 101 }, (_, i) => {
-    const x = (i - 50) / 10;
-    const y = -Math.pow(2, x / 2);
-    return `${x},${y}`;
+  const [a, setA] = useState(2); // base
+  const [b, setB] = useState(1); // coefficient multiplicateur
+  const [c, setC] = useState(0); // translation verticale
+  const [showParams, setShowParams] = useState(false);
+
+  const points = Array.from({ length: 201 }, (_, i) => {
+    const x = (i - 100) / 10;
+    const y = b * Math.pow(a, x) + c;
+    return `${x},${-y}`;
   }).join(" ");
+
   return (
-    <svg width="300" height="300" viewBox="-10 -10 20 20">
-      <Axes />
-      <polyline fill="none" stroke="red" strokeWidth="0.2" points={points} />
-    </svg>
+    <div className="flex flex-col items-center">
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <polyline fill="none" stroke="red" strokeWidth="0.2" points={points} />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a (base) = {a}</label>
+            <input
+              type="range"
+              min={0.1}
+              max={5}
+              step={0.1}
+              value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b (coefficient) = {b}</label>
+            <input
+              type="range"
+              min={-5}
+              max={5}
+              step={0.1}
+              value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">c (translation verticale) = {c}</label>
+            <input
+              type="range"
+              min={-10}
+              max={10}
+              step={0.1}
+              value={c}
+              onChange={(e) => setC(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
+
 
 const StepFunctionVisual = () => {
   const steps = Array.from({ length: 20 }, (_, i) => {

@@ -149,7 +149,7 @@ export default function AlgebreBase() {
               2(x + 4)
             </span>
             <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
-              ÷2
+              2
             </span>
           </span>
           &nbsp;=&nbsp;
@@ -158,7 +158,7 @@ export default function AlgebreBase() {
               18
             </span>
             <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
-              ÷2
+              2
             </span>
           </span>
         </div>
