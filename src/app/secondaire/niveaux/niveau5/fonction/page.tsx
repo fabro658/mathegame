@@ -6,52 +6,68 @@ import Link from "next/link";
 interface FunctionQuestion {
   questionText: string;
   correctAnswer: string;
+  Graph: () => JSX.Element; // fonction qui rend un SVG
 }
 
 export default function TestFonctions() {
-  const totalQuestions = 10;
-  const questionsPerPage = 3;
+  const totalQuestions = 5; // pour l'exemple
+  const questionsPerPage = 2;
 
   const [questions] = useState<FunctionQuestion[]>([
     {
-      questionText: "Quelle est la définition d'une fonction ?",
-      correctAnswer: "Relation où chaque élément de l'ensemble de départ est associé à un seul élément de l'ensemble d'arrivée.",
+      questionText: "Quelle est la pente a de cette fonction linéaire f(x) = ax + b ?",
+      correctAnswer: "2",
+      Graph: () => (
+        <svg width={200} height={200} viewBox="0 0 10 10" className="border">
+          <line x1={0} y1={8} x2={10} y2={0} stroke="blue" strokeWidth={0.2} />
+          <line x1={0} y1={0} x2={0} y2={10} stroke="black" />
+          <line x1={0} y1={8} x2={10} y2={8} stroke="black" />
+        </svg>
+      ),
     },
     {
-      questionText: "Donnez la formule générale d'une fonction linéaire.",
-      correctAnswer: "f(x) = ax + b",
+      questionText: "Quel est le sommet et la formule de cette fonction quadratique ?",
+      correctAnswer: "f(x) = (x-1)^2",
+      Graph: () => (
+        <svg width={200} height={200} viewBox="0 0 4 4" className="border">
+          <path d="M0,1 L1,0 L2,1 L3,4" stroke="blue" fill="transparent" strokeWidth={0.05} />
+          <line x1={0} y1={2} x2={4} y2={2} stroke="black" />
+          <line x1={1} y1={0} x2={1} y2={4} stroke="black" />
+        </svg>
+      ),
     },
     {
-      questionText: "Quelle est la valeur de f(x) = 2x + 3 pour x = 5 ?",
-      correctAnswer: "13",
+      questionText: "Quel est a dans cette fonction exponentielle f(x) = a^x ?",
+      correctAnswer: "2",
+      Graph: () => (
+        <svg width={200} height={200} viewBox="0 0 4 4" className="border">
+          <path d="M0,3 L1,1.5 L2,0.75 L3,0.375 L4,0.2" stroke="blue" fill="transparent" strokeWidth={0.05} />
+          <line x1={0} y1={0} x2={0} y2={4} stroke="black" />
+          <line x1={0} y1={4} x2={4} y2={4} stroke="black" />
+        </svg>
+      ),
     },
     {
-      questionText: "Donnez un exemple de fonction quadratique.",
-      correctAnswer: "f(x) = x^2 + 2x + 1",
+      questionText: "Quel est h et b dans f(x) = |x-h| + b ?",
+      correctAnswer: "f(x) = |x-3| + 1",
+      Graph: () => (
+        <svg width={200} height={200} viewBox="0 0 6 6" className="border">
+          <path d="M0,4 L3,1 L6,4" stroke="blue" fill="transparent" strokeWidth={0.1} />
+          <line x1={0} y1={0} x2={0} y2={6} stroke="black" />
+          <line x1={0} y1={6} x2={6} y2={6} stroke="black" />
+        </svg>
+      ),
     },
     {
-      questionText: "Quelle est la fonction inverse de f(x) = x^2 ?",
-      correctAnswer: "f(x) = √x",
-    },
-    {
-      questionText: "Quelle est la valeur de f(x) = |x| pour x = -7 ?",
-      correctAnswer: "7",
-    },
-    {
-      questionText: "Donnez la formule d'une fonction exponentielle.",
-      correctAnswer: "f(x) = a^x",
-    },
-    {
-      questionText: "Quelle est la fonction en escalier qui associe à x son entier inférieur ?",
-      correctAnswer: "f(x) = ⌊x⌋",
-    },
-    {
-      questionText: "Quelle est la valeur de sin(π/2) ?",
-      correctAnswer: "1",
-    },
-    {
-      questionText: "Donnez un exemple de fonction rationnelle.",
-      correctAnswer: "f(x) = (x+1)/(x-1)",
+      questionText: "Quelle est la fonction inverse représentée ici ?",
+      correctAnswer: "f(x) = 1/x",
+      Graph: () => (
+        <svg width={200} height={200} viewBox="0 0 5 5" className="border">
+          <path d="M0,5 L1,2.5 L2,1.66 L3,1.25 L4,1" stroke="blue" fill="transparent" strokeWidth={0.05} />
+          <line x1={0} y1={0} x2={0} y2={5} stroke="black" />
+          <line x1={0} y1={5} x2={5} y2={5} stroke="black" />
+        </svg>
+      ),
     },
   ]);
 
@@ -68,7 +84,6 @@ export default function TestFonctions() {
   const handleValidation = (): void => {
     const startIndex = currentPage * questionsPerPage;
     const endIndex = startIndex + questionsPerPage;
-
     const pageAnswers = answers.slice(startIndex, endIndex);
     const pageCorrectAnswers = questions.slice(startIndex, endIndex).map(q => q.correctAnswer);
 
@@ -80,7 +95,6 @@ export default function TestFonctions() {
     }
 
     const updatedAnswers = [...answers];
-
     pageAnswers.forEach((answer, index) => {
       if (answer?.toLowerCase() !== pageCorrectAnswers[index].toLowerCase()) {
         updatedAnswers[startIndex + index] = null;
@@ -123,9 +137,11 @@ export default function TestFonctions() {
       <h1 className="text-3xl font-bold mb-6">Test sur les Fonctions</h1>
 
       <div className="flex flex-col gap-6">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ questionText }, index) => (
+        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
+          .map(({ questionText, Graph }, index) => (
           <div key={index} className="flex flex-col items-start gap-2">
             <div className="font-bold text-black">{questionText}</div>
+            <Graph />
             <input
               type="text"
               className="border border-gray-400 p-4 rounded w-96 text-black text-lg"
