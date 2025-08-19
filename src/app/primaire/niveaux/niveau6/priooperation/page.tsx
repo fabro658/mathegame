@@ -172,7 +172,7 @@ export default function PrioOperation() {
       </div>
 
       {/* Contenu central */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-32">
+<div className="z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-32">
         <h1 className="text-3xl font-bold mb-6 text-black">Priorités des Opérations</h1>
 
         {feedbackMessage && (
