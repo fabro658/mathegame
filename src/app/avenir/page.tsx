@@ -35,7 +35,6 @@ export default function Primaire() {
       {/* Section Titre */}
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-center">
         <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-          À Venir
         </h1>
       </div>
 
