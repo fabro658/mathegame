@@ -1622,7 +1622,7 @@ left: -50px;
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #ffffff;
+  background: #000;
   border-radius: 50%;
   border: 2px solid #000;
 }
