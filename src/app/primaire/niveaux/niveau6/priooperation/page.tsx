@@ -129,6 +129,7 @@ export default function PrioOperation() {
       <div className="tail"></div>
       </div>
       <div className= "box" >
+      <div className="neck"></div>
       <div className="head"></div>
       <div className="bec"></div>
     </div>
