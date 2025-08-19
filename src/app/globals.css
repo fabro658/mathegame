@@ -1597,7 +1597,7 @@ left: -50px;
 .neck {
   position: absolute;
   top: -40px; 
-  left: -5px;  
+  left: 0px;  
   width: 30px;
   height: 30px;
   background: #fff;
