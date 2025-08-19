@@ -121,9 +121,6 @@ export default function PrioOperation() {
           <div className="cloud absolute top-[30px] left-[40px] scale-[0.5]" />
           <div className="cloud absolute top-[50px] left-[50%] -translate-x-1/2 scale-[0.8]" />
         </div>
-    {/* Mer */}
-    <div className="water"></div>
-  </div>
   <div className="body">
     <div className="wing">
       <div className="tail"></div>
@@ -135,6 +132,9 @@ export default function PrioOperation() {
     </div>
   </div>
 </div>
+    {/* Mer */}
+    <div className="water"></div>
+  </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-32">
         {/* Liens */}
