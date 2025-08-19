@@ -1,213 +1,156 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
-export default function ApprendreAlgebre() {
-  const totalQuestions = 20;
-  const questionsPerPage = 5;
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
+export default function AlgebreBase() {
+  const [showExample, setShowExample] = useState(false);
+  const [exampleIndex, setExampleIndex] = useState(1); // de 1 à 4
 
-  type Question = {
-    questionText: string;
-    correctAnswer: string;
+  const totalExamples = 4;
+
+  const nextExample = () => {
+    setExampleIndex((prev) => (prev === totalExamples ? 1 : prev + 1));
   };
-
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const generateQuestions = (): Question[] => {
-      return Array.from({ length: totalQuestions }, () => {
-        const type = Math.floor(Math.random() * 3);
-
-        let a, b, c, questionText, correctAnswer;
-
-        switch (type) {
-          case 0: // ax + b = c
-            a = Math.floor(Math.random() * 9) + 1; // 1-9
-            b = Math.floor(Math.random() * 10);
-            c = Math.floor(Math.random() * 20) + b;
-            questionText = `${a}x + ${b} = ${c}`;
-            correctAnswer = ((c - b) / a).toString();
-            break;
-
-          case 1: // ax - b = c
-            a = Math.floor(Math.random() * 9) + 1;
-            b = Math.floor(Math.random() * 10);
-            c = Math.floor(Math.random() * 20);
-            questionText = `${a}x - ${b} = ${c}`;
-            correctAnswer = ((c + b) / a).toString();
-            break;
-
-          default: // x / a + b = c
-            a = Math.floor(Math.random() * 5) + 2;
-            b = Math.floor(Math.random() * 10);
-            c = Math.floor(Math.random() * 20) + b;
-            questionText = `x ÷ ${a} + ${b} = ${c}`;
-            correctAnswer = ((c - b) * a).toString();
-            break;
-        }
-
-        return { questionText, correctAnswer };
-      });
-    };
-
-    setQuestions(generateQuestions());
-  }, []);
-
-  const handleChange = (index: number, value: string): void => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
-    setAnswers(newAnswers);
-    setFeedbackMessage(null);
-  };
-
-  const handleValidation = (): void => {
-    const start = currentPage * questionsPerPage;
-    const end = start + questionsPerPage;
-    const pageAnswers = answers.slice(start, end);
-    const correctAnswers = questions.slice(start, end).map((q) => q.correctAnswer);
-
-    if (pageAnswers.some((ans) => !ans || ans.trim() === "")) {
-      setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
-      return;
-    }
-
-    const updatedAnswers = [...answers];
-    const incorrect: number[] = [];
-    pageAnswers.forEach((answer, i) => {
-      const globalIndex = start + i;
-      if (answer !== correctAnswers[i]) {
-        updatedAnswers[globalIndex] = null;
-        incorrect.push(globalIndex);
-      }
-    });
-
-    setAnswers(updatedAnswers);
-    setIncorrectAnswers(incorrect);
-
-    if (incorrect.length === 0) {
-      const next = currentPage + 1;
-      if (next < totalQuestions / questionsPerPage) {
-        setCurrentPage(next);
-        setFeedbackMessage("Toutes les réponses sont correctes !");
-      } else {
-        setFeedbackMessage("Félicitations ! Vous avez complété toutes les questions !");
-      }
-    } else {
-      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalQuestions / questionsPerPage - 1) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 1);
-  };
-
-  const completedAnswers = answers.filter((ans) => ans !== null).length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
 
   return (
-    <div className="relative min-h-screen font-fredoka overflow-hidden bg-green-100">
-
-      {/* Bouton Retour */}
+    <main className="flex min-h-screen bg-gray-100 text-black relative">
+      {/* Bouton retour global en haut à droite */}
       <Link
-        href="/primaire/niveaux/niveau6"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-30"
+        href="/menu/apprendre"
+        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-20"
       >
         Retour
       </Link>
 
-      {/* Bouton Apprendre */}
-      <Link
-        href="/menu/apprendre"
-        className="absolute bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-30"
-      >
-        Apprendre
-      </Link>
+      {/* Barre latérale */}
+      <div className="w-1/4 bg-white p-6 shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-center mt-20">
+          Algèbre de base
+        </h1>
 
-      {/* Progression */}
-      <div className="absolute top-4 left-4 w-32 h-32 z-30">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle cx="50%" cy="50%" r={radius} fill="none" stroke="#e5e5e5" strokeWidth={strokeWidth} />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-500">{completionPercentage}%</span>
+        <p className="text-lg text-center mb-6">
+          Apprends à <strong>isoler la variable x</strong> étape par étape.
+        </p>
+
+        <div className="text-left text-md space-y-2 mb-8">
+          <p>1️⃣ Déplace les nombres de l’autre côté.</p>
+          <p>2️⃣ Simplifie l’équation.</p>
+          <p>3️⃣ Si x est multiplié, divise pour isoler.</p>
+          <p>4️⃣ Si x est dans une puissance, utilise la racine.</p>
         </div>
+
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-700 transition-all"
+          onClick={() => setShowExample(!showExample)}
+        >
+          {showExample ? "Cacher l’exemple" : "Montrer l'exemple"}
+        </button>
       </div>
 
-      {/* Contenu */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-32">
-        <h1 className="text-3xl font-bold mb-6 text-black">Isoler la variable (x)</h1>
+      {/* Colonne centrale */}
+      <div className="w-full sm:w-3/4 p-8">
+        <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
+          {!showExample && (
+            <div>
+              <h2 className="text-2xl font-bold mb-4 text-center">
+                Isoler x dans une équation
+              </h2>
+              <p className="text-lg text-center">
+                Pour résoudre une équation, on veut <strong>x tout seul</strong>
+                .
+                <br />
+                On fait les mêmes opérations des deux côtés de l’équation pour
+                garder l’égalité.
+              </p>
+              <ul className="list-disc pl-8 mt-4 text-md space-y-1">
+                <li>On simplifie chaque côté.</li>
+                <li>On déplace les termes pour isoler x.</li>
+                <li>On divise ou on prend la racine si nécessaire.</li>
+              </ul>
+            </div>
+          )}
 
-        {feedbackMessage && (
-          <p
-            className={`text-xl mb-4 text-center ${
-              feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
-                ? "text-red-500"
-                : "text-green-500"
-            }`}
-          >
-            {feedbackMessage}
-          </p>
-        )}
+          {showExample && (
+            <div className="space-y-6 min-h-[400px] flex flex-col justify-between">
+              {/* Exemple 1 */}
+              {exampleIndex === 1 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">
+                    Exemple 1&nbsp;: Équation simple
+                  </h2>
+                  <p className="text-lg mb-2">Résolvons&nbsp;:  x + 5 = 12</p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On soustrait 5 des deux côtés&nbsp;: x = 12 - 5</li>
+                    <li>On calcule&nbsp;: x = <strong>7</strong></li>
+                  </ol>
+                </div>
+              )}
 
-        {/* Questions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-          {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map((question, i) => {
-            const index = currentPage * questionsPerPage + i;
-            return (
-              <div key={index} className="flex items-center gap-4">
-                <button className="bg-green-500 text-white font-bold py-4 px-6 rounded w-full" disabled>
-                  {question.questionText}
+              {/* Exemple 2 */}
+              {exampleIndex === 2 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">
+                    Exemple 2&nbsp;: x multiplié
+                  </h2>
+                  <p className="text-lg mb-2">Résolvons&nbsp;: 3x = 15</p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>
+                      Ici, x est multiplié par 3. On divise des deux côtés par 3.
+                    </li>
+                    <li>x = 15 ÷ 3</li>
+                    <li>x = <strong>5</strong></li>
+                  </ol>
+                </div>
+              )}
+
+              {/* Exemple 3 */}
+              {exampleIndex === 3 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">
+                    Exemple 3&nbsp;: parenthèses
+                  </h2>
+                  <p className="text-lg mb-2">Résolvons&nbsp;: 2(x + 4) = 18</p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>
+                      On divise d’abord par 2&nbsp;: (x + 4) = 18 ÷ 2 = 9
+                    </li>
+                    <li>On soustrait 4&nbsp;: x = 9 - 4</li>
+                    <li>x = <strong>5</strong></li>
+                  </ol>
+                </div>
+              )}
+
+              {/* Exemple 4 */}
+              {exampleIndex === 4 && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">
+                    Exemple 4&nbsp;: exposants
+                  </h2>
+                  <p className="text-lg mb-2">Résolvons&nbsp;: x² = 49</p>
+                  <ol className="list-decimal space-y-2 pl-6 text-md">
+                    <li>On prend la racine carrée des deux côtés.</li>
+                    <li>x = √49</li>
+                    <li>
+                      x = <strong>7</strong> ou x = <strong>-7</strong>
+                    </li>
+                  </ol>
+                </div>
+              )}
+
+              {/* Bouton suivant */}
+              <div className="text-center">
+                <button
+                  onClick={nextExample}
+                  className="mt-4 bg-blue-500 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition"
+                >
+                  Voir l’exemple suivant
                 </button>
-                <input
-                  type="text"
-                  className={`border p-4 rounded w-24 text-center text-lg ${
-                    incorrectAnswers.includes(index) ? "border-red-500" : ""
-                  }`}
-                  value={answers[index] || ""}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  placeholder="x = ?"
-                />
               </div>
-            );
-          })}
-        </div>
-
-        {/* Navigation */}
-        <div className="mt-6 flex gap-4">
-          <button onClick={handlePreviousPage} className="bg-gray-500 text-white py-3 px-6 rounded font-bold">
-            Précédent
-          </button>
-          <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-            Valider
-          </button>
-          <button onClick={handleNextPage} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-            Suivant
-          </button>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
