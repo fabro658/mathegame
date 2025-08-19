@@ -81,52 +81,111 @@ export default function AlgebreBase() {
                   </h2>
                   <p className="text-lg mb-2">Résolvons&nbsp;:  x + 5 = 12</p>
                   <ol className="list-decimal space-y-2 pl-6 text-md">
-<li>
-  On soustrait 5 des deux côtés :{" "}
-  <span>
-    x + 5{" "}
-    <span style={{ color: "blue" }}>- 5</span> = 12{" "}
-    <span style={{ color: "blue" }}>- 5</span>
-  </span>
-</li>
+                    <li>
+                      On soustrait 5 des deux côtés :{" "}
+                        <span>
+                         x + 5{" "}
+                         <span style={{ color: "blue" }}>- 5</span> = 12{" "}
+                         <span style={{ color: "blue" }}>- 5</span>
+                         </span>
+                         </li>
                     <li>On calcule&nbsp;: x = <strong>7</strong></li>
                   </ol>
                 </div>
               )}
 
-              {/* Exemple 2 */}
-              {exampleIndex === 2 && (
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">
-                    Exemple 2&nbsp;: x multiplié
-                  </h2>
-                  <p className="text-lg mb-2">Résolvons&nbsp;: 3x = 15</p>
-                  <ol className="list-decimal space-y-2 pl-6 text-md">
-                    <li>
-                      Ici, x est multiplié par 3. On divise des deux côtés par 3.
-                    </li>
-                    <li>x = 15 ÷ 3</li>
-                    <li>x = <strong>5</strong></li>
-                  </ol>
-                </div>
-              )}
+            {/* Exemple 2 */}
+{exampleIndex === 2 && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">
+      Exemple 2&nbsp;: x multiplié
+    </h2>
+    <p className="text-lg mb-2">Résolvons&nbsp;: 3x = 15</p>
+    <ol className="list-decimal space-y-2 pl-6 text-md">
+      <li>
+        Ici, x est multiplié par 3. On divise des deux côtés par 3.
+      </li>
+      <li>
+        <div className="flex items-center space-x-4">
+          {/* 3x côté gauche */}
+          <div className="flex flex-col items-center">
+            <span>3x</span>
+            <span className="text-blue-600 border-t border-blue-600 w-full text-center">
+              3
+            </span>
+          </div>
+          <span>=</span>
+          {/* 15 côté droit */}
+          <div className="flex flex-col items-center">
+            <span>15</span>
+            <span className="text-blue-600 border-t border-blue-600 w-full text-center">
+              3
+            </span>
+          </div>
+        </div>
+      </li>
+      <li>
+        x = <strong>5</strong>
+      </li>
+    </ol>
+  </div>
+)}
 
-              {/* Exemple 3 */}
-              {exampleIndex === 3 && (
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">
-                    Exemple 3&nbsp;: parenthèses
-                  </h2>
-                  <p className="text-lg mb-2">Résolvons&nbsp;: 2(x + 4) = 18</p>
-                  <ol className="list-decimal space-y-2 pl-6 text-md">
-                    <li>
-                      On divise d’abord par 2&nbsp;: (x + 4) = 18 ÷ 2 = 9
-                    </li>
-                    <li>On soustrait 4&nbsp;: x = 9 - 4</li>
-                    <li>x = <strong>5</strong></li>
-                  </ol>
-                </div>
-              )}
+
+{/* Exemple 3 */}
+{exampleIndex === 3 && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">
+      Exemple 3&nbsp;: parenthèses
+    </h2>
+    <p className="text-lg mb-2">Résolvons&nbsp;: 2(x + 4) = 18</p>
+    <ol className="list-decimal space-y-4 pl-6 text-md">
+      {/* Étape 1 */}
+      <li>
+        On divise d’abord par 2 :
+        <div className="mt-2">
+          <span className="inline-block text-black relative px-1">
+            <span className="border-t-2 border-black px-1">
+              2(x + 4)
+            </span>
+            <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
+              ÷2
+            </span>
+          </span>
+          &nbsp;=&nbsp;
+          <span className="inline-block text-black relative px-1">
+            <span className="border-t-2 border-black px-1">
+              18
+            </span>
+            <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
+              ÷2
+            </span>
+          </span>
+        </div>
+        <div className="mt-2">⇨ (x + 4) = 9</div>
+      </li>
+
+      {/* Étape 2 */}
+      <li>
+        On soustrait 4 :
+        <div className="mt-2">
+          <span className="text-black">x + 4</span>
+          <span className="text-blue-600"> - 4</span>
+          &nbsp;=&nbsp;
+          <span className="text-black">9</span>
+          <span className="text-blue-600"> - 4</span>
+        </div>
+        <div className="mt-2">⇨ x = 5</div>
+      </li>
+
+      {/* Étape 3 */}
+      <li>
+        Résultat : <strong>x = 5</strong>
+      </li>
+    </ol>
+  </div>
+)}
+
 
               {/* Exemple 4 */}
               {exampleIndex === 4 && (
@@ -137,7 +196,7 @@ export default function AlgebreBase() {
                   <p className="text-lg mb-2">Résolvons&nbsp;: x² = 49</p>
                   <ol className="list-decimal space-y-2 pl-6 text-md">
                     <li>On prend la racine carrée des deux côtés.</li>
-                    <li>x = √49</li>
+                    <li>√x² = √49</li>
                     <li>
                       x = <strong>7</strong> ou x = <strong>-7</strong>
                     </li>
