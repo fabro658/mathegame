@@ -63,7 +63,7 @@ export default function PrioriteOperation() {
       </div>
 
       {/* Colonne centrale */}
-      <div className="w-full sm:w-3/4 p-8">
+<div className="w-full sm:w-3/4 p-8 mt-20">
         <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
           {!showExample && (
             <div>

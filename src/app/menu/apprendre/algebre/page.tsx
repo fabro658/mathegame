@@ -34,10 +34,10 @@ export default function AlgebreBase() {
         </p>
 
         <div className="text-left text-md space-y-2 mb-8">
-          <p>1️⃣ Déplace les nombres de l’autre côté.</p>
-          <p>2️⃣ Simplifie l’équation.</p>
-          <p>3️⃣ Si x est multiplié, divise pour isoler.</p>
-          <p>4️⃣ Si x est dans une puissance, utilise la racine.</p>
+          <p>1. Déplace les nombres de l’autre côté.</p>
+          <p>2. Simplifie l’équation.</p>
+          <p>3. Si x est multiplié, divise pour isoler.</p>
+          <p>4. Si x est dans une puissance, utilise la racine.</p>
         </div>
 
         <button
@@ -49,7 +49,7 @@ export default function AlgebreBase() {
       </div>
 
       {/* Colonne centrale */}
-      <div className="w-full sm:w-3/4 p-8">
+<div className="w-full sm:w-3/4 p-8 mt-20">
         <div className="bg-white p-6 rounded-lg shadow-lg min-h-[70vh]">
           {!showExample && (
             <div>
@@ -70,7 +70,7 @@ export default function AlgebreBase() {
               </ul>
             </div>
           )}
-
+        `{/* Exemple 1 */}
           {showExample && (
             <div className="space-y-6 min-h-[400px] flex flex-col justify-between">
               {/* Exemple 1 */}
@@ -81,7 +81,14 @@ export default function AlgebreBase() {
                   </h2>
                   <p className="text-lg mb-2">Résolvons&nbsp;:  x + 5 = 12</p>
                   <ol className="list-decimal space-y-2 pl-6 text-md">
-                    <li>On soustrait 5 des deux côtés&nbsp;: x = 12 - 5</li>
+<li>
+  On soustrait 5 des deux côtés :{" "}
+  <span>
+    x + 5{" "}
+    <span style={{ color: "blue" }}>- 5</span> = 12{" "}
+    <span style={{ color: "blue" }}>- 5</span>
+  </span>
+</li>
                     <li>On calcule&nbsp;: x = <strong>7</strong></li>
                   </ol>
                 </div>
