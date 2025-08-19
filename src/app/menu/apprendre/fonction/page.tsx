@@ -146,7 +146,7 @@ const QuadraticFunctionVisual = () => {
     </div>
   );
 };
-// ✅ Fonction valeur absolue : y = a|x - h| + b
+// Fonction valeur absolue : y = a|x - h| + b
 const AbsoluteFunctionVisual = () => {
   const [a, setA] = useState(1); // coefficient
   const [h, setH] = useState(0); // translation horizontale
@@ -220,23 +220,24 @@ const AbsoluteFunctionVisual = () => {
   );
 };
 
-// ✅ Fonction exponentielle : y = a · b^x + c
 const ExponentialFunctionVisual = () => {
-  const [a, setA] = useState(1); // coefficient multiplicateur
-  const [b, setB] = useState(2); // base de l'exponentielle
-  const [c, setC] = useState(0); // translation verticale
+  const [a, setA] = useState(1); // coefficient multiplicatif
+  const [c, setC] = useState(2); // base
+  const [b, setB] = useState(1); // facteur horizontal
+  const [h, setH] = useState(0); // translation horizontale
+  const [k, setK] = useState(0); // translation verticale
   const [showParams, setShowParams] = useState(false);
 
   const points = Array.from({ length: 201 }, (_, i) => {
     const x = (i - 100) / 10;
-    const y = a * Math.pow(b, x) + c;
+    const y = a * Math.pow(c, b * (x - h)) + k;
     return `${x},${-y}`;
   }).join(" ");
 
   return (
     <div className="flex flex-col items-center">
       <h2 className="text-xl font-bold mb-2">Fonction exponentielle</h2>
-      <p className="mb-2">y = a · b<sup>x</sup> + c</p>
+      <p className="mb-2">f(x) = a · c<sup>b(x-h)</sup> + k</p>
 
       <svg width="300" height="300" viewBox="-10 -10 20 20">
         <Axes />
@@ -253,7 +254,7 @@ const ExponentialFunctionVisual = () => {
       {showParams && (
         <div className="mt-4 w-full max-w-sm space-y-4">
           <div>
-            <label className="block mb-1 font-semibold">a (coefficient) = {a}</label>
+            <label className="block mb-1 font-semibold">a = {a}</label>
             <input
               type="range"
               min={-5}
@@ -265,10 +266,22 @@ const ExponentialFunctionVisual = () => {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold">b (base) = {b}</label>
+            <label className="block mb-1 font-semibold">c (base) = {c}</label>
             <input
               type="range"
               min={0.1}
+              max={5}
+              step={0.1}
+              value={c}
+              onChange={(e) => setC(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b (facteur horizontal) = {b}</label>
+            <input
+              type="range"
+              min={-5}
               max={5}
               step={0.1}
               value={b}
@@ -277,14 +290,26 @@ const ExponentialFunctionVisual = () => {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold">c (translation verticale) = {c}</label>
+            <label className="block mb-1 font-semibold">h (translation horizontale) = {h}</label>
             <input
               type="range"
               min={-10}
               max={10}
               step={0.1}
-              value={c}
-              onChange={(e) => setC(parseFloat(e.target.value))}
+              value={h}
+              onChange={(e) => setH(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">k (translation verticale) = {k}</label>
+            <input
+              type="range"
+              min={-10}
+              max={10}
+              step={0.1}
+              value={k}
+              onChange={(e) => setK(parseFloat(e.target.value))}
               className="w-full"
             />
           </div>
@@ -293,6 +318,7 @@ const ExponentialFunctionVisual = () => {
     </div>
   );
 };
+
 
 
 
