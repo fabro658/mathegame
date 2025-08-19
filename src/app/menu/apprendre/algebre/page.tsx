@@ -145,7 +145,7 @@ export default function AlgebreBase() {
         On divise d’abord par 2 :
         <div className="mt-2">
           <span className="inline-block text-black relative px-1">
-            <span className="border-t-2 border-black px-1">
+            <span className="border-b-2 border-black px-1">
               2(x + 4)
             </span>
             <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
@@ -154,7 +154,7 @@ export default function AlgebreBase() {
           </span>
           &nbsp;=&nbsp;
           <span className="inline-block text-black relative px-1">
-            <span className="border-t-2 border-black px-1">
+            <span className="border-b-2 border-black px-1">
               18
             </span>
             <span className="text-blue-600 absolute -bottom-5 left-1/2 -translate-x-1/2 text-sm">
