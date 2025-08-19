@@ -1573,9 +1573,9 @@ left: -50px;
 .wing {
   position: absolute;
   left: 25px;
-  top: 0px;
+  top: -5px;
   width: 80px;
-  height: 43px;
+  height: 40px;
   background: #aaaaa9;
   border-radius: 25% 75% 9% 91% / 64% 78% 22% 36%;   
   overflow: hidden;
