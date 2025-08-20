@@ -97,7 +97,7 @@ export default function TestFonctions() {
 
         // Cubiques / Constantes
         { id: 9, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x*x*x, answerFunc: () => "0" },
-        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 5, answerFunc: () => "5" },
+        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: () => 5, answerFunc: () => "5" },
 
         { id: 11, text: "Quelle est la pente ?", func: (x) => 4*x + 1, answerFunc: () => "4" },
         { id: 12, text: "Quel est le sommet (x, y) ?", func: (x) => -x*x + 6, answerFunc: () => "(0,6)" },
