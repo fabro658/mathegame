@@ -7,12 +7,12 @@ interface Question {
   id: number;
   text: string;
   func: (x: number) => number;
-  correctAnswer: string;
+  answerFunc: () => string;
 }
 
 const width = 300;
 const height = 300;
-const scale = 25;
+const scale = 25; // 1 unité = 25 px
 const originX = width / 2;
 const originY = height / 2;
 
@@ -22,22 +22,28 @@ const generatePath = (f: (x: number) => number) => {
     const x = (px - originX) / scale;
     const y = f(x);
     const py = originY - y * scale;
-    path += px === 0 ? `M ${px},${py}` : ` L ${px},${py}`;
+    if (px === 0) path = `M ${px},${py}`;
+    else path += ` L ${px},${py}`;
   }
   return path;
 };
 
 const renderCartesian = (f: (x: number) => number) => {
   return (
-    <svg width={width} height={height} style={{ border: "1px solid #ddd", background: "white" }}>
-      {/* Grille */}
-      {Array.from({ length: Math.floor(width / scale) }).map((_, i) => {
-        const px = originX + (i - 6) * scale;
-        return <line key={`v${i}`} x1={px} y1={0} x2={px} y2={height} stroke="#ccc" strokeWidth={0.5} />;
+    <svg
+      width={width}
+      height={height}
+      style={{ border: "1px solid #ddd", background: "white" }}
+    >
+      {/* Grille verticale */}
+      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((_, idx) => {
+        const px = originX + (idx - 6) * scale;
+        return <line key={idx} x1={px} y1={0} x2={px} y2={height} stroke="#ccc" strokeWidth={0.5} />;
       })}
-      {Array.from({ length: Math.floor(height / scale) }).map((_, i) => {
-        const py = originY - (i - 6) * scale;
-        return <line key={`h${i}`} x1={0} y1={py} x2={width} y2={py} stroke="#ccc" strokeWidth={0.5} />;
+      {/* Grille horizontale */}
+      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((_, idx) => {
+        const py = originY - (idx - 6) * scale;
+        return <line key={idx} x1={0} y1={py} x2={width} y2={py} stroke="#ccc" strokeWidth={0.5} />;
       })}
 
       {/* Axes */}
@@ -45,22 +51,16 @@ const renderCartesian = (f: (x: number) => number) => {
       <line x1={originX} y1={0} x2={originX} y2={height} stroke="black" strokeWidth={1} />
 
       {/* Graduations */}
-      {Array.from({ length: 11 }).map((_, i) => {
-        const val = i - 5;
-        return (
-          <text key={`lx${i}`} x={originX + val * scale} y={originY + 12} fontSize="10" textAnchor="middle">
-            {val}
-          </text>
-        );
-      })}
-      {Array.from({ length: 11 }).map((_, i) => {
-        const val = i - 5;
-        return (
-          <text key={`ly${i}`} x={originX + 12} y={originY - val * scale + 4} fontSize="10">
-            {val}
-          </text>
-        );
-      })}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((val) => (
+        <text key={`lx${val}`} x={originX + val * scale} y={originY + 12} fontSize="10" textAnchor="middle">
+          {val}
+        </text>
+      ))}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((val) => (
+        <text key={`ly${val}`} x={originX + 12} y={originY - val * scale + 4} fontSize="10">
+          {val}
+        </text>
+      ))}
 
       {/* Courbe */}
       <path d={generatePath(f)} stroke="blue" fill="none" strokeWidth={2} />
@@ -81,26 +81,40 @@ export default function TestFonctions() {
   useEffect(() => {
     if (questions.length === 0) {
       const qs: Question[] = [
-        { id: 1, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 2 * x + 1, correctAnswer: "1" },
-        { id: 2, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -x + 3, correctAnswer: "3" },
-        { id: 3, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x - 2, correctAnswer: "-2" },
-        { id: 4, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 0.5 * x - 4, correctAnswer: "-4" },
-        { id: 5, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -2 * x, correctAnswer: "0" },
-        { id: 6, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x + 5, correctAnswer: "5" },
-        { id: 7, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -0.5 * x + 2, correctAnswer: "2" },
-        { id: 8, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 3 * x - 7, correctAnswer: "-7" },
-        { id: 9, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x * x, correctAnswer: "0" },
-        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: () => 4, correctAnswer: "4" },
-        { id: 11, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -3 * x + 6, correctAnswer: "6" },
-        { id: 12, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x - 9, correctAnswer: "-9" },
-        { id: 13, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 2 * x - 8, correctAnswer: "-8" },
-        { id: 14, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -x * x + 10, correctAnswer: "10" },
-        { id: 15, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 0.25 * x + 1, correctAnswer: "1" },
-        { id: 16, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -4 * x + 12, correctAnswer: "12" },
-        { id: 17, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x / 2 - 3, correctAnswer: "-3" },
-        { id: 18, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 5 * x + 15, correctAnswer: "15" },
-        { id: 19, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -2 * x - 5, correctAnswer: "-5" },
-        { id: 20, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x - x, correctAnswer: "0" },
+        // Droites
+        { id: 1, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 2*x + 1, answerFunc: () => "1" },
+        { id: 2, text: "Quelle est la pente de cette droite ?", func: (x) => -3*x + 4, answerFunc: () => "-3" },
+        { id: 3, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 0.5*x - 2, answerFunc: () => "-2" },
+
+        // Paraboles
+        { id: 4, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x*x - 3, answerFunc: () => "-3" },
+        { id: 5, text: "Quelle est l’abscisse du sommet ?", func: (x) => -x*x + 4*x - 1, answerFunc: () => "2" },
+        { id: 6, text: "Quel est le sommet (x, y) ?", func: (x) => 2*x*x - 8*x + 5, answerFunc: () => "(2, -3)" },
+
+        // Droites simples
+        { id: 7, text: "Quelle est la pente ?", func: (x) => 3*x + 2, answerFunc: () => "3" },
+        { id: 8, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -0.5*x + 1, answerFunc: () => "1" },
+
+        // Cubiques / Constantes
+        { id: 9, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x*x*x, answerFunc: () => "0" },
+        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 5, answerFunc: () => "5" },
+
+        { id: 11, text: "Quelle est la pente ?", func: (x) => 4*x + 1, answerFunc: () => "4" },
+        { id: 12, text: "Quel est le sommet (x, y) ?", func: (x) => -x*x + 6, answerFunc: () => "(0,6)" },
+        { id: 13, text: "Quelle est l’abscisse du sommet ?", func: (x) => 2*x*x - 8*x + 6, answerFunc: () => "2" },
+
+        // Droites
+        { id: 14, text: "Quelle est la pente ?", func: (x) => -2*x + 3, answerFunc: () => "-2" },
+        { id: 15, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 0.25*x + 1, answerFunc: () => "1" },
+
+        // Paraboles
+        { id: 16, text: "Quel est le sommet (x, y) ?", func: (x) => -0.5*x*x + 3*x - 2, answerFunc: () => "(3, 2.5)" },
+        { id: 17, text: "Quelle est l’abscisse du sommet ?", func: (x) => x*x - 4*x + 3, answerFunc: () => "2" },
+
+        // Droites simples
+        { id: 18, text: "Quelle est la pente ?", func: (x) => 5*x + 10, answerFunc: () => "5" },
+        { id: 19, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -2*x - 5, answerFunc: () => "-5" },
+        { id: 20, text: "Quel est le sommet (x, y) ?", func: (x) => -x*x + 4*x - 3, answerFunc: () => "(2,1)" },
       ];
       setQuestions(qs);
       setAnswers(Array(qs.length).fill(""));
@@ -115,10 +129,10 @@ export default function TestFonctions() {
   };
 
   const validateOne = (index: number) => {
-    if (answers[index].trim() === questions[index].correctAnswer) {
-      updateFeedback(index, "Réponse correcte");
+    if (answers[index].trim() === questions[index].answerFunc()) {
+      updateFeedback(index, "✅ Réponse correcte");
     } else {
-      updateFeedback(index, "Réponse erronée");
+      updateFeedback(index, "❌ Réponse erronée");
     }
   };
 
@@ -141,13 +155,21 @@ export default function TestFonctions() {
 
   return (
     <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
-      <Link href="/menu/apprendre/fonctions" className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50">
+      {/* Navigation */}
+      <Link
+        href="/menu/apprendre/fonctions"
+        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+      >
         Apprendre
       </Link>
-      <Link href="/secondaire/niveaux/niveau5" className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50">
+      <Link
+        href="/secondaire/niveaux/niveau5"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
+      >
         Retour
       </Link>
 
+      {/* Contenu */}
       <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-40 space-y-12">
         <h1 className="text-3xl font-bold text-center">Questions sur les fonctions</h1>
 
@@ -187,14 +209,13 @@ export default function TestFonctions() {
         })}
       </div>
 
+      {/* Pagination */}
       <div className="fixed bottom-4 right-4 bg-[#1e1f3d] border-t border-gray-700 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
           onClick={handlePrevious}
           disabled={currentPage === 0}
           className={`px-6 py-2 rounded font-bold ${
-            currentPage === 0
-              ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+            currentPage === 0 ? "bg-gray-600 text-gray-300 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
           Page précédente
@@ -203,9 +224,7 @@ export default function TestFonctions() {
           onClick={handleNext}
           disabled={currentPage === totalPages - 1}
           className={`px-6 py-2 rounded font-bold ${
-            currentPage === totalPages - 1
-              ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+            currentPage === totalPages - 1 ? "bg-gray-600 text-gray-300 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
           Page suivante
