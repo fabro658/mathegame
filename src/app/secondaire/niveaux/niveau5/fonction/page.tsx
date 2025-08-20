@@ -19,9 +19,9 @@ const originY = height / 2;
 const generatePath = (f: (x: number) => number) => {
   let path = "";
   for (let px = 0; px <= width; px++) {
-    const x = (px - originX) / scale;
-    const y = f(x);
-    const py = originY - y * scale;
+    const xValue = (px - originX) / scale;
+    const yValue = f(xValue);
+    const py = originY - yValue * scale;
     if (px === 0) {
       path = `M ${px},${py}`;
     } else {
@@ -38,60 +38,82 @@ const renderCartesian = (f: (x: number) => number) => {
       height={height}
       style={{ border: "1px solid #ddd", background: "white" }}
     >
-      {/* Grille */}
-      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((x) => {
-        const px = originX + x * scale;
-        return (
-          <line
-            key={`v${x}`}
-            x1={px}
-            y1={0}
-            x2={px}
-            y2={height}
-            stroke="#ccc"
-            strokeWidth={0.5}
-          />
-        );
-      })}
-      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((y) => {
-        const py = originY - y * scale;
-        return (
-          <line
-            key={`h${y}`}
-            x1={0}
-            y1={py}
-            x2={width}
-            y2={py}
-            stroke="#ccc"
-            strokeWidth={0.5}
-          />
-        );
-      })}
+      {/* Grille verticale */}
+      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map(
+        (xGrid) => {
+          const px = originX + xGrid * scale;
+          return (
+            <line
+              key={`v${xGrid}`}
+              x1={px}
+              y1={0}
+              x2={px}
+              y2={height}
+              stroke="#ccc"
+              strokeWidth={0.5}
+            />
+          );
+        }
+      )}
+
+      {/* Grille horizontale */}
+      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map(
+        (yGrid) => {
+          const py = originY - yGrid * scale;
+          return (
+            <line
+              key={`h${yGrid}`}
+              x1={0}
+              y1={py}
+              x2={width}
+              y2={py}
+              stroke="#ccc"
+              strokeWidth={0.5}
+            />
+          );
+        }
+      )}
 
       {/* Axes */}
-      <line x1={0} y1={originY} x2={width} y2={originY} stroke="black" strokeWidth={1} />
-      <line x1={originX} y1={0} x2={originX} y2={height} stroke="black" strokeWidth={1} />
+      <line
+        x1={0}
+        y1={originY}
+        x2={width}
+        y2={originY}
+        stroke="black"
+        strokeWidth={1}
+      />
+      <line
+        x1={originX}
+        y1={0}
+        x2={originX}
+        y2={height}
+        stroke="black"
+        strokeWidth={1}
+      />
 
-      {/* Graduations */}
-      {Array.from({ length: 11 }, (_, i) => i - 5).map((x) => (
+      {/* Graduations X */}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((xLabel) => (
         <text
-          key={`lx${x}`}
-          x={originX + x * scale}
+          key={`lx${xLabel}`}
+          x={originX + xLabel * scale}
           y={originY + 12}
           fontSize="10"
           textAnchor="middle"
         >
-          {x}
+          {xLabel}
         </text>
       ))}
-      {Array.from({ length: 11 }, (_, i) => i - 5).map((y) => (
+
+      {/* Graduations Y */}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((yLabel) => (
         <text
-          key={`ly${y}`}
+          key={`ly${yLabel}`}
           x={originX + 12}
-          y={originY - y * scale + 4}
+          y={originY - yLabel * scale + 4}
           fontSize="10"
         >
-          {y}
+          {yLabel}
         </text>
       ))}
 
