@@ -19,28 +19,28 @@ export default function IsolerVariable() {
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
 
-  // Générer des équations aléatoires
+  // Générer les équations aléatoires
   useEffect(() => {
     if (questions.length === 0) {
       const generatedQuestions: Equation[] = Array.from({ length: totalQuestions }, (_, i) => {
-        const type = Math.floor(Math.random() * 2); // 0 ou 1 → deux types d'équations
-        let a = Math.floor(Math.random() * 9) + 1; // coef x, 1 à 9
-        let b = Math.floor(Math.random() * 21) - 10; // constante b, -10 à 10
-        let c = Math.floor(Math.random() * 21) - 10; // constante c, -10 à 10
-        let text = "";
-        let answer = 0;
+        const eqType = Math.floor(Math.random() * 2); // type 0 ou 1
+        const coef = Math.floor(Math.random() * 9) + 1; // coefficient x
+        const valB = Math.floor(Math.random() * 21) - 10; // constante b
+        const valC = Math.floor(Math.random() * 21) - 10; // constante c
+        let textEquation = "";
+        let correctAnswer = 0;
 
-        if (type === 0) {
+        if (eqType === 0) {
           // ax + b = c
-          answer = (c - b) / a;
-          text = `${a}x + ${b} = ${c}`;
+          correctAnswer = (valC - valB) / coef;
+          textEquation = `${coef}x + ${valB} = ${valC}`;
         } else {
           // a + bx = c
-          answer = (c - a) / b;
-          text = `${a} + ${b}x = ${c}`;
+          correctAnswer = (valC - coef) / valB;
+          textEquation = `${coef} + ${valB}x = ${valC}`;
         }
 
-        return { id: i + 1, text, answer };
+        return { id: i + 1, text: textEquation, answer: correctAnswer };
       });
       setQuestions(generatedQuestions);
     }
@@ -48,8 +48,8 @@ export default function IsolerVariable() {
 
   const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
+    const parsed = parseFloat(value);
+    newAnswers[index] = isNaN(parsed) ? null : parsed;
     setAnswers(newAnswers);
     setFeedbackMessage(null);
   };
@@ -64,22 +64,22 @@ export default function IsolerVariable() {
       return;
     }
 
-    let hasError = false;
     const newAnswers = [...answers];
-    const incorrect: number[] = [];
+    const incorrectIndices: number[] = [];
+    let hasError = false;
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
+    pageAnswers.forEach((ans, idx) => {
+      const globalIndex = startIndex + idx;
       const correct = questions[globalIndex].answer;
-      if (answer !== correct) {
+      if (ans !== correct) {
         newAnswers[globalIndex] = null;
-        incorrect.push(globalIndex);
+        incorrectIndices.push(globalIndex);
         hasError = true;
       }
     });
 
     setAnswers(newAnswers);
-    setIncorrectAnswers(incorrect);
+    setIncorrectAnswers(incorrectIndices);
 
     if (hasError) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez les corriger.");
