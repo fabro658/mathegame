@@ -19,6 +19,7 @@ const originY = height / 2;
 const generatePath = (f: (x: number) => number) => {
   let path = "";
   for (let px = 0; px <= width; px++) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const x = (px - originX) / scale;
     const y = f(x);
     const py = originY - y * scale;
@@ -39,58 +40,61 @@ const renderCartesian = (f: (x: number) => number) => {
       style={{ border: "1px solid #ddd", background: "white" }}
     >
       {/* Grille */}
-{Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((_unused) => {
-  const px = originX + (_unused) * scale;
-  return (
-    <line
-      key={`v${_unused}`}
-      x1={px}
-      y1={0}
-      x2={px}
-      y2={height}
-      stroke="#ccc"
-      strokeWidth={0.5}
-    />
-  );
-})}
-{Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((_unused) => {
-  const py = originY - (_unused) * scale;
-  return (
-    <line
-      key={`h${_unused}`}
-      x1={0}
-      y1={py}
-      x2={width}
-      y2={py}
-      stroke="#ccc"
-      strokeWidth={0.5}
-    />
-  );
-})}
+      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((_unused) => {
+        const px = originX + _unused * scale;
+        return (
+          <line
+            key={`v${_unused}`}
+            x1={px}
+            y1={0}
+            x2={px}
+            y2={height}
+            stroke="#ccc"
+            strokeWidth={0.5}
+          />
+        );
+      })}
+      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((_unused) => {
+        const py = originY - _unused * scale;
+        return (
+          <line
+            key={`h${_unused}`}
+            x1={0}
+            y1={py}
+            x2={width}
+            y2={py}
+            stroke="#ccc"
+            strokeWidth={0.5}
+          />
+        );
+      })}
 
-{/* Graduations */}
-{Array.from({ length: 11 }, (_, i) => i - 5).map((_unused) => (
-  <text
-    key={`lx${_unused}`}
-    x={originX + _unused * scale}
-    y={originY + 12}
-    fontSize="10"
-    textAnchor="middle"
-  >
-    {_unused}
-  </text>
-))}
-{Array.from({ length: 11 }, (_, i) => i - 5).map((_unused) => (
-  <text
-    key={`ly${_unused}`}
-    x={originX + 12}
-    y={originY - _unused * scale + 4}
-    fontSize="10"
-  >
-    {_unused}
-  </text>
-))}
+      {/* Axes */}
+      <line x1={0} y1={originY} x2={width} y2={originY} stroke="black" strokeWidth={1} />
+      <line x1={originX} y1={0} x2={originX} y2={height} stroke="black" strokeWidth={1} />
 
+      {/* Graduations */}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((_unused) => (
+        <text
+          key={`lx${_unused}`}
+          x={originX + _unused * scale}
+          y={originY + 12}
+          fontSize="10"
+          textAnchor="middle"
+        >
+          {_unused}
+        </text>
+      ))}
+      {Array.from({ length: 11 }, (_, i) => i - 5).map((_unused) => (
+        <text
+          key={`ly${_unused}`}
+          x={originX + 12}
+          y={originY - _unused * scale + 4}
+          fontSize="10"
+        >
+          {_unused}
+        </text>
+      ))}
 
       {/* Courbe */}
       <path d={generatePath(f)} stroke="blue" fill="none" strokeWidth={2} />
@@ -120,7 +124,7 @@ export default function TestFonctions() {
         { id: 7, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -0.5 * x + 2, correctAnswer: "2" },
         { id: 8, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 3 * x - 7, correctAnswer: "-7" },
         { id: 9, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x * x, correctAnswer: "0" },
-        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 4, correctAnswer: "4" },
+        { id: 10, text: "Quelle est l’ordonnée à l’origine ?", func: (_) => 4, correctAnswer: "4" },
         { id: 11, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => -3 * x + 6, correctAnswer: "6" },
         { id: 12, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => x * x - 9, correctAnswer: "-9" },
         { id: 13, text: "Quelle est l’ordonnée à l’origine ?", func: (x) => 2 * x - 8, correctAnswer: "-8" },
