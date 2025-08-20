@@ -36,13 +36,13 @@ const renderCartesian = (f: (x: number) => number) => {
       style={{ border: "1px solid #ddd", background: "white" }}
     >
       {/* Grille verticale */}
-      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((_, idx) => {
-        const px = originX + (idx - 6) * scale;
+      {Array.from({ length: Math.floor(width / scale) }, (_, i) => i - 6).map((val, idx) => {
+        const px = originX + val * scale;
         return <line key={idx} x1={px} y1={0} x2={px} y2={height} stroke="#ccc" strokeWidth={0.5} />;
       })}
       {/* Grille horizontale */}
-      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((_, idx) => {
-        const py = originY - (idx - 6) * scale;
+      {Array.from({ length: Math.floor(height / scale) }, (_, i) => i - 6).map((val, idx) => {
+        const py = originY - val * scale;
         return <line key={idx} x1={0} y1={py} x2={width} y2={py} stroke="#ccc" strokeWidth={0.5} />;
       })}
 
