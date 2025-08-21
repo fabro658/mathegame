@@ -150,9 +150,9 @@ export default function TestFonctions() {
 
   const validateOne = (index: number) => {
     if (answers[index].trim() === questions[index].answerFunc()) {
-      updateFeedback(index, "✅ Réponse correcte");
+      updateFeedback(index, "Réponse correcte");
     } else {
-      updateFeedback(index, "❌ Réponse erronée");
+      updateFeedback(index, "Réponse erronée");
     }
   };
 
