@@ -45,15 +45,6 @@ export default function MobileHome() {
           </div>
         </Link>
 
-        {/* Bouton À venir */}
-        <Link href="/avenir">
-          <div
-            className="bg-orange-500 text-black text-base h-20 w-28 flex items-center justify-center font-bold hover:bg-orange-400 rounded-lg"
-          >
-            À venir
-          </div>
-        </Link>
-
         {/* Bouton Secondaire */}
         <Link href="/mobile/secondaire_mobile">
           <div

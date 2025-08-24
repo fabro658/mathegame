@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center items-center text-white relative overflow-hidden bg-[#081c34] font-fredoka">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"
@@ -13,7 +13,7 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Les Exposants</h1>
 
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">

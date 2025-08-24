@@ -13,15 +13,21 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Mission Comparaison</h1>
 
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
         <Link
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparer_fraction_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparaison_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Comparaison de fraction
+          Comparaison
+        </Link>
+          <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparaison_decimaux_mobile"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
+        >
+          Décimaux 
         </Link>
         <Link
           href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/expression_equivalente_mobile"
@@ -30,10 +36,10 @@ export default function Page() {
           Expression équivalentes
         </Link>
         <Link
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparaison_mobile"
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile/comparer_fraction_mobile"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Comparaison
+          Fractions
         </Link>
       </div>
     </div>

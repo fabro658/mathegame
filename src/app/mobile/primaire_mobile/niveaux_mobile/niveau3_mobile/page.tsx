@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center items-center text-black relative overflow-hidden font-fredoka bg-gradient-to-b from-[#f8e9b8] to-[#eddca3]">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"
@@ -14,7 +14,7 @@ export default function Page() {
       </Link>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold mb-12 text-center">Choisissez une opération</h1>
+      <h1 className="text-4xl font-bold mb-12 text-center">Le désert des Fractions</h1>
 
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
@@ -22,14 +22,14 @@ export default function Page() {
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/additionfraction_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Addition de fraction
+          Addition de fractions
         </Link>
 
         <Link
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/soustractionfraction_mobile"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
-          Soustraction de fraction
+          Soustraction de fractions
         </Link>
 
         <Link
