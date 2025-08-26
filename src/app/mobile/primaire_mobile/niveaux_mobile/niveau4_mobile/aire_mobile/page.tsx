@@ -152,19 +152,13 @@ export default function AreaByCounting() {
   const startIndex = currentPage * questionsPerPage;
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
-  const radius = 50;
-  const strokeWidth = 10;
-  const circumference = 2 * Math.PI * radius;
-  const completedAnswers = answers.filter((a) => a.trim() !== "").length;
-  const completionPercentage = Math.round((completedAnswers / totalQuestions) * 100);
-
   return (
     <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
 
-      {/* Boutons fixes */}
+      {/* Boutons fixes en haut */}
       <Link
         href="/menu/apprendre/aire"
-        className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+        className="fixed top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
       >
         Apprendre
       </Link>
@@ -174,34 +168,6 @@ export default function AreaByCounting() {
       >
         Retour
       </Link>
-
-      {/* Cercle de progression */}
-      <div className="fixed top-4 left-4 w-32 h-32 z-50">
-        <svg className="transform -rotate-90" width="100%" height="100%">
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#444"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#60a5fa"
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - (circumference * completionPercentage) / 100}
-            className="transition-all duration-500"
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-blue-400">{completionPercentage}%</span>
-        </div>
-      </div>
 
       {/* Contenu des questions */}
       <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-40 space-y-12">
@@ -251,7 +217,7 @@ export default function AreaByCounting() {
         })}
       </div>
 
-      {/* Pagination */}
+      {/* Pagination en bas */}
       <div className="fixed bottom-4 right-4 bg-[#1e1f3d] border-t border-gray-700 shadow-md px-6 py-3 rounded-lg flex gap-6 z-50">
         <button
           onClick={handlePrevious}
