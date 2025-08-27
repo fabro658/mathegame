@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-
   const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
@@ -18,21 +17,22 @@ export default function Addition() {
         let a: number, b: number;
 
         if (index < 10) {
-          a = Math.floor(Math.random() * 10) + 1;      // [1, 10]
-          b = Math.floor(Math.random() * 10) + 1;      // [1, 10]
+          a = Math.floor(Math.random() * 10) + 1; // [1, 10]
+          b = Math.floor(Math.random() * 10) + 1; // [1, 10]
         } else if (index < 20) {
           const range = 20;
-          a = Math.floor(Math.random() * range) + 10;  // [10, 30]
-          b = Math.floor(Math.random() * range) + 5;   // [5, 25]
+          a = Math.floor(Math.random() * range) + 10; // [10, 30]
+          b = Math.floor(Math.random() * range) + 5;  // [5, 25]
         } else if (index < 30) {
           do {
-            a = Math.floor(Math.random() * 50) + 10;   // [10, 60]
-            b = Math.floor(Math.random() * 50) + 10;   // [10, 60]
+            a = Math.floor(Math.random() * 50) + 10; // [10, 60]
+            b = Math.floor(Math.random() * 50) + 10; // [10, 60]
           } while (a === b);
         } else {
-          a = Math.floor(Math.random() * 100) + 50;    // [50, 150]
-          b = Math.floor(Math.random() * 100) + 50;    // [50, 150]
+          a = Math.floor(Math.random() * 100) + 50; // [50, 150]
+          b = Math.floor(Math.random() * 100) + 50; // [50, 150]
         }
+
         return [a, b];
       });
     };
@@ -84,8 +84,8 @@ export default function Addition() {
   };
 
   return (
-    <div className="relative min-h-screen bg-gray-100 text-black overflow-y-auto">
-      {/* Boutons fixes en haut */}
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+      {/* Boutons fixes en haut (comme la page Aire) */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"
         className="fixed top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
@@ -100,17 +100,15 @@ export default function Addition() {
       </Link>
 
       {/* Contenu scrollable */}
-      <div className="flex flex-col items-center py-6 px-4 pt-24"> {/* pt-24 pour dégager les boutons fixes */}
-        {/* Titre */}
-        <h1 className="text-4xl font-bold mb-6">Addition</h1>
+      <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-24 mt-16">
+        <h1 className="text-3xl font-bold text-center mb-6">Addition</h1>
 
-        {/* Feedback */}
         {feedbackMessage && (
           <p
-            className={`text-xl mb-4 text-center ${
+            className={`text-xl mb-6 text-center ${
               feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-                ? "text-red-500"
-                : "text-green-600"
+                ? "text-red-400"
+                : "text-green-400"
             }`}
           >
             {feedbackMessage}
@@ -118,7 +116,7 @@ export default function Addition() {
         )}
 
         {/* Questions (page courante) */}
-        <div className="flex flex-col gap-6 w-full max-w-xl items-center">
+        <div className="flex flex-col gap-6 w-full items-center">
           {questions
             .slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage)
             .map(([a, b], index) => (
@@ -140,7 +138,7 @@ export default function Addition() {
         </div>
 
         {/* Bouton de validation */}
-        <div className="mt-6 flex justify-center w-full">
+        <div className="mt-8 flex justify-center w-full">
           <button
             onClick={handleValidation}
             className="bg-blue-600 text-white py-3 px-6 rounded font-bold w-full max-w-xs hover:bg-blue-700"
