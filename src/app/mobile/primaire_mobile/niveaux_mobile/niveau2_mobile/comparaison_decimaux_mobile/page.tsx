@@ -113,20 +113,27 @@ export default function ComparerDecimaux() {
         )}
 
         {/* 6 questions de la page courante */}
-        <div className="flex flex-col gap-6 w-full max-w-lg mx-auto">
+        <div className="flex flex-col gap-10 w-full max-w-lg mx-auto">
           {visibleQuestions.map((q, idx) => {
             const globalIndex = startIndex + idx;
             return (
-              <div key={globalIndex} className="flex items-center justify-center gap-6">
-                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl">
+              <div
+                key={globalIndex}
+                className="flex flex-col items-center justify-center gap-4"
+              >
+                {/* Enoncé */}
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center w-full">
                   {q.numbers[0].toFixed(2)} ? {q.numbers[1].toFixed(2)}
                 </div>
+                {/* Réponse en dessous */}
                 <select
                   value={answers[globalIndex] || ""}
                   onChange={(e) => handleChange(globalIndex, e.target.value)}
                   className="border border-gray-400 py-2 px-3 rounded text-center text-black text-lg w-28"
                 >
-                  <option value="" disabled>Choisissez</option>
+                  <option value="" disabled>
+                    Choisissez
+                  </option>
                   <option value="<">&lt;</option>
                   <option value=">">&gt;</option>
                   <option value="=">=</option>
@@ -137,7 +144,7 @@ export default function ComparerDecimaux() {
         </div>
 
         {/* Valider */}
-        <div className="mt-8 flex justify-center w-full">
+        <div className="mt-10 flex justify-center w-full">
           <button
             onClick={handleValidation}
             className="bg-blue-600 text-white py-3 px-6 rounded font-bold w-full max-w-xs hover:bg-blue-700"
