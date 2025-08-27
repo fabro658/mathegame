@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -6,34 +6,33 @@ import Link from "next/link";
 type Question = {
   type: "compare";
   fractions: [string, string];
-  correctAnswer: string;
+  correctAnswer: "<" | ">" | "=";
 };
 
 export default function ComparerFractions() {
   const totalQuestions = 30;
-  const questionsPerPage = 6; // Display 6 questions per page
+  const questionsPerPage = 6;
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
-  const [isValidated, setIsValidated] = useState(false);
-  const [hasPassed, setHasPassed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   // Génération des questions
   const generateQuestions = (): Question[] => {
     return Array.from({ length: totalQuestions }, () => {
-      const numerator1 = Math.floor(Math.random() * 9) + 1;
-      const denominator1 = Math.floor(Math.random() * 8) + 2;
-      const numerator2 = Math.floor(Math.random() * 9) + 1;
-      const denominator2 = Math.floor(Math.random() * 8) + 2;
+      const n1 = Math.floor(Math.random() * 9) + 1;
+      const d1 = Math.floor(Math.random() * 8) + 2;
+      const n2 = Math.floor(Math.random() * 9) + 1;
+      const d2 = Math.floor(Math.random() * 8) + 2;
 
-      const fraction1 = `${numerator1}/${denominator1}`;
-      const fraction2 = `${numerator2}/${denominator2}`;
-      const value1 = numerator1 / denominator1;
-      const value2 = numerator2 / denominator2;
+      const f1 = `${n1}/${d1}`;
+      const f2 = `${n2}/${d2}`;
+      const v1 = n1 / d1;
+      const v2 = n2 / d2;
 
-      const correctAnswer = value1 > value2 ? ">" : value1 < value2 ? "<" : "=";
-
-      return { type: "compare", fractions: [fraction1, fraction2], correctAnswer };
+      const correct: "<" | ">" | "=" = v1 > v2 ? ">" : v1 < v2 ? "<" : "=";
+      return { type: "compare", fractions: [f1, f2], correctAnswer: correct };
     });
   };
 
@@ -42,87 +41,122 @@ export default function ComparerFractions() {
   }, []);
 
   const handleAnswer = (index: number, value: string) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = value;
-    setAnswers(updatedAnswers);
+    const updated = [...answers];
+    updated[index] = value as "<" | ">" | "=" | string;
+    setAnswers(updated);
+    setFeedbackMessage("");
   };
 
   const handleValidation = () => {
-    const pageAnswers = answers.slice(0, questionsPerPage);
+    const startIndex = currentPage * questionsPerPage;
+    const endIndex = startIndex + questionsPerPage;
 
+    const pageAnswers = answers.slice(startIndex, endIndex);
     if (pageAnswers.includes(null)) {
-      alert("Veuillez répondre à toutes les questions avant de valider.");
+      setFeedbackMessage("Veuillez répondre à toutes les questions avant de valider.");
       return;
     }
 
-    const isCorrect = pageAnswers.every((answer, index) => {
-      return questions[index] && answer === questions[index].correctAnswer;
+    let hasErrors = false;
+    const updated = [...answers];
+
+    pageAnswers.forEach((answer, idx) => {
+      const globalIndex = startIndex + idx;
+      const expected = questions[globalIndex]?.correctAnswer;
+      if (answer !== expected) {
+        hasErrors = true;
+        updated[globalIndex] = null; // efface les mauvaises réponses
+      }
     });
 
-    setIsValidated(true);
-    setHasPassed(isCorrect);
+    setAnswers(updated);
+
+    const lastPageIndex = Math.floor(totalQuestions / questionsPerPage) - 1;
+    if (hasErrors) {
+      setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez réessayer.");
+    } else if (currentPage < lastPageIndex) {
+      setFeedbackMessage("Bravo ! Toutes les réponses sont correctes. Vous pouvez continuer.");
+      setCurrentPage(currentPage + 1);
+    } else {
+      setFeedbackMessage("Excellent ! Vous avez terminé toutes les questions.");
+    }
   };
 
-  const currentQuestions = questions.slice(0, questionsPerPage);
+  const startIndex = currentPage * questionsPerPage;
+  const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative">
-      {/* Boutons de navigation avec z-index pour être toujours au-dessus */}
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+      {/* Boutons fixes en haut (on garde la couleur de fond globale) */}
       <Link
         href="/menu/apprendre"
-        className="absolute top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-10"
+        className="fixed top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
       >
         Apprendre
       </Link>
       <Link
         href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
       </Link>
 
-      {/* Titre avec espacement supplémentaire */}
-      <h1 className="text-3xl font-bold mb-6 mt-16">Comparaison de Fractions</h1>
+      {/* Contenu scrollable */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-24 mt-16">
+        {/* Titre */}
+        <h1 className="text-3xl font-bold mb-6 text-center">Comparaison de Fractions</h1>
 
-      {!isValidated && (
-        <div className="flex flex-col items-center justify-center">
-          {currentQuestions.map((question, index) => (
-            <div key={index} className="bg-white p-6 rounded shadow-md text-center mb-6">
-              <p className="text-xl font-bold mb-4">
-                {`${question.fractions[0]} ? ${question.fractions[1]}`}
-              </p>
-              <select
-                value={answers[index] || ""}
-                onChange={(e) => handleAnswer(index, e.target.value)}
-                className="py-3 px-6 rounded border-gray-300 text-lg"
-              >
-                <option value="" disabled>Choisissez</option>
-                <option value="<">&lt;</option>
-                <option value=">">&gt;</option>
-                <option value="=">=</option>
-              </select>
-              {answers[index] === null && (
-                <p className="text-red-500 text-sm mt-2">Réponse manquante</p>
-              )}
-            </div>
-          ))}
-          <div className="flex flex-col items-center mt-4">
-            <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold">
-              Valider
-            </button>
-          </div>
-        </div>
-      )}
+        {/* Feedback */}
+        {feedbackMessage && (
+          <p
+            className={`text-xl mb-6 text-center ${
+              feedbackMessage.includes("incorrectes") ||
+              feedbackMessage.includes("réessayer") ||
+              feedbackMessage.includes("toutes les questions")
+                ? "text-red-600"
+                : "text-green-600"
+            }`}
+          >
+            {feedbackMessage}
+          </p>
+        )}
 
-      {isValidated && (
-        <div className="text-center mt-4">
-          {hasPassed ? (
-            <p className="text-green-500 font-bold text-lg">Toutes les réponses sont correctes !</p>
-          ) : (
-            <p className="text-red-500 font-bold text-lg">Certaines réponses sont incorrectes.</p>
-          )}
+        {/* 6 questions de la page courante — vertical (énoncé au-dessus, réponse en dessous) */}
+        <div className="flex flex-col gap-10 w-full max-w-lg mx-auto">
+          {visibleQuestions.map((q, idx) => {
+            const globalIndex = startIndex + idx;
+            return (
+              <div key={globalIndex} className="flex flex-col items-center justify-center gap-4">
+                {/* Enoncé */}
+                <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl text-center w-full">
+                  {q.fractions[0]} ? {q.fractions[1]}
+                </div>
+                {/* Sélecteur en dessous */}
+                <select
+                  value={answers[globalIndex] || ""}
+                  onChange={(e) => handleAnswer(globalIndex, e.target.value)}
+                  className="border border-gray-400 py-2 px-3 rounded text-center text-black text-lg w-28"
+                >
+                  <option value="" disabled>Choisissez</option>
+                  <option value="<">&lt;</option>
+                  <option value=">">&gt;</option>
+                  <option value="=">=</option>
+                </select>
+              </div>
+            );
+          })}
         </div>
-      )}
+
+        {/* Valider */}
+        <div className="mt-10 flex justify-center w-full">
+          <button
+            onClick={handleValidation}
+            className="bg-blue-600 text-white py-3 px-6 rounded font-bold w-full max-w-xs hover:bg-blue-700"
+          >
+            Valider
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
