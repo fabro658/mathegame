@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gradient-to-b from-[#f8e9b8] to-[#eddca3] text-black p-4 relative">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Bouton retour fixe */}
       <Link
         href="/mobile/primaire_mobile"
