@@ -79,7 +79,7 @@ export default function ComparerDecimaux() {
   const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+<div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes en haut */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"
