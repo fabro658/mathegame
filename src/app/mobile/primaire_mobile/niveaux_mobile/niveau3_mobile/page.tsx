@@ -18,26 +18,26 @@ export default function Page() {
 
       {/* Boutons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 relative z-10">
-        <Link
+        <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/additionfraction_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Addition de fractions
-        </Link>
+        </a>
 
-        <Link
+        <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/soustractionfraction_mobile"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Soustraction de fractions
-        </Link>
+        </a>
 
-        <Link
+        <a
           href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile/trouvefraction_mobile"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center min-w-[300px]"
         >
           Trouver la fraction
-        </Link>
+        </a>
       </div>
     </div>
   );
