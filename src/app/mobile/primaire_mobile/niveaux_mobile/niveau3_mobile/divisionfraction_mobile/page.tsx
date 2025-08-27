@@ -18,48 +18,53 @@ export default function DivisionFraction() {
     return [numerator / divisor, denominator / divisor];
   };
 
-  // Fonction pour normaliser les réponses (en enlevant les espaces et en convertissant en format fraction)
+  // Normaliser les réponses (ex: "2/2" -> "1")
   const normalizeAnswer = (answer: string) => {
-    return answer.replace(/\s+/g, "").toLowerCase();
+    const normalized = answer.replace(/\s+/g, "").toLowerCase();
+    const match = normalized.match(/^(\d+)\/\1$/);
+    if (match) return "1";
+    const zeroMatch = normalized.match(/^0\/\d+$/);
+    if (zeroMatch) return "0";
+    return normalized;
   };
 
   // Génération des questions
   useEffect(() => {
     const generateQuestions = () =>
       Array.from({ length: totalQuestions }, () => {
-        const a1 = Math.floor(Math.random() * 5) + 1;  // Utiliser des nombres plus petits (1 à 5)
-        const b1 = Math.floor(Math.random() * 5) + 1;  // Utiliser des nombres plus petits (1 à 5)
-        const a2 = Math.floor(Math.random() * 5) + 1;  // Utiliser des nombres plus petits (1 à 5)
-        const b2 = Math.floor(Math.random() * 5) + 1;  // Utiliser des nombres plus petits (1 à 5)
+        const a1 = Math.floor(Math.random() * 5) + 1;
+        const b1 = Math.floor(Math.random() * 5) + 1;
+        const a2 = Math.floor(Math.random() * 5) + 1;
+        const b2 = Math.floor(Math.random() * 5) + 1;
 
-        const numeratorResult = a1 * b2; // Numérateur après division
-        const denominatorResult = b1 * a2; // Dénominateur après division
+        const numeratorResult = a1 * b2;
+        const denominatorResult = b1 * a2;
 
-        const [simplifiedNumerator, simplifiedDenominator] = simplifyFraction(numeratorResult, denominatorResult);
+        const [simplifiedNum, simplifiedDen] = simplifyFraction(numeratorResult, denominatorResult);
 
         return {
           fraction1: `${a1}/${b1}`,
           fraction2: `${a2}/${b2}`,
-          correctAnswer: `${simplifiedNumerator}/${simplifiedDenominator}`,
+          correctAnswer: `${simplifiedNum}/${simplifiedDen}`,
         };
       });
 
     setQuestions(generateQuestions());
   }, []);
 
-  // Gestion des changements de réponse
+  // Gestion des réponses
   const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value.trim();
-    setAnswers(newAnswers);
-    setFeedbackMessage(""); // Réinitialiser le message de feedback lors d'un changement
+    const updated = [...answers];
+    updated[index] = value.trim();
+    setAnswers(updated);
+    setFeedbackMessage("");
   };
 
-  // Validation des réponses
+  // Validation
   const handleValidation = () => {
-    const startIndex = currentPage * questionsPerPage;
-    const endIndex = startIndex + questionsPerPage;
-    const pageAnswers = answers.slice(startIndex, endIndex);
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+    const pageAnswers = answers.slice(start, end);
 
     if (pageAnswers.includes(null) || pageAnswers.includes("")) {
       setFeedbackMessage("Veuillez remplir toutes les réponses avant de valider.");
@@ -67,79 +72,99 @@ export default function DivisionFraction() {
     }
 
     let allCorrect = true;
-    const newAnswers = [...answers];
+    const updated = [...answers];
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
-
-      // Vérifier si la réponse n'est pas vide ou nulle avant de la normaliser
-      const normalizedAnswer = answer ? normalizeAnswer(answer) : "";
-      const normalizedCorrectAnswer = normalizeAnswer(questions[globalIndex]?.correctAnswer); // Normaliser la réponse correcte
-
-      if (normalizedAnswer !== normalizedCorrectAnswer) {
+    pageAnswers.forEach((answer, i) => {
+      const globalIndex = start + i;
+      const correct = questions[globalIndex]?.correctAnswer;
+      if (!answer || normalizeAnswer(answer) !== normalizeAnswer(correct)) {
+        updated[globalIndex] = null;
         allCorrect = false;
-        newAnswers[globalIndex] = null; // Réinitialiser les mauvaises réponses
       }
     });
 
-    setAnswers(newAnswers);
+    setAnswers(updated);
 
     if (allCorrect) {
-      setFeedbackMessage("Bravo ! Toutes vos réponses sont correctes.");
       if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+        setFeedbackMessage("Bravo ! Toutes les réponses sont correctes. Vous pouvez continuer.");
         setCurrentPage(currentPage + 1);
       } else {
-        setFeedbackMessage("Félicitations, vous avez terminé toutes les séries !");
+        setFeedbackMessage("Félicitations ! Vous avez terminé toutes les séries !");
       }
     } else {
       setFeedbackMessage("Certaines réponses sont incorrectes. Corrigez-les.");
     }
   };
 
+  const startIndex = currentPage * questionsPerPage;
+  const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black relative py-6 px-4">
-      <div className="flex justify-between w-full mb-6">
-        <Link 
-          href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile" 
-          className="bg-black text-white py-3 px-8 rounded font-bold">
-          Apprendre
-        </Link>
-        <Link 
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile" 
-          className="bg-orange-500 text-white py-3 px-8 rounded font-bold">
-          Retour
-        </Link>
-      </div>
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+      {/* Boutons fixes */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"
+        className="fixed top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Retour
+      </Link>
 
-      <h1 className="text-3xl font-bold mb-6">Division de fractions</h1>
+      {/* Bloc central blanc */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-24 mt-16">
+        <h1 className="text-3xl font-bold mb-6 text-center">Division de Fractions</h1>
 
-      {feedbackMessage && (
-        <p className={`text-xl font-bold mb-6 text-center ${feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir") ? "text-red-600" : "text-green-600"}`}>
-          {feedbackMessage}
-        </p>
-      )}
+        {/* Feedback */}
+        {feedbackMessage && (
+          <p
+            className={`text-xl mb-6 text-center ${
+              feedbackMessage.includes("incorrectes") || feedbackMessage.includes("remplir")
+                ? "text-red-600"
+                : "text-green-600"
+            }`}
+          >
+            {feedbackMessage}
+          </p>
+        )}
 
-      <div className="grid grid-cols-1 gap-4 w-full max-w-lg">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(({ fraction1, fraction2 }, index) => (
-          <div key={index} className="flex items-center justify-center gap-4 mb-4">
-            <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl w-48 text-center">
-              {fraction1} ÷ {fraction2}
-            </div>
-            <input
-              type="text"
-              className="border border-gray-400 p-4 rounded w-32 text-center text-black text-2xl"
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-              value={answers[currentPage * questionsPerPage + index] || ""}
-            />
-          </div>
-        ))}
-      </div>
+        {/* Questions verticales */}
+        <div className="flex flex-col gap-8 w-full max-w-2xl mx-auto">
+          {visibleQuestions.map(({ fraction1, fraction2 }, idx) => {
+            const globalIndex = startIndex + idx;
+            return (
+              <div key={globalIndex} className="flex flex-col items-center justify-center gap-4">
+                {/* Énoncé */}
+                <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg text-2xl text-center w-full">
+                  {fraction1} ÷ {fraction2}
+                </div>
+                {/* Réponse */}
+                <input
+                  type="text"
+                  placeholder="Réponse (ex: 3/4)"
+                  className="border border-gray-400 p-3 rounded-lg w-1/3 text-center text-lg"
+                  value={answers[globalIndex] || ""}
+                  onChange={(e) => handleChange(globalIndex, e.target.value)}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-      {/* Validate Button */}
-      <div className="mt-6 flex justify-center w-full">
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
-          Valider les réponses
-        </button>
+        {/* Bouton Valider */}
+        <div className="mt-10 flex justify-center w-full">
+          <button
+            onClick={handleValidation}
+            className="bg-blue-600 text-white py-3 px-6 rounded font-bold w-full max-w-xs hover:bg-blue-700"
+          >
+            Valider les réponses
+          </button>
+        </div>
       </div>
     </div>
   );
