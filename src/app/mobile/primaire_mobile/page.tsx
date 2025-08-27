@@ -1,18 +1,19 @@
+"use client";
 import Link from "next/link";
 
 export default function Primaire_mobile() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-blue-100 text-black-900 relative">
-      {/* Bouton Retour */}
+    <div className="h-screen overflow-y-auto flex flex-col items-center bg-blue-100 text-black relative p-4">
+      {/* Bouton Retour (fixe en haut à droite) */}
       <Link
         href="/"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-10"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
       </Link>
 
       {/* Section Titre */}
-      <div className="flex flex-col items-center text-center mb-8">
+      <div className="flex flex-col items-center text-center mt-20 mb-8">
         <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
           Primaire
         </h1>
@@ -23,38 +24,41 @@ export default function Primaire_mobile() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full px-4 sm:items-center sm:gap-4 sm:w-full sm:text-center sm:mt-8 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2 md:flex-col md:items-end md:w-auto z-0">
+      <div className="flex flex-col gap-6 w-full max-w-md sm:items-center z-0">
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full">
             Opérations arithmétiques
           </div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile//niveau2_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full">
             Comparaisons
           </div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile//niveau3_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Fraction
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full">
+            Fractions
           </div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile//niveau4_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white gap-2 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full">
             Géométrie
           </div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile//niveau5_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full">
             Exposants
           </div>
         </Link>
-        <Link href="/mobile/primaire_mobile/niveaux_mobile//niveau6_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white gap-2 hover:bg-red-600 text-sm sm:text-base h-10 sm:h-12 w-full sm:w-64 px-4 sm:px-5 md:w-72 md:mr-[-36px]">
-            Priorité d&#39;opération
+        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile">
+          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full">
+            Priorité d&apos;opération
           </div>
         </Link>
       </div>
+
+      {/* marge en bas pour scroller confortablement */}
+      <div className="h-16"></div>
     </div>
   );
 }
