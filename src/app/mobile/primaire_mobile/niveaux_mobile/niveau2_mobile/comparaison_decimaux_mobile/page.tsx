@@ -79,7 +79,7 @@ export default function ComparerDecimaux() {
   const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-<div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes en haut */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"
@@ -94,8 +94,8 @@ export default function ComparerDecimaux() {
         Retour
       </Link>
 
-      {/* Contenu scrollable */}
-      <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-24 mt-16">
+      {/* Bloc central en blanc (fond pâle global conservé) */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-24 mt-16">
         <h1 className="text-3xl font-bold mb-6 text-center">Comparaison de décimaux</h1>
 
         {feedbackMessage && (
@@ -104,8 +104,8 @@ export default function ComparerDecimaux() {
               feedbackMessage.includes("incorrectes") ||
               feedbackMessage.includes("réessayer") ||
               feedbackMessage.includes("toutes les questions")
-                ? "text-red-400"
-                : "text-green-400"
+                ? "text-red-600"
+                : "text-green-600"
             }`}
           >
             {feedbackMessage}

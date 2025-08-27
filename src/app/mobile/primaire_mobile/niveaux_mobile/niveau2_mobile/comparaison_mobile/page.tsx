@@ -81,7 +81,7 @@ export default function ComparerEntiers() {
   );
 
   return (
-<div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes */}
       <Link
         href="/menu/apprendre"
@@ -96,8 +96,8 @@ export default function ComparerEntiers() {
         Retour
       </Link>
 
-      {/* Contenu scrollable */}
-      <div className="max-w-4xl w-full bg-[#1e1f3d] p-6 rounded-lg shadow-lg pb-24 mt-16">
+      {/* Bloc central en blanc */}
+      <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg pb-24 mt-16">
         <h1 className="text-3xl font-bold mb-6 text-center">
           Comparaison de nombres entiers
         </h1>
@@ -108,8 +108,8 @@ export default function ComparerEntiers() {
               feedbackMessage.includes("incorrectes") ||
               feedbackMessage.includes("réessayer") ||
               feedbackMessage.includes("toutes les questions")
-                ? "text-red-400"
-                : "text-green-400"
+                ? "text-red-600"
+                : "text-green-600"
             }`}
           >
             {feedbackMessage}
