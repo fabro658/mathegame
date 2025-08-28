@@ -1,32 +1,72 @@
 "use client";
 import Link from "next/link";
 
-export default function Page() {
+export default function Primaire_mobile() {
   return (
     // Zone de scroll indépendante du body/layout
-    <div className="fixed inset-0 overflow-y-auto bg-blue-100 text-gray-900 p-4">
-      {/* Bouton de retour en haut à droite */}
+    <div className="fixed inset-0 overflow-y-auto flex flex-col items-center bg-blue-100 text-black p-4 touch-pan-y">
+      {/* Bouton Retour (fixe en haut à droite) */}
       <Link
-        href="/mobile/primaire_mobile"
+        href="/"
         className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
       >
         Retour
       </Link>
 
-      {/* Contenu */}
-      <div className="min-h-full flex flex-col items-center">
-        <h1 className="text-4xl font-bold mt-20 mb-12 text-center">
-          Les exposants
+      {/* Section Titre */}
+      <div className="flex flex-col items-center text-center mt-20 mb-8">
+        <h1 className="text-black text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+          Primaire
         </h1>
+        <div className="w-48 md:w-64 lg:w-96 h-1 bg-black mb-4"></div>
+        <h2 className="text-black text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold">
+          Choisi un sujet!
+        </h2>
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 w-full justify-items-center mb-12">
-          <Link
-            href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile/priooperation_mobile"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
-          >
-            Priorité d&apos;opération
-          </Link>
-        </div>
+      {/* Liens vers les niveaux */}
+      <div className="flex flex-col gap-6 w-full max-w-md sm:items-center pb-24">
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau1_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full"
+        >
+          Opérations arithmétiques
+        </Link>
+
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full"
+        >
+          Comparaisons
+        </Link>
+
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full"
+        >
+          Fractions
+        </Link>
+
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full"
+        >
+          Géométrie
+        </Link>
+
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full"
+        >
+          Exposants
+        </Link>
+
+        <Link
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full"
+        >
+          Priorité d&apos;opération
+        </Link>
       </div>
     </div>
   );

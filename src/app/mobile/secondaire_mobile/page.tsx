@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Secondaire_mobile() {
   return (
     // Zone de scroll indépendante du body/layout
-    <div className="fixed inset-0 overflow-y-auto flex flex-col items-center bg-blue-100 text-black p-4">
+    <div className="fixed inset-0 overflow-y-auto flex flex-col items-center bg-blue-100 text-black p-4 touch-pan-y">
       {/* Bouton Retour (fixe) */}
       <Link
         href="/"
@@ -25,35 +25,40 @@ export default function Secondaire_mobile() {
       </div>
 
       {/* Liens vers les niveaux */}
-      <div className="flex flex-col gap-4 w-full max-w-md sm:items-center z-0 mb-16">
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white hover:bg-blue-600 text-base h-12 w-full px-5 font-bold">
-            Arithmétique
-          </div>
+      <div className="flex flex-col gap-4 w-full max-w-md sm:items-center pb-24">
+        <Link
+          href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-yellow-500 text-white hover:bg-blue-600 text-base h-12 w-full px-5 font-bold"
+        >
+          Arithmétique
         </Link>
 
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 text-base h-12 w-full px-5 font-bold">
-            Fraction
-          </div>
+        <Link
+          href="/mobile/secondaire_mobile/niveaux_mobile/niveau2_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 text-base h-12 w-full px-5 font-bold"
+        >
+          Fraction
         </Link>
 
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white hover:bg-red-600 text-base h-12 w-full px-5 font-bold">
-            Algèbre
-          </div>
+        <Link
+          href="/mobile/secondaire_mobile/niveaux_mobile/niveau3_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white hover:bg-red-600 text-base h-12 w-full px-5 font-bold"
+        >
+          Algèbre
         </Link>
 
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-base h-12 w-full px-5 font-bold">
-            Géométrie
-          </div>
+        <Link
+          href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-base h-12 w-full px-5 font-bold"
+        >
+          Géométrie
         </Link>
 
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau5_mobile">
-          <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white hover:bg-green-600 text-base h-12 w-full px-5 font-bold">
-            Fonction
-          </div>
+        <Link
+          href="/mobile/secondaire_mobile/niveaux_mobile/niveau5_mobile"
+          className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white hover:bg-green-600 text-base h-12 w-full px-5 font-bold"
+        >
+          Fonction
         </Link>
       </div>
     </div>
