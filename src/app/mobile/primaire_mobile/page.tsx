@@ -3,7 +3,8 @@ import Link from "next/link";
 
 export default function Primaire_mobile() {
   return (
-    <div className="h-screen overflow-y-auto flex flex-col items-center bg-blue-100 text-black relative p-4">
+    // Zone de scroll indépendante du body/layout
+    <div className="fixed inset-0 overflow-y-auto flex flex-col items-center bg-blue-100 text-black p-4">
       {/* Bouton Retour (fixe en haut à droite) */}
       <Link
         href="/"
@@ -30,26 +31,31 @@ export default function Primaire_mobile() {
             Opérations arithmétiques
           </div>
         </Link>
+
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau2_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-orange-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full">
             Comparaisons
           </div>
         </Link>
+
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau3_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-red-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full">
             Fractions
           </div>
         </Link>
+
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full">
             Géométrie
           </div>
         </Link>
+
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-500 text-white hover:bg-green-600 text-lg font-bold py-3 w-full">
             Exposants
           </div>
         </Link>
+
         <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau6_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-purple-500 text-white hover:bg-red-600 text-lg font-bold py-3 w-full">
             Priorité d&apos;opération
