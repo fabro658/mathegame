@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     // Zone scrollable indépendante du body/layout
-    <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-gray-900 p-4">
+    <div className="fixed inset-0 overflow-y-auto bg-blue-100 text-gray-900 p-4">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="h-screen overflow-y-auto flex flex-col items-center bg-gray-100 text-gray-900 p-4 relative">
+    <div className="h-screen overflow-y-auto flex flex-col items-center bg-blue-100 text-gray-900 p-4 relative">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"

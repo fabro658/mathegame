@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     // Conteneur "blindé" : scrolle même si body est overflow:hidden
-    <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-gray-900 p-4">
+    <div className="fixed inset-0 overflow-y-auto bg-blue-100 text-gray-900 p-4">
       {/* Bouton retour */}
       <Link
         href="/mobile/primaire_mobile"
