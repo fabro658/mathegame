@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* ou autre couleur */
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
