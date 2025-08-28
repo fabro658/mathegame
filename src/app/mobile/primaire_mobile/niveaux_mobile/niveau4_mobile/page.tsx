@@ -3,8 +3,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    // Zone scrollable indépendante du body/layout
-    <div className="fixed inset-0 overflow-y-auto bg-blue-100 text-gray-900 p-4">
+    <div className="h-screen overflow-y-auto flex flex-col items-center bg-blue-100 text-gray-900 p-4 relative">
       {/* Bouton de retour en haut à droite */}
       <Link
         href="/mobile/primaire_mobile"
@@ -13,34 +12,31 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Contenu */}
-      <div className="min-h-full flex flex-col items-center">
-        <h1 className="text-4xl font-bold mt-20 mb-12 text-center">
-          Mission Géométrie
-        </h1>
+      {/* Titre */}
+      <h1 className="text-4xl font-bold mt-20 mb-12 text-center">
+        Mission Géométrie
+      </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 w-full justify-items-center mb-12">
-          <Link
-            href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
-          >
-            Aire
-          </Link>
-
-          <Link
-            href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
-          >
-            Périmètre
-          </Link>
-
-          <Link
-            href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
-          >
-            Géométrie
-          </Link>
-        </div>
+      {/* Boutons (scrollables avec la page) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 w-full justify-items-center mb-12">
+        <a
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
+        >
+          Aire
+        </a>
+        <a
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
+        >
+          Périmètre
+        </a>
+        <a
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
+        >
+          Géométrie
+        </a>
       </div>
     </div>
   );
