@@ -156,7 +156,7 @@ export default function FractionIdentification() {
                   }`}
                   value={answers[questionIndex] || ""}
                   onChange={(e) => handleChange(questionIndex, e.target.value)}
-                  placeholder={`1/${den}`}
+                  placeholder={`1/n`}
                 />
               </div>
             );
