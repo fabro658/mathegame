@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    // Zone de scroll indépendante du body/layout
     <div className="fixed inset-0 overflow-y-auto flex flex-col items-center bg-blue-100 text-gray-900 p-4 touch-pan-y">
       {/* Bouton de retour en haut à droite */}
       <Link
@@ -13,25 +12,25 @@ export default function Page() {
         Retour
       </Link>
 
-      {/* Contenu */}
+      {/* Titre */}
       <h1 className="text-4xl font-bold mt-20 mb-12 text-center">
         Les exposants
       </h1>
 
+      {/* Boutons (scrollables avec la page) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 w-full justify-items-center mb-12 pb-24">
-        <Link
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n1_mobile"
+        <a
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
           className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
         >
           Premier niveau
-        </Link>
-
-        <Link
-          href="/mobile/primaire_mobile/niveaux_mobile/niveau5_mobile/exposant_mobile/n2_mobile"
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
+        </a>
+        <a
+          href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile/geometrie_mobile"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-6 px-12 rounded-lg text-3xl shadow-lg text-center flex items-center justify-center w-[300px] leading-snug"
         >
           Deuxième niveau
-        </Link>
+        </a>
       </div>
     </div>
   );
