@@ -7,7 +7,7 @@ export default function Page() {
     // Zone de scroll indépendante du body/layout
     <div className="fixed inset-0 overflow-y-auto bg-blue-100 text-gray-900">
       {/* Barre supérieure fixe */}
-      <div className="fixed top-0 left-0 right-0 z-10 bg-gray-100/90 backdrop-blur px-4 py-4 border-b">
+      <div className="fixed top-0 left-0 right-0 z-10 bg-blue-100/90 backdrop-blur px-4 py-4 border-b">
         <div className="max-w-md mx-auto flex items-center gap-3">
           <Link
             href="/"
