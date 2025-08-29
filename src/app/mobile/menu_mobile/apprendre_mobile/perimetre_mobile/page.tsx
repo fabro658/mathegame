@@ -2,128 +2,155 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
+/* ============= Illustrations SVG ============= */
+const CarreIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="200" height="200">
+      <rect x="40" y="40" width="120" height="120" stroke="black" fill="none" strokeWidth="2" />
+      <text x="100" y="30" textAnchor="middle" fontSize="14">4 cm</text>
+      <text x="100" y="185" textAnchor="middle" fontSize="14">4 cm</text>
+      <text x="25" y="110" textAnchor="middle" fontSize="14" transform="rotate(-90 25,110)">4 cm</text>
+      <text x="175" y="110" textAnchor="middle" fontSize="14" transform="rotate(90 175,110)">4 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">
+      Le périmètre est donc la somme des côtés :<br />4 + 4 + 4 + 4 = 16
+    </p>
+  </div>
+);
+
+const RectangleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="250" height="150">
+      <rect x="50" y="30" width="150" height="80" stroke="black" fill="none" strokeWidth="2" />
+      <text x="125" y="20" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="125" y="130" textAnchor="middle" fontSize="14">15 cm</text>
+      <text x="35" y="70" textAnchor="middle" fontSize="14" transform="rotate(-90 35,70)">8 cm</text>
+      <text x="205" y="70" textAnchor="middle" fontSize="14" transform="rotate(90 205,70)">8 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">Périmètre = 15 + 8 + 15 + 8 = 46 cm</p>
+  </div>
+);
+
+const TriangleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="200" height="150">
+      <polygon points="50,120 150,120 100,30" stroke="black" fill="none" strokeWidth="2" />
+      <text x="100" y="135" textAnchor="middle" fontSize="14">10 cm</text>
+      <text x="40" y="70" textAnchor="middle" fontSize="14" transform="rotate(-45 40,70)">8 cm</text>
+      <text x="160" y="70" textAnchor="middle" fontSize="14" transform="rotate(45 160,70)">8 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">Périmètre = 10 + 8 + 8 = 26 cm</p>
+  </div>
+);
+
+const CercleIllustration = () => (
+  <div className="flex flex-col items-center mt-6">
+    <svg width="300" height="300">
+      <circle cx="150" cy="150" r="100" stroke="black" fill="none" strokeWidth="2" />
+      <line x1="150" y1="150" x2="250" y2="150" stroke="red" strokeWidth="2" />
+      <text x="200" y="140" textAnchor="middle" fontSize="14" fill="red">rayon = 10 cm</text>
+    </svg>
+    <p className="mt-4 font-bold text-center">Périmètre = 2 × π × 10 = 62.8 cm</p>
+  </div>
+);
+
+/* ============= Types & Données ============= */
 interface Shape {
   name: string;
   description: string;
   formula: string;
   example: string;
-  imageUrl: string;
+  imageComponent?: React.ReactNode;
 }
 
+const shapes: Shape[] = [
+  {
+    name: "Carré",
+    description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
+    formula: "Périmètre = 4 × côté",
+    example: "Si le côté mesure 5 cm, le périmètre est : 4 + 4 + 4 + 4 = 20 cm",
+    imageComponent: <CarreIllustration />,
+  },
+  {
+    name: "Rectangle",
+    description: "Le périmètre d'un rectangle est la somme de sa longueur et de sa largeur.",
+    formula: "Périmètre = 2 × (base + hauteur)",
+    example: "Si la longueur est 15 cm et la largeur est 8 cm, le périmètre est : 2 × (15 + 8) = 46 cm",
+    imageComponent: <RectangleIllustration />,
+  },
+  {
+    name: "Triangle",
+    description: "Le périmètre d'un triangle est la somme de ses trois côtés.",
+    formula: "Périmètre = côté1 + côté2 + côté3",
+    example: "Si les côtés mesurent 10 cm, 8 cm et 8 cm, le périmètre est : 10 + 8 + 8 = 26 cm",
+    imageComponent: <TriangleIllustration />,
+  },
+  {
+    name: "Cercle",
+    description: "Le périmètre (ou circonférence) d'un cercle est 2 fois π multiplié par le rayon.",
+    formula: "Périmètre = 2 × π × rayon",
+    example: "Si le rayon est 10 cm, le périmètre est : 2 × π × 10 = 62.8 cm",
+    imageComponent: <CercleIllustration />,
+  },
+];
+
+/* ============= Page Mobile ============= */
 export default function PerimetreLearning() {
-  const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
-
-  const shapes: Shape[] = [
-    {
-      name: "Carré",
-      description: "Le périmètre d'un carré est calculé en multipliant la longueur de son côté par 4.",
-      formula: "Périmètre = 4 × côté",
-      example: "Si le côté mesure 5 cm, le périmètre est : 4 × 5 = 20 cm",
-      imageUrl: "/images/carre.png",
-    },
-    {
-      name: "Rectangle",
-      description:
-        "Le périmètre d'un rectangle est calculé en ajoutant la longueur et la largeur, puis en multipliant par 2.",
-      formula: "Périmètre = 2 × (longueur + largeur)",
-      example: "Si la longueur est 6 cm et la largeur est 4 cm, le périmètre est : 2 × (6 + 4) = 20 cm",
-      imageUrl: "/images/rectangle.png",
-    },
-    {
-      name: "Triangle",
-      description: "Le périmètre d'un triangle est calculé en additionnant les longueurs de ses trois côtés.",
-      formula: "Périmètre = côté1 + côté2 + côté3",
-      example: "Si les côtés mesurent 5 cm, 6 cm et 7 cm, le périmètre est : 5 + 6 + 7 = 18 cm",
-      imageUrl: "/images/triangle.png",
-    },
-    {
-      name: "Cercle",
-      description: "Le périmètre (circonférence) d'un cercle est 2π fois le rayon.",
-      formula: "Périmètre = 2 × π × rayon",
-      example: "Si le rayon est 7 cm, le périmètre est : 2 × 3.14 × 7 = 43.96 cm",
-      imageUrl: "/images/cercle.png",
-    },
-    {
-      name: "Trapeze",
-      description: "L'aire d'un trapèze est calculée en faisant la moyenne des bases multipliée par la hauteur.",
-      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example: "Si base1 = 6, base2 = 10 et h = 4, alors Aire = ((6+10)×4)÷2 = 32 cm²",
-      imageUrl: "/images/trapeze.png",
-    },
-    {
-      name: "Polygone",
-      description: "Le périmètre d'un polygone régulier = nombre de côtés × longueur d'un côté.",
-      formula: "Périmètre = n × c",
-      example: "Si un polygone a 6 côtés de 4 cm, périmètre = 6 × 4 = 24 cm",
-      imageUrl: "/images/polygone.png",
-    },
-  ];
-
-  const handleSelectShape = (shape: Shape): void => setSelectedShape(shape);
+  // Pré-sélection (affiche une forme dès l’ouverture)
+  const [selectedShape, setSelectedShape] = useState<Shape>(shapes[0]);
 
   return (
-    // Page avec scroll isolé
+    // Page mobile : scroll isolé + bouton fixe
     <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-black">
-      {/* Contenu principal */}
       <main className="min-h-screen flex flex-col items-center p-4 pt-24 pb-28 relative">
         {/* Bouton Retour (fixe) */}
         <Link
-          href="/mobile/menu_mobile/apprendre_mobile"
-          className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700 z-50"
+          href="/menu/apprendre"
+          className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-50"
         >
           Retour
         </Link>
 
         {/* Titre */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4">Calculer le périmètre</h1>
-          <p className="text-lg">Sélectionne une forme pour apprendre à calculer le périmètre</p>
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold">Formes géométriques</h1>
+          <p className="text-lg mt-2">
+            Sélectionne une forme pour apprendre comment calculer son périmètre :
+          </p>
         </div>
 
-        {/* Boutons des formes */}
-        <div className="grid grid-cols-2 gap-4 mb-6 w-full max-w-md">
-          {shapes.map((shape, index) => (
+        {/* Liste des formes (verticale, mobile-first) */}
+        <div className="w-full max-w-md grid grid-cols-1 gap-3 mb-8">
+          {shapes.map((shape) => (
             <button
-              key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
-              onClick={() => handleSelectShape(shape)}
+              key={shape.name}
+              className={`py-3 px-4 rounded font-bold transition
+                          ${selectedShape.name === shape.name
+                            ? "bg-blue-600 text-white"
+                            : "bg-blue-500 text-white hover:bg-blue-600"}`}
+              onClick={() => setSelectedShape(shape)}
             >
               {shape.name}
             </button>
           ))}
         </div>
 
-        {/* Bloc de détails avec scroll interne si contenu long */}
-        {selectedShape && (
-          <div className="w-full max-w-4xl">
-            <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg max-h-[68vh] overflow-y-auto">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
-                {selectedShape.name}
-              </h2>
+        {/* Bloc de détails (grand + scroll interne) */}
+        <div className="w-full max-w-3xl">
+          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[60vh] max-h-[82vh] overflow-y-auto">
+            <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
+            <p className="text-lg mb-4">{selectedShape.description}</p>
 
-              <p className="text-md sm:text-lg mb-4">{selectedShape.description}</p>
+            <p className="text-xl font-semibold mb-2">Formule :</p>
+            <p className="text-lg mb-4">{selectedShape.formula}</p>
 
-              <div>
-                <p className="text-lg font-bold mb-2">Formule :</p>
-                <p className="text-lg mb-4">{selectedShape.formula}</p>
-                <p className="text-lg font-bold mb-2">Exemple :</p>
-                <p className="text-lg">{selectedShape.example}</p>
-              </div>
+            <p className="text-xl font-semibold mb-2">Exemple :</p>
+            <p className="text-lg mb-6">{selectedShape.example}</p>
 
-              <div className="mt-6 flex justify-center">
-                <Image
-                  src={selectedShape.imageUrl}
-                  alt={selectedShape.name}
-                  width={192}
-                  height={192}
-                  className="object-contain max-h-64 w-auto h-auto"
-                />
-              </div>
-            </div>
+            <div className="mt-2 flex justify-center">{selectedShape.imageComponent}</div>
           </div>
-        )}
+        </div>
       </main>
     </div>
   );
