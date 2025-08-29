@@ -18,7 +18,7 @@ export default function PrioriteOperation() {
       <main className="min-h-screen flex flex-col items-center p-4 pt-24 pb-28 relative">
         {/* Bouton retour (fixe) */}
         <Link
-          href="/menu/apprendre"
+          href="/mobile/menu_mobile/apprendre_mobile"
           className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-50"
         >
           Retour
