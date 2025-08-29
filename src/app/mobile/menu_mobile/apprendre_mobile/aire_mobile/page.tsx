@@ -71,14 +71,11 @@ export default function AireLearning() {
     },
   ];
 
-  const handleSelectShape = (shape: Shape): void => {
-    setSelectedShape(shape);
-  };
+  const handleSelectShape = (shape: Shape): void => setSelectedShape(shape);
 
   return (
-    // Zone scrollable indépendante
+    // Page avec scroll isolé
     <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-black">
-      {/* Contenu principal scrollable */}
       <main className="min-h-screen flex flex-col items-center p-4 pt-24 pb-28 relative">
         {/* Bouton Retour (fixe) */}
         <Link
@@ -97,7 +94,7 @@ export default function AireLearning() {
         </div>
 
         {/* Boutons des formes */}
-        <div className="grid grid-cols-2 gap-4 mb-10 w-full max-w-md">
+        <div className="grid grid-cols-2 gap-4 mb-6 w-full max-w-md">
           {shapes.map((shape, index) => (
             <button
               key={index}
@@ -109,25 +106,30 @@ export default function AireLearning() {
           ))}
         </div>
 
-        {/* Détails de la forme sélectionnée */}
+        {/* Bloc de détails avec scroll interne */}
         {selectedShape && (
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-            <h2 className="text-3xl font-bold mb-6 text-center">
-              {selectedShape.name}
-            </h2>
-            <p className="text-lg mb-4">{selectedShape.description}</p>
-            <p className="text-xl font-semibold mb-2">Formule :</p>
-            <p className="text-lg mb-4">{selectedShape.formula}</p>
-            <p className="text-xl font-semibold mb-2">Exemple :</p>
-            <p className="text-lg mb-6">{selectedShape.example}</p>
-            <div className="flex justify-center mt-6">
-              <Image
-                src={selectedShape.imageUrl}
-                alt={selectedShape.name}
-                width={400}
-                height={400}
-                className="object-contain"
-              />
+          <div className="w-full max-w-4xl">
+            <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg max-h-[68vh] overflow-y-auto">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">
+                {selectedShape.name}
+              </h2>
+              <p className="text-lg mb-4">{selectedShape.description}</p>
+
+              <p className="text-xl font-semibold mb-2">Formule :</p>
+              <p className="text-lg mb-4">{selectedShape.formula}</p>
+
+              <p className="text-xl font-semibold mb-2">Exemple :</p>
+              <p className="text-lg mb-6">{selectedShape.example}</p>
+
+              <div className="flex justify-center">
+                <Image
+                  src={selectedShape.imageUrl}
+                  alt={selectedShape.name}
+                  width={400}
+                  height={400}
+                  className="object-contain max-h-80 w-auto h-auto"
+                />
+              </div>
             </div>
           </div>
         )}
