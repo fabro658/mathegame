@@ -6,29 +6,44 @@ import Link from "next/link";
 export default function Addition() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(totalQuestions).fill(null));
+
+  const [answers, setAnswers] = useState<(number | null)[]>(
+    Array(totalQuestions).fill(null)
+  );
   const [currentPage, setCurrentPage] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [questions, setQuestions] = useState<[number, number][]>([]);
 
   useEffect(() => {
-    const generatedQuestions: [number, number][] = Array.from({ length: totalQuestions }, (_, index) => {
-      if (index < 12) {
-        return [Math.floor(Math.random() * 90) + 10, Math.floor(Math.random() * 90) + 10];
-      } else if (index < 24) {
-        return [Math.floor(Math.random() * 900) + 100, Math.floor(Math.random() * 900) + 100];
-      } else {
-        return [Math.floor(Math.random() * 9000) + 1000, Math.floor(Math.random() * 9000) + 1000];
+    const generated: [number, number][] = Array.from(
+      { length: totalQuestions },
+      (_, index) => {
+        if (index < 12) {
+          return [
+            Math.floor(Math.random() * 90) + 10,
+            Math.floor(Math.random() * 90) + 10,
+          ];
+        } else if (index < 24) {
+          return [
+            Math.floor(Math.random() * 900) + 100,
+            Math.floor(Math.random() * 900) + 100,
+          ];
+        } else {
+          return [
+            Math.floor(Math.random() * 9000) + 1000,
+            Math.floor(Math.random() * 9000) + 1000,
+          ];
+        }
       }
-    });
-    setQuestions(generatedQuestions);
+    );
+    setQuestions(generated);
   }, []);
 
   const handleChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    const parsedValue = parseFloat(value);
-    newAnswers[index] = isNaN(parsedValue) ? null : parsedValue;
-    setAnswers(newAnswers);
+    const next = [...answers];
+    const parsed = parseFloat(value);
+    next[index] = isNaN(parsed) ? null : parsed;
+    setAnswers(next);
     setFeedbackMessage("");
   };
 
@@ -43,81 +58,105 @@ export default function Addition() {
     }
 
     let hasErrors = false;
-    const newAnswers = [...answers];
+    const next = [...answers];
 
-    pageAnswers.forEach((answer, index) => {
-      const globalIndex = startIndex + index;
+    pageAnswers.forEach((answer, idx) => {
+      const globalIndex = startIndex + idx;
       const [a, b] = questions[globalIndex];
       if (answer !== a + b) {
-        newAnswers[globalIndex] = null;
+        next[globalIndex] = null; // efface seulement les mauvaises
         hasErrors = true;
       }
     });
 
-    setAnswers(newAnswers);
+    setAnswers(next);
 
+    const lastPageIndex = Math.floor(totalQuestions / questionsPerPage) - 1;
     if (hasErrors) {
       setFeedbackMessage("Certaines réponses sont incorrectes. Veuillez corriger les erreurs.");
-    } else if (currentPage < Math.floor(totalQuestions / questionsPerPage) - 1) {
+    } else if (currentPage < lastPageIndex) {
       setFeedbackMessage("Toutes les réponses de cette page sont correctes. Vous pouvez continuer.");
-      setCurrentPage(currentPage + 1);
+      setCurrentPage((p) => p + 1);
     } else {
       setFeedbackMessage("Bravo ! Vous avez terminé toutes les questions.");
     }
   };
 
+  const startIndex = currentPage * questionsPerPage;
+  const visible = questions.slice(startIndex, startIndex + questionsPerPage);
+
   return (
-    <div className="flex flex-col items-center bg-gray-100 text-black min-h-screen py-6 px-4 overflow-y-auto">
-      {/* Navigation Buttons */}
-      <div className="flex justify-between w-full mb-6">
-        <Link href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile">
-          <div className="bg-black text-white py-3 px-8 rounded font-bold w-40 text-center">Apprendre</div>
-        </Link>
-        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile">
-          <div className="bg-orange-500 text-white py-3 px-8 rounded font-bold w-40 text-center">Retour</div>
-        </Link>
-      </div>
+    // Page à défilement isolé
+    <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-black">
+      {/* Boutons fixes en haut */}
+      <Link
+        href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"
+        className="fixed top-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Apprendre
+      </Link>
+      <Link
+        href="/mobile/secondaire_mobile/niveaux_mobile/niveau1_mobile"
+        className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50"
+      >
+        Retour
+      </Link>
 
-      {/* Title */}
-      <h1 className="text-4xl font-bold mb-6">Somme</h1>
+      {/* Contenu central (carte blanche) */}
+      <main className="min-h-screen flex justify-center items-start p-4 pt-24 pb-28">
+        <div className="max-w-4xl w-full bg-white p-6 rounded-lg shadow-lg">
+          {/* Titre */}
+          <h1 className="text-3xl font-bold mb-6 text-center">Somme</h1>
 
-      {/* Feedback */}
-      {feedbackMessage && (
-        <p
-          className={`text-xl mb-4 text-center ${
-            feedbackMessage.includes("remplir toutes les réponses") || feedbackMessage.includes("incorrectes")
-              ? "text-red-500"
-              : "text-green-500"
-          }`}
-        >
-          {feedbackMessage}
-        </p>
-      )}
+          {/* Feedback */}
+          {feedbackMessage && (
+            <p
+              className={`text-xl mb-6 text-center ${
+                feedbackMessage.includes("incorrectes") ||
+                feedbackMessage.includes("Veuillez remplir")
+                  ? "text-red-600"
+                  : "text-green-600"
+              }`}
+            >
+              {feedbackMessage}
+            </p>
+          )}
 
-      {/* Questions */}
-      <div className="flex flex-col gap-6 w-full items-center">
-        {questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage).map(([a, b], index) => (
-          <div key={`${currentPage}-${index}`} className="flex items-center justify-between gap-6 w-full max-w-md">
-            <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
-              {a} + {b} =
-            </div>
-            <input
-              type="text"
-              inputMode="numeric"
-              className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
-              value={answers[currentPage * questionsPerPage + index] ?? ""}
-              onChange={(e) => handleChange(currentPage * questionsPerPage + index, e.target.value)}
-            />
+          {/* Questions (6 par page) */}
+          <div className="flex flex-col gap-6 w-full items-center">
+            {visible.map(([a, b], idx) => {
+              const globalIndex = startIndex + idx;
+              return (
+                <div
+                  key={globalIndex}
+                  className="flex items-center justify-between gap-6 w-full max-w-md"
+                >
+                  <div className="bg-blue-500 text-white py-4 px-6 rounded-lg font-bold text-3xl flex-grow text-center">
+                    {a} + {b} =
+                  </div>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    className="border border-gray-400 py-3 px-4 rounded-lg text-center text-black text-2xl w-32"
+                    value={answers[globalIndex] ?? ""}
+                    onChange={(e) => handleChange(globalIndex, e.target.value)}
+                  />
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
 
-      {/* Validate Button */}
-      <div className="mt-6 flex justify-center w-full mb-10">
-        <button onClick={handleValidation} className="bg-blue-500 text-white py-3 px-6 rounded font-bold w-full max-w-xs">
-          Valider les réponses
-        </button>
-      </div>
+          {/* Bouton Valider */}
+          <div className="mt-8 flex justify-center w-full">
+            <button
+              onClick={handleValidation}
+              className="bg-blue-600 text-white py-3 px-6 rounded font-bold w-full max-w-xs hover:bg-blue-700"
+            >
+              Valider les réponses
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
