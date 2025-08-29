@@ -36,10 +36,10 @@ const TriangleIllustration = () => (
     </svg>
     <div className="mt-4 text-center font-bold text-lg">
       Aire ={" "}
-      <div style={{ display: "inline-block", lineHeight: 1.4, marginLeft: 8 }}>
-        <div style={{ borderBottom: "2px solid black" }}>base × hauteur</div>
-        <div>2</div>
-      </div>
+      <span style={{ display: "inline-block", lineHeight: 1.4, marginLeft: 8 }}>
+        <span style={{ borderBottom: "2px solid black", display: "block" }}>base × hauteur</span>
+        <span style={{ display: "block", textAlign: "center" }}>2</span>
+      </span>
       <p className="mt-4 font-bold text-center">(10 × 8) / 2 = 40 cm²</p>
     </div>
   </div>
@@ -120,7 +120,7 @@ const shapes: Shape[] = [
 ];
 
 export default function AireLearning() {
-  // Carré sélectionné par défaut pour afficher une forme dès l’ouverture
+  // Carré sélectionné par défaut
   const [selectedShape, setSelectedShape] = useState<Shape>(shapes[0]);
 
   return (
@@ -157,9 +157,9 @@ export default function AireLearning() {
           ))}
         </div>
 
-        {/* Bloc de détails (scroll interne si long) */}
+        {/* Bloc de détails (allongé + scroll interne si contenu long) */}
         <div className="w-full max-w-3xl">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-h-[68vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded-lg shadow-lg min-h-[60vh] max-h-[82vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">{selectedShape.name}</h2>
             <p className="text-lg mb-4">{selectedShape.description}</p>
 
