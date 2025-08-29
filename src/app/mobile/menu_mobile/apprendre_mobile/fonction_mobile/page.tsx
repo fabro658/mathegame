@@ -2,109 +2,385 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
-interface Shape {
+interface FunctionConcept {
   name: string;
-  description: string;
+  description: React.ReactNode;
   formula: string;
   example: string;
-  imageUrl: string;
+  visual: React.ReactNode;
 }
 
-export default function AireLearning() {
-  const [selectedShape, setSelectedShape] = useState<Shape | null>(null);
+/* ===== Axes XY ===== */
+const Axes = () => (
+  <>
+    <line x1="-10" y1="0" x2="10" y2="0" stroke="gray" strokeWidth="0.05" />
+    <line x1="0" y1="-10" x2="0" y2="10" stroke="gray" strokeWidth="0.05" />
+  </>
+);
 
-  const shapes: Shape[] = [
-    {
-      name: "Carré",
-      description:
-        "L'aire d'un carré est calculée en multipliant la longueur de son côté par elle-même.",
-      formula: "Aire = côté × côté",
-      example: "Si le côté mesure 5 cm, l'aire est : 5 × 5 = 25 cm²",
-      imageUrl: "/airecarre.jpeg",
-    },
-    {
-      name: "Rectangle",
-      description:
-        "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
-      formula: "Aire = base × hauteur",
-      example:
-        "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
-      imageUrl: "/airerectangle.jpeg",
-    },
-    {
-      name: "Triangle",
-      description:
-        "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
-      formula: "Aire = (base × hauteur) ÷ 2",
-      example:
-        "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
-      imageUrl: "/airetriangle.jpeg",
-    },
-    {
-      name: "Trapèze",
-      description:
-        "L'aire d'un trapèze est calculée en faisant la moyenne des longueurs des deux bases et en multipliant par la hauteur.",
-      formula: "Aire = ((base1 + base2) × hauteur) ÷ 2",
-      example:
-        "Si la base1 est 6 cm, la base2 est 10 cm, et la hauteur est 4 cm, l'aire est : ((6 + 10) × 4) ÷ 2 = 32 cm²",
-      imageUrl: "/airetrapeze.jpeg",
-    },
-  ];
+/* ===== Visuels des fonctions (interactifs) ===== */
+const LinearFunctionVisual = () => {
+  const [a, setA] = useState(2); // pente
+  const [b, setB] = useState(1); // ordonnée à l'origine
+  const [showParams, setShowParams] = useState(false);
+
+  const x1 = -5, x2 = 5;
+  const y1 = a * x1 + b;
+  const y2 = a * x2 + b;
 
   return (
-    // Conteneur scrollable indépendant
+    <div className="flex flex-col items-center">
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <line x1={x1} y1={-y1} x2={x2} y2={-y2} stroke="blue" strokeWidth="0.2" />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a (pente) = {a}</label>
+            <input
+              type="range" min={-5} max={5} step={0.1} value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b (ordonnée à l’origine) = {b}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const QuadraticFunctionVisual = () => {
+  const [a, setA] = useState(-1);
+  const [b, setB] = useState(0);
+  const [c, setC] = useState(0);
+  const [showParams, setShowParams] = useState(false);
+
+  const points = Array.from({ length: 201 }, (_, i) => {
+    const x = (i - 100) / 10;
+    const y = a * x * x + b * x + c;
+    return `${x},${-y}`;
+  }).join(" ");
+
+  return (
+    <div className="flex flex-col items-center">
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <polyline fill="none" stroke="green" strokeWidth="0.2" points={points} />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a = {a}</label>
+            <input
+              type="range" min={-5} max={5} step={0.1} value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b = {b}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">c = {c}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={c}
+              onChange={(e) => setC(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const AbsoluteFunctionVisual = () => {
+  const [a, setA] = useState(1);
+  const [h, setH] = useState(0);
+  const [b, setB] = useState(0);
+  const [showParams, setShowParams] = useState(false);
+
+  const points = Array.from({ length: 201 }, (_, i) => {
+    const x = (i - 100) / 10;
+    const y = a * Math.abs(x - h) + b;
+    return `${x},${-y}`;
+  }).join(" ");
+
+  return (
+    <div className="flex flex-col items-center">
+      <h2 className="text-xl font-bold mb-2">Fonction valeur absolue</h2>
+      <p className="mb-2">y = a |x - h| + b</p>
+
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <polyline fill="none" stroke="orange" strokeWidth="0.2" points={points} />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-orange-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a = {a}</label>
+            <input
+              type="range" min={-5} max={5} step={0.1} value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">h = {h}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={h}
+              onChange={(e) => setH(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b = {b}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ExponentialFunctionVisual = () => {
+  const [a, setA] = useState(1);
+  const [c, setC] = useState(2);
+  const [b, setB] = useState(1);
+  const [h, setH] = useState(0);
+  const [k, setK] = useState(0);
+  const [showParams, setShowParams] = useState(false);
+
+  const points = Array.from({ length: 201 }, (_, i) => {
+    const x = (i - 100) / 10;
+    const y = a * Math.pow(c, b * (x - h)) + k;
+    return `${x},${-y}`;
+  }).join(" ");
+
+  return (
+    <div className="flex flex-col items-center">
+      <h2 className="text-xl font-bold mb-2">Fonction exponentielle</h2>
+      <p className="mb-2">f(x) = a · c<sup>b(x-h)</sup> + k</p>
+
+      <svg width="300" height="300" viewBox="-10 -10 20 20">
+        <Axes />
+        <polyline fill="none" stroke="red" strokeWidth="0.2" points={points} />
+      </svg>
+
+      <button
+        onClick={() => setShowParams(!showParams)}
+        className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
+      >
+        {showParams ? "Masquer les paramètres" : "Modifier les paramètres"}
+      </button>
+
+      {showParams && (
+        <div className="mt-4 w-full max-w-sm space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold">a = {a}</label>
+            <input
+              type="range" min={-5} max={5} step={0.1} value={a}
+              onChange={(e) => setA(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">c (base) = {c}</label>
+            <input
+              type="range" min={0.1} max={5} step={0.1} value={c}
+              onChange={(e) => setC(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">b (facteur horizontal) = {b}</label>
+            <input
+              type="range" min={-5} max={5} step={0.1} value={b}
+              onChange={(e) => setB(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">h (translation horizontale) = {h}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={h}
+              onChange={(e) => setH(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">k (translation verticale) = {k}</label>
+            <input
+              type="range" min={-10} max={10} step={0.1} value={k}
+              onChange={(e) => setK(parseFloat(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const StepFunctionVisual = () => {
+  const steps = Array.from({ length: 20 }, (_, i) => {
+    const x = i - 10;
+    const y = -Math.floor(x);
+    return (
+      <g key={i}>
+        <line x1={x} y1={y} x2={x + 1} y2={y} stroke="purple" strokeWidth="0.2" />
+        <circle cx={x} cy={y} r={0.15} fill="black" />
+        <circle cx={x + 1} cy={y} r={0.15} fill="white" stroke="black" strokeWidth="0.1" />
+      </g>
+    );
+  });
+
+  return (
+    <svg width="300" height="300" viewBox="-10 -10 20 20">
+      <Axes />
+      {steps}
+    </svg>
+  );
+};
+
+/* ===== Données ===== */
+const functionConcepts: FunctionConcept[] = [
+  {
+    name: "Fonction linéaire",
+    description: (
+      <>
+        <p>Une fonction linéaire est une fonction dont le graphique est une droite.</p>
+        <p className="mt-2">
+          Elle s’écrit sous la forme <strong>f(x) = ax + b</strong>, où <strong>a</strong> est la pente et <strong>b</strong> est l’endroit où la droite coupe l’axe vertical.
+        </p>
+      </>
+    ),
+    formula: "f(x) = 2x + 1",
+    example: "f(4) = 2(4) + 1 = 9",
+    visual: <LinearFunctionVisual />,
+  },
+  {
+    name: "Fonction quadratique",
+    description: "Une fonction quadratique est une fonction polynomiale de degré 2. Son graphique est une parabole qui peut s’ouvrir vers le haut ou vers le bas.",
+    formula: "f(x) = x²",
+    example: "f(3) = 3² = 9",
+    visual: <QuadraticFunctionVisual />,
+  },
+  {
+    name: "Fonction valeur absolue",
+    description: "La fonction valeur absolue donne toujours un résultat positif ou nul.",
+    formula: "f(x) = |x|",
+    example: "f(-5) = |-5| = 5",
+    visual: <AbsoluteFunctionVisual />,
+  },
+  {
+    name: "Fonction exponentielle",
+    description: "La fonction exponentielle modélise une croissance très rapide. Elle s’écrit f(x) = aˣ avec a > 1. Plus x augmente, plus f(x) augmente rapidement.",
+    formula: "f(x) = 2ˣ",
+    example: "f(3) = 2³ = 8",
+    visual: <ExponentialFunctionVisual />,
+  },
+  {
+    name: "Fonction en escalier (partie entière)",
+    description: "La fonction en escalier, ou fonction partie entière, associe à chaque nombre le plus grand entier inférieur ou égal à ce nombre. Son graphique ressemble à des marches.",
+    formula: "f(x) = ⌊x⌋",
+    example: "f(3.7) = 3",
+    visual: <StepFunctionVisual />,
+  },
+];
+
+/* ===== Page mobile ===== */
+export default function FonctionLearning() {
+  const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
+
+  return (
+    // Page mobile : scroll isolé + bouton retour fixe
     <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-black">
       <main className="min-h-screen flex flex-col items-center p-4 pt-24 pb-28 relative">
-        {/* Bouton retour (fixe en haut à droite) */}
+        {/* Bouton retour (fixe) */}
         <Link
-          href="/mobile/menu_mobile/apprendre_mobile"
-          className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700 z-50"
+          href="/menu/apprendre"
+          className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-50"
         >
           Retour
         </Link>
 
-        {/* Titre et sous-titre */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Calculer l&apos;aire</h1>
-          <p className="text-lg text-gray-700">
-            Sélectionne une forme pour apprendre à calculer l&apos;aire
-          </p>
+        {/* Titre */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold">Les Fonctions</h1>
+          <p className="text-lg mt-2">Sélectionne un concept pour en apprendre davantage :</p>
         </div>
 
-        {/* Boutons des formes en 2 colonnes */}
-        <div className="grid grid-cols-2 gap-4 mb-10 w-full max-w-md">
-          {shapes.map((shape, index) => (
+        {/* Liste des concepts (verticale, mobile-first) */}
+        <div className="w-full max-w-md grid grid-cols-1 gap-3 mb-8">
+          {functionConcepts.map((concept, index) => (
             <button
               key={index}
-              className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
-              onClick={() => setSelectedShape(shape)}
+              className="bg-blue-500 text-white py-3 px-4 rounded font-bold hover:bg-blue-600 transition"
+              onClick={() => setSelectedConcept(concept)}
             >
-              {shape.name}
+              {concept.name}
             </button>
           ))}
         </div>
 
-        {/* Section des détails de la forme sélectionnée */}
-        {selectedShape && (
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">
-              {selectedShape.name}
-            </h2>
-            <p className="text-lg mb-4">{selectedShape.description}</p>
-            <p className="text-xl font-semibold mb-2">Formule :</p>
-            <p className="text-lg mb-4">{selectedShape.formula}</p>
-            <p className="text-xl font-semibold mb-2">Exemple :</p>
-            <p className="text-lg mb-6">{selectedShape.example}</p>
-            <div className="flex justify-center mt-6">
-              <Image
-                src={selectedShape.imageUrl}
-                alt={selectedShape.name}
-                width={400}
-                height={400}
-                className="object-contain"
-              />
+        {/* Bloc de détails avec scroll interne si contenu long */}
+        {selectedConcept && (
+          <div className="w-full max-w-3xl">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-h-[68vh] overflow-y-auto">
+              <h2 className="text-2xl font-bold mb-4">{selectedConcept.name}</h2>
+              <div className="text-lg mb-6">{selectedConcept.description}</div>
+
+              <p className="text-xl font-semibold mb-2">Formule :</p>
+              <p className="text-lg mb-6">{selectedConcept.formula}</p>
+
+              <p className="text-xl font-semibold mb-2">Exemple :</p>
+              <p className="text-lg mb-6">{selectedConcept.example}</p>
+
+              <div className="mt-4 flex justify-center">{selectedConcept.visual}</div>
             </div>
           </div>
         )}
