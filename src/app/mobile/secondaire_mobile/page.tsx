@@ -44,7 +44,7 @@ export default function Secondaire_mobile() {
           </div>
         </Link>
 
-        <Link href="/mobile/primaire_mobile/niveaux_mobile/niveau4_mobile">
+        <Link href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile">
           <div className="rounded-tl-full rounded-bl-full transition-colors flex items-center justify-center bg-blue-800 text-white hover:bg-blue-600 text-lg font-bold py-3 w-full">
             Géométrie
           </div>
