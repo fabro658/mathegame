@@ -30,21 +30,21 @@ export default function Niveau4() {
         <div className="flex flex-col gap-4 items-center w-full max-w-xl">
           <Link
             href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/perimetre_mobile"
-            className="w-64 sm:w-80 md:w-96 h-14 sm:h-16 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-bold"
+            className="w-80 sm:w-96 h-14 sm:h-16 px-8 sm:px-10 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-semibold"
           >
             Périmètre
           </Link>
 
           <Link
             href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/aire_mobile"
-            className="w-64 sm:w-80 md:w-96 h-14 sm:h-16 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-bold"
+            className="w-80 sm:w-96 h-14 sm:h-16 px-8 sm:px-10 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-semibold"
           >
             Aire
           </Link>
 
           <Link
             href="/mobile/secondaire_mobile/niveaux_mobile/niveau4_mobile/volume_mobile"
-            className="w-64 sm:w-80 md:w-96 h-14 sm:h-16 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-bold"
+            className="w-80 sm:w-96 h-14 sm:h-16 px-8 sm:px-10 rounded-full transition-colors flex items-center justify-center bg-white text-black hover:bg-gray-200 text-lg sm:text-xl font-semibold"
           >
             Volume
           </Link>
