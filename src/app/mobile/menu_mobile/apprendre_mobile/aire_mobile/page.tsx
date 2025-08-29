@@ -29,7 +29,8 @@ export default function AireLearning() {
       description:
         "L'aire d'un rectangle est calculée en multipliant sa longueur par sa largeur.",
       formula: "Aire = base × hauteur",
-      example: "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
+      example:
+        "Si la longueur est 6 cm et la largeur est 4 cm, l'aire est : 6 × 4 = 24 cm²",
       imageUrl: "/airerectangle.jpeg",
     },
     {
@@ -37,7 +38,8 @@ export default function AireLearning() {
       description:
         "L'aire d'un triangle est calculée en utilisant la base et la hauteur.",
       formula: "Aire = (base × hauteur) ÷ 2",
-      example: "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
+      example:
+        "Si la base mesure 8 cm et la hauteur est 5 cm, l'aire est : (8 × 5) ÷ 2 = 20 cm²",
       imageUrl: "/airetriangle.jpeg",
     },
     {
@@ -51,18 +53,22 @@ export default function AireLearning() {
     },
     {
       name: "Cercle",
-      description: "L'aire d'un cercle est calculée en utilisant la formule π multiplié par le carré du rayon.",
+      description:
+        "L'aire d'un cercle est calculée en utilisant la formule π multiplié par le carré du rayon.",
       formula: "Aire = π × rayon²",
-      example: "Si le rayon est de 5 cm, l'aire est : π × 5² = 25π cm² ≈ 78.54 cm²",
-      imageUrl: "/cercle.jpeg"
+      example:
+        "Si le rayon est de 5 cm, l'aire est : π × 5² = 25π cm² ≈ 78.54 cm²",
+      imageUrl: "/cercle.jpeg",
     },
     {
       name: "Polygone",
-      description: "L'aire d'un polygone régulier est calculée en utilisant la formule : (périmètre × apothème) ÷ 2.",
+      description:
+        "L'aire d'un polygone régulier est calculée en utilisant la formule : (périmètre × apothème) ÷ 2.",
       formula: "Aire = (périmètre × apothème) ÷ 2",
-      example: "Si le périmètre est de 24 cm et l'apothème est de 5 cm, l'aire est : (24 × 5) ÷ 2 = 60 cm²",
-      imageUrl: "/polygone.jpeg"
-    }
+      example:
+        "Si le périmètre est de 24 cm et l'apothème est de 5 cm, l'aire est : (24 × 5) ÷ 2 = 60 cm²",
+      imageUrl: "/polygone.jpeg",
+    },
   ];
 
   const handleSelectShape = (shape: Shape): void => {
@@ -70,39 +76,45 @@ export default function AireLearning() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black p-4">
-      {/* Bouton Retour */}
-      <Link
-        href="/mobile/menu_mobile/apprendre_mobile"
-        className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700"
-      >
-        Retour
-      </Link>
-      {/* Titre et sous-titre */}
-      <div className="text-center mb-8 mt-16">
-        <h1 className="text-3xl font-bold text-center mt-8 mb-4">Calculer l&apos;aire</h1>
-        <p className="text-lg text-center mb-6">Sélectionne une forme pour apprendre à calculer l&apos;aire
-        </p>
-      </div>
+    // Zone scrollable indépendante
+    <div className="fixed inset-0 overflow-y-auto bg-gray-100 text-black">
+      {/* Contenu principal scrollable */}
+      <main className="min-h-screen flex flex-col items-center p-4 pt-24 pb-28 relative">
+        {/* Bouton Retour (fixe) */}
+        <Link
+          href="/mobile/menu_mobile/apprendre_mobile"
+          className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold hover:bg-orange-700 z-50"
+        >
+          Retour
+        </Link>
 
-            {/* Boutons des opérations en 2 colonnes de 2 lignes */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-            {shapes.map((shape, index) => (
-          <button
-            key={index}
-            className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
-            onClick={() => handleSelectShape(shape)}
-          >
-            {shape.name}
-          </button>
-        ))}
-      </div>
+        {/* Titre et sous-titre */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-4">Calculer l&apos;aire</h1>
+          <p className="text-lg">
+            Sélectionne une forme pour apprendre à calculer l&apos;aire
+          </p>
+        </div>
 
-      {/* Section des détails de la forme sélectionnée */}
-      <div className="mt-12 flex justify-center">
+        {/* Boutons des formes */}
+        <div className="grid grid-cols-2 gap-4 mb-10 w-full max-w-md">
+          {shapes.map((shape, index) => (
+            <button
+              key={index}
+              className="bg-blue-500 text-white py-2 px-6 rounded font-bold shadow-lg hover:bg-blue-700 transition-all duration-300"
+              onClick={() => handleSelectShape(shape)}
+            >
+              {shape.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Détails de la forme sélectionnée */}
         {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-            <h2 className="text-3xl font-bold mb-6 text-center">{selectedShape.name}</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center">
+              {selectedShape.name}
+            </h2>
             <p className="text-lg mb-4">{selectedShape.description}</p>
             <p className="text-xl font-semibold mb-2">Formule :</p>
             <p className="text-lg mb-4">{selectedShape.formula}</p>
@@ -119,7 +131,7 @@ export default function AireLearning() {
             </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
