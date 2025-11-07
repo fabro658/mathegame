@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques"; // ⬅️ adapte l'URL si besoin
-
+/* =========================================================
+   Types + Données
+   ========================================================= */
 type OpName = "Addition" | "Soustraction" | "Multiplication" | "Division";
 
 interface Topic {
@@ -35,7 +36,11 @@ const TOPICS: Topic[] = [
   },
 ];
 
-// ---------- Utils ----------
+const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques"; // ajuste si besoin
+
+/* =========================================================
+   Utils
+   ========================================================= */
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
@@ -45,27 +50,29 @@ function boundsFor(op: OpName) {
   return { minA: 0, maxA: 30, minB: 0, maxB: 30 };
 }
 
-// ---------- Calcul + étapes (texte simple) ----------
+/* =========================================================
+   Étapes (texte)
+   ========================================================= */
 function compute(op: OpName, a: number, b: number) {
-  let result: number | string = 0;
+  let result: number | string = "Compte le pot 😊";
   const steps: string[] = [];
 
   if (op === "Addition") {
-    steps.push(`On a ${a} bonbon${a > 1 ? "s" : ""} sur le plateau A.`);
-    steps.push(`On glisse des bonbons dans le pot.`);
-    result = a + b; // valeur “attendue”, mais l'enfant comptera dans le pot
-    steps.push(`On compte dans le pot pour trouver le total.`);
+    steps.push(`Plateau A contient ${a} bonbon${a > 1 ? "s" : ""}.`);
+    steps.push("Glisse les bonbons dans le pot.");
+    steps.push("On COMPTE ce qu’il y a dans le pot.");
+    result = "Compte le pot 😊";
   } else if (op === "Soustraction") {
-    steps.push(`On commence avec ${a} bonbon${a > 1 ? "s" : ""} dans le pot.`);
-    const take = Math.max(0, Math.min(b, a));
-    steps.push(`On retire ${take} bonbon${take > 1 ? "s" : ""} vers la zone Retrait.`);
-    result = a - take; // valeur “attendue”, mais l'enfant comptera ce qu'il reste
-    steps.push(`On compte ce qu’il reste dans le pot.`);
+    steps.push(`Le pot commence avec ${a} bonbon${a > 1 ? "s" : ""}.`);
+    steps.push("On RETIRE des bonbons vers la zone Retrait.");
+    steps.push("On COMPTE ce qu’il reste dans le pot.");
+    result = "Compte le pot 😊";
   } else if (op === "Multiplication") {
     steps.push(`On a ${a} boîte${a > 1 ? "s" : ""}.`);
-    steps.push(`Dans chaque boîte : ${b} bonbon${b > 1 ? "s" : ""}.`);
-    result = a * b;
-    steps.push(`Total : ${a} × ${b} = ${result} bonbons.`);
+    steps.push(`Chaque boîte contient ${b} bonbon${b > 1 ? "s" : ""}.`);
+    const r = a * b;
+    steps.push(`Total : ${a} × ${b} = ${r} bonbons.`);
+    result = r;
   } else {
     if (b === 0) {
       steps.push("On ne peut pas partager en 0 groupe.");
@@ -74,21 +81,20 @@ function compute(op: OpName, a: number, b: number) {
       steps.push(`On partage ${a} bonbons en ${b} boîtes.`);
       const q = Math.floor(a / b);
       const r = a % b;
-      if (r === 0) {
-        steps.push(`Chaque boîte reçoit ${q} bonbons, sans reste.`);
-        result = q;
-      } else {
-        steps.push(
-          `Chaque boîte reçoit ${q} bonbons et il reste ${r} bonbon${r > 1 ? "s" : ""}.`
-        );
-        result = `${q} reste ${r}`;
-      }
+      steps.push(
+        r === 0
+          ? `Chaque boîte reçoit ${q} bonbons, sans reste.`
+          : `Chaque boîte reçoit ${q} bonbons et il reste ${r} bonbon${r > 1 ? "s" : ""}.`
+      );
+      result = r === 0 ? q : `${q} reste ${r}`;
     }
   }
   return { result, steps };
 }
 
-// ---------- Stepper (− [val] +) ----------
+/* =========================================================
+   Stepper commun (− [val] +)
+   ========================================================= */
 function NumberStepper({
   value,
   setValue,
@@ -107,344 +113,85 @@ function NumberStepper({
   return (
     <div className="flex items-center gap-2">
       {label && <span className="text-sm font-medium mr-1">{label}</span>}
-      <button onClick={dec} className="px-3 py-2 border rounded-md hover:bg-gray-50">−</button>
-      <div className="px-4 py-2 border rounded-md min-w-[56px] text-center bg-white">{value}</div>
-      <button onClick={inc} className="px-3 py-2 border rounded-md hover:bg-gray-50">+</button>
+      <button onClick={dec} className="px-3 py-2 border rounded-md hover:bg-gray-50">
+        −
+      </button>
+      <div className="px-4 py-2 border rounded-md min-w-[56px] text-center bg-white">
+        {value}
+      </div>
+      <button onClick={inc} className="px-3 py-2 border rounded-md hover:bg-gray-50">
+        +
+      </button>
     </div>
   );
 }
 
-// ---------- VISUELS ----------
-function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
-  if (op === "Addition") return <AdditionJarOneTray a={a} />; // ⬅️ un seul plateau A
-  if (op === "Soustraction") return <SubtractionJar a={a} />;  // ⬅️ on retire du pot
-  if (op === "Multiplication") return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
-  return <EqualGroups total={a} groups={b} />;
-}
+/* =========================================================
+   Visuels — Pot + Boîtes
+   ========================================================= */
 
-// Palette bonbons
-const CANDY_COLORS = ["#3B82F6", "#F59E0B", "#10B981", "#EC4899", "#8B5CF6", "#EF4444"];
+// Zone interne du pot (où on dessine les bonbons)
+const JAR_INNER = { left: 58, top: 100, width: 200, height: 220 };
 
-// JAR SVG (réutilisé)
+// Pot agrandi
 function JarSVG({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 220 260" className={className}>
-      <rect x="40" y="14" width="140" height="18" rx="4" fill="#9CA3AF" />
-      <rect x="50" y="28" width="120" height="10" rx="3" fill="#6B7280" />
+    <svg viewBox="0 0 300 400" className={className}>
+      <rect x="70" y="36" width="160" height="22" rx="6" fill="#9CA3AF" />
+      <rect x="85" y="56" width="130" height="12" rx="6" fill="#6B7280" />
       <path
-        d="M60 40 h100 c8 0 12 6 12 14 v140 c0 40-28 52-62 52s-62-12-62-52V54c0-8 4-14 12-14z"
+        d="
+          M90,80 
+          h120 
+          c12,0 18,9 18,18 
+          v210 
+          c0,60 -45,80 -78,80 
+          s-78,-20 -78,-80 
+          V98 
+          c0,-9 6,-18 18,-18 
+          z"
         fill="#F9FAFB"
         stroke="#D1D5DB"
-        strokeWidth="2"
+        strokeWidth="3"
       />
     </svg>
   );
 }
 
+// Bonbons persistants
+type CandyObj = { id: number; color: string };
+const CANDY_PALETTE = ["#3B82F6", "#F59E0B", "#10B981", "#EC4899", "#8B5CF6", "#EF4444"];
+
+function makeCandies(count: number, seed = 0): CandyObj[] {
+  return Array.from({ length: count }).map((_, i) => ({
+    id: seed * 100000 + i,
+    color: CANDY_PALETTE[i % CANDY_PALETTE.length],
+  }));
+}
+
+// ⚠️ prop renommée en handleDragStart
 const Candy = ({
-  color,
+  item,
   from,
-  onDragStart,
+  handleDragStart,
 }: {
-  color: string;
+  item: CandyObj;
   from: "A" | "JAR" | "RET";
-  onDragStart: (e: React.DragEvent, source: "A" | "JAR" | "RET") => void;
+  handleDragStart: (
+    e: React.DragEvent,
+    payload: { src: "A" | "JAR" | "RET"; id: number }
+  ) => void;
 }) => (
   <div
     draggable
-    onDragStart={(e) => onDragStart(e, from)}
+    onDragStart={(e) => handleDragStart(e, { src: from, id: item.id })}
     className="w-4 h-4 rounded-full"
-    style={{ background: color, boxShadow: "0 1px 0 rgba(0,0,0,.15)" }}
+    style={{ background: item.color, boxShadow: "0 1px 0 rgba(0,0,0,.15)" }}
     title="Glisse-moi !"
   />
 );
 
-// === ADDITION — UN PLATEAU A -> POT ===
-function AdditionJarOneTray({ a }: { a: number }) {
-  const [trayA, setTrayA] = useState<number>(a);
-  const [jar, setJar] = useState<number>(0);
-
-  // si A change via steppers, on reset proprement
-  useEffect(() => {
-    setTrayA(a);
-    setJar(0);
-  }, [a]);
-
-  // DnD helpers
-  function onDragStart(e: React.DragEvent, source: "A" | "JAR" | "RET") {
-    e.dataTransfer.setData("text/plain", source);
-  }
-  function allowDrop(e: React.DragEvent) {
-    e.preventDefault();
-  }
-  function dropToJar(e: React.DragEvent) {
-    e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain") as "A" | "JAR" | "RET";
-    if (src === "A" && trayA > 0) {
-      setTrayA((n) => n - 1);
-      setJar((n) => n + 1);
-    }
-  }
-  function dropToTrayA(e: React.DragEvent) {
-    e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain") as "A" | "JAR" | "RET";
-    if (src === "JAR" && jar > 0) {
-      setJar((n) => n - 1);
-      setTrayA((n) => n + 1);
-    }
-  }
-
-  // centrement des bonbons dans le pot : grille centrée
-  const renderJarCandies = (count: number) => {
-    const cols = 8; // densité agréable
-    return (
-      <div
-        className="w-[164px] h-[150px] absolute left-[28px] top-[70px]"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          gap: "8px",
-          placeItems: "center",
-          placeContent: "center", // ⬅️ centre la grille dans le pot
-        }}
-      >
-        {Array.from({ length: count }).map((_, i) => (
-          <div
-            key={`J-${i}`}
-            className="w-4 h-4 rounded-full"
-            draggable
-            onDragStart={(e) => onDragStart(e, "JAR")}
-            style={{
-              background: CANDY_COLORS[i % CANDY_COLORS.length],
-              boxShadow: "0 1px 0 rgba(0,0,0,.15)",
-            }}
-          />
-        ))}
-      </div>
-    );
-  };
-
-  const renderGrid = (count: number, from: "A" | "JAR" | "RET") => (
-    <div className="grid grid-cols-8 gap-2 place-items-center">
-      {Array.from({ length: count }).map((_, i) => (
-        <Candy
-          key={`${from}-${i}`}
-          color={CANDY_COLORS[i % CANDY_COLORS.length]}
-          from={from}
-          onDragStart={onDragStart}
-        />
-      ))}
-    </div>
-  );
-
-  return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
-        <div
-          onDragOver={allowDrop}
-          onDrop={dropToTrayA}
-          className="bg-white border border-gray-200 rounded-2xl p-4 md:col-span-1"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold">Plateau A</span>
-            <span className="text-sm text-gray-500">
-              {trayA} bonbon{trayA > 1 ? "s" : ""}
-            </span>
-          </div>
-          {renderGrid(trayA, "A")}
-          <div className="mt-3 text-xs text-gray-500">Glisse un bonbon vers le pot</div>
-        </div>
-
-        <div
-          onDragOver={allowDrop}
-          onDrop={dropToJar}
-          className="bg-gradient-to-b from-blue-50 to-white border border-blue-200 rounded-2xl p-4 flex flex-col items-center md:col-span-2"
-        >
-          <div className="font-semibold mb-2">Pot</div>
-          <div className="relative">
-            <JarSVG className="w-64 h-72" />
-            {renderJarCandies(jar)}
-          </div>
-          <div className="mt-2 text-sm">
-            Dans le pot : <b>{jar}</b> bonbon{jar > 1 ? "s" : ""}
-          </div>
-          <div className="mt-3 flex gap-2">
-            <button
-              onClick={() => {
-                setTrayA(a);
-                setJar(0);
-              }}
-              className="px-3 py-1.5 text-sm rounded border hover:bg-gray-50"
-            >
-              Réinitialiser
-            </button>
-            <button
-              onClick={() => {
-                setJar(a);
-                setTrayA(0);
-              }}
-              className="px-3 py-1.5 text-sm rounded bg-blue-600 text-white"
-            >
-              Remplir (tout A)
-            </button>
-          </div>
-          <div className="mt-2 text-xs text-gray-500">
-            Astuce : tu peux aussi glisser du pot vers A.
-          </div>
-        </div>
-      </div>
-
-      <div className="text-center text-xl font-extrabold">
-        Résultat (on COMPTE le pot) : <span className="text-blue-700">{jar}</span> bonbons
-      </div>
-    </div>
-  );
-}
-
-// === SOUSTRACTION — LE POT -> RETRAIT ===
-function SubtractionJar({ a }: { a: number }) {
-  const [jar, setJar] = useState<number>(a);
-  const [ret, setRet] = useState<number>(0); // zone Retrait
-
-  useEffect(() => {
-    setJar(a);
-    setRet(0);
-  }, [a]);
-
-  function onDragStart(e: React.DragEvent, source: "A" | "JAR" | "RET") {
-    e.dataTransfer.setData("text/plain", source);
-  }
-  function allowDrop(e: React.DragEvent) {
-    e.preventDefault();
-  }
-  function dropToRet(e: React.DragEvent) {
-    e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain") as "A" | "JAR" | "RET";
-    if (src === "JAR" && jar > 0) {
-      setJar((n) => n - 1);
-      setRet((n) => n + 1);
-    }
-  }
-  function dropToJar(e: React.DragEvent) {
-    e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain") as "A" | "JAR" | "RET";
-    if (src === "RET" && ret > 0) {
-      setRet((n) => n - 1);
-      setJar((n) => n + 1);
-    }
-  }
-
-  const renderJarCandies = (count: number) => {
-    const cols = 8;
-    return (
-      <div
-        className="w-[164px] h-[150px] absolute left-[28px] top-[70px]"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          gap: "8px",
-          placeItems: "center",
-          placeContent: "center",
-        }}
-      >
-        {Array.from({ length: count }).map((_, i) => (
-          <div
-            key={`J-${i}`}
-            className="w-4 h-4 rounded-full"
-            draggable
-            onDragStart={(e) => onDragStart(e, "JAR")}
-            style={{
-              background: CANDY_COLORS[i % CANDY_COLORS.length],
-              boxShadow: "0 1px 0 rgba(0,0,0,.15)",
-            }}
-          />
-        ))}
-      </div>
-    );
-  };
-
-  const renderGrid = (count: number, from: "A" | "JAR" | "RET") => (
-    <div className="grid grid-cols-8 gap-2 place-items-center">
-      {Array.from({ length: count }).map((_, i) => (
-        <Candy
-          key={`${from}-${i}`}
-          color={CANDY_COLORS[i % CANDY_COLORS.length]}
-          from={from}
-          onDragStart={onDragStart}
-        />
-      ))}
-    </div>
-  );
-
-  return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="grid md:grid-cols-3 gap-6 mb-6">
-        {/* Pot au centre (col-span-2 sur md) */}
-        <div
-          onDragOver={allowDrop}
-          onDrop={dropToJar}
-          className="bg-gradient-to-b from-blue-50 to-white border border-blue-200 rounded-2xl p-4 flex flex-col items-center md:col-span-2"
-        >
-          <div className="font-semibold mb-2">Pot</div>
-          <div className="relative">
-            <JarSVG className="w-64 h-72" />
-            {renderJarCandies(jar)}
-          </div>
-          <div className="mt-2 text-sm">
-            Dans le pot : <b>{jar}</b> bonbon{jar > 1 ? "s" : ""}
-          </div>
-          <div className="mt-3 flex gap-2">
-            <button
-              onClick={() => {
-                setJar(a);
-                setRet(0);
-              }}
-              className="px-3 py-1.5 text-sm rounded border hover:bg-gray-50"
-            >
-              Réinitialiser
-            </button>
-            <button
-              onClick={() => {
-                const m = Math.min(jar, 1);
-                setJar((n) => n - m);
-                setRet((n) => n + m);
-              }}
-              className="px-3 py-1.5 text-sm rounded bg-blue-600 text-white"
-            >
-              Retirer 1
-            </button>
-          </div>
-          <div className="mt-2 text-xs text-gray-500">
-            Astuce : glisse un bonbon du pot vers « Retrait ».
-          </div>
-        </div>
-
-        {/* Zone Retrait */}
-        <div
-          onDragOver={allowDrop}
-          onDrop={dropToRet}
-          className="bg-white border border-gray-200 rounded-2xl p-4"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold">Retrait</span>
-            <span className="text-sm text-gray-500">
-              {ret} bonbon{ret > 1 ? "s" : ""}
-            </span>
-          </div>
-          {renderGrid(ret, "RET")}
-          <div className="mt-3 text-xs text-gray-500">Glisse ici pour enlever du pot</div>
-        </div>
-      </div>
-
-      <div className="text-center text-xl font-extrabold">
-        Résultat (ce qu’il reste dans le pot) :{" "}
-        <span className="text-blue-700">{jar}</span> bonbons
-      </div>
-    </div>
-  );
-}
-
-/** MULTIPLICATION — boîtes de bonbons (inchangé) */
+/* ---------- Multiplication/Division (inchangés) ---------- */
 function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   const cols = Math.min(4, boxes);
   const rows = Math.ceil(boxes / cols);
@@ -457,7 +204,6 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   const perRow = Math.ceil(Math.sqrt(Math.max(perBox, 1)));
   const cell = 18;
   const padding = 20;
-  const candyColors = CANDY_COLORS;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-5xl">
@@ -476,7 +222,7 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
               const cc = k % perRow;
               const cx = x + padding + cc * cell + 8;
               const cy = y + 42 + rr * cell;
-              const color = candyColors[(k + i) % candyColors.length];
+              const color = CANDY_PALETTE[(k + i) % CANDY_PALETTE.length];
               return <circle key={k} cx={cx} cy={cy} r={6} fill={color} />;
             })}
             <text x={x + boxW - 12} y={y + boxH - 12} fontSize={13} fill="#374151" textAnchor="end">
@@ -492,7 +238,6 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   );
 }
 
-/** DIVISION — partage en groupes égaux (inchangé) */
 function EqualGroups({ total, groups }: { total: number; groups: number }) {
   const g = Math.max(1, groups);
   const q = Math.floor(groups === 0 ? 0 : total / g);
@@ -538,11 +283,376 @@ function EqualGroups({ total, groups }: { total: number; groups: number }) {
   );
 }
 
-// ---------- PAGE ----------
+/* =========================================================
+   ADDITION — Un seul plateau A → Pot (rebond)
+   ========================================================= */
+function AdditionJarOneTray({ a }: { a: number }) {
+  const [trayA, setTrayA] = useState<CandyObj[]>(() => makeCandies(a, 1));
+  const [jar, setJar] = useState<CandyObj[]>([]);
+  const [jarPop, setJarPop] = useState(false);
+
+  useEffect(() => {
+    setTrayA(makeCandies(a, 1));
+    setJar([]);
+  }, [a]);
+
+  function handleDragStart(
+    e: React.DragEvent,
+    payload: { src: "A" | "JAR"; id: number }
+  ) {
+    e.dataTransfer.setData("application/json", JSON.stringify(payload));
+  }
+  function allowDrop(e: React.DragEvent) {
+    e.preventDefault();
+  }
+
+  function dropToJar(e: React.DragEvent) {
+    e.preventDefault();
+    try {
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
+        src: "A" | "JAR";
+        id: number;
+      };
+      if (src === "A") {
+        const idx = trayA.findIndex((c) => c.id === id);
+        if (idx >= 0) {
+          const item = trayA[idx];
+          setTrayA((prev) => prev.filter((c) => c.id !== id));
+          setJar((prev) => [...prev, item]);
+          setJarPop(true);
+          setTimeout(() => setJarPop(false), 180);
+        }
+      }
+    } catch {}
+  }
+
+  function dropToTrayA(e: React.DragEvent) {
+    e.preventDefault();
+    try {
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
+        src: "A" | "JAR";
+        id: number;
+      };
+      if (src === "JAR") {
+        const idx = jar.findIndex((c) => c.id === id);
+        if (idx >= 0) {
+          const item = jar[idx];
+          setJar((prev) => prev.filter((c) => c.id !== id));
+          setTrayA((prev) => [...prev, item]);
+          setJarPop(true);
+          setTimeout(() => setJarPop(false), 180);
+        }
+      }
+    } catch {}
+  }
+
+  function JarGrid({ items }: { items: CandyObj[] }) {
+    const cols = Math.min(10, Math.max(4, Math.ceil(Math.sqrt(items.length))));
+    return (
+      <div
+        className="absolute"
+        style={{
+          left: JAR_INNER.left,
+          top: JAR_INNER.top,
+          width: JAR_INNER.width,
+          height: JAR_INNER.height,
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gap: 8,
+          placeItems: "center",
+          placeContent: "center",
+        }}
+      >
+        {items.map((it) => (
+          <Candy key={it.id} item={it} from="JAR" handleDragStart={handleDragStart} />
+        ))}
+      </div>
+    );
+  }
+
+  const TrayGrid = ({ items }: { items: CandyObj[] }) => (
+    <div className="grid grid-cols-8 gap-2 place-items-center">
+      {items.map((it) => (
+        <Candy key={it.id} item={it} from="A" handleDragStart={handleDragStart} />
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="w-full max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-6 mb-6">
+        {/* Plateau A */}
+        <div
+          onDragOver={allowDrop}
+          onDrop={dropToTrayA}
+          className="bg-white border border-gray-200 rounded-2xl p-4"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Plateau A</span>
+            <span className="text-sm text-gray-500">
+              {trayA.length} bonbon{trayA.length > 1 ? "s" : ""}
+            </span>
+          </div>
+          <TrayGrid items={trayA} />
+          <div className="mt-3 text-xs text-gray-500">Glisse un bonbon vers le pot</div>
+        </div>
+
+        {/* Pot */}
+        <div
+          onDragOver={allowDrop}
+          onDrop={dropToJar}
+          className="bg-gradient-to-b from-blue-50 to-white border border-blue-200 rounded-2xl p-4 flex flex-col items-center md:col-span-2"
+        >
+          <div className="font-semibold mb-2">Pot</div>
+          <div
+            className="relative"
+            style={{
+              transition: "transform 180ms ease-out",
+              transform: jarPop ? "scale(1.06)" : "scale(1)",
+            }}
+          >
+            <JarSVG className="w-80 h-[420px]" />
+            <JarGrid items={jar} />
+          </div>
+          <div className="mt-2 text-sm">
+            Dans le pot : <b>{jar.length}</b> bonbon{jar.length > 1 ? "s" : ""}
+          </div>
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={() => {
+                setTrayA(makeCandies(a, 1));
+                setJar([]);
+              }}
+              className="px-3 py-1.5 text-sm rounded border hover:bg-gray-50"
+            >
+              Réinitialiser
+            </button>
+            <button
+              onClick={() => {
+                setJar(makeCandies(a, 1));
+                setTrayA([]);
+                setJarPop(true);
+                setTimeout(() => setJarPop(false), 180);
+              }}
+              className="px-3 py-1.5 text-sm rounded bg-blue-600 text-white"
+            >
+              Remplir (tout A)
+            </button>
+          </div>
+          <div className="mt-2 text-xs text-gray-500">
+            Astuce : tu peux aussi glisser du pot vers A.
+          </div>
+        </div>
+      </div>
+
+      <div className="text-center text-xl font-extrabold">
+        Résultat (on COMPTE le pot) :{" "}
+        <span className="text-blue-700">{jar.length}</span> bonbons
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================
+   SOUSTRACTION — Pot → Retrait (rebond)
+   ========================================================= */
+function SubtractionJar({ a }: { a: number }) {
+  const [jar, setJar] = useState<CandyObj[]>(() => makeCandies(a, 2));
+  const [ret, setRet] = useState<CandyObj[]>([]);
+  const [jarPop, setJarPop] = useState(false);
+  const [retPop, setRetPop] = useState(false);
+
+  useEffect(() => {
+    setJar(makeCandies(a, 2));
+    setRet([]);
+  }, [a]);
+
+  function handleDragStart(
+    e: React.DragEvent,
+    payload: { src: "JAR" | "RET"; id: number }
+  ) {
+    e.dataTransfer.setData("application/json", JSON.stringify(payload));
+  }
+  function allowDrop(e: React.DragEvent) {
+    e.preventDefault();
+  }
+
+  function dropToRet(e: React.DragEvent) {
+    e.preventDefault();
+    try {
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
+        src: "JAR" | "RET";
+        id: number;
+      };
+      if (src === "JAR") {
+        const idx = jar.findIndex((c) => c.id === id);
+        if (idx >= 0) {
+          const item = jar[idx];
+          setJar((p) => p.filter((c) => c.id !== id));
+          setRet((p) => [...p, item]);
+          setJarPop(true);
+          setRetPop(true);
+          setTimeout(() => setJarPop(false), 180);
+          setTimeout(() => setRetPop(false), 180);
+        }
+      }
+    } catch {}
+  }
+  function dropToJar(e: React.DragEvent) {
+    e.preventDefault();
+    try {
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
+        src: "JAR" | "RET";
+        id: number;
+      };
+      if (src === "RET") {
+        const idx = ret.findIndex((c) => c.id === id);
+        if (idx >= 0) {
+          const item = ret[idx];
+          setRet((p) => p.filter((c) => c.id !== id));
+          setJar((p) => [...p, item]);
+          setJarPop(true);
+          setRetPop(true);
+          setTimeout(() => setJarPop(false), 180);
+          setTimeout(() => setRetPop(false), 180);
+        }
+      }
+    } catch {}
+  }
+
+  function JarGrid({ items }: { items: CandyObj[] }) {
+    const cols = Math.min(10, Math.max(4, Math.ceil(Math.sqrt(items.length))));
+    return (
+      <div
+        className="absolute"
+        style={{
+          left: JAR_INNER.left,
+          top: JAR_INNER.top,
+          width: JAR_INNER.width,
+          height: JAR_INNER.height,
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gap: 8,
+          placeItems: "center",
+          placeContent: "center",
+        }}
+      >
+        {items.map((it) => (
+          <Candy key={it.id} item={it} from="JAR" handleDragStart={handleDragStart} />
+        ))}
+      </div>
+    );
+  }
+
+  const Grid = ({ items }: { items: CandyObj[] }) => (
+    <div className="grid grid-cols-8 gap-2 place-items-center">
+      {items.map((it) => (
+        <Candy key={it.id} item={it} from="RET" handleDragStart={handleDragStart} />
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="w-full max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-6 mb-6">
+        {/* Pot */}
+        <div
+          onDragOver={allowDrop}
+          onDrop={dropToJar}
+          className="bg-gradient-to-b from-blue-50 to-white border border-blue-200 rounded-2xl p-4 flex flex-col items-center md:col-span-2"
+        >
+          <div className="font-semibold mb-2">Pot</div>
+          <div
+            className="relative"
+            style={{
+              transition: "transform 180ms ease-out",
+              transform: jarPop ? "scale(1.06)" : "scale(1)",
+            }}
+          >
+            <JarSVG className="w-80 h-[420px]" />
+            <JarGrid items={jar} />
+          </div>
+          <div className="mt-2 text-sm">
+            Dans le pot : <b>{jar.length}</b> bonbon{jar.length > 1 ? "s" : ""}
+          </div>
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={() => {
+                setJar(makeCandies(a, 2));
+                setRet([]);
+              }}
+              className="px-3 py-1.5 text-sm rounded border hover:bg-gray-50"
+            >
+              Réinitialiser
+            </button>
+            <button
+              onClick={() => {
+                if (jar.length > 0) {
+                  const item = jar[jar.length - 1];
+                  setJar((p) => p.slice(0, -1));
+                  setRet((p) => [...p, item]);
+                  setJarPop(true);
+                  setRetPop(true);
+                  setTimeout(() => setJarPop(false), 180);
+                  setTimeout(() => setRetPop(false), 180);
+                }
+              }}
+              className="px-3 py-1.5 text-sm rounded bg-blue-600 text-white"
+            >
+              Retirer 1
+            </button>
+          </div>
+          <div className="mt-2 text-xs text-gray-500">
+            Astuce : glisse un bonbon du pot vers « Retrait ».
+          </div>
+        </div>
+
+        {/* Retrait */}
+        <div
+          onDragOver={allowDrop}
+          onDrop={dropToRet}
+          className="bg-white border border-gray-200 rounded-2xl p-4"
+          style={{
+            transition: "transform 180ms ease-out",
+            transform: retPop ? "scale(1.04)" : "scale(1)",
+          }}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Retrait</span>
+            <span className="text-sm text-gray-500">
+              {ret.length} bonbon{ret.length > 1 ? "s" : ""}
+            </span>
+          </div>
+          <Grid items={ret} />
+          <div className="mt-3 text-xs text-gray-500">Glisse ici pour enlever du pot</div>
+        </div>
+      </div>
+
+      <div className="text-center text-xl font-extrabold">
+        Résultat (ce qu’il reste dans le pot) :{" "}
+        <span className="text-blue-700">{jar.length}</span> bonbons
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================
+   Sélecteur du visuel selon l’opération
+   ========================================================= */
+function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
+  if (op === "Addition") return <AdditionJarOneTray a={a} />;
+  if (op === "Soustraction") return <SubtractionJar a={a} />;
+  if (op === "Multiplication") return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
+  return <EqualGroups total={a} groups={b} />;
+}
+
+/* =========================================================
+   Page
+   ========================================================= */
 export default function OperationsLearning() {
   const [selected, setSelected] = useState<Topic | null>(TOPICS[0]);
   const [a, setA] = useState(4);
-  const [b, setB] = useState(3); // b sert encore pour × et ÷ uniquement
+  const [b, setB] = useState(3); // b : utilisé pour × et ÷ uniquement
   const opName = selected?.name ?? "Addition";
   const { minA, maxA, minB, maxB } = boundsFor(opName);
 
@@ -550,7 +660,7 @@ export default function OperationsLearning() {
 
   return (
     <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
-      {/* Bouton Retour */}
+      {/* Retour */}
       <Link
         href="/menu/apprendre"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-10"
@@ -578,7 +688,7 @@ export default function OperationsLearning() {
           ))}
         </div>
 
-        {/* A / B avec steppers (B masqué pour + et −) */}
+        {/* A / B — B masqué pour + et − */}
         <div className="grid grid-cols-1 gap-4 mb-6">
           <div className="flex flex-col text-sm gap-1">
             <span className="font-medium">
@@ -590,21 +700,29 @@ export default function OperationsLearning() {
                 ? "A — bonbons"
                 : "A — bonbons dans le pot"}
             </span>
-            <NumberStepper value={a} setValue={(v) => setA(clamp(v, minA, maxA))} min={minA} max={maxA} />
+            <NumberStepper
+              value={a}
+              setValue={(v) => setA(clamp(v, minA, maxA))}
+              min={minA}
+              max={maxA}
+            />
           </div>
 
-          {/* Affiche B seulement pour × et ÷ */}
           {(opName === "Multiplication" || opName === "Division") && (
             <div className="flex flex-col text-sm gap-1">
               <span className="font-medium">
                 {opName === "Multiplication" ? "B — bonbons/boîte" : "B — boîtes"}
               </span>
-              <NumberStepper value={b} setValue={(v) => setB(clamp(v, minB, maxB))} min={minB} max={maxB} />
+              <NumberStepper
+                value={b}
+                setValue={(v) => setB(clamp(v, minB, maxB))}
+                min={minB}
+                max={maxB}
+              />
             </div>
           )}
         </div>
 
-        {/* Bouton Pratique */}
         <Link
           href={PRACTICE_HREF}
           className="block text-center bg-purple-600 text-white py-2 px-4 rounded font-semibold"
@@ -634,10 +752,8 @@ export default function OperationsLearning() {
                 ))}
               </ol>
               <p className="mt-3">
-                Résultat (à observer dans le visuel) :{" "}
-                <span className="font-bold">
-                  {typeof result === "number" ? result : result}
-                </span>
+                Résultat (observe le visuel) :{" "}
+                <span className="font-bold">{String(result)}</span>
               </p>
             </div>
           </div>
