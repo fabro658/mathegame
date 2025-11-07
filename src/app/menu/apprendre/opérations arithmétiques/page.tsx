@@ -385,10 +385,7 @@ export default function OperationsLearning() {
               </div>
             </div>
 
-            {/* Viz */}
-            <div className="mb-6">
-              <OperationViz op={selected.name} a={a} b={b} />
-            </div>
+           
 
             {/* Étapes */}
             <div className="bg-gray-50 rounded p-4">
