@@ -87,11 +87,46 @@ function compute(op: OpName, a: number, b: number) {
   return { result, steps };
 }
 
+// -------- Stepper commun (− [val] +) --------
+function NumberStepper({
+  value,
+  setValue,
+  min = -9999,
+  max = 9999,
+  label,
+}: {
+  value: number;
+  setValue: (n: number) => void;
+  min?: number;
+  max?: number;
+  label?: string;
+}) {
+  const dec = () => setValue(clamp(value - 1, min, max));
+  const inc = () => setValue(clamp(value + 1, min, max));
+
+  return (
+    <div className="flex items-center gap-2">
+      {label && <span className="text-sm font-medium mr-1">{label}</span>}
+      <button onClick={dec} className="px-3 py-2 border rounded-md hover:bg-gray-50">
+        −
+      </button>
+      <div className="px-4 py-2 border rounded-md min-w-[56px] text-center bg-white">
+        {value}
+      </div>
+      <button onClick={inc} className="px-3 py-2 border rounded-md hover:bg-gray-50">
+        +
+      </button>
+    </div>
+  );
+}
+
+
 // -------- SVGs --------
 function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
   if (op === "Addition") return <NumberLine a={a} b={b} mode="add" />;
   if (op === "Soustraction") return <NumberLine a={a} b={b} mode="sub" />;
-  if (op === "Multiplication") return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
+  if (op === "Multiplication")
+    return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
   return <EqualGroups total={a} groups={b} />;
 }
 
@@ -163,23 +198,24 @@ function NumberLine({
   );
 }
 
-/** Multiplication — Boîtes de bonbons */
+/** Multiplication — Boîtes de bonbons (visuel friendly) */
 function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   const cols = Math.min(4, boxes);
   const rows = Math.ceil(boxes / cols);
-  const boxW = 140;
-  const boxH = 120;
-  const gap = 16;
+  const boxW = 180;
+  const boxH = 140;
+  const gap = 24;
   const W = cols * boxW + (cols + 1) * gap;
-  const H = rows * boxH + (rows + 1) * gap + 40; // + légende
+  const H = rows * boxH + (rows + 1) * gap + 48;
 
-  // pour placer les bonbons en grille dans chaque boîte
   const perRow = Math.ceil(Math.sqrt(Math.max(perBox, 1)));
-  const cell = 16;
-  const padding = 16;
+  const cell = 18;
+  const padding = 20;
+
+  const candyColors = ["#2563EB", "#EC4899", "#8B5CF6", "#10B981", "#F59E0B"];
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-3xl">
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-5xl">
       {Array.from({ length: boxes }).map((_, i) => {
         const row = Math.floor(i / cols);
         const col = i % cols;
@@ -188,24 +224,41 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
 
         return (
           <g key={i}>
-            <rect x={x} y={y} width={boxW} height={boxH} rx={14} ry={14} fill="#FFFFFF" stroke="#D1D5DB" />
-            <text x={x + 10} y={y + 20} fontSize={12} fill="#111827" fontWeight={600}>
+            {/* Carton avec bord arrondi + ombre légère */}
+            <rect
+              x={x}
+              y={y}
+              width={boxW}
+              height={boxH}
+              rx={22}
+              ry={22}
+              fill="#FFFFFF"
+              stroke="#E5E7EB"
+            />
+            {/* Étiquette */}
+            <rect x={x + 14} y={y + 10} width={80} height={20} rx={10} fill="#F3F4F6" />
+            <text x={x + 22} y={y + 25} fontSize={12} fill="#111827" fontWeight={700}>
               Boîte {i + 1}
             </text>
+            {/* Bonbons */}
             {Array.from({ length: perBox }).map((__, k) => {
               const rr = Math.floor(k / perRow);
               const cc = k % perRow;
-              const cx = x + padding + cc * cell;
-              const cy = y + 36 + rr * cell;
-              return <circle key={k} cx={cx} cy={cy} r={5} fill="#2563EB" />;
+              const jitterX = (k % 2) * 0.6; // petite variation pour le “fun”
+              const jitterY = ((k + i) % 2) * 0.6;
+              const cx = x + padding + cc * cell + 8 + jitterX;
+              const cy = y + 40 + rr * cell + jitterY;
+              const color = candyColors[(k + i) % candyColors.length];
+              return <circle key={k} cx={cx} cy={cy} r={6} fill={color} />;
             })}
-            <text x={x + boxW - 10} y={y + boxH - 10} fontSize={12} fill="#374151" textAnchor="end">
-              {perBox} bonbon{perBox > 1 ? "s" : ""}
+            {/* Compteur */}
+            <text x={x + boxW - 12} y={y + boxH - 12} fontSize={13} fill="#374151" textAnchor="end">
+              {perBox} bonbons
             </text>
           </g>
         );
       })}
-      <text x={W / 2} y={H - 14} textAnchor="middle" fontSize={14} fill="#111827" fontWeight={600}>
+      <text x={W / 2} y={H - 14} textAnchor="middle" fontSize={18} fill="#111827" fontWeight={800}>
         Total = {boxes} × {perBox} = {boxes * perBox} bonbons
       </text>
     </svg>
@@ -257,17 +310,20 @@ function EqualGroups({ total, groups }: { total: number; groups: number }) {
   );
 }
 
-// -------- Page avec gabarit --------
+// -------- Page (gabarit conservé) --------
 export default function OperationsLearning() {
   const [selected, setSelected] = useState<Topic | null>(TOPICS[0]);
-  const [a, setA] = useState(3); // valeurs plus parlantes pour la multiplication
-  const [b, setB] = useState(4);
+  const [a, setA] = useState(4);
+  const [b, setB] = useState(8);
   const [mode, setMode] = useState<"Apprendre" | "Pratique">("Apprendre");
   const opName = selected?.name ?? "Addition";
 
   const { result, steps } = useMemo(() => compute(opName, a, b), [opName, a, b]);
 
-  const [answer, setAnswer] = useState<string>("");
+  // Réponses via steppers
+  const [ans, setAns] = useState<number>(0);     // pour +, −, ×
+  const [ansQ, setAnsQ] = useState<number>(0);   // pour ÷ (quotient)
+  const [ansR, setAnsR] = useState<number>(0);   // pour ÷ (reste)
   const [feedback, setFeedback] = useState<string>("");
 
   function randomize() {
@@ -275,15 +331,18 @@ export default function OperationsLearning() {
     if (selected.name === "Division") {
       setA(randInt(4, 60));
       setB(randInt(2, 9));
+      setAnsQ(0);
+      setAnsR(0);
     } else if (selected.name === "Multiplication") {
-      setA(randInt(1, 6));     // nombre de boîtes
-      setB(randInt(1, 10));    // bonbons par boîte
+      setA(randInt(1, 6));
+      setB(randInt(1, 10));
+      setAns(0);
     } else {
       setA(randInt(0, 30));
       setB(randInt(0, 30));
+      setAns(0);
     }
     setFeedback("");
-    setAnswer("");
   }
 
   function checkAnswer() {
@@ -291,29 +350,18 @@ export default function OperationsLearning() {
     if (selected.name === "Division") {
       const q = Math.floor(b === 0 ? 0 : a / b);
       const r = b === 0 ? a : a % b;
-      const normalized = answer.trim().toLowerCase();
-      const ok1 = r === 0 && normalized === String(q);
-      const ok2 =
-        normalized === `${q} reste ${r}` ||
-        normalized === `${q} r ${r}` ||
-        normalized === `${q} rem ${r}`;
-      setFeedback(ok1 || ok2 ? "Correct." : "À revoir.");
+      const ok = ansQ === q && ansR === r;
+      setFeedback(ok ? "Correct." : "À revoir.");
     } else {
       const expected =
         selected.name === "Addition" ? a + b : selected.name === "Soustraction" ? a - b : a * b;
-      setFeedback(Number(normalizeNumber(answer)) === expected ? "Correct." : "À revoir.");
+      setFeedback(ans === expected ? "Correct." : "À revoir.");
     }
   }
 
-  // Helpers pour les boutons +/- spécifiques à la multiplication
-  const incA = () => setA((v) => clamp(v + 1, 1, 12));
-  const decA = () => setA((v) => clamp(v - 1, 1, 12));
-  const incB = () => setB((v) => clamp(v + 1, 1, 16));
-  const decB = () => setB((v) => clamp(v - 1, 1, 16));
-
   return (
     <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
-      {/* Bouton Retour (gabarit) */}
+      {/* Bouton Retour */}
       <Link
         href="/menu/apprendre"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-10"
@@ -337,7 +385,10 @@ export default function OperationsLearning() {
               onClick={() => {
                 setSelected(t);
                 setFeedback("");
-                setAnswer("");
+                // reset réponses quand on change d'opération
+                setAns(0);
+                setAnsQ(0);
+                setAnsR(0);
               }}
             >
               {t.name}
@@ -345,24 +396,22 @@ export default function OperationsLearning() {
           ))}
         </div>
 
-        {/* Contrôles A/B — avec boutons +/- quand Multiplication */}
+        {/* Contrôles A/B (avec +/- pour Multiplication) */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <label className="flex flex-col text-sm">
             <span className="mb-1 font-medium">
               {selected?.name === "Multiplication" ? "A — boîtes" : "A"}
             </span>
             <div className="flex items-center gap-2">
-              {selected?.name === "Multiplication" && (
-                <button onClick={decA} className="px-2 py-1 border rounded">−</button>
-              )}
-              <input
-                type="number"
-                value={a}
-                onChange={(e) => setA(Number(e.target.value))}
-                className="border rounded px-2 py-1 w-full"
-              />
-              {selected?.name === "Multiplication" && (
-                <button onClick={incA} className="px-2 py-1 border rounded">+</button>
+              {selected?.name === "Multiplication" ? (
+                <NumberStepper value={a} setValue={(v) => setA(clamp(v, 1, 12))} min={1} max={12} />
+              ) : (
+                <input
+                  type="number"
+                  value={a}
+                  onChange={(e) => setA(Number(e.target.value))}
+                  className="border rounded px-2 py-1 w-full"
+                />
               )}
             </div>
           </label>
@@ -372,17 +421,15 @@ export default function OperationsLearning() {
               {selected?.name === "Multiplication" ? "B — bonbons/boîte" : "B"}
             </span>
             <div className="flex items-center gap-2">
-              {selected?.name === "Multiplication" && (
-                <button onClick={decB} className="px-2 py-1 border rounded">−</button>
-              )}
-              <input
-                type="number"
-                value={b}
-                onChange={(e) => setB(Number(e.target.value))}
-                className="border rounded px-2 py-1 w-full"
-              />
-              {selected?.name === "Multiplication" && (
-                <button onClick={incB} className="px-2 py-1 border rounded">+</button>
+              {selected?.name === "Multiplication" ? (
+                <NumberStepper value={b} setValue={(v) => setB(clamp(v, 1, 16))} min={1} max={16} />
+              ) : (
+                <input
+                  type="number"
+                  value={b}
+                  onChange={(e) => setB(Number(e.target.value))}
+                  className="border rounded px-2 py-1 w-full"
+                />
               )}
             </div>
           </label>
@@ -405,7 +452,6 @@ export default function OperationsLearning() {
               onClick={() => {
                 setMode("Pratique");
                 setFeedback("");
-                setAnswer("");
               }}
               className={`px-3 py-2 rounded ${
                 mode === "Pratique" ? "bg-purple-600 text-white" : "bg-purple-50 text-purple-700"
@@ -454,37 +500,39 @@ export default function OperationsLearning() {
                   {typeof result === "number" ? result : result}
                 </span>
               </p>
-              {selected.name === "Division" && b !== 0 && typeof result === "string" && (
-                <p className="text-sm text-gray-600 mt-1">
-                  Pour la division entière, tu peux écrire le résultat sous la forme <code>q reste r</code>.
-                </p>
-              )}
             </div>
 
             {/* Pratique */}
             {mode === "Pratique" && (
               <div className="mt-6 border-t pt-6">
                 <h3 className="text-xl font-semibold mb-3">Pratique</h3>
-                <p className="mb-3">
-                  Réponds à l’opération. Pour la division, réponds soit le quotient si le reste est 0, soit{" "}
-                  <code>q reste r</code>.
-                </p>
-                <div className="flex flex-wrap gap-3 items-center">
+
+                {/* (on a retiré la ligne d’instructions ici, comme demandé) */}
+
+                <div className="flex flex-wrap gap-4 items-center">
+                  {/* Label opération */}
                   <span className="text-lg font-medium">
                     {selected.name === "Addition" && `${a} + ${b} = `}
                     {selected.name === "Soustraction" && `${a} − ${b} = `}
                     {selected.name === "Multiplication" && `${a} × ${b} = `}
                     {selected.name === "Division" && `${a} ÷ ${b} = `}
                   </span>
-                  <input
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder={selected.name === "Division" ? "ex: 4 reste 2" : "ex: 12"}
-                    className="border rounded px-3 py-2 w-56"
-                  />
+
+                  {/* Réponse via steppers */}
+                  {selected.name !== "Division" ? (
+                    <NumberStepper value={ans} setValue={setAns} />
+                  ) : (
+                    <div className="flex items-center gap-4">
+                      <NumberStepper label="q" value={ansQ} setValue={setAnsQ} min={0} />
+                      <span className="text-gray-500">reste</span>
+                      <NumberStepper label="r" value={ansR} setValue={setAnsR} min={0} />
+                    </div>
+                  )}
+
                   <button onClick={checkAnswer} className="bg-blue-600 text-white px-4 py-2 rounded">
                     Vérifier
                   </button>
+
                   {feedback && (
                     <span
                       className={
