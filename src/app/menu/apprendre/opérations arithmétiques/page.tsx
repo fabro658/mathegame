@@ -4,12 +4,13 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 type OpName = "Addition" | "Soustraction" | "Multiplication" | "Division";
+type DivExplainMode = "reste" | "fraction"; // priorité: "reste"
 
 interface Topic {
   name: OpName;
   description: string;
-  formula: string;
-  example: string;
+  formula?: string;
+  example?: string;
 }
 
 const TOPICS: Topic[] = [
@@ -37,13 +38,12 @@ const TOPICS: Topic[] = [
   {
     name: "Division",
     description:
-      "Diviser, c’est partager en groupes égaux ou mesurer combien de fois B tient dans A.",
-    formula: "A ÷ B",
-    example: "Ex. A = 12, B = 3 → 12 ÷ 3 = 4",
+      "Diviser, c’est partager entre amis en parts égales ou mesurer combien de fois B tient dans A.",
+    // Pas de formule/exemple ici : on privilégie une mise en page adaptée aux enfants
   },
 ];
 
-// -------- Utils --------
+// ---------- Utils ----------
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
@@ -53,8 +53,32 @@ function randInt(min: number, max: number) {
 function normalizeNumber(s: string) {
   return s.replace(",", ".").trim();
 }
+function gcd(a: number, b: number): number {
+  a = Math.abs(a); b = Math.abs(b);
+  while (b) [a, b] = [b, a % b];
+  return a || 1;
+}
+function toMixedFraction(a: number, b: number) {
+  if (b === 0) return { q: 0, r: 0, den: 0, text: "Indéfini" };
+  const q = Math.floor(a / b);
+  const r0 = a % b;
+  if (r0 === 0) return { q, r: 0, den: 1, text: `${q}` };
+  const d = gcd(r0, b);
+  const r = r0 / d;
+  const den = b / d;
+  const prettyMap: Record<string, string> = {
+    "1/2": "½",
+    "1/3": "⅓",
+    "2/3": "⅔",
+    "1/4": "¼",
+    "3/4": "¾",
+  };
+  const fracStr = `${r}/${den}`;
+  const pretty = prettyMap[fracStr] ? `${q} ${prettyMap[fracStr]}` : `${q} + ${r}/${den}`;
+  return { q, r, den, text: pretty };
+}
 
-// -------- Calcul + étapes --------
+// ---------- Calcul + étapes ----------
 function compute(op: OpName, a: number, b: number) {
   let result: number | string = 0;
   const steps: string[] = [];
@@ -76,25 +100,243 @@ function compute(op: OpName, a: number, b: number) {
       steps.push("On ne peut pas diviser par 0.");
       result = "Indéfini (division par 0)";
     } else {
-      steps.push(`On partage ${a} en ${b} groupes égaux.`);
       const q = Math.floor(a / b);
       const r = a % b;
+      steps.push(`On partage ${a} billes en ${b} boîtes (amis).`);
       steps.push(`${a} ÷ ${b} = ${q} reste ${r}.`);
       result = r === 0 ? q : `${q} reste ${r}`;
     }
   }
-
   return { result, steps };
 }
 
-// -------- SVGs --------
-function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
-  if (op === "Addition") return <NumberLine a={a} b={b} mode="add" />;
-  if (op === "Soustraction") return <NumberLine a={a} b={b} mode="sub" />;
-  if (op === "Multiplication") return <DotArray rows={clamp(a, 1, 12)} cols={clamp(b, 1, 12)} />;
-  return <EqualGroups total={a} groups={b} />;
+// ---------- SVG : commun ----------
+function Dot({ cx, cy, r = 5, fill = "#2563EB" }: { cx: number; cy: number; r?: number; fill?: string }) {
+  return <circle cx={cx} cy={cy} r={r} fill={fill} />;
 }
 
+// ---------- Division : boîtes d’amis (mode “reste”) ----------
+function FriendsBoxesRemainder({ total, friends }: { total: number; friends: number }) {
+  const f = Math.max(1, friends);
+  const q = Math.floor(friends === 0 ? 0 : total / f);
+  const r = friends === 0 ? total : total % f;
+
+  const cols = Math.min(4, f);
+  const rows = Math.ceil(f / cols);
+  const boxW = 140;
+  const boxH = 120;
+  const gap = 16;
+  const W = cols * boxW + (cols + 1) * gap;
+  const H = rows * boxH + (rows + 2) * gap + (r > 0 ? boxH : 0);
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-3xl">
+      {Array.from({ length: f }).map((_, i) => {
+        const row = Math.floor(i / cols);
+        const col = i % cols;
+        const x = gap + col * (boxW + gap);
+        const y = gap + row * (boxH + gap);
+
+        // Chaque ami reçoit exactement q billes. Le reste va dans une boîte spéciale en bas.
+        const dots = q;
+        const perRow = Math.ceil(Math.sqrt(Math.max(dots, 1)));
+        const cell = 16;
+        const pad = 16;
+
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width={boxW} height={boxH} rx={14} ry={14} fill="#FFFFFF" stroke="#D1D5DB" />
+            {/* Titre */}
+            <text x={x + 10} y={y + 20} fontSize={12} fill="#111827" fontWeight={600}>
+              Ami {i + 1}
+            </text>
+            {/* Billes */}
+            {Array.from({ length: dots }).map((__, k) => {
+              const rr = Math.floor(k / perRow);
+              const cc = k % perRow;
+              const cx = x + pad + cc * cell;
+              const cy = y + 36 + rr * cell;
+              return <Dot key={k} cx={cx} cy={cy} r={5} />;
+            })}
+            {/* Compteur */}
+            <text x={x + boxW - 10} y={y + boxH - 10} fontSize={12} fill="#374151" textAnchor="end">
+              {dots} bille{dots > 1 ? "s" : ""}
+            </text>
+          </g>
+        );
+      })}
+
+      {/* Boîte Reste (si r > 0) */}
+      {r > 0 && (
+        <g>
+          <rect
+            x={gap}
+            y={rows * (boxH + gap) + gap}
+            width={W - 2 * gap}
+            height={boxH}
+            rx={14}
+            ry={14}
+            fill="#FFF7ED"
+            stroke="#FDBA74"
+          />
+          <text x={gap + 12} y={rows * (boxH + gap) + gap + 24} fontSize={12} fill="#9A3412" fontWeight={700}>
+            Reste
+          </text>
+          {/* Billes du reste */}
+          {Array.from({ length: r }).map((__, k) => {
+            const perRow = 16;
+            const cell = 16;
+            const pad = 16;
+            const x0 = gap + 10;
+            const y0 = rows * (boxH + gap) + gap + 36;
+            const rr = Math.floor(k / perRow);
+            const cc = k % perRow;
+            const cx = x0 + cc * cell;
+            const cy = y0 + rr * cell;
+            return <Dot key={k} cx={cx} cy={cy} r={5} fill="#F97316" />;
+          })}
+          <text
+            x={W - gap - 12}
+            y={rows * (boxH + gap) + gap + boxH - 10}
+            fontSize={12}
+            fill="#9A3412"
+            textAnchor="end"
+          >
+            {r} bille{r > 1 ? "s" : ""} à partager
+          </text>
+        </g>
+      )}
+    </svg>
+  );
+}
+
+// ---------- Division : vue fractionnaire ----------
+function FriendsFraction({ total, friends }: { total: number; friends: number }) {
+  const f = Math.max(1, friends);
+  const { q, r, den } = toMixedFraction(total, f);
+
+  // On montre q billes pleines par ami + une barre fractionnaire expliquant r/den pour chacun.
+  const cols = Math.min(4, f);
+  const rows = Math.ceil(f / cols);
+  const boxW = 160;
+  const boxH = 140;
+  const gap = 16;
+  const W = cols * boxW + (cols + 1) * gap;
+  const H = rows * boxH + (rows + 1) * gap + 90; // espace barre fraction
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-3xl">
+      {Array.from({ length: f }).map((_, i) => {
+        const row = Math.floor(i / cols);
+        const col = i % cols;
+        const x = gap + col * (boxW + gap);
+        const y = gap + row * (boxH + gap);
+
+        // q billes pleines + un petit ruban fractionnaire r/den
+        const dots = q;
+        const perRow = Math.ceil(Math.sqrt(Math.max(dots, 1)));
+        const cell = 16;
+        const pad = 16;
+
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width={boxW} height={boxH} rx={14} ry={14} fill="#FFFFFF" stroke="#D1D5DB" />
+            <text x={x + 10} y={y + 20} fontSize={12} fill="#111827" fontWeight={600}>
+              Ami {i + 1}
+            </text>
+            {/* Billes entières */}
+            {Array.from({ length: dots }).map((__, k) => {
+              const rr2 = Math.floor(k / perRow);
+              const cc2 = k % perRow;
+              const cx = x + pad + cc2 * cell;
+              const cy = y + 36 + rr2 * cell;
+              return <Dot key={k} cx={cx} cy={cy} r={5} />;
+            })}
+            {/* Ruban fractionnaire r/den */}
+            {r > 0 && (
+              <>
+                <rect
+                  x={x + pad}
+                  y={y + boxH - 28}
+                  width={boxW - pad * 2}
+                  height={10}
+                  rx={5}
+                  fill="#E5E7EB"
+                />
+                {/* on remplit r/den de la barre */}
+                <rect
+                  x={x + pad}
+                  y={y + boxH - 28}
+                  width={(boxW - pad * 2) * (r / den)}
+                  height={10}
+                  rx={5}
+                  fill="#60A5FA"
+                />
+                <text
+                  x={x + boxW - pad}
+                  y={y + boxH - 34}
+                  fontSize={10}
+                  fill="#374151"
+                  textAnchor="end"
+                >
+                  + {r}/{den} de bille
+                </text>
+              </>
+            )}
+          </g>
+        );
+      })}
+
+      {/* Légende fraction globale */}
+      <g>
+        <text x={W / 2} y={H - 60} textAnchor="middle" fontSize={14} fill="#111827" fontWeight={600}>
+          Partage équitable des restes : chaque ami reçoit {r === 0 ? "une part entière" : `+ ${r}/${den}`} en plus.
+        </text>
+        <FractionBar x={W / 2 - 160} y={H - 45} width={320} height={16} r={r} den={den} />
+        <text x={W / 2} y={H - 16} textAnchor="middle" fontSize={12} fill="#374151">
+          (Représentation du morceau {r}/{den})
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+function FractionBar({
+  x,
+  y,
+  width,
+  height,
+  r,
+  den,
+}: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  r: number;
+  den: number;
+}) {
+  if (den === 0) return null;
+  const segW = width / den;
+  return (
+    <g>
+      <rect x={x} y={y} width={width} height={height} rx={6} fill="#F3F4F6" stroke="#D1D5DB" />
+      {Array.from({ length: den }).map((_, i) => (
+        <rect
+          key={i}
+          x={x + i * segW + 2}
+          y={y + 2}
+          width={segW - 4}
+          height={height - 4}
+          fill={i < r ? "#60A5FA" : "#FFFFFF"}
+          stroke="#E5E7EB"
+        />
+      ))}
+    </g>
+  );
+}
+
+// ---------- Autres SVG (addition, soustraction, multiplication) ----------
 function NumberLine({
   a,
   b,
@@ -105,7 +347,11 @@ function NumberLine({
   mode: "add" | "sub";
 }) {
   const start = 0;
-  const end = Math.max(a, mode === "add" ? a + Math.max(0, b) : a, mode === "sub" ? Math.max(0, a - Math.max(0, b)) : a);
+  const end = Math.max(
+    a,
+    mode === "add" ? a + Math.max(0, b) : a,
+    mode === "sub" ? Math.max(0, a - Math.max(0, b)) : a
+  );
   const W = 640;
   const H = 160;
   const L = 40;
@@ -179,59 +425,15 @@ function DotArray({ rows, cols }: { rows: number; cols: number }) {
   );
 }
 
-function EqualGroups({ total, groups }: { total: number; groups: number }) {
-  const g = Math.max(1, groups);
-  const q = Math.floor(groups === 0 ? 0 : total / g);
-  const r = groups === 0 ? total : total % g;
-
-  const cols = Math.min(4, g);
-  const rows = Math.ceil(g / cols);
-  const boxW = 120;
-  const boxH = 100;
-  const gap = 16;
-  const W = cols * boxW + (cols + 1) * gap;
-  const H = rows * boxH + (rows + 1) * gap;
-
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-2xl border border-gray-200 rounded">
-      {Array.from({ length: g }).map((_, i) => {
-        const row = Math.floor(i / cols);
-        const col = i % cols;
-        const x = gap + col * (boxW + gap);
-        const y = gap + row * (boxH + gap);
-        const dots = q + (i < r ? 1 : 0);
-        const perRow = Math.ceil(Math.sqrt(Math.max(dots, 1)));
-        const cell = 14;
-        const pad = 16;
-
-        return (
-          <g key={i}>
-            <rect x={x} y={y} width={boxW} height={boxH} rx={10} ry={10} fill="#F9FAFB" stroke="#D1D5DB" />
-            {Array.from({ length: dots }).map((__, k) => {
-              const rr = Math.floor(k / perRow);
-              const cc = k % perRow;
-              const cx = x + pad + cc * cell;
-              const cy = y + pad + rr * cell;
-              return <circle key={k} cx={cx} cy={cy} r={4} fill="#2563EB" />;
-            })}
-            <text x={x + boxW / 2} y={y + boxH - 8} fontSize={12} textAnchor="middle" fill="#111827">
-              Groupe {i + 1}: {dots}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-
-// -------- Page avec gabarit comme ton exemple (scroll OK) --------
+// ---------- Page ----------
 export default function OperationsLearning() {
   const [selected, setSelected] = useState<Topic | null>(TOPICS[0]);
   const [a, setA] = useState(8);
   const [b, setB] = useState(3);
   const [mode, setMode] = useState<"Apprendre" | "Pratique">("Apprendre");
-  const opName = selected?.name ?? "Addition";
+  const [divExplain, setDivExplain] = useState<DivExplainMode>("reste"); // priorité “reste”
 
+  const opName = selected?.name ?? "Addition";
   const { result, steps } = useMemo(() => compute(opName, a, b), [opName, a, b]);
 
   const [answer, setAnswer] = useState<string>("");
@@ -259,12 +461,17 @@ export default function OperationsLearning() {
       const q = Math.floor(b === 0 ? 0 : a / b);
       const r = b === 0 ? a : a % b;
       const normalized = answer.trim().toLowerCase();
-      const ok1 = r === 0 && normalized === String(q);
-      const ok2 =
+      const mf = toMixedFraction(a, b);
+      const okRemainder =
+        (r === 0 && normalized === String(q)) ||
         normalized === `${q} reste ${r}` ||
         normalized === `${q} r ${r}` ||
         normalized === `${q} rem ${r}`;
-      setFeedback(ok1 || ok2 ? "Correct." : "À revoir.");
+      const okFraction =
+        normalized === mf.text.replace(" + ", " ").replace(" ", " ").toLowerCase() ||
+        normalized === `${q} + ${mf.r}/${mf.den}`.toLowerCase() ||
+        normalized === `${q} ${mf.r}/${mf.den}`.toLowerCase();
+      setFeedback(okRemainder || okFraction ? "Correct." : "À revoir.");
     } else {
       const expected =
         selected.name === "Addition" ? a + b : selected.name === "Soustraction" ? a - b : a * b;
@@ -274,7 +481,7 @@ export default function OperationsLearning() {
 
   return (
     <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
-      {/* Bouton Retour (gabarit) */}
+      {/* Bouton Retour */}
       <Link
         href="/menu/apprendre"
         className="absolute top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold z-10"
@@ -282,7 +489,7 @@ export default function OperationsLearning() {
         Retour
       </Link>
 
-      {/* Colonne gauche (menu) */}
+      {/* Colonne gauche */}
       <aside className="w-full md:w-1/4 bg-white p-6 shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
         <p className="text-lg mb-6">
@@ -359,87 +566,208 @@ export default function OperationsLearning() {
         </div>
       </aside>
 
-      {/* Colonne droite (contenu) */}
+      {/* Colonne droite */}
       <section className="w-full md:w-3/4 p-6 md:p-10 flex flex-col items-center overflow-y-auto">
         {selected && (
           <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
             <h2 className="text-3xl font-bold mb-2">{selected.name}</h2>
             <p className="text-gray-700 mb-4">{selected.description}</p>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-gray-50 rounded p-4">
-                <h3 className="text-xl font-semibold mb-2">Formule</h3>
-                <p className="text-lg">{selected.formula}</p>
-              </div>
-              <div className="bg-gray-50 rounded p-4">
-                <h3 className="text-xl font-semibold mb-2">Exemple</h3>
-                <p className="text-lg">{selected.example}</p>
-              </div>
-            </div>
+            {/* --- Division : Mise en page spéciale enfants --- */}
+            {selected.name === "Division" ? (
+              <>
+                {/* Étapes EN HAUT */}
+                <div className="bg-gray-50 rounded p-4 mb-6">
+                  <h3 className="text-xl font-semibold mb-2">Étapes</h3>
+                  <ol className="list-decimal space-y-1 pl-6">
+                    {/* On réécrit les étapes pour la division avec un wording enfant */}
+                    {b === 0 ? (
+                      <>
+                        <li>On ne peut pas partager en 0 amis.</li>
+                        <li>La division par 0 est impossible.</li>
+                      </>
+                    ) : divExplain === "reste" ? (
+                      <>
+                        <li>On crée {b} boîtes, une pour chaque ami.</li>
+                        <li>On met la même quantité de billes dans chaque boîte.</li>
+                        <li>Les billes qui restent vont dans la boîte “Reste”.</li>
+                      </>
+                    ) : (
+                      <>
+                        <li>On partage d’abord des billes entières également.</li>
+                        <li>On coupe les billes restantes en {b} parts égales.</li>
+                        <li>Chaque ami reçoit la même petite part en plus.</li>
+                      </>
+                    )}
+                  </ol>
 
-            {/* SVG */}
-            <div className="mb-6">
-              <OperationViz op={selected.name} a={a} b={b} />
-            </div>
+                  {/* Résultat selon le mode d’explication */}
+                  <div className="mt-3">
+                    {b === 0 ? (
+                      <p className="text-red-700 font-semibold">Résultat : Indéfini (division par 0)</p>
+                    ) : divExplain === "reste" ? (
+                      (() => {
+                        const q = Math.floor(a / b);
+                        const r = a % b;
+                        return (
+                          <p>
+                            Résultat : <span className="font-bold">{q} reste {r}</span>
+                          </p>
+                        );
+                      })()
+                    ) : (
+                      (() => {
+                        const mf = toMixedFraction(a, b);
+                        return (
+                          <p>
+                            Résultat :{" "}
+                            <span className="font-bold">{mf.text}</span>{" "}
+                            <span className="text-gray-500">(soit {a}/{b})</span>
+                          </p>
+                        );
+                      })()
+                    )}
+                  </div>
 
-            {/* Étapes */}
-            <div className="bg-gray-50 rounded p-4">
-              <h3 className="text-xl font-semibold mb-2">Étapes</h3>
-              <ol className="list-decimal space-y-1 pl-6">
-                {steps.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ol>
-              <p className="mt-3">
-                Résultat :{" "}
-                <span className="font-bold">
-                  {typeof result === "number" ? result : result}
-                </span>
-              </p>
-              {selected.name === "Division" && b !== 0 && typeof result === "string" && (
-                <p className="text-sm text-gray-600 mt-1">
-                  Pour la division entière, tu peux écrire le résultat sous la forme <code>q reste r</code>.
-                </p>
-              )}
-            </div>
-
-            {/* Pratique */}
-            {mode === "Pratique" && (
-              <div className="mt-6 border-t pt-6">
-                <h3 className="text-xl font-semibold mb-3">Pratique</h3>
-                <p className="mb-3">
-                  Réponds à l’opération. Pour la division, réponds soit le quotient si le reste est 0, soit{" "}
-                  <code>q reste r</code>.
-                </p>
-                <div className="flex flex-wrap gap-3 items-center">
-                  <span className="text-lg font-medium">
-                    {selected.name === "Addition" && `${a} + ${b} = `}
-                    {selected.name === "Soustraction" && `${a} − ${b} = `}
-                    {selected.name === "Multiplication" && `${a} × ${b} = `}
-                    {selected.name === "Division" && `${a} ÷ ${b} = `}
-                  </span>
-                  <input
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder={selected.name === "Division" ? "ex: 4 reste 2" : "ex: 12"}
-                    className="border rounded px-3 py-2 w-56"
-                  />
-                  <button onClick={checkAnswer} className="bg-blue-600 text-white px-4 py-2 rounded">
-                    Vérifier
-                  </button>
-                  {feedback && (
-                    <span
-                      className={
-                        feedback === "Correct."
-                          ? "text-emerald-700 font-semibold"
-                          : "text-red-700 font-semibold"
-                      }
+                  {/* Choix de l’explication */}
+                  <div className="mt-4 flex gap-2">
+                    <button
+                      className={`px-3 py-2 rounded ${
+                        divExplain === "reste" ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700"
+                      }`}
+                      onClick={() => setDivExplain("reste")}
                     >
-                      {feedback}
-                    </span>
+                      Partage avec reste (priorité)
+                    </button>
+                    <button
+                      className={`px-3 py-2 rounded ${
+                        divExplain === "fraction" ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700"
+                      }`}
+                      onClick={() => setDivExplain("fraction")}
+                    >
+                      Nombre fractionnaire
+                    </button>
+                  </div>
+                </div>
+
+                {/* VISUELS */}
+                <div className="mb-2">
+                  {b > 0 &&
+                    (divExplain === "reste" ? (
+                      <FriendsBoxesRemainder total={a} friends={b} />
+                    ) : (
+                      <FriendsFraction total={a} friends={b} />
+                    ))}
+                </div>
+
+                {/* Mode pratique pour Division */}
+                {mode === "Pratique" && (
+                  <div className="mt-6 border-t pt-6">
+                    <h3 className="text-xl font-semibold mb-3">Pratique</h3>
+                    <p className="mb-3">
+                      Réponds avec <code>q reste r</code>, ou en nombre mixte (ex. <code>2 ⅔</code>).
+                    </p>
+                    <div className="flex flex-wrap gap-3 items-center">
+                      <span className="text-lg font-medium">
+                        {a} ÷ {b} ={" "}
+                      </span>
+                      <input
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        placeholder={"ex: 2 reste 1  •  ou  2 1/3"}
+                        className="border rounded px-3 py-2 w-64"
+                      />
+                      <button onClick={checkAnswer} className="bg-blue-600 text-white px-4 py-2 rounded">
+                        Vérifier
+                      </button>
+                      {feedback && (
+                        <span
+                          className={
+                            feedback === "Correct."
+                              ? "text-emerald-700 font-semibold"
+                              : "text-red-700 font-semibold"
+                          }
+                        >
+                          {feedback}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              // --- Autres opérations (structure précédente) ---
+              <>
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-gray-50 rounded p-4">
+                    <h3 className="text-xl font-semibold mb-2">Formule</h3>
+                    <p className="text-lg">{selected.formula}</p>
+                  </div>
+                  <div className="bg-gray-50 rounded p-4">
+                    <h3 className="text-xl font-semibold mb-2">Exemple</h3>
+                    <p className="text-lg">{selected.example}</p>
+                  </div>
+                </div>
+
+                {/* Viz */}
+                <div className="mb-6">
+                  {selected.name === "Addition" && <NumberLine a={a} b={b} mode="add" />}
+                  {selected.name === "Soustraction" && <NumberLine a={a} b={b} mode="sub" />}
+                  {selected.name === "Multiplication" && (
+                    <DotArray rows={clamp(a, 1, 12)} cols={clamp(b, 1, 12)} />
                   )}
                 </div>
-              </div>
+
+                {/* Étapes calcul simples */}
+                <div className="bg-gray-50 rounded p-4">
+                  <h3 className="text-xl font-semibold mb-2">Étapes</h3>
+                  <ol className="list-decimal space-y-1 pl-6">
+                    {steps.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ol>
+                  <p className="mt-3">
+                    Résultat :{" "}
+                    <span className="font-bold">
+                      {typeof result === "number" ? result : result}
+                    </span>
+                  </p>
+                </div>
+
+                {/* Pratique (autres opérations) */}
+                {mode === "Pratique" && (
+                  <div className="mt-6 border-t pt-6">
+                    <h3 className="text-xl font-semibold mb-3">Pratique</h3>
+                    <div className="flex flex-wrap gap-3 items-center">
+                      <span className="text-lg font-medium">
+                        {selected.name === "Addition" && `${a} + ${b} = `}
+                        {selected.name === "Soustraction" && `${a} − ${b} = `}
+                        {selected.name === "Multiplication" && `${a} × ${b} = `}
+                      </span>
+                      <input
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        placeholder={"ex: 12"}
+                        className="border rounded px-3 py-2 w-56"
+                      />
+                      <button onClick={checkAnswer} className="bg-blue-600 text-white px-4 py-2 rounded">
+                        Vérifier
+                      </button>
+                      {feedback && (
+                        <span
+                          className={
+                            feedback === "Correct."
+                              ? "text-emerald-700 font-semibold"
+                              : "text-red-700 font-semibold"
+                          }
+                        >
+                          {feedback}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
