@@ -38,6 +38,10 @@ const TOPICS: Topic[] = [
 
 const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques"; // ajuste si besoin
 
+/* Drag types unifiés */
+type DragSrc = "A" | "JAR" | "RET";
+type DragPayload = { src: DragSrc; id: number };
+
 /* =========================================================
    Utils
    ========================================================= */
@@ -130,7 +134,7 @@ function NumberStepper({
    Visuels — Pot + Boîtes
    ========================================================= */
 
-// Zone interne du pot (où on dessine les bonbons)
+// Zone interne du pot (où on dessine les bonbons) — pour centrer la grille
 const JAR_INNER = { left: 58, top: 100, width: 200, height: 220 };
 
 // Pot agrandi
@@ -169,18 +173,15 @@ function makeCandies(count: number, seed = 0): CandyObj[] {
   }));
 }
 
-// ⚠️ prop renommée en handleDragStart
+// ⚠️ prop renommée en handleDragStart (types unifiés)
 const Candy = ({
   item,
   from,
   handleDragStart,
 }: {
   item: CandyObj;
-  from: "A" | "JAR" | "RET";
-  handleDragStart: (
-    e: React.DragEvent,
-    payload: { src: "A" | "JAR" | "RET"; id: number }
-  ) => void;
+  from: DragSrc;
+  handleDragStart: (e: React.DragEvent, payload: DragPayload) => void;
 }) => (
   <div
     draggable
@@ -296,10 +297,7 @@ function AdditionJarOneTray({ a }: { a: number }) {
     setJar([]);
   }, [a]);
 
-  function handleDragStart(
-    e: React.DragEvent,
-    payload: { src: "A" | "JAR"; id: number }
-  ) {
+  function handleDragStart(e: React.DragEvent, payload: DragPayload) {
     e.dataTransfer.setData("application/json", JSON.stringify(payload));
   }
   function allowDrop(e: React.DragEvent) {
@@ -309,10 +307,10 @@ function AdditionJarOneTray({ a }: { a: number }) {
   function dropToJar(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
-        src: "A" | "JAR";
-        id: number;
-      };
+      const { src, id } = JSON.parse(
+        e.dataTransfer.getData("application/json")
+      ) as DragPayload;
+
       if (src === "A") {
         const idx = trayA.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -329,10 +327,10 @@ function AdditionJarOneTray({ a }: { a: number }) {
   function dropToTrayA(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
-        src: "A" | "JAR";
-        id: number;
-      };
+      const { src, id } = JSON.parse(
+        e.dataTransfer.getData("application/json")
+      ) as DragPayload;
+
       if (src === "JAR") {
         const idx = jar.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -467,10 +465,7 @@ function SubtractionJar({ a }: { a: number }) {
     setRet([]);
   }, [a]);
 
-  function handleDragStart(
-    e: React.DragEvent,
-    payload: { src: "JAR" | "RET"; id: number }
-  ) {
+  function handleDragStart(e: React.DragEvent, payload: DragPayload) {
     e.dataTransfer.setData("application/json", JSON.stringify(payload));
   }
   function allowDrop(e: React.DragEvent) {
@@ -480,10 +475,10 @@ function SubtractionJar({ a }: { a: number }) {
   function dropToRet(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
-        src: "JAR" | "RET";
-        id: number;
-      };
+      const { src, id } = JSON.parse(
+        e.dataTransfer.getData("application/json")
+      ) as DragPayload;
+
       if (src === "JAR") {
         const idx = jar.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -501,10 +496,10 @@ function SubtractionJar({ a }: { a: number }) {
   function dropToJar(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as {
-        src: "JAR" | "RET";
-        id: number;
-      };
+      const { src, id } = JSON.parse(
+        e.dataTransfer.getData("application/json")
+      ) as DragPayload;
+
       if (src === "RET") {
         const idx = ret.findIndex((c) => c.id === id);
         if (idx >= 0) {
