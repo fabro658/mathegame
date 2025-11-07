@@ -141,7 +141,7 @@ function FriendsBoxesRemainder({ total, friends }: { total: number; friends: num
         const dots = q;
         const perRow = Math.ceil(Math.sqrt(Math.max(dots, 1)));
         const cell = 16;
-        const pad = 16;
+        const padding = 16; 
 
         return (
           <g key={i}>
@@ -154,7 +154,7 @@ function FriendsBoxesRemainder({ total, friends }: { total: number; friends: num
             {Array.from({ length: dots }).map((__, k) => {
               const rr = Math.floor(k / perRow);
               const cc = k % perRow;
-              const cx = x + pad + cc * cell;
+              const cx = x + padding + cc * cell;
               const cy = y + 36 + rr * cell;
               return <Dot key={k} cx={cx} cy={cy} r={5} />;
             })}
@@ -186,7 +186,7 @@ function FriendsBoxesRemainder({ total, friends }: { total: number; friends: num
           {Array.from({ length: r }).map((__, k) => {
             const perRow = 16;
             const cell = 16;
-            const pad = 16;
+            const padding = 16;
             const x0 = gap + 10;
             const y0 = rows * (boxH + gap) + gap + 36;
             const rr = Math.floor(k / perRow);
@@ -209,6 +209,7 @@ function FriendsBoxesRemainder({ total, friends }: { total: number; friends: num
     </svg>
   );
 }
+
 
 // ---------- Division : vue fractionnaire ----------
 function FriendsFraction({ total, friends }: { total: number; friends: number }) {
