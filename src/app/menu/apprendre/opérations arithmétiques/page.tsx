@@ -3,43 +3,35 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 
+const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques"; // <-- change si besoin
+
 type OpName = "Addition" | "Soustraction" | "Multiplication" | "Division";
 
 interface Topic {
   name: OpName;
   description: string;
-  formula: string;
-  example: string;
 }
 
 const TOPICS: Topic[] = [
   {
     name: "Addition",
     description:
-      "Additionner, c’est réunir des quantités. Sur une ligne de nombres, on avance vers la droite.",
-    formula: "A + B",
-    example: "Ex. A = 3, B = 5 → 3 + 5 = 8",
+      "Additionner, c’est RASSEMBLER : on met des billes ensemble pour en avoir plus.",
   },
   {
     name: "Soustraction",
     description:
-      "Soustraire, c’est enlever ou comparer. Sur une ligne de nombres, on recule vers la gauche.",
-    formula: "A − B",
-    example: "Ex. A = 8, B = 5 → 8 − 5 = 3",
+      "Soustraire, c’est ENLEVER : on retire des billes et il en reste moins.",
   },
   {
     name: "Multiplication",
     description:
-      "Multiplier, c’est acheter des boîtes de bonbons : A boîtes et B bonbons par boîte, donc A × B bonbons au total.",
-    formula: "A × B",
-    example: "Ex. A = 3, B = 4 → 3 × 4 = 12 bonbons",
+      "Multiplier, c’est AVOIR PLUSIEURS BOÎTES identiques de bonbons.",
   },
   {
     name: "Division",
     description:
-      "Diviser, c’est partager en groupes égaux ou mesurer combien de fois B tient dans A.",
-    formula: "A ÷ B",
-    example: "Ex. A = 12, B = 3 → 12 ÷ 3 = 4",
+      "Diviser, c’est PARTAGER en boîtes (ou groupes) égaux.",
   },
 ];
 
@@ -47,51 +39,58 @@ const TOPICS: Topic[] = [
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
-
 function boundsFor(op: OpName) {
   if (op === "Multiplication") return { minA: 1, maxA: 12, minB: 1, maxB: 16 };
   if (op === "Division") return { minA: 1, maxA: 60, minB: 1, maxB: 12 }; // B≥1
   return { minA: 0, maxA: 30, minB: 0, maxB: 30 };
 }
-
 function randInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// ---------- Calcul + étapes ----------
+// ---------- Calcul + étapes (langage enfant) ----------
 function compute(op: OpName, a: number, b: number) {
   let result: number | string = 0;
   const steps: string[] = [];
 
   if (op === "Addition") {
-    steps.push(`On part de ${a} et on ajoute ${b}.`);
+    steps.push(`On a ${a} bille${a > 1 ? "s" : ""}.`);
+    steps.push(`On ajoute ${b} bille${b > 1 ? "s" : ""}.`);
     result = a + b;
-    steps.push(`${a} + ${b} = ${result}.`);
+    steps.push(`Ça fait ${a} + ${b} = ${result} billes.`);
   } else if (op === "Soustraction") {
-    steps.push(`On part de ${a} et on enlève ${b}.`);
+    steps.push(`On a ${a} bille${a > 1 ? "s" : ""}.`);
+    steps.push(`On enlève ${b} bille${b > 1 ? "s" : ""}.`);
     result = a - b;
-    steps.push(`${a} − ${b} = ${result}.`);
+    steps.push(`Il reste ${a} − ${b} = ${result} billes.`);
   } else if (op === "Multiplication") {
-    steps.push(`On a ${a} boîte${a > 1 ? "s" : ""} de ${b} bonbon${b > 1 ? "s" : ""} chacune.`);
+    steps.push(`On a ${a} boîte${a > 1 ? "s" : ""}.`);
+    steps.push(`Dans chaque boîte : ${b} bonbon${b > 1 ? "s" : ""}.`);
     result = a * b;
-    steps.push(`Total = ${a} × ${b} = ${result} bonbon${Number(result) > 1 ? "s" : ""}.`);
+    steps.push(`Total : ${a} × ${b} = ${result} bonbons.`);
   } else {
     if (b === 0) {
-      steps.push("On ne peut pas diviser par 0.");
-      result = "Indéfini (division par 0)";
+      steps.push("On ne peut pas partager en 0 groupe.");
+      result = "Indéfini";
     } else {
-      steps.push(`On partage ${a} en ${b} groupes égaux.`);
+      steps.push(`On partage ${a} bonbons en ${b} boîtes.`);
       const q = Math.floor(a / b);
       const r = a % b;
-      steps.push(`${a} ÷ ${b} = ${q} reste ${r}.`);
-      result = r === 0 ? q : `${q} reste ${r}`;
+      if (r === 0) {
+        steps.push(`Chaque boîte reçoit ${q} bonbons, sans reste.`);
+        result = q;
+      } else {
+        steps.push(
+          `Chaque boîte reçoit ${q} bonbons et il reste ${r} bonbon${r > 1 ? "s" : ""}.`
+        );
+        result = `${q} reste ${r}`;
+      }
     }
   }
-
   return { result, steps };
 }
 
-// ---------- Stepper commun (− [val] +) ----------
+// ---------- Stepper (− [val] +) ----------
 function NumberStepper({
   value,
   setValue,
@@ -107,7 +106,6 @@ function NumberStepper({
 }) {
   const dec = () => setValue(clamp(value - 1, min, max));
   const inc = () => setValue(clamp(value + 1, min, max));
-
   return (
     <div className="flex items-center gap-2">
       {label && <span className="text-sm font-medium mr-1">{label}</span>}
@@ -118,60 +116,108 @@ function NumberStepper({
   );
 }
 
-// ---------- SVGs ----------
+// ---------- VISUELS ----------
 function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
-  if (op === "Addition") return <NumberLine a={a} b={b} mode="add" />;
-  if (op === "Soustraction") return <NumberLine a={a} b={b} mode="sub" />;
+  if (op === "Addition") return <AddBilles a={a} b={b} />;
+  if (op === "Soustraction") return <RemoveBilles a={a} b={b} />;
   if (op === "Multiplication") return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
   return <EqualGroups total={a} groups={b} />;
 }
 
-function NumberLine({ a, b, mode }: { a: number; b: number; mode: "add" | "sub" }) {
-  const start = 0;
-  const end = Math.max(
-    a,
-    mode === "add" ? a + Math.max(0, b) : a,
-    mode === "sub" ? Math.max(0, a - Math.max(0, b)) : a
-  );
-  const W = 640, H = 160, L = 40, R = 600, Y = 100;
-  const scale = (x: number) => L + (x / Math.max(1, end - start)) * (R - L);
+/** Addition — deux groupes de billes se réunissent */
+function AddBilles({ a, b }: { a: number; b: number }) {
+  const left = Math.max(0, a);
+  const right = Math.max(0, b);
+  const total = left + right;
 
-  const jumpFrom = a;
-  const jumpTo = mode === "add" ? a + b : a - b;
-  const arcY = 60;
+  const cell = 18;
+  const pad = 20;
+  const groupW = 180;
+  const groupH = 140;
+  const gap = 24;
+  const W = groupW * 2 + gap + pad * 2;
+  const H = groupH + 90;
+
+  const perRow = 6;
+  const colors = ["#3B82F6", "#F59E0B", "#10B981", "#EC4899", "#8B5CF6"];
+
+  const drawGroup = (count: number, x0: number, y0: number, label: string) => (
+    <g>
+      <rect x={x0} y={y0} width={groupW} height={groupH} rx={18} fill="#FFFFFF" stroke="#E5E7EB" />
+      <text x={x0 + 12} y={y0 + 22} fontSize={12} fill="#111827" fontWeight={700}>{label}</text>
+      {Array.from({ length: count }).map((_, k) => {
+        const r = Math.floor(k / perRow);
+        const c = k % perRow;
+        const cx = x0 + 24 + c * cell;
+        const cy = y0 + 44 + r * cell;
+        const color = colors[(k + count) % colors.length];
+        return <circle key={k} cx={cx} cy={cy} r={6} fill={color} />;
+      })}
+      <text x={x0 + groupW - 12} y={y0 + groupH - 12} fontSize={13} fill="#374151" textAnchor="end">
+        {count} billes
+      </text>
+    </g>
+  );
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-2xl">
-      <line x1={L} y1={Y} x2={R} y2={Y} stroke="#111827" strokeWidth={2} />
-      {Array.from({ length: end - start + 1 }, (_, i) => start + i).map((v) => (
-        <g key={v}>
-          <line x1={scale(v)} y1={Y - 6} x2={scale(v)} y2={Y + 6} stroke="#111827" />
-          <text x={scale(v)} y={Y + 22} fontSize={12} textAnchor="middle" fill="#111827">{v}</text>
-        </g>
-      ))}
-      <circle cx={scale(a)} cy={Y} r={4} fill="#2563EB" />
-      {b !== 0 && (
-        <>
-          <path
-            d={`M ${scale(jumpFrom)} ${Y}
-               C ${scale(jumpFrom)} ${arcY}, ${scale(jumpTo)} ${arcY}, ${scale(jumpTo)} ${Y}`}
-            fill="none" stroke="#2563EB" strokeWidth={2} markerEnd="url(#arrowhead)"
-          />
-          <defs>
-            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <polygon points="0 0, 6 3, 0 6" fill="#2563EB" />
-            </marker>
-          </defs>
-        </>
-      )}
-      <text x={scale((jumpFrom + jumpTo) / 2)} y={arcY - 6} fontSize={12} textAnchor="middle" fill="#2563EB">
-        {mode === "add" ? `+${b}` : `−${b}`}
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-3xl">
+      {drawGroup(left, pad, 16, "Groupe A")}
+      {drawGroup(right, pad + groupW + gap, 16, "Groupe B")}
+      <text x={W / 2} y={groupH + 60} textAnchor="middle" fontSize={18} fill="#111827" fontWeight={800}>
+        Total = {left} + {right} = {total} billes
       </text>
     </svg>
   );
 }
 
-/** Multiplication — Boîtes de bonbons (plus friendly) */
+/** Soustraction — on enlève des billes (affichées en gris pâle) */
+function RemoveBilles({ a, b }: { a: number; b: number }) {
+  const start = Math.max(0, a);
+  const take = clamp(b, 0, start);
+  const left = start - take;
+
+  const cell = 18;
+  const pad = 20;
+  const groupW = 320;
+  const groupH = 160;
+  const W = groupW + pad * 2;
+  const H = groupH + 70;
+
+  const perRow = 10;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-3xl">
+      <rect x={pad} y={16} width={groupW} height={groupH} rx={18} fill="#FFFFFF" stroke="#E5E7EB" />
+      <text x={pad + 12} y={16 + 22} fontSize={12} fill="#111827" fontWeight={700}>
+        On enlève {take} bille{take > 1 ? "s" : ""}.
+      </text>
+
+      {Array.from({ length: start }).map((_, k) => {
+        const r = Math.floor(k / perRow);
+        const c = k % perRow;
+        const cx = pad + 24 + c * cell;
+        const cy = 16 + 44 + r * cell;
+        const removed = k >= start - take; // marque les dernières comme “retirées”
+        return (
+          <circle
+            key={k}
+            cx={cx}
+            cy={cy}
+            r={6}
+            fill={removed ? "#E5E7EB" : "#3B82F6"}
+            opacity={removed ? 0.6 : 1}
+          />
+        );
+      })}
+
+      <text x={W / 2} y={groupH + 50} textAnchor="middle" fontSize={18} fill="#111827" fontWeight={800}>
+        Il reste {left} billes ({start} − {take} = {left})
+      </text>
+    </svg>
+  );
+}
+
+/** Multiplication — Boîtes de bonbons */
 function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   const cols = Math.min(4, boxes);
   const rows = Math.ceil(boxes / cols);
@@ -193,27 +239,19 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
         const col = i % cols;
         const x = gap + col * (boxW + gap);
         const y = gap + row * (boxH + gap);
-
         return (
           <g key={i}>
             <rect x={x} y={y} width={boxW} height={boxH} rx={22} ry={22} fill="#FFFFFF" stroke="#E5E7EB" />
-            {/* étiquette avec 🍬 */}
-            <rect x={x + 14} y={y + 10} width={100} height={22} rx={11} fill="#F3F4F6" />
-            <text x={x + 22} y={y + 26} fontSize={12} fill="#111827" fontWeight={700}>
-              🍬 Boîte {i + 1}
-            </text>
-            {/* bonbons */}
+            <rect x={x + 14} y={y + 10} width={110} height={22} rx={11} fill="#F3F4F6" />
+            <text x={x + 22} y={y + 26} fontSize={12} fill="#111827" fontWeight={700}>🍬 Boîte {i + 1}</text>
             {Array.from({ length: perBox }).map((__, k) => {
               const rr = Math.floor(k / perRow);
               const cc = k % perRow;
-              const jitterX = (k % 2) * 0.6;
-              const jitterY = ((k + i) % 2) * 0.6;
-              const cx = x + padding + cc * cell + 8 + jitterX;
-              const cy = y + 42 + rr * cell + jitterY;
+              const cx = x + padding + cc * cell + 8;
+              const cy = y + 42 + rr * cell;
               const color = candyColors[(k + i) % candyColors.length];
               return <circle key={k} cx={cx} cy={cy} r={6} fill={color} />;
             })}
-            {/* compteur */}
             <text x={x + boxW - 12} y={y + boxH - 12} fontSize={13} fill="#374151" textAnchor="end">
               {perBox} bonbons
             </text>
@@ -227,6 +265,7 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
   );
 }
 
+/** Division — partage en groupes égaux */
 function EqualGroups({ total, groups }: { total: number; groups: number }) {
   const g = Math.max(1, groups);
   const q = Math.floor(groups === 0 ? 0 : total / g);
@@ -263,7 +302,7 @@ function EqualGroups({ total, groups }: { total: number; groups: number }) {
               return <circle key={k} cx={cx} cy={cy} r={4} fill="#2563EB" />;
             })}
             <text x={x + boxW / 2} y={y + boxH - 8} fontSize={12} textAnchor="middle" fill="#111827">
-              Groupe {i + 1}: {dots}
+              Boîte {i + 1}: {dots}
             </text>
           </g>
         );
@@ -276,47 +315,11 @@ function EqualGroups({ total, groups }: { total: number; groups: number }) {
 export default function OperationsLearning() {
   const [selected, setSelected] = useState<Topic | null>(TOPICS[0]);
   const [a, setA] = useState(4);
-  const [b, setB] = useState(8);
-  const [mode, setMode] = useState<"Apprendre" | "Pratique">("Apprendre");
+  const [b, setB] = useState(3);
   const opName = selected?.name ?? "Addition";
   const { minA, maxA, minB, maxB } = boundsFor(opName);
 
   const { result, steps } = useMemo(() => compute(opName, a, b), [opName, a, b]);
-
-  // Réponses via steppers
-  const [ans, setAns] = useState<number>(0);     // +, −, ×
-  const [ansQ, setAnsQ] = useState<number>(0);   // ÷ quotient
-  const [ansR, setAnsR] = useState<number>(0);   // ÷ reste
-  const [feedback, setFeedback] = useState<string>("");
-
-  function randomize() {
-    if (!selected) return;
-    if (selected.name === "Division") {
-      setA(randInt(4, 60));
-      setB(randInt(1, 9)); // B≥1
-      setAnsQ(0); setAnsR(0);
-    } else if (selected.name === "Multiplication") {
-      setA(randInt(1, 6)); setB(randInt(1, 10)); setAns(0);
-    } else {
-      setA(randInt(0, 30)); setB(randInt(0, 30)); setAns(0);
-    }
-    setFeedback("");
-  }
-
-  function checkAnswer() {
-    if (!selected) return;
-    if (selected.name === "Division") {
-      const q = Math.floor(b === 0 ? 0 : a / b);
-      const r = b === 0 ? a : a % b;
-      setFeedback(ansQ === q && ansR === r ? "Correct." : "À revoir.");
-    } else {
-      const expected =
-        selected.name === "Addition" ? a + b :
-        selected.name === "Soustraction" ? a - b :
-        a * b;
-      setFeedback(ans === expected ? "Correct." : "À revoir.");
-    }
-  }
 
   return (
     <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
@@ -325,7 +328,7 @@ export default function OperationsLearning() {
         Retour
       </Link>
 
-      {/* Colonne gauche */}
+      {/* Colonne gauche (menu) */}
       <aside className="w-full md:w-1/4 bg-white p-6 shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
 
@@ -333,37 +336,36 @@ export default function OperationsLearning() {
           {TOPICS.map((t) => (
             <button
               key={t.name}
-              className={`py-2 px-6 rounded font-bold text-left ${selected?.name === t.name ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700 hover:bg-blue-100"}`}
-              onClick={() => {
-                setSelected(t);
-                setFeedback("");
-                setAns(0); setAnsQ(0); setAnsR(0);
-              }}
+              className={`py-2 px-6 rounded font-bold text-left ${
+                selected?.name === t.name ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+              }`}
+              onClick={() => setSelected(t)}
             >
               {t.name}
             </button>
           ))}
         </div>
 
-        {/* A / B avec steppers pour TOUTES les opérations */}
-        <div className="grid grid-cols-1 gap-4 mb-4">
+        {/* A / B avec steppers pour toutes les ops */}
+        <div className="grid grid-cols-1 gap-4 mb-6">
           <div className="flex flex-col text-sm gap-1">
-            <span className="font-medium">{opName === "Multiplication" ? "A — boîtes" : "A"}</span>
+            <span className="font-medium">
+              {opName === "Multiplication" ? "A — boîtes" : opName === "Division" ? "A — bonbons" : "A"}
+            </span>
             <NumberStepper value={a} setValue={(v) => setA(clamp(v, minA, maxA))} min={minA} max={maxA} />
           </div>
           <div className="flex flex-col text-sm gap-1">
-            <span className="font-medium">{opName === "Multiplication" ? "B — bonbons/boîte" : "B"}</span>
+            <span className="font-medium">
+              {opName === "Multiplication" ? "B — bonbons/boîte" : opName === "Division" ? "B — boîtes" : "B"}
+            </span>
             <NumberStepper value={b} setValue={(v) => setB(clamp(v, minB, maxB))} min={minB} max={maxB} />
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <button onClick={randomize} className="bg-gray-800 text-white px-4 py-2 rounded">Random</button>
-          <div className="ml-auto flex gap-2">
-            <button onClick={() => setMode("Apprendre")} className={`px-3 py-2 rounded ${mode === "Apprendre" ? "bg-emerald-600 text-white" : "bg-emerald-50 text-emerald-700"}`}>Apprendre</button>
-            <button onClick={() => { setMode("Pratique"); setFeedback(""); }} className={`px-3 py-2 rounded ${mode === "Pratique" ? "bg-purple-600 text-white" : "bg-purple-50 text-purple-700"}`}>Pratique</button>
-          </div>
-        </div>
+        {/* Bouton Pratique -> page exercices */}
+        <Link href={PRACTICE_HREF} className="block text-center bg-purple-600 text-white py-2 px-4 rounded font-semibold">
+          Pratique
+        </Link>
       </aside>
 
       {/* Colonne droite */}
@@ -373,52 +375,21 @@ export default function OperationsLearning() {
             <h2 className="text-3xl font-bold mb-2">{selected.name}</h2>
             <p className="text-gray-700 mb-4">{selected.description}</p>
 
-            {/* Viz */}
+            {/* Visuel */}
             <div className="mb-6">
               <OperationViz op={selected.name} a={a} b={b} />
             </div>
 
-            {/* Étapes */}
+            {/* Étapes (simples) */}
             <div className="bg-gray-50 rounded p-4">
               <h3 className="text-xl font-semibold mb-2">Étapes</h3>
               <ol className="list-decimal space-y-1 pl-6">
                 {steps.map((s, i) => (<li key={i}>{s}</li>))}
               </ol>
-              <p className="mt-3">Résultat : <span className="font-bold">{typeof result === "number" ? result : result}</span></p>
+              <p className="mt-3">
+                Résultat : <span className="font-bold">{typeof result === "number" ? result : result}</span>
+              </p>
             </div>
-
-            {/* Pratique */}
-            {mode === "Pratique" && (
-              <div className="mt-6 border-t pt-6">
-                <h3 className="text-xl font-semibold mb-3">Pratique</h3>
-
-                <div className="flex flex-wrap gap-4 items-center">
-                  <span className="text-lg font-medium">
-                    {selected.name === "Addition" && `${a} + ${b} = `}
-                    {selected.name === "Soustraction" && `${a} − ${b} = `}
-                    {selected.name === "Multiplication" && `${a} × ${b} = `}
-                    {selected.name === "Division" && `${a} ÷ ${b} = `}
-                  </span>
-
-                  {selected.name !== "Division" ? (
-                    <NumberStepper value={ans} setValue={setAns} />
-                  ) : (
-                    <div className="flex items-center gap-4">
-                      <NumberStepper label="q" value={ansQ} setValue={setAnsQ} min={0} />
-                      <span className="text-gray-500">reste</span>
-                      <NumberStepper label="r" value={ansR} setValue={setAnsR} min={0} />
-                    </div>
-                  )}
-
-                  <button onClick={checkAnswer} className="bg-blue-600 text-white px-4 py-2 rounded">Vérifier</button>
-                  {feedback && (
-                    <span className={feedback === "Correct." ? "text-emerald-700 font-semibold" : "text-red-700 font-semibold"}>
-                      {feedback}
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         )}
       </section>
