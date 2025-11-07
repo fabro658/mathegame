@@ -44,9 +44,7 @@ function boundsFor(op: OpName) {
   if (op === "Division") return { minA: 1, maxA: 60, minB: 1, maxB: 12 }; // B≥1
   return { minA: 0, maxA: 30, minB: 0, maxB: 30 };
 }
-function randInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+
 
 // ---------- Calcul + étapes (langage enfant) ----------
 function compute(op: OpName, a: number, b: number) {
