@@ -373,19 +373,10 @@ export default function OperationsLearning() {
             <h2 className="text-3xl font-bold mb-2">{selected.name}</h2>
             <p className="text-gray-700 mb-4">{selected.description}</p>
 
-            {/* Formule / Exemple */}
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-gray-50 rounded p-4">
-                <h3 className="text-xl font-semibold mb-2">Formule</h3>
-                <p className="text-lg">{selected.formula}</p>
-              </div>
-              <div className="bg-gray-50 rounded p-4">
-                <h3 className="text-xl font-semibold mb-2">Exemple</h3>
-                <p className="text-lg">{selected.example}</p>
-              </div>
+            {/* Viz */}
+            <div className="mb-6">
+              <OperationViz op={selected.name} a={a} b={b} />
             </div>
-
-           
 
             {/* Étapes */}
             <div className="bg-gray-50 rounded p-4">
