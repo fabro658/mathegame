@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 /* =========================================================
@@ -31,12 +31,11 @@ const TOPICS: Topic[] = [
   },
   {
     name: "Division",
-    description:
-      "Diviser, c’est PARTAGER en boîtes (ou groupes) égaux.",
+    description: "Diviser, c’est PARTAGER en boîtes (ou groupes) égaux.",
   },
 ];
 
-const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques"; // ajuste si besoin
+const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques";
 
 /* Drag types unifiés */
 type DragSrc = "A" | "JAR" | "RET";
@@ -50,7 +49,7 @@ function clamp(n: number, min: number, max: number) {
 }
 function boundsFor(op: OpName) {
   if (op === "Multiplication") return { minA: 1, maxA: 12, minB: 1, maxB: 16 };
-  if (op === "Division") return { minA: 1, maxA: 60, minB: 1, maxB: 12 }; // B≥1
+  if (op === "Division") return { minA: 1, maxA: 60, minB: 1, maxB: 12 };
   return { minA: 0, maxA: 30, minB: 0, maxB: 30 };
 }
 
@@ -164,7 +163,14 @@ function JarSVG({ className = "" }: { className?: string }) {
 
 // Bonbons persistants
 type CandyObj = { id: number; color: string };
-const CANDY_PALETTE = ["#3B82F6", "#F59E0B", "#10B981", "#EC4899", "#8B5CF6", "#EF4444"];
+const CANDY_PALETTE = [
+  "#3B82F6",
+  "#F59E0B",
+  "#10B981",
+  "#EC4899",
+  "#8B5CF6",
+  "#EF4444",
+];
 
 function makeCandies(count: number, seed = 0): CandyObj[] {
   return Array.from({ length: count }).map((_, i) => ({
@@ -173,7 +179,7 @@ function makeCandies(count: number, seed = 0): CandyObj[] {
   }));
 }
 
-// ⚠️ prop renommée en handleDragStart (types unifiés)
+// Bonbon draggable (types unifiés)
 const Candy = ({
   item,
   from,
@@ -215,9 +221,20 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
         const y = gap + row * (boxH + gap);
         return (
           <g key={i}>
-            <rect x={x} y={y} width={boxW} height={boxH} rx={22} ry={22} fill="#FFFFFF" stroke="#E5E7EB" />
+            <rect
+              x={x}
+              y={y}
+              width={boxW}
+              height={boxH}
+              rx={22}
+              ry={22}
+              fill="#FFFFFF"
+              stroke="#E5E7EB"
+            />
             <rect x={x + 14} y={y + 10} width={110} height={22} rx={11} fill="#F3F4F6" />
-            <text x={x + 22} y={y + 26} fontSize={12} fill="#111827" fontWeight={700}>🍬 Boîte {i + 1}</text>
+            <text x={x + 22} y={y + 26} fontSize={12} fill="#111827" fontWeight={700}>
+              🍬 Boîte {i + 1}
+            </text>
             {Array.from({ length: perBox }).map((__, k) => {
               const rr = Math.floor(k / perRow);
               const cc = k % perRow;
@@ -226,13 +243,26 @@ function CandyBoxes({ boxes, perBox }: { boxes: number; perBox: number }) {
               const color = CANDY_PALETTE[(k + i) % CANDY_PALETTE.length];
               return <circle key={k} cx={cx} cy={cy} r={6} fill={color} />;
             })}
-            <text x={x + boxW - 12} y={y + boxH - 12} fontSize={13} fill="#374151" textAnchor="end">
+            <text
+              x={x + boxW - 12}
+              y={y + boxH - 12}
+              fontSize={13}
+              fill="#374151"
+              textAnchor="end"
+            >
               {perBox} bonbons
             </text>
           </g>
         );
       })}
-      <text x={W / 2} y={H - 14} textAnchor="middle" fontSize={18} fill="#111827" fontWeight={800}>
+      <text
+        x={W / 2}
+        y={H - 14}
+        textAnchor="middle"
+        fontSize={18}
+        fill="#111827"
+        fontWeight={800}
+      >
         Total = {boxes} × {perBox} = {boxes * perBox} bonbons
       </text>
     </svg>
@@ -285,7 +315,7 @@ function EqualGroups({ total, groups }: { total: number; groups: number }) {
 }
 
 /* =========================================================
-   ADDITION — Un seul plateau A → Pot (rebond)
+   ADDITION — Un seul plateau A → Pot
    ========================================================= */
 function AdditionJarOneTray({ a }: { a: number }) {
   const [trayA, setTrayA] = useState<CandyObj[]>(() => makeCandies(a, 1));
@@ -307,10 +337,7 @@ function AdditionJarOneTray({ a }: { a: number }) {
   function dropToJar(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(
-        e.dataTransfer.getData("application/json")
-      ) as DragPayload;
-
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as DragPayload;
       if (src === "A") {
         const idx = trayA.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -327,10 +354,7 @@ function AdditionJarOneTray({ a }: { a: number }) {
   function dropToTrayA(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(
-        e.dataTransfer.getData("application/json")
-      ) as DragPayload;
-
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as DragPayload;
       if (src === "JAR") {
         const idx = jar.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -452,7 +476,7 @@ function AdditionJarOneTray({ a }: { a: number }) {
 }
 
 /* =========================================================
-   SOUSTRACTION — Pot → Retrait (rebond)
+   SOUSTRACTION — Pot → Retrait
    ========================================================= */
 function SubtractionJar({ a }: { a: number }) {
   const [jar, setJar] = useState<CandyObj[]>(() => makeCandies(a, 2));
@@ -475,10 +499,7 @@ function SubtractionJar({ a }: { a: number }) {
   function dropToRet(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(
-        e.dataTransfer.getData("application/json")
-      ) as DragPayload;
-
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as DragPayload;
       if (src === "JAR") {
         const idx = jar.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -496,10 +517,7 @@ function SubtractionJar({ a }: { a: number }) {
   function dropToJar(e: React.DragEvent) {
     e.preventDefault();
     try {
-      const { src, id } = JSON.parse(
-        e.dataTransfer.getData("application/json")
-      ) as DragPayload;
-
+      const { src, id } = JSON.parse(e.dataTransfer.getData("application/json")) as DragPayload;
       if (src === "RET") {
         const idx = ret.findIndex((c) => c.id === id);
         if (idx >= 0) {
@@ -637,7 +655,8 @@ function SubtractionJar({ a }: { a: number }) {
 function OperationViz({ op, a, b }: { op: OpName; a: number; b: number }) {
   if (op === "Addition") return <AdditionJarOneTray a={a} />;
   if (op === "Soustraction") return <SubtractionJar a={a} />;
-  if (op === "Multiplication") return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
+  if (op === "Multiplication")
+    return <CandyBoxes boxes={clamp(a, 1, 12)} perBox={clamp(b, 1, 16)} />;
   return <EqualGroups total={a} groups={b} />;
 }
 
