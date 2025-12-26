@@ -3,9 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-/* =========================================================
-   Types + Données
-   ========================================================= */
 type OpName = "Addition" | "Soustraction" | "Multiplication" | "Division";
 
 interface Topic {
@@ -739,6 +736,7 @@ export default function OperationsLearning() {
 
         <Link
           href={PRACTICE_HREF}
+            href="/menu/primaire/niveaux/niveau1"
           className="block text-center bg-purple-600 text-white py-2 px-4 rounded font-semibold"
         >
           Pratique
