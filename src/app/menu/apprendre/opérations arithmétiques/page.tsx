@@ -32,8 +32,6 @@ const TOPICS: Topic[] = [
   },
 ];
 
-const PRACTICE_HREF = "/menu/exercices/operations-arithmetiques";
-
 /* Drag types unifiés */
 type DragSrc = "A" | "JAR" | "RET";
 type DragPayload = { src: DragSrc; id: number };
