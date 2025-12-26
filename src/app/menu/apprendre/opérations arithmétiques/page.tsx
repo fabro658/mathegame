@@ -735,7 +735,6 @@ export default function OperationsLearning() {
         </div>
 
         <Link
-          href={PRACTICE_HREF}
             href="/menu/primaire/niveaux/niveau1"
           className="block text-center bg-purple-600 text-white py-2 px-4 rounded font-semibold"
         >

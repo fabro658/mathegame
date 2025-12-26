@@ -78,7 +78,8 @@ export default function AireAvecSVG() {
 
   return (
     <div className="min-h-screen bg-[#0b0c2a] text-white p-6 space-y-10">
-      <Link href="/menu/apprendre" className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold">
+      <Link href="/secondaire/niveaux/niveau4"
+      className="fixed top-4 right-4 bg-orange-500 text-white py-2 px-6 rounded font-bold">
         Retour
       </Link>
 
