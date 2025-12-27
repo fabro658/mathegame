@@ -9,6 +9,10 @@ export default function PrioOperation() {
   const totalQuestions = 36;
   const questionsPerPage = 6;
 
+  const toSup = (n: number) =>
+  n.toString().replace(/\d/g, d => "⁰¹²³⁴⁵⁶⁷⁸⁹"[parseInt(d)]);
+
+
   // 6 pages de questions + 1 page coffre
   const totalQuestionPages = totalQuestions / questionsPerPage; // 6
   const totalPages = totalQuestionPages + 1; // 7 (dernière = coffre)
@@ -22,6 +26,7 @@ export default function PrioOperation() {
   // Mot-code (6 lettres) révélé 1 lettre / page réussie
   // Tu peux changer pour PIRATE, TRESOR, etc (6 lettres)
   const CODE_WORD = "TRESOR";
+  
 
   const [questions, setQuestions] = useState<Q[]>([]);
   const [answers, setAnswers] = useState<(string | null)[]>(Array(totalQuestions).fill(null));
@@ -62,24 +67,24 @@ export default function PrioOperation() {
           const b = Math.floor(Math.random() * 10) + 1;
           questionText = `${a} + ${b} × 2 ?`;
           correctAnswer = (a + b * 2).toString();
-} else {
-  const base = Math.floor(Math.random() * 6) + 2;
-  const exponent = Math.floor(Math.random() * 3) + 1;
+        } else {
+         const a = Math.floor(Math.random() * 6) + 2;
+         const n = Math.floor(Math.random() * 3) + 1;
 
-  // Format direct: a^n (ex: 8^2)
-  questionText = `${base}^${exponent} ?`;
-  correctAnswer = Math.pow(base, exponent).toString();
+        const sup = toSup(n);
 
-  // Variante: (a + b)^n (ex: (5 + 3)^1)
-  if (Math.random() > 0.5) {
-    const delta = Math.floor(Math.random() * 4) + 1;
-    const baseAlt = base + delta;
+        questionText = `${a}${sup} ?`;
+        correctAnswer = Math.pow(a, n).toString();
 
-    questionText = `(${base} + ${delta})^${exponent} ?`;
-    correctAnswer = Math.pow(baseAlt, exponent).toString();
+       // Variante (a + b)ⁿ
+        if (Math.random() > 0.5) {
+         const b = Math.floor(Math.random() * 4) + 1;
+         const base = a + b;
+
+    questionText = `(${a} + ${b})${sup} ?`;
+    correctAnswer = Math.pow(base, n).toString();
   }
 }
-
 
         return { questionText, correctAnswer };
       });
