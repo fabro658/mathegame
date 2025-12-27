@@ -35,7 +35,7 @@ export default function IsolerVariable() {
       while (true) {
         const eqType = Math.floor(Math.random() * 2); // 0 ou 1
         const a = randomInt(1, 9); // coef de x (ou constante selon le type)
-        let b = randomInt(-10, 10);
+        const b = randomInt(-10, 10);
         const c = randomInt(-10, 10);
 
         // évite b = 0 quand b est un coefficient de x (sinon bx = ... impossible)
