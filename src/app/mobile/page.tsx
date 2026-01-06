@@ -34,7 +34,21 @@ export default function MobileHome() {
         <h2 className="text-white text-lg font-semibold">Mathématique</h2>
       </div>
 
-      {/* Boutons Primaire, Secondaire et À venir */}
+<div className="fixed top-3 right-3 z-50 flex gap-2 scale-90 sm:scale-100">
+  <Link href="/secondaire">
+    <div className="px-5 py-2 rounded-full bg-black text-white font-medium hover:bg-neutral-800 transition">
+      Connexion
+    </div>
+  </Link>
+
+  <Link href="/secondaire">
+    <div className="px-5 py-2 rounded-full bg-white text-black border border-black font-medium hover:bg-neutral-100 transition">
+      Créer un compte
+    </div>
+  </Link>
+</div>
+
+
       <div className="absolute bottom-32 flex flex-row justify-center items-center gap-4 w-full px-4">
         {/* Bouton Primaire */}
         <Link href="/mobile/primaire_mobile">
