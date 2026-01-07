@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function ConnexionPage() {
   const router = useRouter();
@@ -11,15 +12,30 @@ export default function ConnexionPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
+
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    if (!captchaToken) {
+      setErrorMsg("Confirme le captcha avant de te connecter.");
+      return;
+    }
+
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+      options: {
+        captchaToken,
+      },
+    });
 
     setLoading(false);
 
@@ -28,29 +44,38 @@ export default function ConnexionPage() {
       return;
     }
 
+    // reset token pour éviter réutilisation
+    setCaptchaToken(null);
     router.push("/");
   };
 
+  const isDisabled = loading || !captchaToken;
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-[#d8d3a1] to-[#f2c14e] flex items-center justify-center px-6">
-  <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
+      <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
-
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button onClick={() => router.push("/")} className="hover:underline">
-              ← Retour à l’accueil
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="hover:underline"
+            >
+              Retour à l’accueil
             </button>
+
+            <Link href="/inscription" className="hover:underline">
+              Créer un compte
+            </Link>
           </div>
 
           <div className="bg-white/95 rounded-3xl p-7 shadow-lg border border-black/10">
-
             <h1 className="text-2xl font-bold mb-1">Connexion</h1>
             <p className="text-sm text-neutral-600 mb-6">
               Reprends là où tu t’étais rendu.
             </p>
 
             <form onSubmit={onSubmit} className="space-y-4">
-
               <div>
                 <label className="text-sm font-medium">Email</label>
                 <input
@@ -59,6 +84,7 @@ export default function ConnexionPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   required
+                  autoComplete="email"
                 />
               </div>
 
@@ -71,15 +97,25 @@ export default function ConnexionPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     type={showPwd ? "text" : "password"}
                     required
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPwd(v => !v)}
+                    onClick={() => setShowPwd((v) => !v)}
                     className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
                   >
                     {showPwd ? "Masquer" : "Afficher"}
                   </button>
                 </div>
+              </div>
+
+              {/* hCaptcha */}
+              <div className="pt-2">
+                <HCaptcha
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                  onVerify={(token) => setCaptchaToken(token)}
+                  onExpire={() => setCaptchaToken(null)}
+                />
               </div>
 
               {errorMsg && (
@@ -89,21 +125,20 @@ export default function ConnexionPage() {
               )}
 
               <button
-                disabled={loading}
-                className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition"
+                disabled={isDisabled}
+                className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
               >
                 {loading ? "Connexion..." : "Se connecter"}
               </button>
 
-              <div className="flex justify-between text-sm pt-2">
-                <Link href="/mot-de-passe-oublie" className="underline">
+              <div className="flex justify-between text-sm">
+                <Link className="underline text-neutral-700" href="/mot-de-passe-oublie">
                   Mot de passe oublié
                 </Link>
-                <Link href="/inscription" className="underline">
+                <Link className="underline text-neutral-700" href="/inscription">
                   Créer un compte
                 </Link>
               </div>
-
             </form>
           </div>
         </div>
