@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
@@ -13,6 +13,9 @@ export default function ReinitialiserMdpPage() {
 
   const [pwd1, setPwd1] = useState("");
   const [pwd2, setPwd2] = useState("");
+
+  const [showPwd1, setShowPwd1] = useState(false);
+  const [showPwd2, setShowPwd2] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -43,6 +46,17 @@ export default function ReinitialiserMdpPage() {
     };
   }, []);
 
+  // Critères de mot de passe (live)
+  const rules = useMemo(() => {
+    const min8 = pwd1.length >= 8;
+    const hasUpper = /[A-Z]/.test(pwd1);
+    const hasNumber = /[0-9]/.test(pwd1);
+    return { min8, hasUpper, hasNumber };
+  }, [pwd1]);
+
+  const allRulesOk = rules.min8 && rules.hasUpper && rules.hasNumber;
+  const samePasswords = pwd1.length > 0 && pwd1 === pwd2;
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMsg(null);
@@ -53,19 +67,18 @@ export default function ReinitialiserMdpPage() {
       return;
     }
 
-    if (!pwd1 || pwd1.length < 8) {
-      setErrorMsg("Le nouveau mot de passe doit contenir au moins 8 caractères.");
+    if (!allRulesOk) {
+      setErrorMsg("Ton mot de passe ne respecte pas tous les critères.");
       return;
     }
 
-    if (pwd1 !== pwd2) {
+    if (!samePasswords) {
       setErrorMsg("Les deux mots de passe ne correspondent pas.");
       return;
     }
 
     setLoading(true);
 
-    // IMPORTANT: pas d'options captchaToken ici (non supporté)
     const { error } = await supabase.auth.updateUser({
       password: pwd1,
     });
@@ -79,13 +92,17 @@ export default function ReinitialiserMdpPage() {
 
     setMsg("Mot de passe mis à jour. Tu peux te connecter.");
 
-    // (Optionnel mais propre) on déconnecte la session recovery
+    // propre : on déconnecte la session recovery
     await supabase.auth.signOut();
 
     router.push("/connexion");
   };
 
-  const isDisabled = loading || !ready || !hasRecoverySession;
+  const isDisabled =
+    loading || !ready || !hasRecoverySession || !allRulesOk || !samePasswords;
+
+  const ruleClass = (ok: boolean) =>
+    ok ? "text-green-700" : "text-neutral-800";
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-[#d8d3a1] to-[#f2c14e] flex items-center justify-center px-6">
@@ -114,30 +131,62 @@ export default function ReinitialiserMdpPage() {
               </div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-4">
+                {/* Nouveau mot de passe */}
                 <div>
                   <label className="text-sm font-medium">Nouveau mot de passe</label>
-                  <input
-                    className="w-full mt-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                    value={pwd1}
-                    onChange={(e) => setPwd1(e.target.value)}
-                    type="password"
-                    required
-                    minLength={8}
-                    autoComplete="new-password"
-                  />
+                  <div className="mt-1 flex gap-2">
+                    <input
+                      className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                      value={pwd1}
+                      onChange={(e) => setPwd1(e.target.value)}
+                      type={showPwd1 ? "text" : "password"}
+                      required
+                      autoComplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPwd1((v) => !v)}
+                      className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                    >
+                      {showPwd1 ? "Masquer" : "Afficher"}
+                    </button>
+                  </div>
+
+                  {/* Critères live */}
+                  <div className="mt-2 space-y-1 text-xs">
+                    <div className={ruleClass(rules.min8)}>• 8 caractères minimum</div>
+                    <div className={ruleClass(rules.hasUpper)}>• 1 majuscule</div>
+                    <div className={ruleClass(rules.hasNumber)}>• 1 chiffre</div>
+                  </div>
                 </div>
 
+                {/* Confirmation */}
                 <div>
                   <label className="text-sm font-medium">Confirmer le nouveau mot de passe</label>
-                  <input
-                    className="w-full mt-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                    value={pwd2}
-                    onChange={(e) => setPwd2(e.target.value)}
-                    type="password"
-                    required
-                    minLength={8}
-                    autoComplete="new-password"
-                  />
+                  <div className="mt-1 flex gap-2">
+                    <input
+                      className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                      value={pwd2}
+                      onChange={(e) => setPwd2(e.target.value)}
+                      type={showPwd2 ? "text" : "password"}
+                      required
+                      autoComplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPwd2((v) => !v)}
+                      className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                    >
+                      {showPwd2 ? "Masquer" : "Afficher"}
+                    </button>
+                  </div>
+
+                  {/* Match indicator */}
+                  {pwd2.length > 0 && (
+                    <div className={`mt-2 text-xs ${samePasswords ? "text-green-700" : "text-red-600"}`}>
+                      {samePasswords ? "• Les mots de passe correspondent" : "• Les mots de passe ne correspondent pas"}
+                    </div>
+                  )}
                 </div>
 
                 {errorMsg && (
@@ -160,7 +209,7 @@ export default function ReinitialiserMdpPage() {
                 </button>
 
                 <p className="text-xs text-neutral-500 text-center pt-1">
-                  Minimum 8 caractères.
+                  Astuce : utilise une phrase + un chiffre (ex: ExploreMath2026).
                 </p>
               </form>
             )}
