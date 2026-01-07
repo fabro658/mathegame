@@ -35,11 +35,10 @@ export default function MotDePasseOubliePage() {
 
     setLoading(true);
 
-    // IMPORTANT: le lien de reset doit revenir sur ton site
-    // (et idéalement vers une page dédiée plus tard, ex: /reset-mot-de-passe)
+    // IMPORTANT: le lien de reset doit pointer vers la page de réinitialisation
     const redirectTo =
       typeof window !== "undefined"
-        ? `${window.location.origin}/connexion`
+        ? `${window.location.origin}/reinitialiser_mdp`
         : undefined;
 
     const { error } = await supabase.auth.resetPasswordForEmail(emailClean, {
@@ -55,6 +54,7 @@ export default function MotDePasseOubliePage() {
       return;
     }
 
+    // Message générique (bon pour la sécurité)
     setMsg("Si cet email existe, un lien de réinitialisation vient d’être envoyé.");
   };
 
