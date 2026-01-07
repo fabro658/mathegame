@@ -27,14 +27,13 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-
         {/* hCaptcha script GLOBAL (obligatoire) */}
         <Script
           src="https://js.hcaptcha.com/1/api.js"
           strategy="afterInteractive"
         />
 
-        {/* Boutons Connexion / Mon compte */}
+        {/* Boutons Connexion / Mon compte (affichés partout SAUF dans le groupe (auth)) */}
         <HeaderAuth basePath="" />
 
         {children}
