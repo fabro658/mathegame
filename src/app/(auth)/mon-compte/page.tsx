@@ -73,7 +73,8 @@ export default function MonComptePage() {
     allRulesOk &&
     sameNewPwds;
 
-  const ruleClass = (ok: boolean) => (ok ? "text-green-700" : "text-neutral-800");
+  const ruleClass = (ok: boolean) =>
+    ok ? "text-green-700" : "text-neutral-800";
 
   // --------- Sécurité suppression ----------
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -98,7 +99,8 @@ export default function MonComptePage() {
       setUser({
         id: u.id,
         email: u.email ?? "",
-        firstName: (u.user_metadata?.first_name as string | undefined) ?? null,
+        firstName:
+          (u.user_metadata?.first_name as string | undefined) ?? null,
       });
 
       setLoading(false);
@@ -106,6 +108,16 @@ export default function MonComptePage() {
 
     load();
   }, [router]);
+
+  // Optionnel mais propre: empêcher le scroll du body quand le modal est ouvert
+  useEffect(() => {
+    if (!confirmOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [confirmOpen]);
 
   const logout = async () => {
     setBusy(true);
@@ -128,7 +140,6 @@ export default function MonComptePage() {
     setErrorMsg(null);
 
     try {
-      // Token pour l'API
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData.session?.access_token;
 
@@ -181,7 +192,6 @@ export default function MonComptePage() {
     setPwdErr(null);
 
     try {
-      // 1) Vérifier l'ancien mot de passe (re-login)
       const { error: reauthError } = await supabase.auth.signInWithPassword({
         email: user.email,
         password: oldPwd,
@@ -191,7 +201,6 @@ export default function MonComptePage() {
         throw new Error("Ancien mot de passe incorrect.");
       }
 
-      // 2) Mettre à jour le mot de passe
       const { error: updateError } = await supabase.auth.updateUser({
         password: newPwd1,
       });
@@ -201,13 +210,10 @@ export default function MonComptePage() {
       }
 
       setPwdMsg("Mot de passe mis à jour.");
-
-      // 3) Clean UI
       setOldPwd("");
       setNewPwd1("");
       setNewPwd2("");
 
-      // Optionnel : recharger l’utilisateur/session
       await supabase.auth.getSession();
     } catch (e) {
       setPwdErr(e instanceof Error ? e.message : "Erreur inconnue.");
@@ -219,8 +225,8 @@ export default function MonComptePage() {
   if (loading) return null;
 
   return (
-  <div className="min-h-screen w-full bg-neutral-100 px-6 py-10 overflow-y-auto">
-    <div className="w-full max-w-xl mx-auto bg-white rounded-3xl border border-black/10 shadow-lg p-8">
+    <div className="min-h-screen w-full bg-neutral-100 px-6 py-10">
+      <div className="w-full max-w-xl mx-auto bg-white rounded-3xl border border-black/10 shadow-lg p-8">
         <h1 className="text-2xl font-bold">Mon compte</h1>
         <p className="text-sm text-neutral-600 mt-1">
           Gère ton profil et tes paramètres.
@@ -254,7 +260,7 @@ export default function MonComptePage() {
         <div className="mt-8 border-t pt-6">
           <h2 className="font-semibold">Modifier le mot de passe</h2>
           <p className="text-sm text-neutral-600 mt-1">
-            Affiche ton ancien mot de passe, puis choisis un nouveau.
+            Entre ton ancien mot de passe, puis choisis un nouveau.
           </p>
 
           <div className="mt-4 space-y-4">
@@ -300,7 +306,9 @@ export default function MonComptePage() {
               </div>
 
               <div className="mt-2 space-y-1 text-xs">
-                <div className={ruleClass(rules.min8)}>• 8 caractères minimum</div>
+                <div className={ruleClass(rules.min8)}>
+                  • 8 caractères minimum
+                </div>
                 <div className={ruleClass(rules.hasUpper)}>• 1 majuscule</div>
                 <div className={ruleClass(rules.hasNumber)}>• 1 chiffre</div>
               </div>
@@ -367,6 +375,7 @@ export default function MonComptePage() {
         {/* Boutons bas */}
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <button
+            type="button"
             onClick={() => router.push("/")}
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-neutral-200 hover:bg-neutral-50"
             disabled={busy || pwdBusy}
@@ -375,6 +384,7 @@ export default function MonComptePage() {
           </button>
 
           <button
+            type="button"
             onClick={logout}
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 disabled:opacity-60"
             disabled={busy || pwdBusy}
@@ -391,6 +401,7 @@ export default function MonComptePage() {
           </p>
 
           <button
+            type="button"
             onClick={openDelete}
             className="mt-4 w-full px-5 py-2.5 rounded-xl bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
             disabled={busy || pwdBusy}
