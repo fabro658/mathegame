@@ -51,7 +51,6 @@ export default function InscriptionPage() {
     setCaptchaToken(null);
     setPendingSubmit(false);
     try {
-      captchaRef.current?.resetCaptcha?.();
     } catch {}
 
     if (error) {
@@ -72,7 +71,6 @@ export default function InscriptionPage() {
       setMsg(null);
 
       try {
-        captchaRef.current?.execute?.();
       } catch {
         setPendingSubmit(false);
         setErrorMsg("Erreur captcha. Recharge la page et réessaie.");
@@ -164,7 +162,6 @@ export default function InscriptionPage() {
               <HCaptcha
                 sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
                 size="invisible"
-                ref={captchaRef}
                 onVerify={onCaptchaVerify}
                 onExpire={() => setCaptchaToken(null)}
               />
