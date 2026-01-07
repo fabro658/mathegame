@@ -35,11 +35,13 @@ export default function MotDePasseOubliePage() {
 
     setLoading(true);
 
-    // IMPORTANT: le lien de reset doit pointer vers la page de réinitialisation
-    const redirectTo =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/reinitialiser_mdp`
-        : undefined;
+    // ✅ Utilise l'URL du site (Vercel/Prod) si disponible, sinon fallback sur l'origin courant
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      (typeof window !== "undefined" ? window.location.origin : "");
+
+    // ✅ Page de réinitialisation (celle que tu as créée)
+    const redirectTo = `${siteUrl}/reinitialiser_mdp`;
 
     const { error } = await supabase.auth.resetPasswordForEmail(emailClean, {
       redirectTo,
@@ -99,7 +101,7 @@ export default function MotDePasseOubliePage() {
 
               <div className="pt-2">
                 <HCaptcha
-                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ?? ""}
                   onVerify={(token) => setCaptchaToken(token)}
                   onExpire={() => setCaptchaToken(null)}
                 />
