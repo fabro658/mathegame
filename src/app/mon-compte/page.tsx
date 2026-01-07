@@ -10,6 +10,29 @@ type UserInfo = {
   firstName: string | null;
 };
 
+type DeleteAccountResponse = {
+  success?: boolean;
+  error?: string;
+};
+
+// Type guard
+function isDeleteAccountResponse(v: unknown): v is DeleteAccountResponse {
+  return typeof v === "object" && v !== null;
+}
+
+// Safe getters (sans any)
+function getErrorMessage(v: unknown): string | undefined {
+  if (!isDeleteAccountResponse(v)) return undefined;
+  const maybe = (v as Record<string, unknown>)["error"];
+  return typeof maybe === "string" ? maybe : undefined;
+}
+
+function getSuccess(v: unknown): boolean | undefined {
+  if (!isDeleteAccountResponse(v)) return undefined;
+  const maybe = (v as Record<string, unknown>)["success"];
+  return typeof maybe === "boolean" ? maybe : undefined;
+}
+
 export default function MonComptePage() {
   const router = useRouter();
 
@@ -23,7 +46,10 @@ export default function MonComptePage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
 
-  const confirmOk = useMemo(() => confirmText.trim().toUpperCase() === "SUPPRIMER", [confirmText]);
+  const confirmOk = useMemo(
+    () => confirmText.trim().toUpperCase() === "SUPPRIMER",
+    [confirmText]
+  );
 
   useEffect(() => {
     const load = async () => {
@@ -69,7 +95,7 @@ export default function MonComptePage() {
     setErrorMsg(null);
 
     try {
-      // Récupère le token pour l'API
+      // Token pour l'API
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData.session?.access_token;
 
@@ -80,30 +106,29 @@ export default function MonComptePage() {
       const res = await fetch("/api/delete_account", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // Toujours lire en text puis parser si possible => plus robuste
       const raw = await res.text();
-      let json: any = null;
+
+      let parsed: unknown = null;
       try {
-        json = raw ? JSON.parse(raw) : null;
+        parsed = raw ? (JSON.parse(raw) as unknown) : null;
       } catch {
-        // si serveur renvoie HTML, on affiche un message clair
-        throw new Error("Réponse serveur invalide (non-JSON). Vérifie les logs Vercel.");
+        throw new Error(
+          "Réponse serveur invalide (non-JSON). Vérifie les logs Vercel."
+        );
       }
 
       if (!res.ok) {
-        throw new Error(json?.error || "Erreur serveur.");
+        throw new Error(getErrorMessage(parsed) || "Erreur serveur.");
       }
 
-      if (!json?.success) {
-        throw new Error(json?.error || "Suppression échouée.");
+      if (getSuccess(parsed) !== true) {
+        throw new Error(getErrorMessage(parsed) || "Suppression échouée.");
       }
 
-      // Déconnexion + retour accueil
       await supabase.auth.signOut();
       router.push("/");
     } catch (e) {
@@ -182,7 +207,6 @@ export default function MonComptePage() {
         </div>
       </div>
 
-      {/* Modal de confirmation */}
       {confirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40">
           <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-black/10 p-6">
