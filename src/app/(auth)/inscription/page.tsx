@@ -63,7 +63,7 @@ export default function InscriptionPage() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-sky-200 to-blue-300 flex items-center justify-center p-6">
-      <div className="auth-shell w-full rounded-[32px] p-6 sm:p-10 shadow-xl">
+      <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
             <button
@@ -71,7 +71,7 @@ export default function InscriptionPage() {
               onClick={() => router.push("/")}
               className="hover:underline"
             >
-              ← Retour à l’accueil
+              Retour à l’accueil
             </button>
             <Link href="/mobile/connexion" className="hover:underline">
               Connexion
