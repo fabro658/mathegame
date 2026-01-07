@@ -219,8 +219,8 @@ export default function MonComptePage() {
   if (loading) return null;
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-6 bg-neutral-100">
-      <div className="w-full max-w-xl bg-white rounded-3xl border border-black/10 shadow-lg p-8">
+  <div className="min-h-screen w-full bg-neutral-100 px-6 py-10 overflow-y-auto">
+    <div className="w-full max-w-xl mx-auto bg-white rounded-3xl border border-black/10 shadow-lg p-8">
         <h1 className="text-2xl font-bold">Mon compte</h1>
         <p className="text-sm text-neutral-600 mt-1">
           Gère ton profil et tes paramètres.
