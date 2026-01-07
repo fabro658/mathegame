@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function InscriptionPage() {
   const router = useRouter();
+
+  const captchaRef = useRef<any>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [pendingSubmit, setPendingSubmit] = useState(false);
 
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
@@ -17,37 +22,84 @@ export default function InscriptionPage() {
   const [msg, setMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const doSignup = async (token: string) => {
     setMsg(null);
     setErrorMsg(null);
     setLoading(true);
+
+    const redirectTo =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/connexion`
+        : undefined;
 
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        // IMPORTANT: assure que le lien email renvoie vers le bon domaine
+        emailRedirectTo: redirectTo,
         data: {
           first_name: prenom.trim() || null,
         },
+        // Supabase validera automatiquement le captcha côté serveur
+        captchaToken: token,
       },
     });
 
     setLoading(false);
+
+    // reset captcha/token pour un prochain essai propre
+    setCaptchaToken(null);
+    setPendingSubmit(false);
+    try {
+      captchaRef.current?.resetCaptcha?.();
+    } catch {}
 
     if (error) {
       setErrorMsg(error.message);
       return;
     }
 
-    setMsg("Compte créé ✅ Vérifie ton email pour confirmer ton compte.");
+    setMsg("Compte créé. Vérifie ton email pour confirmer ton compte.");
   };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // si on n'a pas encore de token captcha, on déclenche le captcha invisible
+    if (!captchaToken) {
+      setPendingSubmit(true);
+      setErrorMsg(null);
+      setMsg(null);
+
+      try {
+        captchaRef.current?.execute?.();
+      } catch {
+        setPendingSubmit(false);
+        setErrorMsg("Erreur captcha. Recharge la page et réessaie.");
+      }
+      return;
+    }
+
+    // token déjà obtenu -> on peut créer le compte
+    await doSignup(captchaToken);
+  };
+
+  const onCaptchaVerify = async (token: string) => {
+    setCaptchaToken(token);
+
+    // si l'utilisateur vient de cliquer "Créer le compte", on continue tout de suite
+    if (pendingSubmit) {
+      await doSignup(token);
+    }
+  };
+
+  const isDisabled = loading || pendingSubmit;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-neutral-100">
       <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
         <div className="w-full max-w-md mx-auto">
-
           <div className="flex justify-between items-center mb-6 text-sm">
             <button onClick={() => router.push("/")} className="hover:underline">
               ← Retour à l’accueil
@@ -109,6 +161,15 @@ export default function InscriptionPage() {
                 <p className="text-xs text-neutral-500 mt-1">Minimum 8 caractères.</p>
               </div>
 
+              {/* hCaptcha invisible */}
+              <HCaptcha
+                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                size="invisible"
+                ref={captchaRef}
+                onVerify={onCaptchaVerify}
+                onExpire={() => setCaptchaToken(null)}
+              />
+
               {errorMsg && (
                 <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
                   {errorMsg}
@@ -122,10 +183,10 @@ export default function InscriptionPage() {
               )}
 
               <button
-                disabled={loading}
+                disabled={isDisabled}
                 className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
               >
-                {loading ? "Création..." : "Créer le compte"}
+                {loading ? "Création..." : pendingSubmit ? "Vérification..." : "Créer le compte"}
               </button>
 
               <p className="text-xs text-neutral-500 text-center pt-1">
