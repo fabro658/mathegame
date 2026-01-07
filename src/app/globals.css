@@ -233,7 +233,7 @@ body {
 }
 
 /* nuage niveau1 primaire */
-.cloud {
+.theme-niveau1 .cloud {
   height: 180px;
   aspect-ratio: 1.8;
   --g: radial-gradient(50% 50%, #000 98%, #0000) no-repeat;
@@ -241,7 +241,7 @@ body {
   background: #eaf6fc; /* ⬅️ blanc bleuté très pâle */
   opacity: 0.8;
 }
-.cloud-button {
+.theme-niveau1 .cloud-button {
   @apply text-blue-900 font-bold text-xl px-10 py-4 text-center transition;
   background: #eaf6fc;
   opacity: 0.9;
@@ -274,7 +274,7 @@ body {
   --brown: #894204;
 }
 
-.airplane-fixed {
+.theme-niveau1 .airplane-fixed {
   width: 50vmin;
   height: 50vmin;
   position: absolute;
