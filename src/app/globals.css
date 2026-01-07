@@ -233,7 +233,8 @@ body {
 }
 
 /* nuage niveau1 primaire */
-.theme-niveau1 .cloud {
+.theme-niveau1 {
+  .cloud {
   height: 180px;
   aspect-ratio: 1.8;
   --g: radial-gradient(50% 50%, #000 98%, #0000) no-repeat;
@@ -241,7 +242,7 @@ body {
   background: #eaf6fc; /* ⬅️ blanc bleuté très pâle */
   opacity: 0.8;
 }
-.theme-niveau1 .cloud-button {
+.cloud-button {
   @apply text-blue-900 font-bold text-xl px-10 py-4 text-center transition;
   background: #eaf6fc;
   opacity: 0.9;
@@ -274,7 +275,7 @@ body {
   --brown: #894204;
 }
 
-.theme-niveau1 .airplane-fixed {
+.airplane-fixed {
   width: 50vmin;
   height: 50vmin;
   position: absolute;
@@ -321,8 +322,10 @@ body {
     radial-gradient(ellipse at 0% 100%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(0vmin)  / 5vmin 10vmin no-repeat,
     radial-gradient(ellipse at 0% 0%, #fe0000 2.25vmin, transparent 0.5vmin ) calc(34.25vmin) calc(9.5vmin)  / 5vmin 5vmin no-repeat;
 }
+}
 
 /* niveau 2 primaire */
+.theme-niveau2{
 .moon {
   position: absolute;
   top: 30px;     /* distance depuis le haut de l'écran */
@@ -390,13 +393,6 @@ body {
   z-index: 0;
 }
 
-
-
-
-
-
-
-
 .crat {
   position: absolute;
   top: 80px;
@@ -443,9 +439,10 @@ body {
   height: 20px;
   box-shadow: inset 1px 7px 7px 1px rgb(204, 183, 204);
 }
+}
 
 /* niveau 3 primaire*/
-
+.theme-niveau3 {
 :root {
   --dark-green: #4e7816;
   --light-green: #568515;
@@ -734,13 +731,10 @@ body {
   background-color: #fcb6a0;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
-
-
-
-
-
+}
 
 /* niveau 4 primaire */
+.theme-niveau4 {
 .planet {
   height: 12.5em;
   width: 12.5em;
@@ -830,9 +824,6 @@ body {
   transform: translateX(-50%);
   background: transparent;
 }
-
-
-
 
 .astronaut {
   position: absolute;
@@ -927,8 +918,6 @@ body {
   z-index: 6;
 }
 
-
-
 /* Bras repositionnés sur les côtés */
 .hand-l,
 .hand-r {
@@ -993,9 +982,6 @@ body {
 }
 
 
-
-
-
 /* Jambes */
 .leg-l,
 .leg-r {
@@ -1040,13 +1026,10 @@ body {
   bottom: -0.09em;
   left: -0.15em;
 }
-
-
-
-
-
+}
 
 /* niveau 5 primaire */
+.theme-niveau5 {
 body {
   background-color: #DDE8FA;
   margin: 0;
@@ -1103,11 +1086,6 @@ body {
   transform: translateY(0) rotate(45deg);
   margin-bottom: -30px;
 }
-
-
-
-
-
 
 .scene {
   position: absolute;
@@ -1200,9 +1178,6 @@ body {
   background-color: #a72828;
 }
 
-
-
-/* Niveau 5 */
 .gifts {
   position: absolute;
   bottom: 100px;
@@ -1470,9 +1445,10 @@ body {
   animation-duration: calc(5s + 5s * random()); /* aléatoire en JS possible */
   left: calc(100% * var(--x)); /* supporté avec CSS variables en JS */
 }
+}
 
-
-/* dernier niveau */
+/* niveau 6*/
+.theme-niveau6 {
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -1649,4 +1625,4 @@ left: -50px;
   background: #f0c756;
   border-radius: 91% 9% 9% 91% / 100% 40% 60% 0%;
   z-index: 5;
-}
+}}
