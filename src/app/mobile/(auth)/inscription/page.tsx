@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
@@ -9,7 +9,6 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 export default function InscriptionPage() {
   const router = useRouter();
 
-  const captchaRef = useRef<any>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [pendingSubmit, setPendingSubmit] = useState(false);
 
