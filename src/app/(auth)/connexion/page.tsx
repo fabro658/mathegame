@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
@@ -18,9 +18,16 @@ export default function ConnexionPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // Optionnel: précharge la page "mot de passe oublié" pour éviter un flash/latence
+  useEffect(() => {
+    router.prefetch("/mot-de-passe-oublie");
+  }, [router]);
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    const emailClean = email.trim().toLowerCase();
 
     if (!captchaToken) {
       setErrorMsg("Confirme le captcha avant de te connecter.");
@@ -30,23 +37,26 @@ export default function ConnexionPage() {
     setLoading(true);
 
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: emailClean,
       password,
-      options: {
-        captchaToken,
-      },
+      options: { captchaToken },
     });
 
     setLoading(false);
 
     if (error) {
       setErrorMsg(error.message);
+      // on invalide le token (souvent à usage unique)
+      setCaptchaToken(null);
       return;
     }
 
     // reset token pour éviter réutilisation
     setCaptchaToken(null);
-    router.push("/");
+
+    // ✅ Redirection plus robuste que "/"
+    // (évite d’être envoyé vers une page “secondaire/mobile” si ta home a une logique de redirect)
+    router.push("/mon-compte");
   };
 
   const isDisabled = loading || !captchaToken;
@@ -56,13 +66,9 @@ export default function ConnexionPage() {
       <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              className="hover:underline"
-            >
+            <Link href="/" className="hover:underline">
               Retour à l’accueil
-            </button>
+            </Link>
 
             <Link href="/inscription" className="hover:underline">
               Créer un compte
