@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import HeaderAuth from "@/components/HeaderAuth";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +33,8 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Boutons Connexion / Mon compte (affichés partout SAUF dans le groupe (auth)) */}
-        <HeaderAuth basePath="" />
+        {/* Navbar: / => Connexion+Inscription, autres => menu hamburger */}
+        <Navbar />
 
         {children}
       </body>
