@@ -5,12 +5,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import type { HCaptcha as HCaptchaType } from "@hcaptcha/react-hcaptcha";
+
+type HCaptchaHandle = {
+  execute: () => void;
+  resetCaptcha: () => void;
+};
 
 export default function InscriptionPage() {
   const router = useRouter();
 
-const captchaRef = useRef<HCaptchaType | null>(null);
+  const captchaRef = useRef<HCaptchaHandle | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [pendingSubmit, setPendingSubmit] = useState(false);
 
@@ -37,7 +41,6 @@ const captchaRef = useRef<HCaptchaType | null>(null);
       email,
       password,
       options: {
-        // IMPORTANT: assure que le lien email renvoie vers le bon domaine
         emailRedirectTo: redirectTo,
         data: {
           first_name: prenom.trim() || null,
@@ -52,9 +55,12 @@ const captchaRef = useRef<HCaptchaType | null>(null);
     // reset captcha/token pour un prochain essai propre
     setCaptchaToken(null);
     setPendingSubmit(false);
+
     try {
-      captchaRef.current?.resetCaptcha?.();
-    } catch {}
+      captchaRef.current?.resetCaptcha();
+    } catch {
+      // no-op
+    }
 
     if (error) {
       setErrorMsg(error.message);
@@ -64,7 +70,7 @@ const captchaRef = useRef<HCaptchaType | null>(null);
     setMsg("Compte créé. Vérifie ton email pour confirmer ton compte.");
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // si on n'a pas encore de token captcha, on déclenche le captcha invisible
@@ -74,7 +80,7 @@ const captchaRef = useRef<HCaptchaType | null>(null);
       setMsg(null);
 
       try {
-        captchaRef.current?.execute?.();
+        captchaRef.current?.execute();
       } catch {
         setPendingSubmit(false);
         setErrorMsg("Erreur captcha. Recharge la page et réessaie.");
@@ -102,7 +108,11 @@ const captchaRef = useRef<HCaptchaType | null>(null);
       <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button onClick={() => router.push("/")} className="hover:underline">
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="hover:underline"
+            >
               ← Retour à l’accueil
             </button>
             <Link href="/connexion" className="hover:underline">
@@ -159,7 +169,9 @@ const captchaRef = useRef<HCaptchaType | null>(null);
                     {showPwd ? "Masquer" : "Afficher"}
                   </button>
                 </div>
-                <p className="text-xs text-neutral-500 mt-1">Minimum 8 caractères.</p>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Minimum 8 caractères.
+                </p>
               </div>
 
               {/* hCaptcha invisible */}
@@ -187,7 +199,11 @@ const captchaRef = useRef<HCaptchaType | null>(null);
                 disabled={isDisabled}
                 className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
               >
-                {loading ? "Création..." : pendingSubmit ? "Vérification..." : "Créer le compte"}
+                {loading
+                  ? "Création..."
+                  : pendingSubmit
+                  ? "Vérification..."
+                  : "Créer le compte"}
               </button>
 
               <p className="text-xs text-neutral-500 text-center pt-1">
