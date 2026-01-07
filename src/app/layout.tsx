@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import Navbar from "@/components/Navbar";
+import HeaderSwitcher from "@/components/HeaderSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +33,8 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-        {/* Navbar: / => Connexion+Inscription, autres => menu hamburger */}
-        <Navbar />
+        {/* Sur / : rien (accueil inchangé). Sur le reste : hamburger/menu */}
+        <HeaderSwitcher />
 
         {children}
       </body>

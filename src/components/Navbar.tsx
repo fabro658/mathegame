@@ -44,111 +44,56 @@ export default function Navbar() {
   const inscriptionHref = "/inscription";
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: "rgba(0,0,0,0.35)",
-        backdropFilter: "blur(8px)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
-      <div
+  <div style={{ position: "fixed", top: 16, left: 16, zIndex: 60 }}>
+    <div className="ks-menu-group" style={{ position: "relative" }}>
+      <button
+        type="button"
+        aria-label="Menu"
         style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "12px 16px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 12,
+          width: 42,
+          height: 42,
+          borderRadius: 12,
+          border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(0,0,0,0.35)",
+          backdropFilter: "blur(8px)",
+          display: "grid",
+          placeItems: "center",
+          cursor: "default",
         }}
       >
-        {/* Gauche : logo / titre */}
-        <Link
-          href="/"
-          style={{
-            color: "white",
-            textDecoration: "none",
-            fontWeight: 800,
-            letterSpacing: 0.2,
-          }}
-        >
-          KnowledgeScroll
-        </Link>
+        <span style={barStyle} />
+        <span style={barStyle} />
+        <span style={barStyle} />
+      </button>
 
-        {/* Droite : soit boutons (home), soit hamburger (autres pages) */}
-        {isHome ? (
-          <div style={{ display: "flex", gap: 10 }}>
-            <Link href={connexionHref} style={btnStyle("ghost")}>
-              Connexion
-            </Link>
-            <Link href={inscriptionHref} style={btnStyle("solid")}>
-              Inscription
-            </Link>
-          </div>
-        ) : (
-          <div style={{ position: "relative" }}>
-            {/* Wrapper "group" pour hover */}
-            <div className="ks-menu-group" style={{ position: "relative" }}>
-              {/* Hamburger */}
-              <button
-                type="button"
-                aria-label="Menu"
-                style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 12,
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  background: "rgba(255,255,255,0.06)",
-                  display: "grid",
-                  placeItems: "center",
-                  cursor: "default",
-                }}
-              >
-                <span style={barStyle} />
-                <span style={barStyle} />
-                <span style={barStyle} />
-              </button>
-
-              {/* Dropdown au hover */}
-              <div
-                className="ks-dropdown"
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 48,
-                  minWidth: 210,
-                  padding: 8,
-                  borderRadius: 14,
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: "rgba(15,15,15,0.92)",
-                  boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
-                  display: "none",
-                }}
-              >
-                <MenuLink href={apprendreHref} label="Apprendre" />
-                <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "6px 6px" }} />
-                {user ? (
-                  <MenuLink href={compteHref} label="Mon compte" />
-                ) : (
-                  <MenuLink href={connexionHref} label="Connexion" />
-                )}
-              </div>
-            </div>
-
-            {/* CSS hover (sans Tailwind) */}
-            <style jsx>{`
-              .ks-menu-group:hover .ks-dropdown {
-                display: block;
-              }
-            `}</style>
-          </div>
-        )}
+      <div
+        className="ks-dropdown"
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 48,
+          minWidth: 210,
+          padding: 8,
+          borderRadius: 14,
+          border: "1px solid rgba(255,255,255,0.12)",
+          background: "rgba(15,15,15,0.92)",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+          display: "none",
+        }}
+      >
+        <MenuLink href="/apprendre" label="Apprendre" />
+        <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "6px 6px" }} />
+        {user ? <MenuLink href="/mon-compte" label="Mon compte" /> : <MenuLink href="/connexion" label="Connexion" />}
       </div>
-    </header>
-  );
+    </div>
+
+    <style jsx>{`
+      .ks-menu-group:hover .ks-dropdown {
+        display: block;
+      }
+    `}</style>
+  </div>
+);
 }
 
 function MenuLink({ href, label }: { href: string; label: string }) {
