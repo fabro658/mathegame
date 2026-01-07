@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 
 export default function ConnexionPage() {
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -17,10 +20,7 @@ export default function ConnexionPage() {
     setErrorMsg(null);
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     setLoading(false);
 
@@ -33,42 +33,87 @@ export default function ConnexionPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <form onSubmit={onSubmit} className="w-full max-w-sm bg-white rounded-2xl p-6 shadow">
-        <h1 className="text-xl font-semibold mb-4">Connexion</h1>
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-sky-50 to-indigo-50">
+      <div className="w-full max-w-md">
+        <div className="flex justify-between items-center mb-4">
+          <button
+            onClick={() => router.push("/")}
+            className="text-sm text-neutral-700 hover:underline"
+          >
+            ← Retour à l’accueil
+          </button>
 
-        <label className="text-sm font-medium">Email</label>
-        <input
-          className="w-full border rounded-xl px-3 py-2 mt-1 mb-3"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          required
-        />
-
-        <label className="text-sm font-medium">Mot de passe</label>
-        <input
-          className="w-full border rounded-xl px-3 py-2 mt-1 mb-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          required
-        />
-
-        {errorMsg && <div className="mb-3 text-sm text-red-600">{errorMsg}</div>}
-
-        <button
-          disabled={loading}
-          className="w-full bg-black text-white rounded-xl py-2 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
-        >
-          {loading ? "Connexion..." : "Se connecter"}
-        </button>
-
-        <div className="mt-4 text-sm flex justify-between">
-          <Link className="underline" href="/inscription">Créer un compte</Link>
-          <Link className="underline" href="/mot-de-passe-oublie">Mot de passe oublié</Link>
+          <Link href="/inscription" className="text-sm text-neutral-700 hover:underline">
+            Créer un compte
+          </Link>
         </div>
-      </form>
+
+        <div className="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-md border border-black/5">
+          <div className="mb-5">
+            <h1 className="text-2xl font-bold text-neutral-900">Connexion</h1>
+            <p className="text-sm text-neutral-600 mt-1">
+              Reprends là où tu t’étais rendu.
+            </p>
+          </div>
+
+          <form onSubmit={onSubmit} className="space-y-3">
+            <div>
+              <label className="text-sm font-medium text-neutral-800">Email</label>
+              <input
+                className="w-full mt-1 border border-neutral-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                required
+                autoComplete="email"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-neutral-800">Mot de passe</label>
+              <div className="mt-1 flex items-stretch gap-2">
+                <input
+                  className="flex-1 border border-neutral-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={showPwd ? "text" : "password"}
+                  required
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPwd((v) => !v)}
+                  className="px-3 rounded-xl border border-neutral-200 text-sm hover:bg-neutral-50"
+                >
+                  {showPwd ? "Masquer" : "Afficher"}
+                </button>
+              </div>
+            </div>
+
+            {errorMsg && (
+              <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              disabled={loading}
+              className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
+            >
+              {loading ? "Connexion..." : "Se connecter"}
+            </button>
+
+            <div className="flex justify-between text-sm">
+              <Link className="underline text-neutral-700" href="/mot-de-passe-oublie">
+                Mot de passe oublié
+              </Link>
+              <Link className="underline text-neutral-700" href="/inscription">
+                Créer un compte
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
