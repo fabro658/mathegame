@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
@@ -40,7 +40,7 @@ export default function InscriptionPage() {
       return;
     }
 
-    setMsg("Compte créé ✅ Vérifie ton email pour confirmer ton compte.");
+    setMsg("Compte créé Vérifie ton email pour confirmer ton compte.");
   };
 
   return (
