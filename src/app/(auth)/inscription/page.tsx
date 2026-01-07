@@ -40,101 +40,99 @@ export default function InscriptionPage() {
       return;
     }
 
-    setMsg("Compte créé Vérifie ton email pour confirmer ton compte.");
+    setMsg("Compte créé ✅ Vérifie ton email pour confirmer ton compte.");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-sky-50 to-indigo-50">
-      <div className="w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <button
-            onClick={() => router.push("/")}
-            className="text-sm text-neutral-700 hover:underline"
-          >
-            ← Retour à l’accueil
-          </button>
+    <div className="min-h-screen flex items-center justify-center p-6 bg-neutral-100">
+      <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
+        <div className="w-full max-w-md mx-auto">
 
-          <Link href="/connexion" className="text-sm text-neutral-700 hover:underline">
-            Connexion
-          </Link>
-        </div>
-
-        <div className="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-md border border-black/5">
-          <div className="mb-5">
-            <h1 className="text-2xl font-bold text-neutral-900">Créer un compte</h1>
-            <p className="text-sm text-neutral-600 mt-1">
-              Pour sauvegarder tes progrès et accéder à ton espace.
-            </p>
+          <div className="flex justify-between items-center mb-6 text-sm">
+            <button onClick={() => router.push("/")} className="hover:underline">
+              ← Retour à l’accueil
+            </button>
+            <Link href="/connexion" className="hover:underline">
+              Connexion
+            </Link>
           </div>
 
-          <form onSubmit={onSubmit} className="space-y-3">
-            <div>
-              <label className="text-sm font-medium text-neutral-800">Prénom (optionnel)</label>
-              <input
-                className="w-full mt-1 border border-neutral-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                value={prenom}
-                onChange={(e) => setPrenom(e.target.value)}
-                autoComplete="given-name"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-neutral-800">Email</label>
-              <input
-                className="w-full mt-1 border border-neutral-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                required
-                autoComplete="email"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-neutral-800">Mot de passe</label>
-              <div className="mt-1 flex items-stretch gap-2">
-                <input
-                  className="flex-1 border border-neutral-200 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type={showPwd ? "text" : "password"}
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPwd((v) => !v)}
-                  className="px-3 rounded-xl border border-neutral-200 text-sm hover:bg-neutral-50"
-                >
-                  {showPwd ? "Masquer" : "Afficher"}
-                </button>
-              </div>
-              <p className="text-xs text-neutral-500 mt-1">Minimum 8 caractères.</p>
-            </div>
-
-            {errorMsg && (
-              <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
-                {errorMsg}
-              </div>
-            )}
-            {msg && (
-              <div className="text-sm text-green-700 bg-green-50 border border-green-100 rounded-xl p-3">
-                {msg}
-              </div>
-            )}
-
-            <button
-              disabled={loading}
-              className="w-full mt-1 bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
-            >
-              {loading ? "Création..." : "Créer le compte"}
-            </button>
-
-            <p className="text-xs text-neutral-500 text-center">
-              En créant un compte, tu acceptes les conditions d’utilisation.
+          <div className="bg-white/95 rounded-3xl p-7 shadow-lg border border-black/10">
+            <h1 className="text-2xl font-bold mb-1">Créer un compte</h1>
+            <p className="text-sm text-neutral-600 mb-6">
+              Pour sauvegarder tes progrès et accéder à ton espace.
             </p>
-          </form>
+
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Prénom (optionnel)</label>
+                <input
+                  className="w-full mt-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={prenom}
+                  onChange={(e) => setPrenom(e.target.value)}
+                  autoComplete="given-name"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <input
+                  className="w-full mt-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  required
+                  autoComplete="email"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Mot de passe</label>
+                <div className="mt-1 flex gap-2">
+                  <input
+                    className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPwd ? "text" : "password"}
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPwd((v) => !v)}
+                    className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                  >
+                    {showPwd ? "Masquer" : "Afficher"}
+                  </button>
+                </div>
+                <p className="text-xs text-neutral-500 mt-1">Minimum 8 caractères.</p>
+              </div>
+
+              {errorMsg && (
+                <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
+                  {errorMsg}
+                </div>
+              )}
+
+              {msg && (
+                <div className="text-sm text-green-700 bg-green-50 border border-green-100 rounded-xl p-3">
+                  {msg}
+                </div>
+              )}
+
+              <button
+                disabled={loading}
+                className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
+              >
+                {loading ? "Création..." : "Créer le compte"}
+              </button>
+
+              <p className="text-xs text-neutral-500 text-center pt-1">
+                En créant un compte, tu acceptes les conditions d’utilisation.
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </div>
