@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function InscriptionPage() {
-  const router = useRouter();
+  const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
 
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
@@ -26,6 +25,11 @@ export default function InscriptionPage() {
     setMsg(null);
     setErrorMsg(null);
 
+    if (!siteKey) {
+      setErrorMsg("hCaptcha n’est pas configuré (clé publique manquante).");
+      return;
+    }
+
     if (!captchaToken) {
       setErrorMsg("Confirme le captcha avant de créer ton compte.");
       return;
@@ -33,9 +37,10 @@ export default function InscriptionPage() {
 
     setLoading(true);
 
+    // WEB (ordi) -> renvoie vers /connexion
     const redirectTo =
       typeof window !== "undefined"
-        ? `${window.location.origin}/mobile/connexion`
+        ? `${window.location.origin}/connexion`
         : undefined;
 
     const { error } = await supabase.auth.signUp({
@@ -59,21 +64,20 @@ export default function InscriptionPage() {
     setCaptchaToken(null);
   };
 
-  const isDisabled = loading || !captchaToken;
+  const isDisabled = loading || !siteKey || !captchaToken;
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-[#d8d3a1] to-[#f2c14e] flex items-center justify-center px-6">
-  <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
+      <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              className="hover:underline"
-            >
+            {/* Plus stable que router.push("/") */}
+            <Link href="/" className="hover:underline">
               Retour à l’accueil
-            </button>
-            <Link href="/mobile/connexion" className="hover:underline">
+            </Link>
+
+            {/* WEB (ordi) */}
+            <Link href="/connexion" className="hover:underline">
               Connexion
             </Link>
           </div>
@@ -133,11 +137,17 @@ export default function InscriptionPage() {
               </div>
 
               <div className="pt-2">
-                <HCaptcha
-                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-                  onVerify={(token) => setCaptchaToken(token)}
-                  onExpire={() => setCaptchaToken(null)}
-                />
+                {siteKey ? (
+                  <HCaptcha
+                    sitekey={siteKey}
+                    onVerify={(token) => setCaptchaToken(token)}
+                    onExpire={() => setCaptchaToken(null)}
+                  />
+                ) : (
+                  <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
+                    NEXT_PUBLIC_HCAPTCHA_SITE_KEY manquant.
+                  </div>
+                )}
               </div>
 
               {errorMsg && (

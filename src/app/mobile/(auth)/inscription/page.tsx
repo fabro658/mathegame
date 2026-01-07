@@ -98,9 +98,10 @@ export default function InscriptionPage() {
       <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button onClick={() => router.push("/")} className="hover:underline">
-              ← Retour à l’accueil
-            </button>
+            <Link href="/mobile" className="hover:underline">
+              Retour à l’accueil
+             </Link>
+
             <Link href="/connexion" className="hover:underline">
               Connexion
             </Link>
