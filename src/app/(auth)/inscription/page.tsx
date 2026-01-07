@@ -35,7 +35,7 @@ export default function InscriptionPage() {
 
     const redirectTo =
       typeof window !== "undefined"
-        ? `${window.location.origin}/connexion`
+        ? `${window.location.origin}/mobile/connexion`
         : undefined;
 
     const { error } = await supabase.auth.signUp({
@@ -43,9 +43,7 @@ export default function InscriptionPage() {
       password,
       options: {
         emailRedirectTo: redirectTo,
-        data: {
-          first_name: prenom.trim() || null,
-        },
+        data: { first_name: prenom.trim() || null },
         captchaToken,
       },
     });
@@ -134,16 +132,12 @@ export default function InscriptionPage() {
                 </p>
               </div>
 
-              {/* hCaptcha (visible, sans ref => zéro any) */}
               <div className="pt-2">
                 <HCaptcha
                   sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
                   onVerify={(token) => setCaptchaToken(token)}
                   onExpire={() => setCaptchaToken(null)}
                 />
-                <p className="text-xs text-neutral-500 mt-2">
-                  (Captcha requis pour créer un compte)
-                </p>
               </div>
 
               {errorMsg && (
