@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import AuthButtons from "@/components/AuthButtons";
 
 export default function Home() {
   const router = useRouter();
@@ -37,8 +36,6 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
-      {/* Auth global */}
-      <AuthButtons />
 
       {/* Menu gauche */}
       <header className="absolute top-4 left-4">
