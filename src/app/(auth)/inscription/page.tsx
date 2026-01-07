@@ -1,22 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-type HCaptchaHandle = {
-  execute: () => void;
-  resetCaptcha: () => void;
-};
-
 export default function InscriptionPage() {
   const router = useRouter();
 
-  const captchaRef = useRef<HCaptchaHandle | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [pendingSubmit, setPendingSubmit] = useState(false);
 
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
@@ -27,9 +20,17 @@ export default function InscriptionPage() {
   const [msg, setMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const doSignup = async (token: string) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     setMsg(null);
     setErrorMsg(null);
+
+    if (!captchaToken) {
+      setErrorMsg("Confirme le captcha avant de créer ton compte.");
+      return;
+    }
+
     setLoading(true);
 
     const redirectTo =
@@ -45,22 +46,11 @@ export default function InscriptionPage() {
         data: {
           first_name: prenom.trim() || null,
         },
-        // Supabase validera automatiquement le captcha côté serveur
-        captchaToken: token,
+        captchaToken,
       },
     });
 
     setLoading(false);
-
-    // reset captcha/token pour un prochain essai propre
-    setCaptchaToken(null);
-    setPendingSubmit(false);
-
-    try {
-      captchaRef.current?.resetCaptcha();
-    } catch {
-      // no-op
-    }
 
     if (error) {
       setErrorMsg(error.message);
@@ -68,40 +58,10 @@ export default function InscriptionPage() {
     }
 
     setMsg("Compte créé. Vérifie ton email pour confirmer ton compte.");
+    setCaptchaToken(null);
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // si on n'a pas encore de token captcha, on déclenche le captcha invisible
-    if (!captchaToken) {
-      setPendingSubmit(true);
-      setErrorMsg(null);
-      setMsg(null);
-
-      try {
-        captchaRef.current?.execute();
-      } catch {
-        setPendingSubmit(false);
-        setErrorMsg("Erreur captcha. Recharge la page et réessaie.");
-      }
-      return;
-    }
-
-    // token déjà obtenu -> on peut créer le compte
-    await doSignup(captchaToken);
-  };
-
-  const onCaptchaVerify = async (token: string) => {
-    setCaptchaToken(token);
-
-    // si l'utilisateur vient de cliquer "Créer le compte", on continue tout de suite
-    if (pendingSubmit) {
-      await doSignup(token);
-    }
-  };
-
-  const isDisabled = loading || pendingSubmit;
+  const isDisabled = loading || !captchaToken;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
@@ -115,7 +75,7 @@ export default function InscriptionPage() {
             >
               ← Retour à l’accueil
             </button>
-            <Link href="/connexion" className="hover:underline">
+            <Link href="/mobile/connexion" className="hover:underline">
               Connexion
             </Link>
           </div>
@@ -174,14 +134,17 @@ export default function InscriptionPage() {
                 </p>
               </div>
 
-              {/* hCaptcha invisible */}
-              <HCaptcha
-                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-                size="invisible"
-                ref={captchaRef}
-                onVerify={onCaptchaVerify}
-                onExpire={() => setCaptchaToken(null)}
-              />
+              {/* hCaptcha (visible, sans ref => zéro any) */}
+              <div className="pt-2">
+                <HCaptcha
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                  onVerify={(token) => setCaptchaToken(token)}
+                  onExpire={() => setCaptchaToken(null)}
+                />
+                <p className="text-xs text-neutral-500 mt-2">
+                  (Captcha requis pour créer un compte)
+                </p>
+              </div>
 
               {errorMsg && (
                 <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
@@ -199,11 +162,7 @@ export default function InscriptionPage() {
                 disabled={isDisabled}
                 className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
               >
-                {loading
-                  ? "Création..."
-                  : pendingSubmit
-                  ? "Vérification..."
-                  : "Créer le compte"}
+                {loading ? "Création..." : "Créer le compte"}
               </button>
 
               <p className="text-xs text-neutral-500 text-center pt-1">
