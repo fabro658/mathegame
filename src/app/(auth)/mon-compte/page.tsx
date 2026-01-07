@@ -42,7 +42,40 @@ export default function MonComptePage() {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Sécurité suppression
+  // --------- Modifier mot de passe ----------
+  const [pwdBusy, setPwdBusy] = useState(false);
+  const [pwdMsg, setPwdMsg] = useState<string | null>(null);
+  const [pwdErr, setPwdErr] = useState<string | null>(null);
+
+  const [oldPwd, setOldPwd] = useState("");
+  const [newPwd1, setNewPwd1] = useState("");
+  const [newPwd2, setNewPwd2] = useState("");
+
+  const [showOld, setShowOld] = useState(false);
+  const [showNew1, setShowNew1] = useState(false);
+  const [showNew2, setShowNew2] = useState(false);
+
+  const rules = useMemo(() => {
+    const min8 = newPwd1.length >= 8;
+    const hasUpper = /[A-Z]/.test(newPwd1);
+    const hasNumber = /[0-9]/.test(newPwd1);
+    return { min8, hasUpper, hasNumber };
+  }, [newPwd1]);
+
+  const allRulesOk = rules.min8 && rules.hasUpper && rules.hasNumber;
+  const sameNewPwds = newPwd1.length > 0 && newPwd1 === newPwd2;
+
+  const canSubmitPwd =
+    !pwdBusy &&
+    !busy &&
+    !!user?.email &&
+    oldPwd.length > 0 &&
+    allRulesOk &&
+    sameNewPwds;
+
+  const ruleClass = (ok: boolean) => (ok ? "text-green-700" : "text-neutral-800");
+
+  // --------- Sécurité suppression ----------
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
 
@@ -139,6 +172,50 @@ export default function MonComptePage() {
     }
   };
 
+  // ---- Changer mot de passe ----
+  const changePassword = async () => {
+    if (!user?.email) return;
+
+    setPwdBusy(true);
+    setPwdMsg(null);
+    setPwdErr(null);
+
+    try {
+      // 1) Vérifier l'ancien mot de passe (re-login)
+      const { error: reauthError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: oldPwd,
+      });
+
+      if (reauthError) {
+        throw new Error("Ancien mot de passe incorrect.");
+      }
+
+      // 2) Mettre à jour le mot de passe
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: newPwd1,
+      });
+
+      if (updateError) {
+        throw new Error(updateError.message);
+      }
+
+      setPwdMsg("Mot de passe mis à jour.");
+
+      // 3) Clean UI
+      setOldPwd("");
+      setNewPwd1("");
+      setNewPwd2("");
+
+      // Optionnel : recharger l’utilisateur/session
+      await supabase.auth.getSession();
+    } catch (e) {
+      setPwdErr(e instanceof Error ? e.message : "Erreur inconnue.");
+    } finally {
+      setPwdBusy(false);
+    }
+  };
+
   if (loading) return null;
 
   return (
@@ -173,11 +250,126 @@ export default function MonComptePage() {
           )}
         </div>
 
+        {/* --------- Modifier mot de passe --------- */}
+        <div className="mt-8 border-t pt-6">
+          <h2 className="font-semibold">Modifier le mot de passe</h2>
+          <p className="text-sm text-neutral-600 mt-1">
+            Affiche ton ancien mot de passe, puis choisis un nouveau.
+          </p>
+
+          <div className="mt-4 space-y-4">
+            {/* Ancien */}
+            <div>
+              <label className="text-sm font-medium">Ancien mot de passe</label>
+              <div className="mt-1 flex gap-2">
+                <input
+                  className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={oldPwd}
+                  onChange={(e) => setOldPwd(e.target.value)}
+                  type={showOld ? "text" : "password"}
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowOld((v) => !v)}
+                  className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                >
+                  {showOld ? "Masquer" : "Afficher"}
+                </button>
+              </div>
+            </div>
+
+            {/* Nouveau */}
+            <div>
+              <label className="text-sm font-medium">Nouveau mot de passe</label>
+              <div className="mt-1 flex gap-2">
+                <input
+                  className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={newPwd1}
+                  onChange={(e) => setNewPwd1(e.target.value)}
+                  type={showNew1 ? "text" : "password"}
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNew1((v) => !v)}
+                  className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                >
+                  {showNew1 ? "Masquer" : "Afficher"}
+                </button>
+              </div>
+
+              <div className="mt-2 space-y-1 text-xs">
+                <div className={ruleClass(rules.min8)}>• 8 caractères minimum</div>
+                <div className={ruleClass(rules.hasUpper)}>• 1 majuscule</div>
+                <div className={ruleClass(rules.hasNumber)}>• 1 chiffre</div>
+              </div>
+            </div>
+
+            {/* Confirmer */}
+            <div>
+              <label className="text-sm font-medium">
+                Confirmer le nouveau mot de passe
+              </label>
+              <div className="mt-1 flex gap-2">
+                <input
+                  className="flex-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  value={newPwd2}
+                  onChange={(e) => setNewPwd2(e.target.value)}
+                  type={showNew2 ? "text" : "password"}
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNew2((v) => !v)}
+                  className="px-4 rounded-xl border text-sm hover:bg-neutral-50"
+                >
+                  {showNew2 ? "Masquer" : "Afficher"}
+                </button>
+              </div>
+
+              {newPwd2.length > 0 && (
+                <div
+                  className={`mt-2 text-xs ${
+                    sameNewPwds ? "text-green-700" : "text-red-600"
+                  }`}
+                >
+                  {sameNewPwds
+                    ? "• Les mots de passe correspondent"
+                    : "• Les mots de passe ne correspondent pas"}
+                </div>
+              )}
+            </div>
+
+            {pwdErr && (
+              <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-2xl p-4">
+                {pwdErr}
+              </div>
+            )}
+
+            {pwdMsg && (
+              <div className="text-sm text-green-700 bg-green-50 border border-green-100 rounded-2xl p-4">
+                {pwdMsg}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={changePassword}
+              disabled={!canSubmitPwd}
+              className="w-full px-5 py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 disabled:opacity-60"
+            >
+              {pwdBusy ? "Mise à jour..." : "Mettre à jour le mot de passe"}
+            </button>
+          </div>
+        </div>
+
+        {/* Boutons bas */}
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => router.push("/")}
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-neutral-200 hover:bg-neutral-50"
-            disabled={busy}
+            disabled={busy || pwdBusy}
           >
             Retour à l’accueil
           </button>
@@ -185,12 +377,13 @@ export default function MonComptePage() {
           <button
             onClick={logout}
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 disabled:opacity-60"
-            disabled={busy}
+            disabled={busy || pwdBusy}
           >
             Déconnexion
           </button>
         </div>
 
+        {/* Zone dangereuse */}
         <div className="mt-8 border-t pt-6">
           <h2 className="font-semibold text-red-600">Zone dangereuse</h2>
           <p className="text-sm text-neutral-600 mt-1">
@@ -200,7 +393,7 @@ export default function MonComptePage() {
           <button
             onClick={openDelete}
             className="mt-4 w-full px-5 py-2.5 rounded-xl bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
-            disabled={busy}
+            disabled={busy || pwdBusy}
           >
             Supprimer mon compte
           </button>
