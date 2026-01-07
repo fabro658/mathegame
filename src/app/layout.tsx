@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import HeaderAuth from "@/components/HeaderAuth";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "ExploreMath",
-  description: "ExploreMath – plateforme de maths",
+  description: "ExploreMath – Plateforme éducative de mathématiques",
 };
 
 export default function RootLayout({
@@ -26,7 +27,14 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Boutons auth top-right sur version web */}
+
+        {/* hCaptcha script GLOBAL (obligatoire) */}
+        <Script
+          src="https://js.hcaptcha.com/1/api.js"
+          strategy="afterInteractive"
+        />
+
+        {/* Boutons Connexion / Mon compte */}
         <HeaderAuth basePath="" />
 
         {children}
