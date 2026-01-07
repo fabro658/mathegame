@@ -62,7 +62,7 @@ export default function InscriptionPage() {
   const isDisabled = loading || !captchaToken;
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-sky-200 to-blue-300 flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-neutral-100">
       <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
