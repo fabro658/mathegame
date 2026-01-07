@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -10,21 +10,26 @@ type UserInfo = {
   firstName: string | null;
 };
 
-export default function ComptePage() {
+export default function MonComptePage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+
   const [user, setUser] = useState<UserInfo | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  // Sécurité suppression
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+
+  const confirmOk = useMemo(() => confirmText.trim().toUpperCase() === "SUPPRIMER", [confirmText]);
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
 
       const { data, error } = await supabase.auth.getUser();
-
       if (error || !data.user) {
         router.push("/connexion");
         return;
@@ -46,45 +51,66 @@ export default function ComptePage() {
   const logout = async () => {
     setBusy(true);
     setErrorMsg(null);
-    setSuccessMsg(null);
-
     await supabase.auth.signOut();
     setBusy(false);
-
     router.push("/");
+  };
+
+  const openDelete = () => {
+    setErrorMsg(null);
+    setConfirmText("");
+    setConfirmOpen(true);
   };
 
   const deleteAccount = async () => {
     if (!user) return;
 
-    const ok = confirm(
-      "Supprimer ton compte définitivement ?\n\nCette action est irréversible."
-    );
-    if (!ok) return;
-
     setBusy(true);
     setErrorMsg(null);
-    setSuccessMsg(null);
 
     try {
-      const res = await fetch("/api/delete-account", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id }),
-      });
+      // Récupère le token pour l'API
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
 
-      const json = (await res.json()) as { success?: boolean; error?: string };
-
-      if (!res.ok || json.error) {
-        throw new Error(json.error || "Erreur lors de la suppression du compte.");
+      if (!token) {
+        throw new Error("Session invalide. Reconnecte-toi et réessaie.");
       }
 
+      const res = await fetch("/api/delete_account", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Toujours lire en text puis parser si possible => plus robuste
+      const raw = await res.text();
+      let json: any = null;
+      try {
+        json = raw ? JSON.parse(raw) : null;
+      } catch {
+        // si serveur renvoie HTML, on affiche un message clair
+        throw new Error("Réponse serveur invalide (non-JSON). Vérifie les logs Vercel.");
+      }
+
+      if (!res.ok) {
+        throw new Error(json?.error || "Erreur serveur.");
+      }
+
+      if (!json?.success) {
+        throw new Error(json?.error || "Suppression échouée.");
+      }
+
+      // Déconnexion + retour accueil
       await supabase.auth.signOut();
       router.push("/");
     } catch (e) {
       setErrorMsg(e instanceof Error ? e.message : "Erreur inconnue.");
     } finally {
       setBusy(false);
+      setConfirmOpen(false);
     }
   };
 
@@ -120,11 +146,6 @@ export default function ComptePage() {
               {errorMsg}
             </div>
           )}
-          {successMsg && (
-            <div className="text-sm text-green-700 bg-green-50 border border-green-100 rounded-2xl p-4">
-              {successMsg}
-            </div>
-          )}
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -152,7 +173,7 @@ export default function ComptePage() {
           </p>
 
           <button
-            onClick={deleteAccount}
+            onClick={openDelete}
             className="mt-4 w-full px-5 py-2.5 rounded-xl bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
             disabled={busy}
           >
@@ -160,6 +181,46 @@ export default function ComptePage() {
           </button>
         </div>
       </div>
+
+      {/* Modal de confirmation */}
+      {confirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-black/10 p-6">
+            <h3 className="text-lg font-semibold">Confirmation</h3>
+            <p className="text-sm text-neutral-600 mt-1">
+              Tape <span className="font-semibold">SUPPRIMER</span> pour confirmer.
+            </p>
+
+            <input
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              className="mt-4 w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="SUPPRIMER"
+              autoFocus
+            />
+
+            <div className="mt-5 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setConfirmOpen(false)}
+                className="flex-1 px-4 py-2.5 rounded-xl border hover:bg-neutral-50"
+                disabled={busy}
+              >
+                Annuler
+              </button>
+
+              <button
+                type="button"
+                onClick={deleteAccount}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
+                disabled={busy || !confirmOk}
+              >
+                {busy ? "Suppression..." : "Confirmer"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
