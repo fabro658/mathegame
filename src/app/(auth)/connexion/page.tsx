@@ -54,7 +54,7 @@ export default function ConnexionPage() {
     // reset token pour éviter réutilisation
     setCaptchaToken(null);
 
-    // ✅ Redirection plus robuste que "/"
+    //  Redirection plus robuste que "/"
     // (évite d’être envoyé vers une page “secondaire/mobile” si ta home a une logique de redirect)
     router.push("/mon-compte");
   };
@@ -139,8 +139,9 @@ export default function ConnexionPage() {
 
               <div className="flex justify-between text-sm">
                 <Link className="underline text-neutral-700" href="/mot-de-passe-oublie">
-                  Mot de passe oublié
+                 Mot de passe oublié
                 </Link>
+
                 <Link className="underline text-neutral-700" href="/inscription">
                   Créer un compte
                 </Link>
