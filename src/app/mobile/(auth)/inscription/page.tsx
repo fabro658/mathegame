@@ -4,126 +4,57 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-export default function InscriptionPage() {
+export default function ConnexionPage() {
   const router = useRouter();
 
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [pendingSubmit, setPendingSubmit] = useState(false);
-
-  const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const doSignup = async (token: string) => {
-    setMsg(null);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setErrorMsg(null);
     setLoading(true);
 
-    const redirectTo =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/connexion`
-        : undefined;
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        // IMPORTANT: assure que le lien email renvoie vers le bon domaine
-        emailRedirectTo: redirectTo,
-        data: {
-          first_name: prenom.trim() || null,
-        },
-        // Supabase validera automatiquement le captcha côté serveur
-        captchaToken: token,
-      },
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     setLoading(false);
-
-    // reset captcha/token pour un prochain essai propre
-    setCaptchaToken(null);
-    setPendingSubmit(false);
-    try {
-    } catch {}
 
     if (error) {
       setErrorMsg(error.message);
       return;
     }
 
-    setMsg("Compte créé. Vérifie ton email pour confirmer ton compte.");
+    // Après login sur mobile, renvoie vers la home mobile (adapte si tu veux)
+    router.push("/mobile");
   };
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // si on n'a pas encore de token captcha, on déclenche le captcha invisible
-    if (!captchaToken) {
-      setPendingSubmit(true);
-      setErrorMsg(null);
-      setMsg(null);
-
-      try {
-      } catch {
-        setPendingSubmit(false);
-        setErrorMsg("Erreur captcha. Recharge la page et réessaie.");
-      }
-      return;
-    }
-
-    // token déjà obtenu -> on peut créer le compte
-    await doSignup(captchaToken);
-  };
-
-  const onCaptchaVerify = async (token: string) => {
-    setCaptchaToken(token);
-
-    // si l'utilisateur vient de cliquer "Créer le compte", on continue tout de suite
-    if (pendingSubmit) {
-      await doSignup(token);
-    }
-  };
-
-  const isDisabled = loading || pendingSubmit;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-neutral-100">
-      <div className="auth-shell w-full max-w-5xl rounded-[32px] p-6 sm:p-10 shadow-xl">
+    <div className="min-h-screen w-full bg-gradient-to-r from-[#d8d3a1] to-[#f2c14e] flex items-center justify-center px-6">
+      <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
             <Link href="/mobile" className="hover:underline">
               Retour à l’accueil
-             </Link>
+            </Link>
 
-            <Link href="/connexion" className="hover:underline">
-              Connexion
+            {/* IMPORTANT: mobile -> /mobile/inscription */}
+            <Link href="/mobile/inscription" className="hover:underline">
+              Créer un compte
             </Link>
           </div>
 
           <div className="bg-white/95 rounded-3xl p-7 shadow-lg border border-black/10">
-            <h1 className="text-2xl font-bold mb-1">Créer un compte</h1>
+            <h1 className="text-2xl font-bold mb-1">Connexion</h1>
             <p className="text-sm text-neutral-600 mb-6">
-              Pour sauvegarder tes progrès et accéder à ton espace.
+              Reprends là où tu t’étais rendu.
             </p>
 
             <form onSubmit={onSubmit} className="space-y-4">
-              <div>
-                <label className="text-sm font-medium">Prénom (optionnel)</label>
-                <input
-                  className="w-full mt-1 rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-                  value={prenom}
-                  onChange={(e) => setPrenom(e.target.value)}
-                  autoComplete="given-name"
-                />
-              </div>
-
               <div>
                 <label className="text-sm font-medium">Email</label>
                 <input
@@ -145,8 +76,7 @@ export default function InscriptionPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     type={showPwd ? "text" : "password"}
                     required
-                    minLength={8}
-                    autoComplete="new-password"
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"
@@ -156,16 +86,7 @@ export default function InscriptionPage() {
                     {showPwd ? "Masquer" : "Afficher"}
                   </button>
                 </div>
-                <p className="text-xs text-neutral-500 mt-1">Minimum 8 caractères.</p>
               </div>
-
-              {/* hCaptcha invisible */}
-              <HCaptcha
-                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-                size="invisible"
-                onVerify={onCaptchaVerify}
-                onExpire={() => setCaptchaToken(null)}
-              />
 
               {errorMsg && (
                 <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3">
@@ -173,22 +94,21 @@ export default function InscriptionPage() {
                 </div>
               )}
 
-              {msg && (
-                <div className="text-sm text-green-700 bg-green-50 border border-green-100 rounded-xl p-3">
-                  {msg}
-                </div>
-              )}
-
               <button
-                disabled={isDisabled}
+                disabled={loading}
                 className="w-full bg-black text-white rounded-xl py-2.5 font-medium hover:bg-neutral-800 transition disabled:opacity-60"
               >
-                {loading ? "Création..." : pendingSubmit ? "Vérification..." : "Créer le compte"}
+                {loading ? "Connexion..." : "Se connecter"}
               </button>
 
-              <p className="text-xs text-neutral-500 text-center pt-1">
-                En créant un compte, tu acceptes les conditions d’utilisation.
-              </p>
+              <div className="flex justify-between text-sm">
+                <Link className="underline" href="/mobile/mot-de-passe-oublie">
+                  Mot de passe oublié
+                </Link>
+                <Link className="underline" href="/mobile/inscription">
+                  Créer un compte
+                </Link>
+              </div>
             </form>
           </div>
         </div>
