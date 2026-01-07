@@ -35,13 +35,10 @@ export default function MotDePasseOubliePage() {
 
     setLoading(true);
 
-    // ✅ Utilise l'URL du site (Vercel/Prod) si disponible, sinon fallback sur l'origin courant
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ??
-      (typeof window !== "undefined" ? window.location.origin : "");
-
-    // ✅ Page de réinitialisation (celle que tu as créée)
-    const redirectTo = `${siteUrl}/reinitialiser_mdp`;
+    const redirectTo =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/reinitialiser_mdp`
+        : undefined;
 
     const { error } = await supabase.auth.resetPasswordForEmail(emailClean, {
       redirectTo,
@@ -56,7 +53,6 @@ export default function MotDePasseOubliePage() {
       return;
     }
 
-    // Message générique (bon pour la sécurité)
     setMsg("Si cet email existe, un lien de réinitialisation vient d’être envoyé.");
   };
 
@@ -67,11 +63,7 @@ export default function MotDePasseOubliePage() {
       <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
-            <button
-              type="button"
-              onClick={() => router.push("/connexion")}
-              className="hover:underline"
-            >
+            <button type="button" onClick={() => router.push("/connexion")} className="hover:underline">
               Retour à la connexion
             </button>
 
@@ -101,7 +93,7 @@ export default function MotDePasseOubliePage() {
 
               <div className="pt-2">
                 <HCaptcha
-                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ?? ""}
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
                   onVerify={(token) => setCaptchaToken(token)}
                   onExpire={() => setCaptchaToken(null)}
                 />
