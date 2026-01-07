@@ -40,9 +40,6 @@ export default function ConnexionPage() {
             <button onClick={() => router.push("/")} className="hover:underline">
               ← Retour à l’accueil
             </button>
-            <Link href="/inscription" className="hover:underline">
-              Créer un compte
-            </Link>
           </div>
 
           <div className="bg-white/95 rounded-3xl p-7 shadow-lg border border-black/10">
