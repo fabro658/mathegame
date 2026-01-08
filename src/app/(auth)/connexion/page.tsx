@@ -54,15 +54,14 @@ export default function ConnexionPage() {
     // reset token pour éviter réutilisation
     setCaptchaToken(null);
 
-    //  Redirection plus robuste que "/"
-    // (évite d’être envoyé vers une page “secondaire/mobile” si ta home a une logique de redirect)
+    //  Redirection vers le tableau de bord
     router.push("/mon-compte");
   };
 
   const isDisabled = loading || !captchaToken;
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-r from-[#d8d3a1] to-[#f2c14e] flex items-center justify-center px-6">
+    <div className="min-h-screen w-full bg-[#0f0f14] flex items-center justify-center px-6">
       <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
