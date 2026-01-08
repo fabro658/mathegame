@@ -225,7 +225,7 @@ export default function MonComptePage() {
   if (loading) return null;
 
   return (
-    <div className="min-h-screen w-full bg-[#cfe3ff] flex items-center justify-center px-6">
+    <div className="min-h-screen w-full bg-[#cfe3ff] px-6 py-10 overflow-y-auto">
       <div className="w-full max-w-xl mx-auto bg-white rounded-3xl border border-black/10 shadow-lg p-8">
         <h1 className="text-2xl font-bold">Mon compte</h1>
         <p className="text-sm text-neutral-600 mt-1">
