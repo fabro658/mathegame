@@ -35,9 +35,9 @@ const TriangleIllustration = () => (
       <text x="90" y="75" textAnchor="end" fontSize="14" fill="red">8 cm</text>
     </svg>
     <div className="mt-4 text-center font-bold text-lg">
-      Aire = 
-      <div style={{ display: 'inline-block', lineHeight: 1.4, marginLeft: 8 }}>
-        <div style={{ borderBottom: '2px solid black' }}>base × hauteur</div>
+      Aire =
+      <div style={{ display: "inline-block", lineHeight: 1.4, marginLeft: 8 }}>
+        <div style={{ borderBottom: "2px solid black" }}>base × hauteur</div>
         <div>2</div>
       </div>
       <p className="mt-4 font-bold text-center">(10 × 8) / 2 = 40 cm²</p>
@@ -89,36 +89,36 @@ export default function AireLearning() {
       description: "L'aire d'un carré se calcule en multipliant la base par la hauteur (les deux égales).",
       formula: "Aire = base × hauteur",
       example: "Si le côté mesure 4 cm, l'aire est : 4 × 4 = 16 cm²",
-      imageComponent: <CarreIllustration />
+      imageComponent: <CarreIllustration />,
     },
     {
       name: "Rectangle",
       description: "L'aire d'un rectangle se calcule en multipliant sa base par sa hauteur.",
       formula: "Aire = base × hauteur",
       example: "Si la base est 15 cm et la hauteur 8 cm, l'aire est : 15 × 8 = 120 cm²",
-      imageComponent: <RectangleIllustration />
+      imageComponent: <RectangleIllustration />,
     },
     {
       name: "Triangle",
       description: "L'aire d'un triangle est le produit de sa base et sa hauteur, divisé par 2.",
       formula: "Aire = (base × hauteur) / 2",
       example: "Si la base mesure 10 cm et la hauteur 8 cm, l'aire est : (10 × 8) / 2 = 40 cm²",
-      imageComponent: <TriangleIllustration />
+      imageComponent: <TriangleIllustration />,
     },
     {
       name: "Cercle",
       description: "L'aire d'un cercle se calcule avec la formule π × rayon².",
       formula: "Aire = π × rayon²",
       example: "Si le rayon est 10 cm, l'aire est : π × 10² = 314.16 cm²",
-      imageComponent: <CercleIllustration />
+      imageComponent: <CercleIllustration />,
     },
     {
       name: "Trapèze",
       description: "L'aire d'un trapèze est la moyenne des deux bases multipliée par la hauteur.",
       formula: "Aire = ((base1 + base2) × hauteur) / 2",
       example: "Si base1 = 14 cm, base2 = 6 cm, hauteur = 10 cm, alors l'aire est : ((14 + 6) × 10) / 2 = 100 cm²",
-      imageComponent: <TrapezeIllustration />
-    }
+      imageComponent: <TrapezeIllustration />,
+    },
   ];
 
   return (
@@ -131,10 +131,13 @@ export default function AireLearning() {
         Retour
       </Link>
 
-      {/* Colonne gauche */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
+      {/* Colonne gauche (descendue seulement) */}
+      <div className="w-1/4 bg-white p-6 shadow-lg pt-24">
         <h1 className="text-3xl font-bold mb-6 text-center">Formes géométriques</h1>
-        <p className="text-lg mb-6">Sélectionne une forme pour apprendre comment calculer son aire :</p>
+        <p className="text-lg mb-6">
+          Sélectionne une forme pour apprendre comment calculer son aire :
+        </p>
+
         <div className="flex flex-col gap-4">
           {shapes.map((shape, index) => (
             <button
@@ -148,7 +151,7 @@ export default function AireLearning() {
         </div>
       </div>
 
-      {/* Colonne droite */}
+      {/* Colonne droite (inchangée) */}
       <div className="w-3/4 p-10 flex flex-col items-center overflow-y-auto">
         {selectedShape && (
           <div className="bg-white p-8 rounded-lg shadow-lg mt-10 w-full max-w-4xl">
