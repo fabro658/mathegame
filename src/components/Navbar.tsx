@@ -12,9 +12,11 @@ type UserMini = {
 export default function Navbar() {
   const [user, setUser] = useState<UserMini | null>(null);
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  // Auth (connexion / mon compte)
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+
+  // Auth
   useEffect(() => {
     let mounted = true;
 
@@ -35,30 +37,69 @@ export default function Navbar() {
     };
   }, []);
 
+  function clearCloseTimer() {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }
+
+  function scheduleClose(delayMs = 320) {
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+    }, delayMs);
+  }
+
   // Fermer si clic en dehors
   useEffect(() => {
     function onDocMouseDown(e: MouseEvent) {
       const el = wrapperRef.current;
       if (!el) return;
-      if (!el.contains(e.target as Node)) setOpen(false);
+      if (!el.contains(e.target as Node)) {
+        clearCloseTimer();
+        setOpen(false);
+      }
     }
     document.addEventListener("mousedown", onDocMouseDown);
     return () => document.removeEventListener("mousedown", onDocMouseDown);
   }, []);
 
+  // Nettoyage timer
+  useEffect(() => {
+    return () => clearCloseTimer();
+  }, []);
+
   return (
     <div
       ref={wrapperRef}
-      style={{ position: "fixed", top: 16, left: 16, zIndex: 9999 }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      style={{
+        position: "fixed",
+        top: 12,
+        left: 12,
+        zIndex: 9999,
+
+        // ✅ zone hover plus grande (invisible)
+        padding: 10,
+      }}
+      onMouseEnter={() => {
+        clearCloseTimer();
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        // ✅ laisse le temps de bouger la souris vers le menu / cliquer
+        scheduleClose(320);
+      }}
     >
       {/* Hamburger */}
       <button
         type="button"
         aria-label="Menu"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          clearCloseTimer();
+          setOpen((v) => !v);
+        }}
         style={{
           width: 42,
           height: 42,
@@ -81,17 +122,27 @@ export default function Navbar() {
         <div
           style={{
             position: "absolute",
-            left: 0,
-            top: 48,
-            minWidth: 210,
+            left: 10, // aligne avec le padding de wrapper
+            top: 58,
+            minWidth: 220,
             padding: 8,
             borderRadius: 14,
             border: "1px solid rgba(255,255,255,0.12)",
             background: "rgba(15,15,15,0.92)",
             boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
           }}
+          onMouseEnter={() => {
+            // ✅ si tu entres dans le menu, on annule la fermeture
+            clearCloseTimer();
+            setOpen(true);
+          }}
+          onMouseLeave={() => {
+            // ✅ et on ferme un peu après quand tu sors du menu
+            scheduleClose(320);
+          }}
         >
           <MenuLink href="/apprendre" label="Apprendre" onClick={() => setOpen(false)} />
+          <MenuLink href="/options" label="Options" onClick={() => setOpen(false)} />
 
           <div
             style={{
@@ -134,7 +185,8 @@ function MenuLink({
         fontWeight: 650,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.08)";
+        (e.currentTarget as HTMLAnchorElement).style.background =
+          "rgba(255,255,255,0.08)";
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
