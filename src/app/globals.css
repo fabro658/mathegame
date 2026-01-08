@@ -1617,5 +1617,7 @@ left: -50px;
   z-index: 5;
 }}
 
-
-
+/* menu sous les titre pour la section apprendre*/
+.page-with-menu {
+  padding-top: 96px; /* ajuste si besoin */
+}
