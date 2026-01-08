@@ -61,7 +61,7 @@ export default function ConnexionPage() {
   const isDisabled = loading || !captchaToken;
 
   return (
-    <div className="min-h-screen w-full bg-[#1f2f5c] flex items-center justify-center px-6">
+    <div className="min-h-screen w-full bg-[#cfe3ff] flex items-center justify-center px-6">
       <div className="auth-shell w-full max-w-5xl rounded-[40px] p-8 shadow-2xl">
         <div className="w-full max-w-md mx-auto">
           <div className="flex justify-between items-center mb-6 text-sm">
