@@ -32,7 +32,6 @@ export default function Addition() {
           } while (a === b);
         } else {
           a = Math.floor(Math.random() * 100) + 50;
-          
           b = Math.floor(Math.random() * 100) + 50;
         }
         return [a, b];
