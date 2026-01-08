@@ -24,7 +24,7 @@ export default function PrioriteOperation() {
       </Link>
 
       {/* Barre latérale */}
-      <div className="w-1/4 bg-white p-6 shadow-lg">
+      <div className="w-1/4 bg-white p-6 shadow-lg pt-24">
         <h1 className="text-3xl font-bold mb-6 text-center mt-20">
           Priorité des opérations
         </h1>

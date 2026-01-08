@@ -678,7 +678,7 @@ export default function OperationsLearning() {
       </Link>
 
       {/* Colonne gauche */}
-      <aside className="w-full md:w-1/4 bg-white p-6 shadow-lg">
+      <aside className="w-full md:w-1/4 bg-white p-6 shadow-lg pt-24">
         <h1 className="text-3xl font-bold mb-6 text-center">Opérations arithmétiques</h1>
 
         <div className="flex flex-col gap-3 mb-6">
