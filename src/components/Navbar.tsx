@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 type UserMini = {
@@ -11,7 +11,10 @@ type UserMini = {
 
 export default function Navbar() {
   const [user, setUser] = useState<UserMini | null>(null);
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
+  // Auth (connexion / mon compte)
   useEffect(() => {
     let mounted = true;
 
@@ -32,33 +35,50 @@ export default function Navbar() {
     };
   }, []);
 
-  return (
-    <div style={{ position: "fixed", top: 16, left: 16, zIndex: 60 }}>
-      <div className="ks-menu-group" style={{ position: "relative" }}>
-        {/* Hamburger */}
-        <button
-          type="button"
-          aria-label="Menu"
-          style={{
-            width: 42,
-            height: 42,
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,0.15)",
-            background: "rgba(0,0,0,0.35)",
-            backdropFilter: "blur(8px)",
-            display: "grid",
-            placeItems: "center",
-            cursor: "default",
-          }}
-        >
-          <span style={barStyle} />
-          <span style={barStyle} />
-          <span style={barStyle} />
-        </button>
+  // Fermer si clic en dehors
+  useEffect(() => {
+    function onDocMouseDown(e: MouseEvent) {
+      const el = wrapperRef.current;
+      if (!el) return;
+      if (!el.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, []);
 
-        {/* Dropdown (hover) */}
+  return (
+    <div
+      ref={wrapperRef}
+      style={{ position: "fixed", top: 16, left: 16, zIndex: 9999 }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      {/* Hamburger */}
+      <button
+        type="button"
+        aria-label="Menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        style={{
+          width: 42,
+          height: 42,
+          borderRadius: 12,
+          border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(0,0,0,0.35)",
+          backdropFilter: "blur(8px)",
+          display: "grid",
+          placeItems: "center",
+          cursor: "pointer",
+        }}
+      >
+        <span style={barStyle} />
+        <span style={barStyle} />
+        <span style={barStyle} />
+      </button>
+
+      {/* Dropdown */}
+      {open && (
         <div
-          className="ks-dropdown"
           style={{
             position: "absolute",
             left: 0,
@@ -69,10 +89,9 @@ export default function Navbar() {
             border: "1px solid rgba(255,255,255,0.12)",
             background: "rgba(15,15,15,0.92)",
             boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
-            display: "none",
           }}
         >
-          <MenuLink href="/apprendre" label="Apprendre" />
+          <MenuLink href="/apprendre" label="Apprendre" onClick={() => setOpen(false)} />
 
           <div
             style={{
@@ -83,26 +102,29 @@ export default function Navbar() {
           />
 
           {user ? (
-            <MenuLink href="/mon-compte" label="Mon compte" />
+            <MenuLink href="/mon-compte" label="Mon compte" onClick={() => setOpen(false)} />
           ) : (
-            <MenuLink href="/connexion" label="Connexion" />
+            <MenuLink href="/connexion" label="Connexion" onClick={() => setOpen(false)} />
           )}
         </div>
-      </div>
-
-      <style jsx>{`
-        .ks-menu-group:hover .ks-dropdown {
-          display: block;
-        }
-      `}</style>
+      )}
     </div>
   );
 }
 
-function MenuLink({ href, label }: { href: string; label: string }) {
+function MenuLink({
+  href,
+  label,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  onClick?: () => void;
+}) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       style={{
         display: "block",
         padding: "10px 10px",
@@ -110,11 +132,9 @@ function MenuLink({ href, label }: { href: string; label: string }) {
         color: "white",
         textDecoration: "none",
         fontWeight: 650,
-        background: "transparent",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.background =
-          "rgba(255,255,255,0.08)";
+        (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.08)";
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
