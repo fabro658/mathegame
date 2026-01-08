@@ -79,7 +79,7 @@ export default function Navbar() {
         left: 12,
         zIndex: 9999,
 
-        // ✅ zone hover plus grande (invisible)
+        //  zone hover plus grande
         padding: 10,
       }}
       onMouseEnter={() => {
@@ -87,7 +87,7 @@ export default function Navbar() {
         setOpen(true);
       }}
       onMouseLeave={() => {
-        // ✅ laisse le temps de bouger la souris vers le menu / cliquer
+        //  laisse le temps de bouger la souris vers le menu / cliquer
         scheduleClose(320);
       }}
     >
@@ -132,17 +132,17 @@ export default function Navbar() {
             boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
           }}
           onMouseEnter={() => {
-            // ✅ si tu entres dans le menu, on annule la fermeture
+            // si tu entres dans le menu, on annule la fermeture
             clearCloseTimer();
             setOpen(true);
           }}
           onMouseLeave={() => {
-            // ✅ et on ferme un peu après quand tu sors du menu
+            // et on ferme un peu après quand tu sors du menu
             scheduleClose(320);
           }}
         >
-          <MenuLink href="/apprendre" label="Apprendre" onClick={() => setOpen(false)} />
-          <MenuLink href="/options" label="Options" onClick={() => setOpen(false)} />
+          <MenuLink href="/menu/apprendre" label="Apprendre" onClick={() => setOpen(false)} />
+          <MenuLink href="/menu/options" label="Options" onClick={() => setOpen(false)} />
 
           <div
             style={{
