@@ -91,31 +91,39 @@ export default function Navbar() {
         scheduleClose(320);
       }}
     >
-      {/* Hamburger */}
+      {/* bouton menu */}
       <button
-        type="button"
-        aria-label="Menu"
-        aria-expanded={open}
-        onClick={() => {
-          clearCloseTimer();
-          setOpen((v) => !v);
-        }}
-        style={{
-          width: 42,
-          height: 42,
-          borderRadius: 12,
-          border: "1px solid rgba(255,255,255,0.15)",
-          background: "rgba(0,0,0,0.35)",
-          backdropFilter: "blur(8px)",
-          display: "grid",
-          placeItems: "center",
-          cursor: "pointer",
-        }}
-      >
-        <span style={barStyle} />
-        <span style={barStyle} />
-        <span style={barStyle} />
-      </button>
+  type="button"
+  aria-label="Menu"
+  aria-expanded={open}
+  onClick={() => {
+    clearCloseTimer();
+    setOpen((v) => !v);
+  }}
+  style={{
+    padding: "0 14px",
+    height: 42,
+    borderRadius: 14,
+    border: "1px solid rgba(255,255,255,0.15)",
+    background: "rgba(0,0,0,0.35)",
+    backdropFilter: "blur(8px)",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    cursor: "pointer",
+    color: "white",
+    fontWeight: 700,
+    letterSpacing: 0.2,
+  }}
+>
+  <div style={{ display: "grid", gap: 4 }}>
+    <span style={barStyle} />
+    <span style={barStyle} />
+    <span style={barStyle} />
+  </div>
+  <span>Menu</span>
+</button>
+
 
       {/* Dropdown */}
       {open && (
@@ -142,7 +150,8 @@ export default function Navbar() {
           }}
         >
           <MenuLink href="/menu/apprendre" label="Apprendre" onClick={() => setOpen(false)} />
-          <MenuLink href="/menu/options" label="Options" onClick={() => setOpen(false)} />
+        <MenuLink href="/menu/options" label="Options" onClick={() => setOpen(false)} />
+
 
           <div
             style={{
