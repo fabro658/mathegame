@@ -68,10 +68,6 @@ export default function ConnexionPage() {
             <Link href="/" className="hover:underline">
               Retour à l’accueil
             </Link>
-
-            <Link href="/inscription" className="hover:underline">
-              Créer un compte
-            </Link>
           </div>
 
           <div className="bg-white/95 rounded-3xl p-7 shadow-lg border border-black/10">
