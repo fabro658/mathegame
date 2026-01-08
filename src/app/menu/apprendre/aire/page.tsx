@@ -122,7 +122,7 @@ export default function AireLearning() {
   ];
 
   return (
-    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
+    <main className="flex min-h-screen bg-gray-100 text-black relative">
       {/* Bouton Retour en haut à droite */}
       <Link
         href="/menu/apprendre"

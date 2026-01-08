@@ -83,7 +83,7 @@ export default function Soustraction() {
   };
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+    <div className="min-h-screen flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
       {/* Boutons fixes en haut */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/operations_arithmetiques_mobile"

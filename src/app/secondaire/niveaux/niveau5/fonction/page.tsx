@@ -169,7 +169,7 @@ export default function TestFonctions() {
   const currentQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
+    <div className="min-h-screen flex justify-center items-start bg-[#0b0c2a] text-white p-4 relative">
       <Link href="/menu/apprendre/fonctions" className="fixed bottom-4 left-4 bg-black text-white py-3 px-8 rounded font-bold z-50">Apprendre</Link>
       <Link href="/secondaire/niveaux/niveau5" className="fixed top-4 right-4 bg-orange-500 text-white py-3 px-8 rounded font-bold z-50">Retour</Link>
 

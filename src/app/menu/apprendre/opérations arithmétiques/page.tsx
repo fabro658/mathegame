@@ -668,7 +668,7 @@ export default function OperationsLearning() {
   const { result, steps } = useMemo(() => compute(opName, a, b), [opName, a, b]);
 
   return (
-    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
+    <main className="flex min-h-screen bg-gray-100 text-black relative">
       {/* Retour */}
       <Link
         href="/menu/apprendre"

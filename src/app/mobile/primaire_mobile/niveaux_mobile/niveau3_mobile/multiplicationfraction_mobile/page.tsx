@@ -93,7 +93,7 @@ export default function MultiplicationFraction() {
   const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+    <div className="min-h-screen flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes */}
       <Link
         href="/mobile/menu_mobile/apprendre_mobile/fraction_mobile"

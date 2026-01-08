@@ -393,7 +393,7 @@ export default function FonctionLearning() {
   const [selectedConcept, setSelectedConcept] = useState<FunctionConcept | null>(null);
 
   return (
-    <main className="flex h-screen overflow-y-auto bg-gray-100 text-black relative">
+    <main className="flex min-h-screen bg-gray-100 text-black relative">
       {/* Bouton retour en haut à droite */}
       <Link
         href="/menu/apprendre"

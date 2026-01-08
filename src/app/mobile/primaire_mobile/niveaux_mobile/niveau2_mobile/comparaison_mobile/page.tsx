@@ -81,7 +81,7 @@ export default function ComparerEntiers() {
   );
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+    <div className="min-h-screen flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes */}
       <Link
         href="/menu/apprendre"

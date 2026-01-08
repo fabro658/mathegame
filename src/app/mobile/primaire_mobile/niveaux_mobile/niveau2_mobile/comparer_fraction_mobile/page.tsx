@@ -86,7 +86,7 @@ export default function ComparerFractions() {
   const visibleQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
   return (
-    <div className="h-screen overflow-y-auto flex justify-center items-start bg-gray-100 text-black p-4 relative">
+    <div className="min-h-screen flex justify-center items-start bg-gray-100 text-black p-4 relative">
       {/* Boutons fixes en haut (on garde la couleur de fond globale) */}
       <Link
         href="/menu/apprendre"
